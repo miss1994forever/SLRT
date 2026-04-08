@@ -23,14 +23,23 @@ We provide processed meta data for [Phoenix-2014T](https://hkustconnect-my.share
 
 ## Training
 ```
+source /root/miniconda3/etc/profile.d/conda.sh
+conda activate slrt_legacy
+export OMP_NUM_THREADS=1
+
 config_file='configs/phoenix-2014t_ISLR.yaml'
-python -m torch.distributed.launch --nproc_per_node 8 --master_port 29999 --use_env training.py --config=${config_file} 
+python -m torch.distributed.run --nproc_per_node 1 --master_port 29999 training.py --config=${config_file}
 ```
 We provide model checkpoints for [Phoenix-2014T](https://hkustconnect-my.sharepoint.com/:f:/g/personal/rzuo_connect_ust_hk/EidJXFxpyaNPho5SKtVHEJ8BHex8Gq62koL-RrNnqtF1PA?e=IGGpxU) and [CSL-Daily](https://hkustconnect-my.sharepoint.com/:f:/g/personal/rzuo_connect_ust_hk/EhS5B3p9i3FNu5OpqFy3WyABkMMGg1VbAzMJrxjuFVOg6Q?e=c7OK0Z).
 
 ## Testing (online inference)
 ```
-config_file='configs/slide_phoenix-2014t.yaml'
-python -m torch.distributed.launch --nproc_per_node 1 --master_port 29999 --use_env prediction_slide.py --config=${config_file}  --save_fea 1
+source /root/miniconda3/etc/profile.d/conda.sh
+conda activate slrt_legacy
+export OMP_NUM_THREADS=1
+
+python -m torch.distributed.run --nproc_per_node 1 --master_port 29997 prediction_slide.py --config=configs/slide_phoenix-2014t.yaml --save_fea 0
 ```
-The flag "--save_fea" is optional, which aims to extract features for boosting an offline model with the well-optimized online model.
+This is the exact Online test command verified in this workspace after the layout cleanup.
+
+The flag `--save_fea` is optional and is mainly for exporting features to boost an offline model with the well-optimized online model. Use `--save_fea 0` for the first repeatable smoke test.

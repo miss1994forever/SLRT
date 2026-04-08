@@ -96,3 +96,35 @@
 2026-03-18 09:14:52,920 Decoding method: window_greedy_13, WER: 31.51, DEL: 25.85, INS: 0.89, SUB: 4.77
 2026-03-18 09:14:53,243 Decoding method: naive_greedy, WER: 57.27, DEL: 2.32, INS: 44.38, SUB: 10.57
 2026-03-18 09:14:54,806 -------------------------Evaluation Finished-------------------------
+2026-04-08 19:52:31,479 Keypoints source: hrnet
+2026-04-08 19:52:32,255 Total #=63
+2026-04-08 19:52:32,367 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-04-08 19:52:32,500 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-04-08 19:52:39,365 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-04-08 19:52:39,366 Evaluate on test set
+2026-04-08 19:52:39,715 Keypoints source: hrnet
+2026-04-08 19:52:40,360 Total #=63
+2026-04-08 19:52:40,365 {'recognition': {'beam_size': 10}}
+2026-04-08 19:52:40,365 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-04-08 19:52:41,269 window size: 16, stride: 1, prob_thr: -1, blank_thr: 0.5
+2026-04-08 19:53:20,704 gls_prob_thr: -1
+2026-04-08 19:55:55,777 Keypoints source: hrnet
+2026-04-08 19:55:56,582 Total #=63
+2026-04-08 19:55:56,674 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-04-08 19:55:56,782 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-04-08 19:56:01,964 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-04-08 19:56:01,965 Evaluate on test set
+2026-04-08 19:56:02,365 Keypoints source: hrnet
+2026-04-08 19:56:03,047 Total #=63
+2026-04-08 19:56:03,051 {'recognition': {'beam_size': 10}}
+2026-04-08 19:56:03,051 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-04-08 19:56:03,053 window size: 16, stride: 1, prob_thr: -1, blank_thr: 0.5
+2026-04-08 20:23:31,562 gls_prob_thr: -1
+2026-04-08 20:23:31,856 Decoding method: window_greedy_3, WER: 29.09, DEL: 4.20, INS: 13.92, SUB: 10.97
+2026-04-08 20:23:32,190 Decoding method: window_greedy_5, WER: 23.15, DEL: 6.20, INS: 6.43, SUB: 10.52
+2026-04-08 20:23:32,423 Decoding method: window_greedy_7, WER: 22.00, DEL: 9.25, INS: 3.50, SUB: 9.25
+2026-04-08 20:23:32,644 Decoding method: window_greedy_9, WER: 23.17, DEL: 13.27, INS: 2.00, SUB: 7.91
+2026-04-08 20:23:32,857 Decoding method: window_greedy_11, WER: 25.90, DEL: 18.20, INS: 1.48, SUB: 6.22
+2026-04-08 20:23:33,056 Decoding method: window_greedy_13, WER: 31.51, DEL: 25.85, INS: 0.89, SUB: 4.77
+2026-04-08 20:23:33,381 Decoding method: naive_greedy, WER: 57.27, DEL: 2.32, INS: 44.38, SUB: 10.57
+2026-04-08 20:23:33,777 -------------------------Evaluation Finished-------------------------

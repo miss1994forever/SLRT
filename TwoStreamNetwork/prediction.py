@@ -1,9 +1,7 @@
-from lib2to3.pytree import WildcardPattern
 from logging import Logger
 from typing import DefaultDict, Text
 import warnings, wandb
 import pickle
-from google.protobuf.reflection import ParseMessage
 from collections import defaultdict
 from modelling.model import build_model
 from modelling.recognition import ctc_decode_func

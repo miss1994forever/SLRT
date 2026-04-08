@@ -110,9 +110,16 @@ class TextTokenizer(BaseTokenizer):
     
     def __call__(self, input_str):
         if self.level == 'sentencepiece':
-            with self.tokenizer.as_target_tokenizer():
-                raw_outputs = self.tokenizer(input_str, 
-                    #return_tensors="pt", 
+            if hasattr(self.tokenizer, 'as_target_tokenizer'):
+                with self.tokenizer.as_target_tokenizer():
+                    raw_outputs = self.tokenizer(
+                        input_str,
+                        return_attention_mask=True,
+                        return_length=True,
+                        padding='longest')
+            else:
+                raw_outputs = self.tokenizer(
+                    text_target=input_str,
                     return_attention_mask=True,
                     return_length=True,
                     padding='longest')

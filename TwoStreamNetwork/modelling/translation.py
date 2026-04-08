@@ -74,8 +74,9 @@ class TranslationNetwork(torch.nn.Module):
             freeze_params(self.model.model.shared)
             self.logger.info('Set txt embedding frozen')
 
-        if 'load_ckpt' in cfg:
-            self.load_from_pretrained_ckpt(cfg['load_ckpt'])
+        load_ckpt = cfg.get('load_ckpt', None)
+        if load_ckpt:
+            self.load_from_pretrained_ckpt(load_ckpt)
 
 
             
