@@ -73,5 +73,14 @@ class ZipReader(object):
     def read(path):
         zip_path, path_img = ZipReader.split_zip_style_path(path)
         zfile = ZipReader.get_zipfile(zip_path)
-        data = zfile.read(path_img)
+        try:
+            data = zfile.read(path_img)
+        except KeyError:
+            # Some Phoenix archives store files under images/<video>/... instead
+            # of images/<split>/<video>/.... Fall back by stripping split segment.
+            parts = path_img.split('/', 2)
+            if len(parts) == 3 and parts[0] == 'images' and parts[1] in {'train', 'dev', 'test'}:
+                data = zfile.read('images/' + parts[2])
+            else:
+                raise
         return data

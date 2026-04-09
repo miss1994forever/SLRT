@@ -1,0 +1,98 @@
+2026-03-17 22:29:57,158 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-17 22:32:08,236 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-17 22:32:15,483 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-03-17 22:32:15,484 Evaluate on test set
+2026-03-17 22:32:15,510 {'recognition': {'beam_size': 1, 'max_len': 100}}
+2026-03-17 22:32:15,510 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-03-17 22:32:15,511 window size: 16, stride: 1, prob_thr: 0.2, blank_thr: 0.5
+2026-03-17 22:33:08,465 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-17 22:33:13,706 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-03-17 22:33:13,706 Evaluate on test set
+2026-03-17 22:33:13,729 {'recognition': {'beam_size': 1, 'max_len': 100}}
+2026-03-17 22:33:13,730 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-03-17 22:33:13,731 window size: 16, stride: 1, prob_thr: 0.2, blank_thr: 0.5
+2026-03-17 22:40:50,958 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-17 22:40:56,230 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-03-17 22:40:56,230 Evaluate on test set
+2026-03-17 22:40:56,252 {'recognition': {'beam_size': 10}}
+2026-03-17 22:40:56,252 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-03-17 22:40:56,253 window size: 16, stride: 1, prob_thr: -1, blank_thr: 0.5
+2026-03-17 22:42:14,187 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-17 22:42:19,538 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-03-17 22:42:19,538 Evaluate on test set
+2026-03-17 22:42:19,561 {'recognition': {'beam_size': 10}}
+2026-03-17 22:42:19,561 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-03-17 22:42:19,562 window size: 16, stride: 1, prob_thr: -1, blank_thr: 0.5
+2026-03-17 22:46:58,518 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-17 22:47:03,736 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-03-17 22:47:03,737 Evaluate on test set
+2026-03-17 22:47:03,758 {'recognition': {'beam_size': 10}}
+2026-03-17 22:47:03,759 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-03-17 22:47:03,759 window size: 16, stride: 1, prob_thr: -1, blank_thr: 0.5
+2026-03-18 00:09:54,446 Keypoints source: hrnet
+2026-03-18 00:13:32,135 Keypoints source: hrnet
+2026-03-18 00:13:32,891 Total #=63
+2026-03-18 00:13:32,983 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-18 00:13:33,088 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-18 00:13:38,708 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-03-18 00:13:38,708 Evaluate on test set
+2026-03-18 00:13:39,168 Keypoints source: hrnet
+2026-03-18 00:13:39,948 Total #=63
+2026-03-18 00:13:39,953 {'recognition': {'beam_size': 10}}
+2026-03-18 00:13:39,954 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-03-18 00:13:39,956 window size: 16, stride: 1, prob_thr: -1, blank_thr: 0.5
+2026-03-18 00:36:21,679 gls_prob_thr: -1
+2026-03-18 00:36:21,948 Decoding method: window_greedy_3, WER: 29.09, DEL: 4.20, INS: 13.92, SUB: 10.97
+2026-03-18 00:36:22,285 Decoding method: window_greedy_5, WER: 23.15, DEL: 6.20, INS: 6.43, SUB: 10.52
+2026-03-18 00:36:22,519 Decoding method: window_greedy_7, WER: 22.00, DEL: 9.25, INS: 3.50, SUB: 9.25
+2026-03-18 00:36:22,743 Decoding method: window_greedy_9, WER: 23.17, DEL: 13.27, INS: 2.00, SUB: 7.91
+2026-03-18 00:36:22,958 Decoding method: window_greedy_11, WER: 25.90, DEL: 18.20, INS: 1.48, SUB: 6.22
+2026-03-18 00:36:23,159 Decoding method: window_greedy_13, WER: 31.51, DEL: 25.85, INS: 0.89, SUB: 4.77
+2026-03-18 00:36:23,487 Decoding method: naive_greedy, WER: 57.27, DEL: 2.32, INS: 44.38, SUB: 10.57
+2026-03-18 00:36:23,797 -------------------------Evaluation Finished-------------------------
+2026-03-18 07:41:53,290 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-18 07:41:58,404 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-03-18 07:41:58,404 Evaluate on test set
+2026-03-18 07:41:58,426 {'recognition': {'beam_size': 10}}
+2026-03-18 07:41:58,426 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-03-18 07:41:58,427 window size: 16, stride: 1, prob_thr: -1, blank_thr: 0.5
+2026-03-18 07:43:51,030 Keypoints source: hrnet
+2026-03-18 07:43:51,758 Total #=63
+2026-03-18 07:43:51,850 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-18 07:43:51,953 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-18 07:43:57,181 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-03-18 07:43:57,181 Evaluate on test set
+2026-03-18 07:43:57,549 Keypoints source: hrnet
+2026-03-18 07:43:58,188 Total #=63
+2026-03-18 07:43:58,192 {'recognition': {'beam_size': 10}}
+2026-03-18 07:43:58,192 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-03-18 07:43:58,194 window size: 16, stride: 1, prob_thr: -1, blank_thr: 0.5
+2026-03-18 08:06:43,152 gls_prob_thr: -1
+2026-03-18 08:06:43,470 Decoding method: window_greedy_3, WER: 29.09, DEL: 4.20, INS: 13.92, SUB: 10.97
+2026-03-18 08:06:43,801 Decoding method: window_greedy_5, WER: 23.15, DEL: 6.20, INS: 6.43, SUB: 10.52
+2026-03-18 08:06:44,036 Decoding method: window_greedy_7, WER: 22.00, DEL: 9.25, INS: 3.50, SUB: 9.25
+2026-03-18 08:06:44,263 Decoding method: window_greedy_9, WER: 23.17, DEL: 13.27, INS: 2.00, SUB: 7.91
+2026-03-18 08:06:44,478 Decoding method: window_greedy_11, WER: 25.90, DEL: 18.20, INS: 1.48, SUB: 6.22
+2026-03-18 08:06:44,682 Decoding method: window_greedy_13, WER: 31.51, DEL: 25.85, INS: 0.89, SUB: 4.77
+2026-03-18 08:06:45,012 Decoding method: naive_greedy, WER: 57.27, DEL: 2.32, INS: 44.38, SUB: 10.57
+2026-03-18 08:06:45,437 -------------------------Evaluation Finished-------------------------
+2026-03-18 08:51:54,060 Keypoints source: hrnet
+2026-03-18 08:51:54,768 Total #=63
+2026-03-18 08:51:54,861 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-18 08:51:54,961 Load pretrained S3D backbone from ../../pretrained_models/s3ds_actioncls_ckpt
+2026-03-18 08:52:00,237 Load model ckpt from results/phoenix-2014t_ISLR/ckpts/best.ckpt
+2026-03-18 08:52:00,237 Evaluate on test set
+2026-03-18 08:52:00,608 Keypoints source: hrnet
+2026-03-18 08:52:01,254 Total #=63
+2026-03-18 08:52:01,258 {'recognition': {'beam_size': 10}}
+2026-03-18 08:52:01,258 ------------------Evaluation epoch=92 test examples #=642---------------------
+2026-03-18 08:52:01,260 window size: 16, stride: 1, prob_thr: -1, blank_thr: 0.5
+2026-03-18 09:14:51,503 gls_prob_thr: -1
+2026-03-18 09:14:51,798 Decoding method: window_greedy_3, WER: 29.09, DEL: 4.20, INS: 13.92, SUB: 10.97
+2026-03-18 09:14:52,045 Decoding method: window_greedy_5, WER: 23.15, DEL: 6.20, INS: 6.43, SUB: 10.52
+2026-03-18 09:14:52,278 Decoding method: window_greedy_7, WER: 22.00, DEL: 9.25, INS: 3.50, SUB: 9.25
+2026-03-18 09:14:52,501 Decoding method: window_greedy_9, WER: 23.17, DEL: 13.27, INS: 2.00, SUB: 7.91
+2026-03-18 09:14:52,717 Decoding method: window_greedy_11, WER: 25.90, DEL: 18.20, INS: 1.48, SUB: 6.22
+2026-03-18 09:14:52,920 Decoding method: window_greedy_13, WER: 31.51, DEL: 25.85, INS: 0.89, SUB: 4.77
+2026-03-18 09:14:53,243 Decoding method: naive_greedy, WER: 57.27, DEL: 2.32, INS: 44.38, SUB: 10.57
+2026-03-18 09:14:54,806 -------------------------Evaluation Finished-------------------------
