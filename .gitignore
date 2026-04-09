@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+
+Online/CSLR/results/phoenix-2014t_ISLR/*.ckpt
+Online/CSLR/results/phoenix-2014t_ISLR/ckpts/
+Online/CSLR/results/phoenix-2014t_ISLR/prediction_slide/test/*.pkl
