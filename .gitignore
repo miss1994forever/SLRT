@@ -1,0 +1,34 @@
+__pycache__/
+*.py[cod]
+*.log
+*.out
+*.err
+*.bak
+*.pid
+._*
+
+Online/*.local.sh
+
+# Generated experiment outputs
+Online/CSLR/results/
+Online/CTC_fusion/results/
+Online/SLT/results/
+Online/CSLR/run_logs/
+
+# Local datasets and extracted media
+data/
+CiCo/CLCL/data_*/
+CiCo/I3D_feature_extractor/*_frame_dict.pkl
+CiCo/data_preparation/*.pkl
+TwoStreamNetwork/data/**/*.pkl
+
+# Downloaded or trained model weights
+pretrained_models/
+Spoken2Sign/vposer/snapshots/
+
+# Python caches inside subpackages
+**/__pycache__/
+
+Online/CSLR/results/phoenix-2014t_ISLR/*.ckpt
+Online/CSLR/results/phoenix-2014t_ISLR/ckpts/
+Online/CSLR/results/phoenix-2014t_ISLR/prediction_slide/test/*.pkl
