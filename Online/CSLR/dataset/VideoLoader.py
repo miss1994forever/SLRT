@@ -5,6 +5,9 @@ from PIL import Image
 import lintel, random
 
 
+_WARNED_MISSING_FRAME_SAMPLES = set()
+
+
 def compute_iou(gt_start, gt_end, vlen, center, win_size=16):
     #gt_end should be inclusive
     left = center - (win_size//2)
@@ -60,6 +63,20 @@ def read_img(path, dataset_name, csl_cut=False, csl_resize=-1):
     return rgb_im
 
 
+def make_missing_frame_placeholder(dataset_name, reference_frame=None):
+    if reference_frame is not None:
+        return np.array(reference_frame)
+
+    dataset_name = dataset_name.lower()
+    if dataset_name in ['csl', 'csl_iso', 'cslr']:
+        return np.zeros((320, 320, 3), dtype=np.uint8)
+    if dataset_name in ['phoenix_iso', 'phoenix']:
+        return np.zeros((260, 210, 3), dtype=np.uint8)
+    if dataset_name in ['phoenix2014_iso', 'phoenix2014']:
+        return np.zeros((260, 210, 3), dtype=np.uint8)
+    return np.zeros((224, 224, 3), dtype=np.uint8)
+
+
 def read_jpg(zip_file, dataset_name, decoded_frames, seq_len, img_dir):
     video_arrays = []
     for f in decoded_frames:
@@ -78,9 +95,14 @@ def read_jpg(zip_file, dataset_name, decoded_frames, seq_len, img_dir):
             img_path = '{}@{}{:04d}.png'.format(zip_file, img_dir, f)
         try:
             img = read_img(img_path, dataset_name, csl_cut=False, csl_resize=[320,320])
-        except:
-            # print('broken img: ', img_path)
-            img = np.array(video_arrays[-1])
+        except Exception:
+            if img_dir not in _WARNED_MISSING_FRAME_SAMPLES:
+                _WARNED_MISSING_FRAME_SAMPLES.add(img_dir)
+                print(f'[WARN] Missing frame asset for {img_dir}: {img_path}. Using placeholder frames.')
+            img = make_missing_frame_placeholder(
+                dataset_name,
+                reference_frame=video_arrays[-1] if video_arrays else None,
+            )
         #sentence_frames-512x512.zip@sentence_frames-512x512/S000853_P0000_T00/000000.jpg
         #PHOENIX2014T_videos.zip@images/train/03June_2011_Friday_tagesschau-7638/images0014.png
         video_arrays.append(img) #H,W,C

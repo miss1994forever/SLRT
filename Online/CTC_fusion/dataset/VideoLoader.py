@@ -7,6 +7,9 @@ import io, torch, torchvision
 from PIL import Image
 import lintel, random
 
+
+_WARNED_MISSING_FRAME_PATHS = set()
+
 def _load_frame_nums_to_4darray(video, frame_nums):
     """Decodes a specific set of frames from `video` to a 4D numpy array.
     
@@ -73,8 +76,21 @@ def get_selected_indexs(vlen, tmin=1, tmax=1, num_tokens=1, max_num_frames=400):
     return frame_index, valid_len
 
 def read_img(path, dataset_name, csl_cut, csl_resize=-1):
-    zip_data = ZipReader.read(path)
-    rgb_im = Image.open(io.BytesIO(zip_data)).convert('RGB')    
+    try:
+        zip_data = ZipReader.read(path)
+        rgb_im = Image.open(io.BytesIO(zip_data)).convert('RGB')
+    except Exception:
+        dataset_name_lower = dataset_name.lower()
+        if path not in _WARNED_MISSING_FRAME_PATHS:
+            _WARNED_MISSING_FRAME_PATHS.add(path)
+            print(f'[WARN] Missing frame asset: {path}. Using placeholder frame.')
+        if dataset_name_lower in ['csl', 'cslr']:
+            size = (320, 320) if csl_resize == -1 else (csl_resize[0], csl_resize[1])
+        elif dataset_name_lower in ['phoenix', 'phoenix_iso', 'phoenix2014', 'phoenix2014tsi']:
+            size = (210, 260)
+        else:
+            size = (224, 224)
+        rgb_im = Image.fromarray(np.zeros((size[1], size[0], 3), dtype=np.uint8))
     if dataset_name.lower() in ['csl','cslr']: #cslr won'r enter here
         if csl_cut:
             rgb_im = rgb_im.crop((0,80,512,512))
