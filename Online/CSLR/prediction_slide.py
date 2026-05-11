@@ -93,11 +93,117 @@ def pad_tensor(x, pad_left, pad_right):
     return x
 
 
-def sliding_windows(video, keypoint, win_size=16, stride=1, save_fea=False):
+def _frame_motion_curve(keypoint, confidence_threshold=0.2, ema_decay=0.6):
+    if keypoint.shape[0] <= 1:
+        return [0.0] * max(int(keypoint.shape[0]), 1)
+
+    coords = keypoint[..., :2].float()
+    if keypoint.shape[-1] > 2:
+        confidence = keypoint[..., 2].float()
+    else:
+        confidence = torch.ones(keypoint.shape[:2], device=keypoint.device, dtype=torch.float32)
+
+    displacement = torch.linalg.norm(coords[1:] - coords[:-1], dim=-1)
+    valid = (confidence[1:] > confidence_threshold) & (confidence[:-1] > confidence_threshold)
+
+    smoothed_motion = []
+    previous_motion = 0.0
+    for frame_idx in range(displacement.shape[0]):
+        current_motion = displacement[frame_idx][valid[frame_idx]]
+        motion_value = current_motion.mean().item() if current_motion.numel() > 0 else previous_motion
+        previous_motion = motion_value if frame_idx == 0 else ema_decay * previous_motion + (1 - ema_decay) * motion_value
+        smoothed_motion.append(previous_motion)
+
+    return [smoothed_motion[0] if smoothed_motion else 0.0] + smoothed_motion
+
+
+def _adaptive_window_centers(
+    keypoint,
+    total_frames,
+    base_stride,
+    min_stride,
+    max_stride,
+    confidence_threshold,
+    ema_decay,
+    quantile_low,
+    quantile_high,
+):
+    motion_curve = _frame_motion_curve(
+        keypoint,
+        confidence_threshold=confidence_threshold,
+        ema_decay=ema_decay,
+    )
+    positive_motion = torch.tensor([value for value in motion_curve if value > 0], dtype=torch.float32)
+
+    fallback_stride = int(max(min_stride, min(max_stride, base_stride)))
+    if positive_motion.numel() == 0:
+        low_motion = 0.0
+        high_motion = 0.0
+    else:
+        low_motion = torch.quantile(positive_motion, quantile_low).item()
+        high_motion = torch.quantile(positive_motion, quantile_high).item()
+
+    centers = [0]
+    current_center = 0
+    while current_center < total_frames - 1:
+        motion_value = motion_curve[min(current_center, len(motion_curve) - 1)]
+        if high_motion <= low_motion + 1e-6:
+            next_stride = fallback_stride
+        else:
+            normalized = (motion_value - low_motion) / (high_motion - low_motion)
+            normalized = max(0.0, min(1.0, normalized))
+            mapped_stride = max_stride - normalized * (max_stride - min_stride)
+            next_stride = int(round(mapped_stride))
+            next_stride = max(min_stride, min(max_stride, next_stride))
+
+        next_center = min(current_center + next_stride, total_frames - 1)
+        if next_center == current_center:
+            break
+        centers.append(next_center)
+        current_center = next_center
+
+    return centers
+
+
+def sliding_windows(video, keypoint, win_size=16, stride=1, save_fea=False, adaptive_cfg=None):
     B, T = video.shape[:2]
     assert B==1
     video = video.squeeze(0)
     keypoint = keypoint.squeeze(0)
+
+    adaptive_cfg = adaptive_cfg or {}
+    adaptive_enabled = adaptive_cfg.get('enabled', False)
+
+    if adaptive_enabled:
+        min_stride = int(adaptive_cfg.get('min_stride', 1))
+        max_stride = int(adaptive_cfg.get('max_stride', max(stride, 1)))
+        max_stride = max(min_stride, max_stride)
+        centers = _adaptive_window_centers(
+            keypoint=keypoint,
+            total_frames=T,
+            base_stride=stride,
+            min_stride=min_stride,
+            max_stride=max_stride,
+            confidence_threshold=float(adaptive_cfg.get('confidence_threshold', 0.2)),
+            ema_decay=float(adaptive_cfg.get('ema_decay', 0.6)),
+            quantile_low=float(adaptive_cfg.get('quantile_low', 0.3)),
+            quantile_high=float(adaptive_cfg.get('quantile_high', 0.8)),
+        )
+        pad_left = win_size // 2
+        pad_right = win_size - pad_left
+        video = pad_tensor(video, pad_left, pad_right)
+        keypoint = pad_tensor(keypoint, pad_left, pad_right)
+
+        num_clips = len(centers)
+        video_s = torch.zeros(num_clips, win_size, video.shape[1], video.shape[2], video.shape[3]).to(video.device)
+        keypoint_s = torch.zeros(num_clips, win_size, keypoint.shape[1], keypoint.shape[2]).to(video.device)
+        for i, center in enumerate(centers):
+            video_s[i, ...] = video[center:center+win_size, ...]
+            keypoint_s[i, ...] = keypoint[center:center+win_size, ...]
+
+        clip_centers = torch.tensor(centers, dtype=torch.float32, device=video_s.device)
+        del video; del keypoint
+        return video_s, keypoint_s, clip_centers
 
     num_clips = math.ceil(T/stride)
     num_clips = max(num_clips, 1)
@@ -117,8 +223,10 @@ def sliding_windows(video, keypoint, win_size=16, stride=1, save_fea=False):
         video_s[i, ...] = video[st:st+win_size, ...]
         keypoint_s[i, ...] = keypoint[st:st+win_size, ...]
     
+    clip_centers = torch.arange(num_clips, dtype=torch.float32, device=video_s.device) * float(stride)
+
     del video; del keypoint
-    return video_s, keypoint_s
+    return video_s, keypoint_s, clip_centers
 
 
 def evaluation_slide(model, cslr_dataloader, cfg, 
@@ -165,6 +273,7 @@ def evaluation_slide(model, cslr_dataloader, cfg,
     # decode_method_lst = ['naive_greedy']
     win_size = cfg['data'].get('win_size', 16)
     stride = cfg['data'].get('stride', 1)
+    adaptive_stride_cfg = cfg['data'].get('adaptive_stride', {})
     split_size = cfg['data'].get('split_size', 8)
     thr_lst = cfg['data'].get('prob_thr', [0.2, -1])
     blank_thr = cfg['data'].get('blank_thr', 0.5)
@@ -216,14 +325,24 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                 feas['keypoint_blk5'].update(exist['keypoint_blk5'])
 
             logits_dict = {}
-            logger.info(f'window size: {win_size}, stride: {stride}, prob_thr: {thr}, blank_thr: {blank_thr}')
+            logger.info(
+                f'window size: {win_size}, stride: {stride}, adaptive_stride: {adaptive_stride_cfg.get("enabled", False)}, '
+                f'prob_thr: {thr}, blank_thr: {blank_thr}'
+            )
             for step, batch in enumerate(cslr_dataloader):
                 #forward -- loss
                 name = batch['names'][0]
                 if save_fea and name in feas['rgb']:
                     continue
                 # batch = move_to_device(batch, cfg['device'])
-                video_s, keypoint_s = sliding_windows(batch['sgn_videos'][0], batch['sgn_keypoints'][0], win_size=win_size, stride=stride, save_fea=save_fea)
+                video_s, keypoint_s, clip_centers = sliding_windows(
+                    batch['sgn_videos'][0],
+                    batch['sgn_keypoints'][0],
+                    win_size=win_size,
+                    stride=stride,
+                    save_fea=save_fea,
+                    adaptive_cfg=adaptive_stride_cfg,
+                )
                 video_s_lst, keypoint_s_lst = video_s.split(split_size, dim=0), keypoint_s.split(split_size, dim=0)  #S,W,C,H,W
                 
                 final_decode_op = []
@@ -335,45 +454,41 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                 
                 if 'window_greedy_7' in decode_method_lst:
                     filter_logits = {}
+                    clip_centers_np = clip_centers.detach().cpu().numpy()
+                    index = final_decode_op[:, 0].detach().cpu().numpy()
+                    raw_gls_hyp = index2token(list(index), vocab, dataset_name)
                     for decode_win_size in [3,5,7,9,11,13]:
-                        index = final_decode_op[:, 0]
-                        # index = torch.cat([torch.zeros(5).long().to(index.device), index], dim=0)
-                        index = index.detach().cpu().numpy()
+                        time_span = max(float(decode_win_size * stride), 1.0)
+                        half_span = 0.5 * time_span
 
-                        # pad index
-                        pad_left = index[0]
-                        pad = np.tile(pad_left, (decode_win_size//2))
-                        index = np.concatenate([pad, index])
-                        pad_right = index[-1]
-                        pad = np.tile(pad_right, (decode_win_size//2))
-                        index = np.concatenate([index, pad])
-
-                        # pad logits
-                        final_gls_logits = pad_tensor(final_gls_logits, decode_win_size//2, decode_win_size//2)
-                        
                         if use_bag_fc or model_ex:
-                            rgb_feas = pad_tensor(feas['rgb_blk5'][name], decode_win_size//2, decode_win_size//2).to(model.device)
-                            kp_feas = pad_tensor(feas['keypoint_blk5'][name], decode_win_size//2, decode_win_size//2).to(model.device)
+                            rgb_feas = feas['rgb_blk5'][name].to(model.device)
+                            kp_feas = feas['keypoint_blk5'][name].to(model.device)
 
                         #------------------voting------------------------------
                         win_index = []
                         win_bag_index = []
                         win_logits = []
                         fea_buffer = []
-                        for st in range(index.shape[0] - decode_win_size + 1):
-                            win = index[st:st+decode_win_size]
+                        for t_idx in range(index.shape[0]):
+                            left = np.searchsorted(clip_centers_np, clip_centers_np[t_idx] - half_span, side='left')
+                            right = np.searchsorted(clip_centers_np, clip_centers_np[t_idx] + half_span, side='right')
+                            if right <= left:
+                                left = t_idx
+                                right = t_idx + 1
+                            win = index[left:right]
                             if use_bag_fc or model_ex:
                                 if use_bag_fc:
-                                    cur_rgb_feas = rgb_feas[st:st+decode_win_size].contiguous().mean(dim=0, keepdim=True)  #1,C
-                                    cur_pose_feas = kp_feas[st:st+decode_win_size].contiguous().mean(dim=0, keepdim=True)  #1,C
+                                    cur_rgb_feas = rgb_feas[left:right].contiguous().mean(dim=0, keepdim=True)  #1,C
+                                    cur_pose_feas = kp_feas[left:right].contiguous().mean(dim=0, keepdim=True)  #1,C
                                     cur_fuse_feas = torch.cat([cur_rgb_feas, cur_pose_feas], dim=-1)
                                     cur_rgb_prob = bag_fc_rgb(cur_rgb_feas).softmax(dim=-1).squeeze()  #N
                                     cur_kp_prob = bag_fc_kp(cur_pose_feas).softmax(dim=-1).squeeze()  #N
                                     cur_fuse_prob = bag_fc_fuse(cur_fuse_feas).softmax(dim=-1).squeeze()  #N
                                     prob = (cur_rgb_prob + cur_kp_prob + cur_fuse_prob) / 3
                                 elif model_ex:
-                                    cur_rgb_feas = rgb_feas[st:st+decode_win_size].contiguous()  #w,C
-                                    cur_pose_feas = kp_feas[st:st+decode_win_size].contiguous()  #w,C
+                                    cur_rgb_feas = rgb_feas[left:right].contiguous()  #w,C
+                                    cur_pose_feas = kp_feas[left:right].contiguous()  #w,C
                                     cur_fuse_feas = torch.cat([cur_rgb_feas, cur_pose_feas], dim=-1).unsqueeze(0)
                                     # fea_buffer.append(cur_fuse_feas)
                                     prob = None
@@ -386,7 +501,7 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                                     # fea_buffer = []
 
                             else:
-                                logits = final_gls_logits[st:st+decode_win_size]
+                                logits = final_gls_logits[left:right]
                                 prob = logits.softmax(dim=-1).mean(dim=0)
 
                             if prob is not None:
@@ -394,7 +509,7 @@ def evaluation_slide(model, cslr_dataloader, cfg,
 
                             uniq, count = np.unique(win, return_counts=True)
                             try:
-                                keep = uniq[count > decode_win_size//2]
+                                keep = uniq[count > (win.shape[0] // 2)]
                                 win_index.append(keep.item())
                             except:
                                 win_index.append(0)  #blank
@@ -433,7 +548,6 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                         #     win_index = list(index)
 
                         gls_hyp = index2token(filtered_index, vocab, dataset_name)
-                        raw_gls_hyp = index2token(list(index), vocab, dataset_name)
                         win_gls_hyp = index2token(win_index, vocab, dataset_name)
                         gls_bag_hyp = index2token(filtered_bag_index, vocab, dataset_name)
                         # print(index, filtered_index)

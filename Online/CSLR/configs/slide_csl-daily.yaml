@@ -20,6 +20,14 @@ data:
   num_output_frames: -1  #to-debug
   win_size: 16
   stride: 1
+  adaptive_stride:
+    enabled: false
+    min_stride: 1
+    max_stride: 4
+    confidence_threshold: 0.2
+    ema_decay: 0.6
+    quantile_low: 0.3
+    quantile_high: 0.8
   split_size: 24
   prob_thr: 
     - -1

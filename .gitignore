@@ -1,6 +1,28 @@
 __pycache__/
 *.py[cod]
 
-Online/CSLR/results/phoenix-2014t_ISLR/*.ckpt
-Online/CSLR/results/phoenix-2014t_ISLR/ckpts/
-Online/CSLR/results/phoenix-2014t_ISLR/prediction_slide/test/*.pkl
+# Common local artifacts
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python caches
+**/__pycache__/
+**/.pytest_cache/
+
+# Runtime logs and process files
+*.log
+*.out
+*.err
+*.pid
+
+# W&B/TensorBoard outputs
+**/wandb/
+**/runs/
+**/tb_logs/
+
+# Online experiment artifacts (checkpoints, predictions, ablation outputs)
+Online/CSLR/results/**
+Online/CTC_fusion/results/**

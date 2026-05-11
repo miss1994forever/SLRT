@@ -64,11 +64,116 @@ def pad_tensor(x, pad_left, pad_right):
     return x
 
 
-def sliding_windows(video, keypoint, win_size=16, stride=1, save_fea=False):
+def _frame_motion_curve(keypoint, confidence_threshold=0.2, ema_decay=0.6):
+    if keypoint.shape[0] <= 1:
+        return [0.0] * max(int(keypoint.shape[0]), 1)
+
+    coords = keypoint[..., :2].float()
+    if keypoint.shape[-1] > 2:
+        confidence = keypoint[..., 2].float()
+    else:
+        confidence = torch.ones(keypoint.shape[:2], device=keypoint.device, dtype=torch.float32)
+
+    displacement = torch.linalg.norm(coords[1:] - coords[:-1], dim=-1)
+    valid = (confidence[1:] > confidence_threshold) & (confidence[:-1] > confidence_threshold)
+
+    smoothed_motion = []
+    previous_motion = 0.0
+    for frame_idx in range(displacement.shape[0]):
+        current_motion = displacement[frame_idx][valid[frame_idx]]
+        motion_value = current_motion.mean().item() if current_motion.numel() > 0 else previous_motion
+        previous_motion = motion_value if frame_idx == 0 else ema_decay * previous_motion + (1 - ema_decay) * motion_value
+        smoothed_motion.append(previous_motion)
+
+    return [smoothed_motion[0] if smoothed_motion else 0.0] + smoothed_motion
+
+
+def _adaptive_window_centers(
+    keypoint,
+    total_frames,
+    base_stride,
+    min_stride,
+    max_stride,
+    confidence_threshold,
+    ema_decay,
+    quantile_low,
+    quantile_high,
+):
+    motion_curve = _frame_motion_curve(
+        keypoint,
+        confidence_threshold=confidence_threshold,
+        ema_decay=ema_decay,
+    )
+    positive_motion = torch.tensor([value for value in motion_curve if value > 0], dtype=torch.float32)
+
+    fallback_stride = int(max(min_stride, min(max_stride, base_stride)))
+    if positive_motion.numel() == 0:
+        low_motion = 0.0
+        high_motion = 0.0
+    else:
+        low_motion = torch.quantile(positive_motion, quantile_low).item()
+        high_motion = torch.quantile(positive_motion, quantile_high).item()
+
+    centers = [0]
+    current_center = 0
+    while current_center < total_frames - 1:
+        motion_value = motion_curve[min(current_center, len(motion_curve) - 1)]
+        if high_motion <= low_motion + 1e-6:
+            next_stride = fallback_stride
+        else:
+            normalized = (motion_value - low_motion) / (high_motion - low_motion)
+            normalized = max(0.0, min(1.0, normalized))
+            mapped_stride = max_stride - normalized * (max_stride - min_stride)
+            next_stride = int(round(mapped_stride))
+            next_stride = max(min_stride, min(max_stride, next_stride))
+
+        next_center = min(current_center + next_stride, total_frames - 1)
+        if next_center == current_center:
+            break
+        centers.append(next_center)
+        current_center = next_center
+
+    return centers
+
+
+def sliding_windows(video, keypoint, win_size=16, stride=1, save_fea=False, adaptive_cfg=None):
     B, T = video.shape[:2]
     assert B==1
     video = video.squeeze(0)
     keypoint = keypoint.squeeze(0)
+
+    adaptive_cfg = adaptive_cfg or {}
+    adaptive_enabled = adaptive_cfg.get('enabled', False)
+
+    if adaptive_enabled:
+        min_stride = int(adaptive_cfg.get('min_stride', 1))
+        max_stride = int(adaptive_cfg.get('max_stride', max(stride, 1)))
+        max_stride = max(min_stride, max_stride)
+        centers = _adaptive_window_centers(
+            keypoint=keypoint,
+            total_frames=T,
+            base_stride=stride,
+            min_stride=min_stride,
+            max_stride=max_stride,
+            confidence_threshold=float(adaptive_cfg.get('confidence_threshold', 0.2)),
+            ema_decay=float(adaptive_cfg.get('ema_decay', 0.6)),
+            quantile_low=float(adaptive_cfg.get('quantile_low', 0.3)),
+            quantile_high=float(adaptive_cfg.get('quantile_high', 0.8)),
+        )
+        pad_left = win_size // 2
+        pad_right = win_size - pad_left
+        video = pad_tensor(video, pad_left, pad_right)
+        keypoint = pad_tensor(keypoint, pad_left, pad_right)
+
+        num_clips = len(centers)
+        video_s = torch.zeros(num_clips, win_size, video.shape[1], video.shape[2], video.shape[3]).to(video.device)
+        keypoint_s = torch.zeros(num_clips, win_size, keypoint.shape[1], keypoint.shape[2]).to(video.device)
+        for i, center in enumerate(centers):
+            video_s[i, ...] = video[center:center+win_size, ...]
+            keypoint_s[i, ...] = keypoint[center:center+win_size, ...]
+
+        del video; del keypoint
+        return video_s, keypoint_s
 
     num_clips = math.ceil(T/stride)
     num_clips = max(num_clips, 1)
@@ -97,7 +202,7 @@ def evaluation(model, val_dataloader, cfg,
         epoch=None, global_step=None,
         generate_cfg={}, save_dir=None,
         do_translation=True, do_recognition=True, external_logits=None,
-        winsize=16, stride=16):  #to-do output_dir
+    winsize=16, stride=16, adaptive_cfg=None):  #to-do output_dir
     
     logger = get_logger()
     logger.info(generate_cfg)
@@ -130,7 +235,13 @@ def evaluation(model, val_dataloader, cfg,
             batch = move_to_device(batch, cfg['device'])
             datasetname = batch['datasetname']
 
-            video_s, keypoint_s = sliding_windows(batch['recognition_inputs']['sgn_videos'], batch['recognition_inputs']['sgn_keypoints'], winsize, stride)
+            video_s, keypoint_s = sliding_windows(
+                batch['recognition_inputs']['sgn_videos'],
+                batch['recognition_inputs']['sgn_keypoints'],
+                winsize,
+                stride,
+                adaptive_cfg=adaptive_cfg,
+            )
             num_windows = video_s.shape[0]
             batch['recognition_inputs']['sgn_videos'] = video_s
             batch['recognition_inputs']['sgn_keypoints'] = keypoint_s
@@ -256,6 +367,40 @@ if __name__ == "__main__":
         default=16,
         type=int
     )
+    parser.add_argument(
+        '--adaptive_stride',
+        action='store_true'
+    )
+    parser.add_argument(
+        '--adaptive_min_stride',
+        default=1,
+        type=int
+    )
+    parser.add_argument(
+        '--adaptive_max_stride',
+        default=4,
+        type=int
+    )
+    parser.add_argument(
+        '--adaptive_confidence_threshold',
+        default=0.2,
+        type=float
+    )
+    parser.add_argument(
+        '--adaptive_ema_decay',
+        default=0.6,
+        type=float
+    )
+    parser.add_argument(
+        '--adaptive_quantile_low',
+        default=0.3,
+        type=float
+    )
+    parser.add_argument(
+        '--adaptive_quantile_high',
+        default=0.8,
+        type=float
+    )
     args = parser.parse_args()
     cfg = load_config(args.config)
     model_dir = cfg['training']['model_dir']
@@ -266,6 +411,16 @@ if __name__ == "__main__":
     model = build_model(cfg)
     do_translation, do_recognition = cfg['task']!='S2G', cfg['task']!='G2T' #(and recognition loss>0 if S2T)
     #load model
+
+    adaptive_cfg = {
+        'enabled': args.adaptive_stride,
+        'min_stride': args.adaptive_min_stride,
+        'max_stride': args.adaptive_max_stride,
+        'confidence_threshold': args.adaptive_confidence_threshold,
+        'ema_decay': args.adaptive_ema_decay,
+        'quantile_low': args.adaptive_quantile_low,
+        'quantile_high': args.adaptive_quantile_high,
+    }
 
     #per-dataset
     for datasetname in cfg['datanames']:
@@ -289,10 +444,13 @@ if __name__ == "__main__":
         for split in ['test', 'dev']:
             logger.info('Evaluate on {} set'.format(split))
             dataloader, sampler = build_dataloader(cfg_, split, model.text_tokenizer, model.gloss_tokenizer)
+            run_name = f'{args.save_subdir}_winsize_{args.winsize}_stride_{args.stride}'
+            if adaptive_cfg['enabled']:
+                run_name += f'_adaptive_{adaptive_cfg["min_stride"]}_{adaptive_cfg["max_stride"]}'
             evaluation(model=model, val_dataloader=dataloader, cfg=cfg_, 
                     epoch=epoch, global_step=global_step, 
                     generate_cfg=cfg_['testing']['cfg'],
-                    save_dir=os.path.join(model_dir,f'{args.save_subdir}_winsize_{args.winsize}_stride_{args.stride}',split),
+                    save_dir=os.path.join(model_dir, run_name, split),
                     do_translation=do_translation, do_recognition=do_recognition, external_logits=args.external_logits,
-                    winsize=args.winsize, stride=args.stride)
+                    winsize=args.winsize, stride=args.stride, adaptive_cfg=adaptive_cfg)
 
