@@ -66,7 +66,8 @@ def pil_list_to_tensor(pil_list, int2float=True):
         tensors = tensors/255
     return tensors # (T,C,H,W)
 
-def load_batch_video(zip_file, names, num_frames, transform_cfg, dataset_name, is_train, 
+def load_batch_video(zip_file, names, num_frames, transform_cfg, dataset_name, is_train,
+    max_num_frames=400,
         pad_length='pad_to_max', pad='replicate',
         name2keypoint=None):
     if name2keypoint!=None:
@@ -74,7 +75,15 @@ def load_batch_video(zip_file, names, num_frames, transform_cfg, dataset_name, i
     sgn_videos, sgn_keypoints = [], [] # (B,C,T,H,W)
     sgn_lengths = [] 
     for name, num in zip(names, num_frames):
-        video, len_, selected_indexs = load_video(zip_file, name, num, transform_cfg, dataset_name, is_train)
+        video, len_, selected_indexs = load_video(
+            zip_file,
+            name,
+            num,
+            transform_cfg,
+            dataset_name,
+            is_train,
+            max_num_frames=max_num_frames,
+        )
         sgn_lengths.append(len_)
         sgn_videos.append(video) 
         if name2keypoint!=None:
@@ -122,7 +131,7 @@ def load_batch_video(zip_file, names, num_frames, transform_cfg, dataset_name, i
 
 
 
-def load_video(zip_file, name, num_frames, transform_cfg, dataset_name, is_train):
+def load_video(zip_file, name, num_frames, transform_cfg, dataset_name, is_train, max_num_frames=400):
     if 'temporal_augmentation' in transform_cfg  and is_train:
         tmin, tmax = transform_cfg['temporal_augmentation']['tmin'], transform_cfg['temporal_augmentation']['tmax']
     else:
@@ -132,14 +141,20 @@ def load_video(zip_file, name, num_frames, transform_cfg, dataset_name, is_train
             image_path_list = ['{}@sentence_frames-512x512/{}/{:06d}.jpg'.format(zip_file, name, fi)
                 for fi in range(num_frames)]
         elif dataset_name.lower()=='phoenix-2014t':
-            image_path_list = ['{}@images/{}/images{:04d}.png'.format(zip_file, name, fi)
+            sample_name = name.split('/', 1)[-1] if '/' in name else name
+            image_path_list = ['{}@images/{}/images{:04d}.png'.format(zip_file, sample_name, fi)
                 for fi in range(1,num_frames+1)]
         elif dataset_name.lower()=='phoenix-2014':
             image_path_list = ['{}@{}.avi_pid0_fn{:06d}-0.png'.format(zip_file, name, fi)
                 for fi in range(num_frames)]
         else:
             raise ValueError  
-        selected_indexs, valid_len = get_selected_indexs(len(image_path_list), tmin=tmin, tmax=tmax)
+        selected_indexs, valid_len = get_selected_indexs(
+            len(image_path_list),
+            tmin=tmin,
+            tmax=tmax,
+            max_num_frames=max_num_frames,
+        )
         sequence = [read_img(image_path_list[i],dataset_name, 
                 csl_cut=transform_cfg.get('csl_cut',True),
                 csl_resize=transform_cfg.get('csl_resize',[320,320])) for i in selected_indexs]

@@ -123,11 +123,13 @@ class Upsampling(nn.Module):
             x = F.interpolate(x, scale_factor=self.scale, mode='trilinear')
             x = self.conv1x1(x)
         else:
-            x = self.conv_trans_s(x)
+            with torch.backends.cudnn.flags(enabled=False):
+                x = self.conv_trans_s(x)
             x = self.bn_s(x)
             x = self.relu_s(x)
 
-            x = self.conv_trans_t(x)
+            with torch.backends.cudnn.flags(enabled=False):
+                x = self.conv_trans_t(x)
             x = self.bn_t(x)
             x = self.relu_t(x)
         return x

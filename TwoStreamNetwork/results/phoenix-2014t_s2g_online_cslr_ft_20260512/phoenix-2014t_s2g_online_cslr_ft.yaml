@@ -1,0 +1,113 @@
+task: S2G
+data:
+  input_data: videos
+  input_streams:
+    - keypoint
+    - rgb
+  keypoint_file: /root/autodl-tmp/datasets/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.pkl
+  use_keypoints:
+    - pose
+    - mouth_half
+    - hand
+    - face_others_1_3
+  zip_file: /root/autodl-tmp/datasets/phoenix_2014t/PHOENIX2014T_videos.zip
+  train: /root/autodl-tmp/datasets/phoenix_2014t/phoenix14t.train
+  dev: /root/autodl-tmp/datasets/phoenix_2014t/phoenix14t.dev
+  test: /root/autodl-tmp/datasets/phoenix_2014t/phoenix14t.test
+  dataset_name: phoenix-2014t
+  level: word
+  txt_lowercase: true
+  max_num_frames: 224
+  max_sent_length: 400
+  transform_cfg:
+    img_size: 224
+    color_jitter: true
+    bottom_area: 0.7
+    center_crop_size: 224
+    center_crop: false
+    randomcrop_threshold: 1
+    aspect_ratio_min: 0.75
+    aspect_ratio_max: 1.3
+    temporal_augmentation:
+      tmin: 0.5
+      tmax: 1.5
+testing:
+  cfg:
+    recognition:
+      beam_size: 5
+training:
+  overwrite: false
+  model_dir: results/phoenix-2014t_s2g_online_cslr_ft_20260512
+  init_from_model_ckpt: /root/autodl-tmp/models/checkpoints/online_slrt/cslr_best.ckpt
+  random_seed: 321
+  shuffle: true
+  num_workers: 4
+  batch_size: 1
+  total_epoch: 20
+  keep_last_ckpts: 5
+  validation:
+    unit: epoch
+    freq: 1
+    cfg:
+      recognition:
+        beam_size: 1
+  optimization:
+    optimizer: Adam
+    learning_rate:
+      default: 1.0e-4
+    weight_decay: 0.001
+    betas:
+      - 0.9
+      - 0.998
+    scheduler: cosineannealing
+    t_max: 20
+model:
+  RecognitionNetwork:
+    GlossTokenizer:
+      gloss2id_file: /root/autodl-tmp/datasets/phoenix_2014t/gloss2ids.pkl
+    s3d:
+      pretrained_ckpt: /root/autodl-tmp/SLRT/pretrained_models/s3ds_actioncls_ckpt
+      use_block: 4
+      freeze_block: 1
+    keypoint_s3d:
+      in_channel: 0
+      pretrained_ckpt: /root/autodl-tmp/SLRT/pretrained_models/s3ds_actioncls_ckpt
+      use_block: 4
+      freeze_block: 0
+    heatmap_cfg:
+      raw_size:
+        - 260
+        - 210
+      input_size: 112
+      sigma: 8
+    fuse_method: triplehead_cat_bilateral
+    lateral:
+      pose2rgb: true
+      rgb2pose: true
+      variant_pose2rgb: null
+      variant_rgb2pose: null
+      fusion_features:
+        - c1
+        - c2
+        - c3
+    pyramid:
+      version: v1
+      rgb: multi_head
+      pose: multi_head
+      head_weight_rgb: 0.2
+      head_weight_keypoint: 0.5
+      num_levels: 3
+    visual_head:
+      input_size: 832
+      hidden_size: 512
+      ff_size: 2048
+      pe: true
+      ff_kernelsize:
+        - 3
+        - 3
+    cross_distillation:
+      teacher_detach: true
+      types:
+        ensemble_last_teaches_keypoint: 1
+        ensemble_last_teaches_rgb: 1
+        ensemble_last_teaches_fuse: 1

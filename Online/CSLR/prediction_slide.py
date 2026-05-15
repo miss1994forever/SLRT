@@ -165,6 +165,132 @@ def _adaptive_window_centers(
     return centers
 
 
+def _collapse_indices(index_sequence, blank_id):
+    filtered_index = []
+    for index in index_sequence:
+        index = int(index)
+        if len(filtered_index) == 0 or index != filtered_index[-1]:
+            filtered_index.append(index)
+    return [index for index in filtered_index if index != blank_id]
+
+
+def _window_slice(clip_centers_np, t_idx, half_span):
+    left = np.searchsorted(clip_centers_np, clip_centers_np[t_idx] - half_span, side='left')
+    right = np.searchsorted(clip_centers_np, clip_centers_np[t_idx] + half_span, side='right')
+    if right <= left:
+        left = t_idx
+        right = t_idx + 1
+    return left, right
+
+
+def _span_weights(clip_centers_np, t_idx, left, right, half_span, enabled=False, min_weight=0.05):
+    window_size = max(right - left, 1)
+    if not enabled:
+        return np.full(window_size, 1.0 / window_size, dtype=np.float32)
+
+    denom = max(float(half_span), 1.0)
+    distances = np.abs(clip_centers_np[left:right] - clip_centers_np[t_idx]) / denom
+    weights = np.maximum(float(min_weight), 1.0 - distances)
+    weight_sum = float(weights.sum())
+    if weight_sum <= 0:
+        return np.full(window_size, 1.0 / window_size, dtype=np.float32)
+    return (weights / weight_sum).astype(np.float32)
+
+
+def _weighted_vote(win, weights, blank_id):
+    if len(win) == 0:
+        return int(blank_id)
+
+    vote_scores = defaultdict(float)
+    for token, weight in zip(win, weights):
+        vote_scores[int(token)] += float(weight)
+
+    keep_token = max(vote_scores.items(), key=lambda item: (item[1], -item[0]))[0]
+    return int(keep_token)
+
+
+def _confidence_summary(prob_sequence, window_clip_counts, window_spans):
+    if len(prob_sequence) == 0:
+        return {
+            'mean_top1_prob': 0.0,
+            'p25_top1_prob': 0.0,
+            'mean_margin': 0.0,
+            'p25_margin': 0.0,
+            'min_window_clip_count': 0,
+            'p25_window_clip_count': 0.0,
+            'mean_window_density': 0.0,
+        }
+
+    probs = torch.stack(prob_sequence, dim=0)
+    topk_num = min(2, probs.shape[-1])
+    topk_values = torch.topk(probs, k=topk_num, dim=-1).values
+    top1 = topk_values[:, 0]
+    if topk_num > 1:
+        margin = topk_values[:, 0] - topk_values[:, 1]
+    else:
+        margin = topk_values[:, 0]
+
+    counts_np = np.asarray(window_clip_counts, dtype=np.float32)
+    spans_np = np.asarray(window_spans, dtype=np.float32)
+    density_np = counts_np / np.maximum(spans_np, 1.0)
+
+    return {
+        'mean_top1_prob': float(top1.mean().item()),
+        'p25_top1_prob': float(torch.quantile(top1, 0.25).item()),
+        'mean_margin': float(margin.mean().item()),
+        'p25_margin': float(torch.quantile(margin, 0.25).item()),
+        'min_window_clip_count': int(counts_np.min()) if counts_np.size > 0 else 0,
+        'p25_window_clip_count': float(np.quantile(counts_np, 0.25)) if counts_np.size > 0 else 0.0,
+        'mean_window_density': float(density_np.mean()) if density_np.size > 0 else 0.0,
+    }
+
+
+def _select_dynamic_decode_method(method_summaries, fallback_cfg):
+    primary_method = fallback_cfg.get('primary_method', 'window_greedy_7')
+    secondary_method = fallback_cfg.get('secondary_method', 'window_greedy_5')
+    tertiary_method = fallback_cfg.get('tertiary_method', 'naive_greedy')
+
+    selected_method = primary_method
+    trigger_flags = []
+
+    primary_summary = method_summaries.get(primary_method, {})
+    secondary_summary = method_summaries.get(secondary_method, {})
+
+    low_confidence_threshold = float(fallback_cfg.get('low_confidence_threshold', 0.45))
+    very_low_confidence_threshold = float(fallback_cfg.get('very_low_confidence_threshold', 0.35))
+    low_margin_threshold = float(fallback_cfg.get('low_margin_threshold', 0.15))
+    very_low_margin_threshold = float(fallback_cfg.get('very_low_margin_threshold', 0.08))
+    min_window_clips = int(fallback_cfg.get('min_window_clips', 3))
+
+    if primary_summary:
+        low_top1 = primary_summary.get('p25_top1_prob', 0.0) < low_confidence_threshold
+        low_margin = primary_summary.get('p25_margin', 0.0) < low_margin_threshold
+        sparse_window = primary_summary.get('p25_window_clip_count', 0.0) < float(min_window_clips)
+
+        if low_top1:
+            trigger_flags.append('low_p25_top1')
+        if low_margin:
+            trigger_flags.append('low_p25_margin')
+        if sparse_window and (low_top1 or low_margin):
+            trigger_flags.append('sparse_window')
+
+    if len(trigger_flags) > 0:
+        selected_method = secondary_method
+
+    severe_flags = []
+    if secondary_summary:
+        if secondary_summary.get('p25_top1_prob', 0.0) < very_low_confidence_threshold:
+            severe_flags.append('very_low_p25_top1')
+        if secondary_summary.get('p25_margin', 0.0) < very_low_margin_threshold:
+            severe_flags.append('very_low_p25_margin')
+
+    if len(severe_flags) > 0:
+        trigger_flags.extend(severe_flags)
+        selected_method = tertiary_method
+
+    return selected_method, trigger_flags
+
+
 def sliding_windows(video, keypoint, win_size=16, stride=1, save_fea=False, adaptive_cfg=None):
     B, T = video.shape[:2]
     assert B==1
@@ -274,10 +400,18 @@ def evaluation_slide(model, cslr_dataloader, cfg,
     win_size = cfg['data'].get('win_size', 16)
     stride = cfg['data'].get('stride', 1)
     adaptive_stride_cfg = cfg['data'].get('adaptive_stride', {})
+    postprocess_cfg = cfg.get('postprocess', {})
+    span_weighted_cfg = postprocess_cfg.get('span_weighted_voting', {})
+    confidence_fallback_cfg = postprocess_cfg.get('confidence_fallback', {})
+    span_weighted_enabled = bool(span_weighted_cfg.get('enabled', False))
+    span_weighted_min_weight = float(span_weighted_cfg.get('min_weight', 0.05))
+    confidence_fallback_enabled = bool(confidence_fallback_cfg.get('enabled', False))
     split_size = cfg['data'].get('split_size', 8)
     thr_lst = cfg['data'].get('prob_thr', [0.2, -1])
     blank_thr = cfg['data'].get('blank_thr', 0.5)
     decode_method_lst = ['window_greedy_3', 'window_greedy_5', 'window_greedy_7', 'window_greedy_9', 'window_greedy_11', 'window_greedy_13', 'naive_greedy']
+    if confidence_fallback_enabled and 'dynamic_greedy' not in decode_method_lst:
+        decode_method_lst.append('dynamic_greedy')
 
     if save_fea or use_bag_fc or model_ex:
         feas_rgb = []
@@ -327,7 +461,8 @@ def evaluation_slide(model, cslr_dataloader, cfg,
             logits_dict = {}
             logger.info(
                 f'window size: {win_size}, stride: {stride}, adaptive_stride: {adaptive_stride_cfg.get("enabled", False)}, '
-                f'prob_thr: {thr}, blank_thr: {blank_thr}'
+                f'prob_thr: {thr}, blank_thr: {blank_thr}, '
+                f'span_weighted: {span_weighted_enabled}, confidence_fallback: {confidence_fallback_enabled}'
             )
             for step, batch in enumerate(cslr_dataloader):
                 #forward -- loss
@@ -403,21 +538,7 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                     index = final_decode_op[:, 0]
                     index = index.detach().cpu().numpy()
 
-                    #remove repeats
-                    filtered_index = []
-                    for i in index:
-                        if len(filtered_index) == 0:
-                            filtered_index.append(i)
-                        else:
-                            if i != filtered_index[-1]:
-                                filtered_index.append(i)
-                    
-                    #remove blank, although training samples may not have blank
-                    filtered_index_wo_blank = []
-                    for i in filtered_index:
-                        if i != blank_id:
-                            filtered_index_wo_blank.append(i)
-                    filtered_index = filtered_index_wo_blank
+                    filtered_index = _collapse_indices(index, blank_id)
 
                     gls_hyp = index2token(filtered_index, vocab, dataset_name)
                     # print(index, filtered_index)
@@ -457,7 +578,9 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                     clip_centers_np = clip_centers.detach().cpu().numpy()
                     index = final_decode_op[:, 0].detach().cpu().numpy()
                     raw_gls_hyp = index2token(list(index), vocab, dataset_name)
+                    method_summaries = {}
                     for decode_win_size in [3,5,7,9,11,13]:
+                        method_name = 'window_greedy_{}'.format(decode_win_size)
                         time_span = max(float(decode_win_size * stride), 1.0)
                         half_span = 0.5 * time_span
 
@@ -468,19 +591,31 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                         #------------------voting------------------------------
                         win_index = []
                         win_bag_index = []
-                        win_logits = []
-                        fea_buffer = []
+                        position_probs = []
+                        window_clip_counts = []
+                        window_spans = []
                         for t_idx in range(index.shape[0]):
-                            left = np.searchsorted(clip_centers_np, clip_centers_np[t_idx] - half_span, side='left')
-                            right = np.searchsorted(clip_centers_np, clip_centers_np[t_idx] + half_span, side='right')
-                            if right <= left:
-                                left = t_idx
-                                right = t_idx + 1
+                            left, right = _window_slice(clip_centers_np, t_idx, half_span)
                             win = index[left:right]
+                            weights = _span_weights(
+                                clip_centers_np,
+                                t_idx,
+                                left,
+                                right,
+                                half_span,
+                                enabled=span_weighted_enabled,
+                                min_weight=span_weighted_min_weight,
+                            )
+                            window_clip_counts.append(int(right - left))
+                            if right - left > 1:
+                                window_spans.append(float(clip_centers_np[right - 1] - clip_centers_np[left]))
+                            else:
+                                window_spans.append(0.0)
                             if use_bag_fc or model_ex:
                                 if use_bag_fc:
-                                    cur_rgb_feas = rgb_feas[left:right].contiguous().mean(dim=0, keepdim=True)  #1,C
-                                    cur_pose_feas = kp_feas[left:right].contiguous().mean(dim=0, keepdim=True)  #1,C
+                                    weight_tensor = torch.from_numpy(weights).to(rgb_feas.device, dtype=rgb_feas.dtype).unsqueeze(-1)
+                                    cur_rgb_feas = (rgb_feas[left:right].contiguous() * weight_tensor).sum(dim=0, keepdim=True)  #1,C
+                                    cur_pose_feas = (kp_feas[left:right].contiguous() * weight_tensor).sum(dim=0, keepdim=True)  #1,C
                                     cur_fuse_feas = torch.cat([cur_rgb_feas, cur_pose_feas], dim=-1)
                                     cur_rgb_prob = bag_fc_rgb(cur_rgb_feas).softmax(dim=-1).squeeze()  #N
                                     cur_kp_prob = bag_fc_kp(cur_pose_feas).softmax(dim=-1).squeeze()  #N
@@ -502,47 +637,20 @@ def evaluation_slide(model, cslr_dataloader, cfg,
 
                             else:
                                 logits = final_gls_logits[left:right]
-                                prob = logits.softmax(dim=-1).mean(dim=0)
+                                window_probs = logits.softmax(dim=-1)
+                                weight_tensor = torch.from_numpy(weights).to(window_probs.device, dtype=window_probs.dtype)
+                                prob = (window_probs * weight_tensor.unsqueeze(-1)).sum(dim=0)
 
                             if prob is not None:
+                                position_probs.append(prob)
                                 win_bag_index.append(torch.argmax(prob).item())
 
-                            uniq, count = np.unique(win, return_counts=True)
-                            try:
-                                keep = uniq[count > (win.shape[0] // 2)]
-                                win_index.append(keep.item())
-                            except:
-                                win_index.append(0)  #blank
+                            keep = _weighted_vote(win, weights, blank_id)
+                            win_index.append(keep)
                         
                         #-------------------------remove repeat-------------------
-                        filtered_index = []
-                        for i in win_index:
-                            if len(filtered_index) == 0:
-                                filtered_index.append(i)
-                            else:
-                                if i != filtered_index[-1]:
-                                    filtered_index.append(i)
-
-                        filtered_bag_index = []
-                        for i in win_bag_index:
-                            if len(filtered_bag_index) == 0:
-                                filtered_bag_index.append(i)
-                            else:
-                                if i != filtered_bag_index[-1]:
-                                    filtered_bag_index.append(i)
-                        
-                        #--------------------------remove blank---------------------
-                        filtered_index_wo_blank = []
-                        for i in filtered_index:
-                            if i != blank_id:
-                                filtered_index_wo_blank.append(i)
-                        filtered_index = filtered_index_wo_blank
-
-                        filtered_bag_index_wo_blank = []
-                        for i in filtered_bag_index:
-                            if i != blank_id:
-                                filtered_bag_index_wo_blank.append(i)
-                        filtered_bag_index = filtered_bag_index_wo_blank
+                        filtered_index = _collapse_indices(win_index, blank_id)
+                        filtered_bag_index = _collapse_indices(win_bag_index, blank_id)
                         # else:
                         #     filtered_index = list(index)
                         #     win_index = list(index)
@@ -550,13 +658,38 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                         gls_hyp = index2token(filtered_index, vocab, dataset_name)
                         win_gls_hyp = index2token(win_index, vocab, dataset_name)
                         gls_bag_hyp = index2token(filtered_bag_index, vocab, dataset_name)
+                        confidence_summary = _confidence_summary(position_probs, window_clip_counts, window_spans)
+                        method_summaries[method_name] = confidence_summary
                         # print(index, filtered_index)
                         # print(gls_hyp)
                         # print(gls_ref)
-                        results[name]['window_greedy_{}_gls_hyp'.format(decode_win_size)] = ' '.join(gls_hyp)
-                        results[name]['window_greedy_{}_raw_gls_hyp'.format(decode_win_size)] = ' '.join(raw_gls_hyp)
-                        results[name]['window_greedy_{}_vote_gls_hyp'.format(decode_win_size)] = ' '.join(win_gls_hyp)
-                        results[name]['window_greedy_{}_gls_bag_hyp'.format(decode_win_size)] = ' '.join(gls_bag_hyp)
+                        results[name]['{}_gls_hyp'.format(method_name)] = ' '.join(gls_hyp)
+                        results[name]['{}_raw_gls_hyp'.format(method_name)] = ' '.join(raw_gls_hyp)
+                        results[name]['{}_vote_gls_hyp'.format(method_name)] = ' '.join(win_gls_hyp)
+                        results[name]['{}_gls_bag_hyp'.format(method_name)] = ' '.join(gls_bag_hyp)
+                        results[name]['{}_mean_top1_prob'.format(method_name)] = confidence_summary['mean_top1_prob']
+                        results[name]['{}_p25_top1_prob'.format(method_name)] = confidence_summary['p25_top1_prob']
+                        results[name]['{}_mean_margin'.format(method_name)] = confidence_summary['mean_margin']
+                        results[name]['{}_p25_margin'.format(method_name)] = confidence_summary['p25_margin']
+                        results[name]['{}_min_window_clip_count'.format(method_name)] = confidence_summary['min_window_clip_count']
+                        results[name]['{}_p25_window_clip_count'.format(method_name)] = confidence_summary['p25_window_clip_count']
+                        results[name]['{}_mean_window_density'.format(method_name)] = confidence_summary['mean_window_density']
+                        if span_weighted_enabled:
+                            results[name]['{}_span_weighted_gls_hyp'.format(method_name)] = ' '.join(gls_hyp)
+
+                    if confidence_fallback_enabled:
+                        selected_method, trigger_flags = _select_dynamic_decode_method(method_summaries, confidence_fallback_cfg)
+                        results[name]['dynamic_greedy_gls_hyp'] = results[name].get('{}_gls_hyp'.format(selected_method), results[name]['naive_greedy_gls_hyp'])
+                        results[name]['dynamic_greedy_selected_method'] = selected_method
+                        results[name]['dynamic_greedy_trigger_flags'] = '|'.join(trigger_flags) if len(trigger_flags) > 0 else 'none'
+                        selected_summary = method_summaries.get(selected_method, {})
+                        results[name]['dynamic_greedy_mean_top1_prob'] = selected_summary.get('mean_top1_prob', 0.0)
+                        results[name]['dynamic_greedy_p25_top1_prob'] = selected_summary.get('p25_top1_prob', 0.0)
+                        results[name]['dynamic_greedy_mean_margin'] = selected_summary.get('mean_margin', 0.0)
+                        results[name]['dynamic_greedy_p25_margin'] = selected_summary.get('p25_margin', 0.0)
+                        results[name]['dynamic_greedy_min_window_clip_count'] = selected_summary.get('min_window_clip_count', 0)
+                        results[name]['dynamic_greedy_p25_window_clip_count'] = selected_summary.get('p25_window_clip_count', 0.0)
+                        results[name]['dynamic_greedy_mean_window_density'] = selected_summary.get('mean_window_density', 0.0)
 
                 if pbar:
                     pbar(step)

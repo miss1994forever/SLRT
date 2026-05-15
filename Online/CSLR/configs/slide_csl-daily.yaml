@@ -48,6 +48,22 @@ data:
     temporal_augmentation:  #deprecated for ISLR
       tmin: 0.5
       tmax: 1.5
+postprocess:
+  span_weighted_voting:
+    enabled: false
+    kernel: triangular
+    min_weight: 0.05
+  confidence_fallback:
+    enabled: false
+    primary_method: window_greedy_7
+    secondary_method: window_greedy_5
+    tertiary_method: naive_greedy
+    low_confidence_threshold: 0.45
+    very_low_confidence_threshold: 0.35
+    low_margin_threshold: 0.15
+    very_low_margin_threshold: 0.08
+    min_window_clips: 3
+    sample_fallback_to_fixed_stride1: false
 testing:
   cfg:
     recognition:

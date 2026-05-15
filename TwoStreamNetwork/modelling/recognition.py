@@ -2,7 +2,10 @@ import math
 from copy import deepcopy
 import random, torchvision
 import numpy as np
-import tensorflow as tf
+try:
+    import tensorflow as tf
+except ImportError:
+    tf = None
 import torch
 from itertools import groupby
 
@@ -14,6 +17,8 @@ from modelling.Visualhead import VisualHead
 from utils.gen_gaussian import gen_gaussian_hmap_op
 
 def ctc_decode_func(tf_gloss_logits, input_lengths, beam_size):
+    if tf is None:
+        raise RuntimeError('TensorFlow is not available for beam-search CTC decoding')
     ctc_decode, _ = tf.nn.ctc_beam_search_decoder(
         inputs=tf_gloss_logits, 
         sequence_length=input_lengths.cpu().detach().numpy(),
@@ -31,6 +36,17 @@ def ctc_decode_func(tf_gloss_logits, input_lengths, beam_size):
         decoded_gloss_sequences.append(
             [x[0] for x in groupby(tmp_gloss_sequences[seq_idx])]
         )
+    return decoded_gloss_sequences
+
+
+def greedy_ctc_decode_func(gloss_logits, input_lengths, blank_id):
+    predicted = torch.argmax(gloss_logits, dim=-1)
+    decoded_gloss_sequences = []
+    for batch_idx in range(predicted.shape[0]):
+        valid_length = int(input_lengths[batch_idx].item())
+        sequence = predicted[batch_idx, :valid_length].detach().cpu().tolist()
+        collapsed = [token for token, _ in groupby(sequence) if token != blank_id]
+        decoded_gloss_sequences.append(collapsed)
     return decoded_gloss_sequences
 
 
@@ -223,6 +239,12 @@ class RecognitionNetwork(torch.nn.Module):
         return loss
 
     def decode(self, gloss_logits, beam_size, input_lengths):
+        if tf is None or beam_size <= 1:
+            return greedy_ctc_decode_func(
+                gloss_logits=gloss_logits,
+                input_lengths=input_lengths,
+                blank_id=self.gloss_tokenizer.silence_id,
+            )
         gloss_logits = gloss_logits.permute(1, 0, 2) #T,B,V
         gloss_logits = gloss_logits.cpu().detach().numpy()
         tf_gloss_logits = np.concatenate(

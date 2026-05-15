@@ -47,6 +47,8 @@ class SignLanguageDataset(torch.utils.data.Dataset):
             Part2index = Hrnet_Part2index
             self.name2keypoints = {}
             for name, all_keypoints in name2all_keypoints.items():
+                if not isinstance(all_keypoints, dict):
+                    all_keypoints = {'keypoints': all_keypoints}
                 self.name2keypoints[name] = []
                 for k in sorted(self.dataset_cfg['use_keypoints']):
                     for key_, selected_index in Part2index[k]:

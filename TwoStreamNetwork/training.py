@@ -11,8 +11,10 @@ from utils.progressbar import ProgressBar
 warnings.filterwarnings("ignore")
 from utils.misc import (
     load_config,
+    load_checkpoint,
     make_model_dir,
     make_logger, make_writer, make_wandb,
+    neq_load_customized,
     set_seed,
     is_main_process, init_DDP,
     synchronize 
@@ -112,6 +114,19 @@ if __name__ == "__main__":
     synchronize()
 
     model = build_model(cfg)
+    init_model_ckpt = cfg['training'].get('init_from_model_ckpt', None)
+    if init_model_ckpt:
+        checkpoint = load_checkpoint(init_model_ckpt, map_location='cpu')
+        pretrained_state = checkpoint.get('model_state', checkpoint.get('state_dict', checkpoint))
+        model_state = model.state_dict()
+        matched_keys = [
+            key for key, value in pretrained_state.items()
+            if key in model_state and model_state[key].shape == value.shape
+        ]
+        neq_load_customized(model, pretrained_state, verbose=False)
+        logger.info('Initialize model weights from {}'.format(init_model_ckpt))
+        logger.info('Init checkpoint matched keys: {}'.format(len(matched_keys)))
+        logger.info('Init checkpoint skipped keys: {}'.format(len(pretrained_state) - len(matched_keys)))
     model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model) 
     total_params_trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     total_params = sum(p.numel() for p in model.parameters())
