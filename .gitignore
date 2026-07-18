@@ -6,6 +6,15 @@ __pycache__/
 *.bak
 *.pid
 ._*
+.DS_Store
+.vscode/
+.idea/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+wandb/
+runs/
+lightning_logs/
 
 Online/*.local.sh
 
