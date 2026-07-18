@@ -48,7 +48,7 @@ testing:
 training:
   overwrite: true
   from_ckpt: true
-  model_dir: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR
+  model_dir: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR_subset32768
   random_seed: 321
   shuffle: true
   num_workers: 4

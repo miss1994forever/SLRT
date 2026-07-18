@@ -30,7 +30,21 @@ import io
 import logging
 import math
 import os
-import portalocker
+try:
+    import portalocker
+except ModuleNotFoundError:
+    class _NoOpLock:
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
+    class portalocker:
+        Lock = _NoOpLock
 import re
 import sys
 import unicodedata

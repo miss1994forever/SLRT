@@ -1,5 +1,8 @@
 import torch
-from transformers_cust import MBartForConditionalGeneration, MBartTokenizer, MBartConfig
+try:
+    from transformers_cust import MBartForConditionalGeneration, MBartTokenizer, MBartConfig
+except ModuleNotFoundError:
+    from transformers import MBartForConditionalGeneration, MBartTokenizer, MBartConfig
 from utils.misc import freeze_params, get_logger
 from utils.loss import XentLoss
 from .Tokenizer import GlossTokenizer_G2T, TextTokenizer
@@ -246,6 +249,5 @@ class TranslationNetwork(torch.nn.Module):
         # print(output_dict['decoded_sequences'])
 
         return output_dict
-
 
 

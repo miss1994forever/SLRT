@@ -4,7 +4,6 @@ data:
   input_streams:
     - keypoint
     - rgb
-  # Expected canonical asset location. Put restored CSL-Daily online assets here.
   keypoint_file: /home/haojun/projects/SLRT/data/csl-daily/keypoints_hrnet_dark_coco_wholebody_iso.pkl
   use_keypoints:
     - pose
@@ -48,7 +47,7 @@ testing:
 training:
   overwrite: true
   from_ckpt: true
-  model_dir: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR
+  model_dir: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR_full_lr1e-4
   random_seed: 321
   shuffle: true
   num_workers: 4

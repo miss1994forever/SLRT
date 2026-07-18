@@ -52,6 +52,52 @@ from collections import defaultdict
 from copy import deepcopy
 
 
+def _get_debug_train_cfg(cfg):
+    return cfg['training'].get('debug', {})
+
+
+def _should_trace_step(step, debug_cfg):
+    start = debug_cfg.get('trace_step_start', None)
+    end = debug_cfg.get('trace_step_end', None)
+    if start is not None and step < start:
+        return False
+    if end is not None and step > end:
+        return False
+    trace_every = debug_cfg.get('trace_every', 1)
+    if trace_every <= 1:
+        return True
+    if start is None:
+        return step % trace_every == 0
+    return (step - start) % trace_every == 0
+
+
+def _debug_batch_summary(batch):
+    return {
+        'names': batch.get('names'),
+        'labels': batch.get('labels').detach().cpu().tolist() if isinstance(batch.get('labels'), torch.Tensor) else batch.get('labels'),
+        'vlens': batch.get('vlens'),
+        'start_idx': batch.get('start_idx'),
+        'ori_video_files': batch.get('ori_video_files'),
+    }
+
+
+def _maybe_trace_batch(logger, cfg, batch, step, phase):
+    debug_cfg = _get_debug_train_cfg(cfg)
+    if not debug_cfg or not _should_trace_step(step, debug_cfg):
+        return
+    logger.info(
+        'DEBUG_TRACE phase=%s epoch=%s rank=%s step=%s global_step=%s batch=%s',
+        phase,
+        cfg.get('_debug_epoch_no', 'NA'),
+        cfg.get('local_rank', 0),
+        step,
+        cfg.get('_debug_global_step', 'NA'),
+        _debug_batch_summary(batch),
+    )
+    if debug_cfg.get('sync_cuda_on_trace', False) and torch.cuda.is_available():
+        torch.cuda.synchronize(cfg['device'])
+
+
 def save_model(model, optimizer, scheduler, output_file, epoch=None, global_step=None, current_score=None):
     base_dir = os.path.dirname(output_file)
     os.makedirs(base_dir, exist_ok=True)
@@ -69,7 +115,7 @@ def save_model(model, optimizer, scheduler, output_file, epoch=None, global_step
     return output_file
 
 
-def evaluate_and_save(model, optimizer, scheduler, val_dataloader, cfg, 
+def evaluate_and_save(model, optimizer, scheduler, val_dataloader, cfg,
                         tb_writer, wandb_run=None,
                         epoch=None, global_step=None, generate_cfg={}):
     tag = 'epoch_{:02d}'.format(epoch) if epoch!=None else 'step_{}'.format(global_step)
@@ -77,19 +123,19 @@ def evaluate_and_save(model, optimizer, scheduler, val_dataloader, cfg,
     global best_score, ckpt_queue
     if cfg['task'] == 'ISLR':
         per_ins_stat, per_cls_stat, _, _, _ = evaluation(
-            model=model, val_dataloader=val_dataloader, cfg=cfg, 
+            model=model, val_dataloader=val_dataloader, cfg=cfg,
             tb_writer=tb_writer, wandb_run=wandb_run,
             epoch=epoch, global_step=global_step, generate_cfg=generate_cfg,
             save_dir=None)
             # save_dir=os.path.join(cfg['training']['model_dir'],'validation',tag))
         evaluation_results = sync_results(per_ins_stat, per_cls_stat, save_dir=None, wandb_run=wandb_run)
     elif cfg['task'] == 'G2G' and is_main_process():
-        _, evaluation_results = eval_g2g(model=model, val_dataloader=val_dataloader, cfg=cfg, 
+        _, evaluation_results = eval_g2g(model=model, val_dataloader=val_dataloader, cfg=cfg,
                                         tb_writer=tb_writer, wandb_run=wandb_run,
                                         epoch=epoch, global_step=global_step, generate_cfg=generate_cfg,
                                         save_dir=None)
     elif cfg['task'] == 'bag_denoise' and is_main_process():
-        evaluation_results = eval_denoise(model=model, val_dataloader=val_dataloader, cfg=cfg, 
+        evaluation_results = eval_denoise(model=model, val_dataloader=val_dataloader, cfg=cfg,
                                         tb_writer=tb_writer, wandb_run=wandb_run,
                                         epoch=epoch, global_step=global_step, generate_cfg=generate_cfg,
                                         save_dir=None)
@@ -112,7 +158,7 @@ def evaluate_and_save(model, optimizer, scheduler, val_dataloader, cfg,
         else:
             best_score = min(best_score, score)
             logger.info('best_score={:.2f}'.format(best_score))
-        
+
         ckpt_file = save_model(model=model, optimizer=optimizer, scheduler=scheduler,
             output_file=os.path.join(cfg['training']['model_dir'],'ckpts',tag+'.ckpt'),
             epoch=epoch, global_step=global_step,
@@ -133,7 +179,7 @@ def evaluate_and_save(model, optimizer, scheduler, val_dataloader, cfg,
         ckpt_queue.put(ckpt_file)
     synchronize()
 
-    
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("SLT baseline")
     parser.add_argument(
@@ -144,7 +190,7 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     assert 'LOCAL_RANK' in os.environ, 'Only support distributed training now!'
-    
+
     cfg = load_config(args.config)
 
     # PREPARATION
@@ -152,7 +198,7 @@ if __name__ == "__main__":
     cfg['rank'] = torch.distributed.get_rank()
     set_seed(seed=cfg["training"].get("random_seed", 42))
     model_dir = make_model_dir(
-        model_dir=cfg['training']['model_dir'], 
+        model_dir=cfg['training']['model_dir'],
         overwrite=(cfg['training'].get('overwrite',False) and not cfg['training'].get('from_ckpt',False)))
     global logger
     logger = make_logger(
@@ -184,12 +230,12 @@ if __name__ == "__main__":
         word_emb_tab = None
     del dataset
     model = build_model(cfg, cls_num, word_emb_tab=word_emb_tab)
-    model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model) 
+    model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     total_params_trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
     total_params = sum(p.numel() for p in model.parameters())
     logger.info('# Total parameters = {}'.format(total_params))
     logger.info('# Total trainable parameters = {}'.format(total_params_trainable))
-    
+
     #load pretrained ckpt
     ckpt_file = cfg['training'].get('load_ckpt', None)
     if ckpt_file:
@@ -214,14 +260,14 @@ if __name__ == "__main__":
         del pretrained_dict
         neq_load_customized(model, updated_dict, verbose=True)
         logger.info("Load ckpt {:s}".format(ckpt_file))
-    
+
     use_amp = cfg['training'].get('amp', False)
     if not use_amp:
-        model = DDP(model, 
-            device_ids=[cfg['local_rank']], 
+        model = DDP(model,
+            device_ids=[cfg['local_rank']],
             output_device=cfg['local_rank'],
             find_unused_parameters=True)
-    
+
     #DATASET
     g2g_tokenizer = model.module.tokenizer if cfg['task'] == 'G2G' else None
     train_dataloader, train_sampler = build_dataloader(cfg, 'train', task=cfg['task'], g2g_tokenizer=g2g_tokenizer, is_train=True)
@@ -241,6 +287,7 @@ if __name__ == "__main__":
     assert scheduler_type == 'epoch'
     start_epoch, total_epoch, global_step = 0, cfg['training']['total_epoch'], 0
     val_unit, val_freq = cfg['training']['validation']['unit'], cfg['training']['validation']['freq']
+    log_step_interval = int(cfg['training'].get('log_step_interval', 50))
     global ckpt_queue, best_score
     ckpt_queue = queue.Queue(maxsize=cfg['training']['keep_last_ckpts'])
     best_score = -10000 if cfg['task'] in ['ISLR', 'bag_denoise'] else 10000
@@ -277,14 +324,14 @@ if __name__ == "__main__":
         tb_writer = None
     else:
         pbar, tb_writer = None, None
-        
+
     # logger.info('Evaluation at the beginning ...')
     # if is_main_process():
     #     evaluate_and_save(
     #         model=model.module, optimizer=optimizer, scheduler=scheduler,
     #         val_dataloader=dev_dataloader,
     #         cfg=cfg, tb_writer=None, wandb_run=wandb_run, epoch=-1,
-    #         generate_cfg=cfg['training']['validation']['cfg'])  
+    #         generate_cfg=cfg['training']['validation']['cfg'])
 
     #iteration
     if use_amp == 'torch':
@@ -298,49 +345,76 @@ if __name__ == "__main__":
     max_step = cfg['training'].get('max_step', float('inf'))
     for epoch_no in range(start_epoch, total_epoch):
         train_sampler.set_epoch(epoch_no)
+        cfg['_debug_epoch_no'] = epoch_no
 
         print()
         logger.info('Epoch {}, Training examples {}'.format(epoch_no, len(train_dataloader.dataset)))
         if 'warmup' not in cfg['training']['optimization']['scheduler']:
             scheduler.step()
         stat = {}
+        epoch_start_time = time.time()
         for step, batch in enumerate(train_dataloader):
             # print(batch['names'][0])
             if ('debug' in model_dir and step==10) or (step >= max_step):
                 break
+            cfg['_debug_global_step'] = global_step
             model.module.set_train()
             # print(batch['labels'])
             if use_amp == 'torch':
-                with autocast():
-                    output = model(is_train=True, labels=batch['labels'], sgn_videos=batch['sgn_videos'], sgn_keypoints=batch['sgn_keypoints'], epoch=epoch_no)
+                try:
+                    _maybe_trace_batch(logger, cfg, batch, step, 'forward_pre')
+                    with autocast():
+                        output = model(is_train=True, labels=batch['labels'], sgn_videos=batch['sgn_videos'], sgn_keypoints=batch['sgn_keypoints'], epoch=epoch_no)
+                    _maybe_trace_batch(logger, cfg, batch, step, 'forward_post')
+                except Exception:
+                    logger.exception('FORWARD_FAIL rank=%s step=%s global_step=%s batch=%s', cfg.get('local_rank', 0), step, global_step, _debug_batch_summary(batch))
+                    raise
             else:
-                output = model(is_train=True, labels=batch['labels'], sgn_videos=batch['sgn_videos'], sgn_keypoints=batch['sgn_keypoints'], epoch=epoch_no,
-                                fbank_rgb=fbank_rgb, fbank_pose=fbank_pose, start_idx=batch['start_idx'], aug=batch['aug'], bag_labels=batch['bag_labels'],
-                                iou_labels=batch['iou_labels'], temp_idx=batch['temp_idx'], translation_inputs=batch.get('translation_inputs', {}),
-                                denoise_inputs=batch.get('denoise_inputs', {}))
+                try:
+                    _maybe_trace_batch(logger, cfg, batch, step, 'forward_pre')
+                    output = model(is_train=True, labels=batch['labels'], sgn_videos=batch['sgn_videos'], sgn_keypoints=batch['sgn_keypoints'], epoch=epoch_no,
+                                    fbank_rgb=fbank_rgb, fbank_pose=fbank_pose, start_idx=batch['start_idx'], aug=batch['aug'], bag_labels=batch['bag_labels'],
+                                    iou_labels=batch['iou_labels'], temp_idx=batch['temp_idx'], translation_inputs=batch.get('translation_inputs', {}),
+                                    denoise_inputs=batch.get('denoise_inputs', {}))
+                    _maybe_trace_batch(logger, cfg, batch, step, 'forward_post')
+                except Exception:
+                    logger.exception('FORWARD_FAIL rank=%s step=%s global_step=%s batch=%s', cfg.get('local_rank', 0), step, global_step, _debug_batch_summary(batch))
+                    raise
                 # print('inp: ', batch['translation_inputs']['input_ids'])
                 # print('lab: ', batch['translation_inputs']['labels'])
-            
+
             #optimize
             if use_amp == 'torch':
-                # if grad_acc_step > 1:
-                # output['total_loss'] = output['total_loss'] / grad_acc_step
-                scaler.scale(output['total_loss']).backward()
-                # if ((step+1) % grad_acc_step)==0:
-                scaler.step(optimizer)
-                scaler.update()
-                model.zero_grad()
+                try:
+                    # if grad_acc_step > 1:
+                    # output['total_loss'] = output['total_loss'] / grad_acc_step
+                    scaler.scale(output['total_loss']).backward()
+                    _maybe_trace_batch(logger, cfg, batch, step, 'backward_post')
+                    # if ((step+1) % grad_acc_step)==0:
+                    scaler.step(optimizer)
+                    scaler.update()
+                    _maybe_trace_batch(logger, cfg, batch, step, 'optimizer_post')
+                    model.zero_grad()
+                except Exception:
+                    logger.exception('OPTIM_FAIL rank=%s step=%s global_step=%s batch=%s', cfg.get('local_rank', 0), step, global_step, _debug_batch_summary(batch))
+                    raise
             else:
-                with torch.autograd.set_detect_anomaly(True):
-                    # print(output['total_loss'].item(), output['recognition_loss'].item(), output['contras_loss_'].item())
-                # print((batch['sgn_keypoints']==0).sum())
-                # if not torch.isnan(output['total_loss']):
-                    output['total_loss'].backward()
-                # else:
-                    # logger.info('nan')
-                
-                optimizer.step()
-                model.zero_grad()
+                try:
+                    with torch.autograd.set_detect_anomaly(True):
+                        # print(output['total_loss'].item(), output['recognition_loss'].item(), output['contras_loss_'].item())
+                    # print((batch['sgn_keypoints']==0).sum())
+                    # if not torch.isnan(output['total_loss']):
+                        output['total_loss'].backward()
+                    _maybe_trace_batch(logger, cfg, batch, step, 'backward_post')
+                    # else:
+                        # logger.info('nan')
+
+                    optimizer.step()
+                    _maybe_trace_batch(logger, cfg, batch, step, 'optimizer_post')
+                    model.zero_grad()
+                except Exception:
+                    logger.exception('OPTIM_FAIL rank=%s step=%s global_step=%s batch=%s', cfg.get('local_rank', 0), step, global_step, _debug_batch_summary(batch))
+                    raise
 
             if contras_setting is not None and 'ema' in contras_setting:
                 beta_init = cfg['training']['optimization'].get('beta_ema', 0.99)
@@ -385,12 +459,32 @@ if __name__ == "__main__":
                     # print('ema')
                 for m,c in zip(ma_model_lst, cur_model_lst):
                     update_moving_average(beta, m, c)
-            
+
             for k, v in output.items():
                 if '_loss' in k:
                     stat[k] = stat.get(k, 0.0) + v.item()
                 # if '_weight' in k:
                 #     stat[k] = stat.get(k, 0.0) + v.mean().item()
+
+            if is_main_process() and log_step_interval > 0 and ((step + 1) % log_step_interval == 0 or step == 0):
+                elapsed = max(time.time() - epoch_start_time, 1e-6)
+                it_per_sec = (step + 1) / elapsed
+                remaining_steps = len(train_dataloader) - (step + 1)
+                eta_sec = int(remaining_steps / max(it_per_sec, 1e-6))
+                lr = optimizer.param_groups[0]['lr']
+                logger.info(
+                    'Train Progress | epoch=%d step=%d/%d global_step=%d loss=%.4f lr=%.6g speed=%.2f it/s eta=%02d:%02d:%02d',
+                    epoch_no,
+                    step + 1,
+                    len(train_dataloader),
+                    global_step,
+                    output['total_loss'].item(),
+                    lr,
+                    it_per_sec,
+                    eta_sec // 3600,
+                    (eta_sec % 3600) // 60,
+                    eta_sec % 60,
+                )
 
             #validation and save (last ckpt and the best ckpt)
             # if is_main_process() and val_unit=='step' and global_step%val_freq==0:
@@ -424,25 +518,25 @@ if __name__ == "__main__":
                 cfg=cfg, tb_writer=tb_writer, wandb_run=wandb_run,
                 epoch=epoch_no,
                 generate_cfg=cfg['training']['validation']['cfg'])
-    
+
     evaluate_and_save(
         model=model.module, optimizer=optimizer, scheduler=scheduler,
         val_dataloader=dev_dataloader,
         cfg=cfg, tb_writer=None, wandb_run=wandb_run,
         epoch=epoch_no,
         generate_cfg=cfg['training']['validation']['cfg'])
-    
+
     if cfg['task'] == 'G2G' and is_main_process():
         load_model_path = os.path.join(cfg['training']['model_dir'],'ckpts','best.ckpt')
         state_dict = torch.load(load_model_path, map_location='cuda')
         model.module.load_state_dict(state_dict['model_state'])
 
-        eval_g2g(model=model.module, val_dataloader=dev_dataloader, cfg=cfg, 
+        eval_g2g(model=model.module, val_dataloader=dev_dataloader, cfg=cfg,
                     tb_writer=tb_writer, wandb_run=wandb_run,
                     epoch=999, global_step=global_step, generate_cfg=cfg['testing']['cfg'],
                     save_dir=os.path.join(model_dir, 'dev'))
         test_dataloader, test_sampler = build_dataloader(cfg, 'test', task=cfg['task'], g2g_tokenizer=g2g_tokenizer, is_train=False, val_distributed=(cfg['task'] in ['ISLR']))
-        eval_g2g(model=model.module, val_dataloader=test_dataloader, cfg=cfg, 
+        eval_g2g(model=model.module, val_dataloader=test_dataloader, cfg=cfg,
                     tb_writer=tb_writer, wandb_run=wandb_run,
                     epoch=999, global_step=global_step, generate_cfg=cfg['testing']['cfg'],
                     save_dir=os.path.join(model_dir, 'test'))
@@ -457,10 +551,10 @@ if __name__ == "__main__":
     #     logger.info('Load model ckpt from '+load_model_path)
     #     split = 'dev'
     #     logger.info('Evaluate on {} set'.format(split))
-    
+
     #     dataloader, sampler = build_dataloader(cfg, split, is_train=False, val_distributed=False)
-    #     per_ins_stat, per_cls_stat, _, _, others = evaluation(model=model.module, val_dataloader=dataloader, cfg=cfg, 
-    #                                                 epoch=epoch, global_step=global_step, 
+    #     per_ins_stat, per_cls_stat, _, _, others = evaluation(model=model.module, val_dataloader=dataloader, cfg=cfg,
+    #                                                 epoch=epoch, global_step=global_step,
     #                                                 generate_cfg=cfg['testing']['cfg'],
     #                                                 save_dir=os.path.join(model_dir,split), return_prob=True)
     #     sync_results(per_ins_stat, per_cls_stat, save_dir=os.path.join(model_dir,split), wandb_run=None, sync=False)
@@ -475,8 +569,8 @@ if __name__ == "__main__":
     #     split = 'test'
     #     logger.info('Evaluate on {} set'.format(split))
     #     dataloader, sampler = build_dataloader(cfg, split, is_train=False, val_distributed=False)
-    #     per_ins_stat, per_cls_stat, _, _, others = evaluation(model=model.module, val_dataloader=dataloader, cfg=cfg, 
-    #                                                 epoch=epoch, global_step=global_step, 
+    #     per_ins_stat, per_cls_stat, _, _, others = evaluation(model=model.module, val_dataloader=dataloader, cfg=cfg,
+    #                                                 epoch=epoch, global_step=global_step,
     #                                                 generate_cfg=cfg['testing']['cfg'],
     #                                                 save_dir=os.path.join(model_dir,split), return_prob=True, return_others=False)
     #     sync_results(per_ins_stat, per_cls_stat, save_dir=os.path.join(model_dir,split), wandb_run=None, sync=False)
@@ -491,7 +585,7 @@ if __name__ == "__main__":
     #     #     sync_results(others[str(o)]['per_ins_stat'], others[str(o)]['per_cls_stat'],
     #     #                 save_dir=os.path.join(model_dir,split), wandb_run=None, sync=False)
     # synchronize()
-    
+
     if wandb_run != None:
         wandb_run.finish()
-    
+

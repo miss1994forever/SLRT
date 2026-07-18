@@ -1,31 +1,27 @@
 task: ISLR
 data:
-  input_data: videos #features, gloss
+  input_data: videos
   input_streams:
     - keypoint
     - rgb
-  # Expected canonical asset location. Put restored CSL-Daily online assets here.
   keypoint_file: /home/haojun/projects/SLRT/data/csl-daily/keypoints_hrnet_dark_coco_wholebody_iso.pkl
   use_keypoints:
     - pose
     - mouth_half
     - hand
   zip_file: /home/haojun/projects/SLRT/data/csl-daily
-  train: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl-daily-top-800.train
-  dev: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl-daily-top-800.dev
-  test: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl-daily-top-800.test
+  train: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl_iso_top800_balanced8192.train
+  dev: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl_iso_top800_with_blank.dev
+  test: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl_iso_top800_with_blank.test
   vocab_file: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl_iso_with_blank.vocab
-  dataset_name: csl
-  level: word #word or char
+  dataset_name: csl_iso
+  level: word
   txt_lowercase: true
-  num_output_frames: -1
-  win_size: 16
-  stride: 1
-  split_size: 24
-  prob_thr:
-    - -1
+  num_output_frames: 16
   max_sent_length: 400
   transform_cfg:
+    bag_size: 6
+    num_instance: 6
     img_size: 224
     color_jitter: true
     bottom_area: 0.7
@@ -44,17 +40,18 @@ data:
 testing:
   cfg:
     recognition:
-      beam_size: 10
+      beam_size: 1
 training:
   overwrite: true
-  from_ckpt: true
-  model_dir: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR
+  model_dir: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR_subset8192
+  load_ckpt: /home/haojun/projects/models/checkpoints/online_slrt/cslr_best.ckpt
   random_seed: 321
   shuffle: true
   num_workers: 4
-  batch_size: 1
-  total_epoch: 100
-  keep_last_ckpts: 5
+  batch_size: 4
+  total_epoch: 1
+  log_step_interval: 25
+  keep_last_ckpts: 1
   validation:
     unit: epoch
     freq: 1
@@ -64,7 +61,7 @@ training:
   optimization:
     optimizer: Adam
     learning_rate:
-      default: 1.0e-4
+      default: 6.0e-4
     weight_decay: 0.001
     betas:
       - 0.9
@@ -131,4 +128,9 @@ model:
       temp: 0.1
       contras_setting: null
       topk: 800
+      split_setting: split_nonblk
     label_smooth: 0.2
+    bag_loss:
+      - avg_prob
+      - avg_prob
+      - avg_prob
