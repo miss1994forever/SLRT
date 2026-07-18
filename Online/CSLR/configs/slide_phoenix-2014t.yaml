@@ -20,7 +20,19 @@ data:
   num_output_frames: -1  #to-debug
   win_size: 16
   stride: 1
-  split_size: 36
+  adaptive_stride:
+    enabled: false
+    min_stride: 1
+    max_stride: 3
+    keypoint_confidence_threshold: 0.2
+    ema_decay: 0.4
+    quantile_low: 0.2
+    quantile_high: 0.7
+    calibration_window_frames: 48
+    warmup_frames: 16
+    min_valid_keypoints: 4
+  # 16 avoids OOM on long Phoenix samples; it does not alter logits or decoding.
+  split_size: 16
   prob_thr: 
     - -1
   max_sent_length: 400
@@ -36,6 +48,13 @@ data:
     temporal_augmentation:  #deprecated for ISLR
       tmin: 0.5
       tmax: 1.5
+postprocess:
+  span_weighted_voting:
+    enabled: false
+    # Selected on Phoenix-2014T dev (2026-07-16); test was not used for tuning.
+    vote_span_frames: 15
+    kernel: triangular
+    min_weight: 0.05
 testing:
   cfg:
     recognition:
