@@ -1,6 +1,6 @@
 # Online CSLR 自适应步长实施方案
 
-> 实施状态（2026-07-16）：核心自适应采样、时间跨度加权投票、离线脚本与实时后端接口已经完成；默认保持关闭。Phoenix test 642/642 完整对照已完成：clip 减少 32.02%，运行时间减少 28.84%，WER 从 22.00 变为 22.73。实现记录见 `dev_logs/2026-07-15_adaptive_stride_implementation.md`，完整对照见 `dev_logs/2026-07-16_adaptive_stride_full_comparison.md`。会话级增量缓存仍待执行。
+> 实施状态（2026-07-16）：核心自适应采样、时间跨度加权投票、离线脚本与实时后端接口已经完成；默认保持关闭。调参前 span-13 历史完整对照中，Phoenix test 的 clip 减少 32.02%、运行时间减少 28.84%、WER 从 22.00 变为 22.73；该结果见 `code_agent_logs/2026-07-16/adaptive_stride_full_comparison.md`。随后只用 dev 冻结的 span-15 最终 test WER 为 23.0571，见 `code_agent_logs/2026-07-16/adaptive_stride_frozen_final_evaluation.md`。实现记录见 `code_agent_logs/2026-07-15/adaptive_stride_implementation.md`。会话级增量缓存仍待执行。
 
 ## 1. 目标与范围
 
