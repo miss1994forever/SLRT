@@ -110,3 +110,7 @@ P1 与 P2 的采样配置相同，所以窗口数和步长分布相同。WER 差
 ## 不属于本 WER 口径的结果
 
 CSL-Daily Top-800 R1 是 isolated dev 可靠性诊断，报告 accuracy/AUROC，不报告连续识别 WER，也没有验证自适应步长。其数据位于 `Online/CSLR/results/csl-daily-top-800_ISLR_full_stable/diagnostics/reliability_r1_dev/`，摘要见 `code_agent_logs/2026-07-26/reliability_r1_results.md`。
+
+## 下一步基础对照
+
+当前结果尚未消除采样器与解码器差异，也缺少固定stride和预算匹配均匀采样对照。下一步预注册实施协议见 [baseline_evaluation_plan.md](experiments/adaptive_stride/baseline_evaluation_plan.md)。在该矩阵完成前，不声称自适应策略优于相同计算预算的普通降采样。

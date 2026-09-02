@@ -10,6 +10,7 @@
 ## 实验设计
 
 - [experiments/adaptive_stride/implementation_plan.md](experiments/adaptive_stride/implementation_plan.md)：自适应步长实施方案；
+- [experiments/adaptive_stride/baseline_evaluation_plan.md](experiments/adaptive_stride/baseline_evaluation_plan.md)：基础对照、数据隔离、训练/推理登记和统一评估脚本实施计划；
 - [../code_agent_logs/README.md](../code_agent_logs/README.md)：带日期的实现、调参和最终结果记录。
 
 ## 上游资料
