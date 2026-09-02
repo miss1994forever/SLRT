@@ -10,6 +10,7 @@
 | `slide_phoenix-2014t.yaml` | 固定/自适应滑窗评估 | Phoenix-2014T |
 | `csl-daily-top-800_ISLR_full_stable.yaml` | 当前 Top-800 ISLR 与 R1 checkpoint | CSL-Daily Top-800 |
 | `slide_csl-daily-top-800_full_stable.yaml` | Top-800 连续滑窗入口 | CSL-Daily Top-800 |
+| `experiments/phoenix_adaptive_baselines_v1.yaml` | B0--B4/A0 冻结基础对照协议 | Phoenix-2014T |
 
 ## 历史和诊断配置
 
@@ -21,4 +22,4 @@
 
 新实验应从推荐配置复制到新的文件名，并修改 `training.model_dir`，不能覆盖既有结果目录。数据路径使用 `../../data/...`，预训练模型使用 `../../pretrained_models/...`，外部迁移 checkpoint 使用 `../../artifacts/checkpoints/...`。
 
-自适应步长默认关闭。复现冻结实验时使用命令行显式传入 `--adaptive_stride 1 --span_weighted_voting 1 --vote_span_frames 15`，避免配置默认值被误认为已经启用。
+自适应步长默认关闭。单次历史复现可继续使用 `--adaptive_stride`；新基础对照统一通过实验协议和 `tools/run_adaptive_baseline_matrix.py` 生成最终生效配置，避免 CLI 未登记或 fixed/uniform/adaptive 口径不同。

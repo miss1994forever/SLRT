@@ -1,5 +1,7 @@
 # Phoenix 自适应步长基础对照实验实施计划
 
+> 实施状态（2026-09-02）：Phase 0 与代码层 Phase 1 已完成，包括协议、统一采样接口、矩阵运行器、manifest、统一评估器和离线测试；完整 GPU dev 矩阵尚未执行，因此本文“是否已有完整结果”仍指历史结果，不代表新增 baseline 已出结果。
+
 ## 1. 目标
 
 在不修改模型权重和已冻结自适应参数的前提下，建立一套可复现的基础对照协议，回答三个不同问题：
@@ -207,9 +209,9 @@ Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1/
 │   └── A0_adaptive_span15/
 ├── test/                       # 冻结后才创建
 └── aggregate/
-    ├── summary.json
-    ├── summary.csv
-    └── summary.md
+    ├── dev_summary.json
+    ├── dev_summary.csv
+    └── dev_summary.md
 ```
 
 PKL、logits和runtime原始记录留在忽略目录。最终把去除机器绝对路径的摘要复制到 `docs/results/phoenix_adaptive_baselines_v1.json`，实验审计写入新的日期日志。

@@ -12,6 +12,7 @@ import distutils
 import shutil
 import queue
 import json, math
+import time
 sys.path.append(os.getcwd())#slt dir
 
 try:
@@ -50,7 +51,8 @@ from copy import deepcopy
 from itertools import groupby
 from functools import partial
 import math
-from utils.adaptive_stride import adaptive_window_starts, span_weighted_predictions
+from utils.adaptive_stride import span_weighted_predictions
+from utils.window_sampling import generate_window_starts, resolve_sampling_config
 
 
 def map_phoenix_gls(g_lower):#lower->upper
@@ -135,28 +137,31 @@ def pad_tensor(x, pad_left, pad_right):
     return x
 
 
-def sliding_windows(video, keypoint, win_size=16, stride=1, save_fea=False, adaptive_cfg=None, return_starts=False):
+def sliding_windows(
+    video,
+    keypoint,
+    win_size=16,
+    stride=1,
+    save_fea=False,
+    adaptive_cfg=None,
+    sampling_cfg=None,
+    return_starts=False,
+):
     B, T = video.shape[:2]
     assert B==1
     video = video.squeeze(0)
     keypoint = keypoint.squeeze(0)
 
-    use_adaptive = adaptive_cfg is not None and bool(
-        adaptive_cfg.get('enabled', adaptive_cfg.get('enable', False))
+    resolved_sampling = resolve_sampling_config(
+        sampling_cfg,
+        fixed_stride=stride,
+        adaptive_config=adaptive_cfg,
     )
-    if use_adaptive:
-        starts, window_metadata = adaptive_window_starts(T, keypoint, adaptive_cfg)
-        num_clips = len(starts)
-        final_frames = starts[-1] + win_size
-    else:
-        num_clips = math.ceil(T/stride)
-        num_clips = max(num_clips, 1)
-        final_frames = (num_clips-1) * stride + win_size
-        starts = [i * stride for i in range(num_clips)]
-        window_metadata = [
-            {'start': int(st), 'stride': int(stride), 'motion': 0.0, 'quality': 1.0}
-            for st in starts
-        ]
+    starts, window_metadata = generate_window_starts(
+        resolved_sampling['mode'], T, keypoint, resolved_sampling
+    )
+    num_clips = len(starts)
+    final_frames = starts[-1] + win_size
 
     pad_left = (final_frames - T) // 2
     pad_right = final_frames - T - pad_left
@@ -178,7 +183,7 @@ def sliding_windows(video, keypoint, win_size=16, stride=1, save_fea=False, adap
     return video_s, keypoint_s
 
 
-def evaluation_slide(model, cslr_dataloader, cfg, 
+def evaluation_slide(model, cslr_dataloader, cfg,
         tb_writer=None, wandb_run=None,
         epoch=None, global_step=None,
         generate_cfg={}, save_dir=None, 
@@ -225,6 +230,11 @@ def evaluation_slide(model, cslr_dataloader, cfg,
     win_size = cfg['data'].get('win_size', 16)
     stride = cfg['data'].get('stride', 1)
     adaptive_stride_cfg = cfg['data'].get('adaptive_stride', {})
+    sampling_cfg = resolve_sampling_config(
+        cfg['data'].get('sampling', {}),
+        fixed_stride=stride,
+        adaptive_config=adaptive_stride_cfg,
+    )
     span_voting_cfg = cfg.get('postprocess', {}).get('span_weighted_voting', {})
     use_span_voting = bool(span_voting_cfg.get('enabled', False))
     span_voting_size = int(span_voting_cfg.get('vote_span_frames', 13))
@@ -260,6 +270,8 @@ def evaluation_slide(model, cslr_dataloader, cfg,
         layer_kp_blk5.register_forward_hook(save_feas_kp_blk5)
 
     save_step = 100
+    profile_runtime = bool(cfg.get('runtime_profile', {}).get('enabled', False))
+    profile_cuda = profile_runtime and torch.cuda.is_available()
 
     with torch.no_grad():
         if use_bag_fc:
@@ -269,6 +281,12 @@ def evaluation_slide(model, cslr_dataloader, cfg,
             bag_fc_fuse = model.recognition_network.visual_head_fuse.bag_fc
 
         for thr in thr_lst:
+            forward_events = []
+            forward_cpu_seconds = 0.0
+            forward_calls = 0
+            processed_clips = 0
+            if profile_cuda:
+                torch.cuda.reset_peak_memory_stats()
             results = defaultdict(dict)
             feas = {'rgb': {}, 'keypoint': {}, 'rgb_blk5': {}, 'keypoint_blk5': {}}
             #load exist
@@ -286,7 +304,8 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                 rgb_weight, keypoint_weight, fuse_weight
             )
             logger.info(
-                f'window size: {win_size}, stride: {stride}, adaptive_stride: {adaptive_stride_cfg}, '
+                f'window size: {win_size}, stride: {stride}, sampling: {sampling_cfg}, '
+                f'adaptive_stride: {adaptive_stride_cfg}, '
                 f'prob_thr: {thr}, blank_thr: {blank_thr}, pred_src: {pred_src}, '
                 f'fusion_weights(rgb,keypoint,fuse)=({norm_rgb_w:.4f},{norm_keypoint_w:.4f},{norm_fuse_w:.4f})'
             )
@@ -306,9 +325,11 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                     stride=stride,
                     save_fea=save_fea,
                     adaptive_cfg=adaptive_stride_cfg,
+                    sampling_cfg=sampling_cfg,
                     return_starts=True,
                 )
                 video_s_lst, keypoint_s_lst = video_s.split(split_size, dim=0), keypoint_s.split(split_size, dim=0)  #S,W,C,H,W
+                processed_clips += len(window_starts)
                 
                 final_decode_op = []
                 all_decode_op = []
@@ -329,7 +350,19 @@ def evaluation_slide(model, cslr_dataloader, cfg,
                         sgn_keypoints = [k_s]
                         sgn_keypoints.append(sgn_keypoints[-1][:, win_size//4:win_size//4+win_size//2, ...].contiguous())
 
+                    if profile_cuda:
+                        start_event = torch.cuda.Event(enable_timing=True)
+                        end_event = torch.cuda.Event(enable_timing=True)
+                        start_event.record()
+                    elif profile_runtime:
+                        forward_start = time.perf_counter()
                     forward_output = model(is_train=False, labels=batch['labels'], sgn_videos=sgn_videos, sgn_keypoints=sgn_keypoints, epoch=epoch)
+                    if profile_cuda:
+                        end_event.record()
+                        forward_events.append((start_event, end_event))
+                    elif profile_runtime:
+                        forward_cpu_seconds += time.perf_counter() - forward_start
+                    forward_calls += 1
                     
                     gls_logits = select_gloss_logits(
                         forward_output,
@@ -602,6 +635,26 @@ def evaluation_slide(model, cslr_dataloader, cfg,
             #save
             if save_dir:
                 os.makedirs(save_dir, exist_ok=True)
+                if profile_runtime:
+                    if forward_events:
+                        torch.cuda.synchronize()
+                        model_forward_seconds = sum(
+                            start.elapsed_time(end) for start, end in forward_events
+                        ) / 1000.0
+                        peak_memory_bytes = int(torch.cuda.max_memory_allocated())
+                    else:
+                        model_forward_seconds = forward_cpu_seconds
+                        peak_memory_bytes = None
+                    runtime_profile = {
+                        'split': split,
+                        'samples': len(results),
+                        'clips': processed_clips,
+                        'model_forward_calls': forward_calls,
+                        'model_forward_seconds': model_forward_seconds,
+                        'peak_cuda_memory_allocated_bytes': peak_memory_bytes,
+                    }
+                    with open(os.path.join(save_dir, '{}_runtime_profile.json'.format(split)), 'w') as f:
+                        json.dump(runtime_profile, f, indent=2)
                 with open(os.path.join(save_dir, '{}_results.pkl'.format(split)), 'wb') as f:
                     pickle.dump(results, f)
                 with open(os.path.join(save_dir, '{}_evaluation_results.pkl'.format(split)), 'wb') as f:
@@ -709,6 +762,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", default="configs/default.yaml", type=str, help="Training configuration file (yaml).")
     parser.add_argument("--config_ex", default=None, type=str, help="Extra config")
     parser.add_argument("--save_subdir", default='prediction_slide', type=str)
+    parser.add_argument('--output_dir', default=None, type=str, help='Exact result directory override.')
     parser.add_argument('--ckpt_name', default='best.ckpt', type=str)
     parser.add_argument('--eval_setting', default='origin', type=str)
     parser.add_argument('--blank_thr', default=0.5, type=float)
@@ -719,6 +773,9 @@ if __name__ == "__main__":
     parser.add_argument('--adaptive_confidence_threshold', default=None, type=float)
     parser.add_argument('--adaptive_quantile_low', default=None, type=float)
     parser.add_argument('--adaptive_quantile_high', default=None, type=float)
+    parser.add_argument('--sampling_mode', default=None, choices=['fixed', 'uniform_rate', 'adaptive_motion'])
+    parser.add_argument('--fixed_stride', default=None, type=int)
+    parser.add_argument('--uniform_mean_stride', default=None, type=float)
     parser.add_argument('--span_weighted_voting', default=None, choices=[0, 1], type=int)
     parser.add_argument('--vote_span_frames', default=None, type=int)
     parser.add_argument('--span_min_weight', default=None, type=float)
@@ -750,6 +807,24 @@ if __name__ == "__main__":
     }
     adaptive_cfg.update({key: value for key, value in cli_adaptive_values.items() if value is not None})
     cfg['data']['adaptive_stride'] = adaptive_cfg
+    sampling_cfg = dict(cfg['data'].get('sampling', {}))
+    if args.sampling_mode is not None:
+        sampling_cfg['mode'] = args.sampling_mode
+    elif args.adaptive_stride is not None:
+        sampling_cfg['mode'] = 'adaptive_motion' if bool(args.adaptive_stride) else 'fixed'
+    if args.fixed_stride is not None:
+        if args.fixed_stride < 1:
+            raise ValueError('--fixed_stride must be at least 1')
+        sampling_cfg['fixed_stride'] = args.fixed_stride
+    if args.uniform_mean_stride is not None:
+        if args.uniform_mean_stride < 1.0:
+            raise ValueError('--uniform_mean_stride must be at least 1.0')
+        sampling_cfg['uniform_mean_stride'] = args.uniform_mean_stride
+    cfg['data']['sampling'] = resolve_sampling_config(
+        sampling_cfg,
+        fixed_stride=cfg['data'].get('stride', 1),
+        adaptive_config=adaptive_cfg,
+    )
     postprocess_cfg = dict(cfg.get('postprocess', {}))
     span_cfg = dict(postprocess_cfg.get('span_weighted_voting', {}))
     cli_span_values = {
@@ -834,7 +909,7 @@ if __name__ == "__main__":
             _, _ = evaluation_slide(model=model, cslr_dataloader=dataloader, cfg=cfg, 
                     epoch=epoch, global_step=global_step, 
                     generate_cfg=cfg['testing']['cfg'],
-                    save_dir=os.path.join(model_dir,args.save_subdir,split), 
+                    save_dir=args.output_dir or os.path.join(model_dir,args.save_subdir,split),
                     return_prob=True, return_others=False, model_ex=model_ex, split=args.split,
                     save_fea=bool(args.save_fea), pred_src=args.pred_src,
                     rgb_weight=args.rgb_weight, keypoint_weight=args.keypoint_weight,

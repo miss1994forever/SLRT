@@ -43,3 +43,17 @@ python -m torch.distributed.run --nproc_per_node 1 --master_port 29997 predictio
 This is the exact Online test command verified in this workspace after the layout cleanup.
 
 The flag `--save_fea` is optional and is mainly for exporting features to boost an offline model with the well-optimized online model. Use `--save_fea 0` for the first repeatable smoke test.
+
+## Registered adaptive-stride baselines
+
+The reproducible Phoenix baseline matrix is declared in `configs/experiments/phoenix_adaptive_baselines_v1.yaml`. It compares fixed stride 1/2/3, budget-matched uniform sampling, and frozen motion-adaptive sampling under controlled decoders. Run it from this directory:
+
+```bash
+CUDA_VISIBLE_DEVICES=GPU-<healthy-uuid> \
+python tools/run_adaptive_baseline_matrix.py \
+  --split dev --gpu-uuid GPU-<healthy-uuid> --repetitions 1
+
+python tools/evaluate_adaptive_baseline_matrix.py --split dev
+```
+
+See `../../docs/REPRODUCIBILITY.md` for manifest freezing, GPU exclusions, runtime repetitions, and guarded test evaluation.

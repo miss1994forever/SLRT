@@ -89,6 +89,59 @@ ALLOW_TEST=1 CUDA_VISIBLE_DEVICES=GPU-<healthy-uuid> \
 
 统一指标定义、版本关系和机器数据位置见 [RESULTS.md](RESULTS.md)。完整审计见 `code_agent_logs/2026-07-16/adaptive_stride_dev_tuning.md` 和 `adaptive_stride_frozen_final_evaluation.md`。test 结果不能用于回调 span 或阈值。
 
+### 5.1 注册基础对照矩阵（v1）
+
+新增基础对照使用 `configs/experiments/phoenix_adaptive_baselines_v1.yaml`，固定同一 Two-Stream S3D checkpoint，并注册 B0/B1/B2/B3/B4/A0。它不重新训练模型。B1 复用 B0 前向；B2 是与 A0 近似等窗口预算的确定性 uniform-rate 对照。
+
+先运行无 CUDA 测试和命令生成检查：
+
+```bash
+python -m unittest discover -s tests -p 'test_*.py' -v
+
+python tools/run_adaptive_baseline_matrix.py \
+  --split dev \
+  --variants B0_fixed1_window7 B2_uniform_rate_span15 A0_adaptive_span15 \
+  --max-samples 5 \
+  --output-root /tmp/phoenix_baseline_matrix_smoke \
+  --dry-run --skip-asset-hashes
+```
+
+正式 dev 前必须提交代码，使 manifest 记录干净 commit。首次命令生成所有注册资产的 hash，并将解析后的配置、完整命令和结果写入独立 run 目录：
+
+```bash
+CUDA_VISIBLE_DEVICES=GPU-<healthy-uuid> \
+python tools/run_adaptive_baseline_matrix.py \
+  --split dev --gpu-uuid GPU-<healthy-uuid> --repetitions 1
+
+python tools/evaluate_adaptive_baseline_matrix.py --split dev
+```
+
+性能重复测量使用同一协议，在新的输出根目录执行三次，避免与正确性 run 混写：
+
+```bash
+CUDA_VISIBLE_DEVICES=GPU-<healthy-uuid> \
+python tools/run_adaptive_baseline_matrix.py \
+  --split dev --gpu-uuid GPU-<healthy-uuid> --repetitions 3 \
+  --output-root results/phoenix-2014t_ISLR/baseline_matrix_v1_runtime
+```
+
+运行器拒绝脏工作树、缺失资产和已登记故障卡。`prediction_slide.py` 同时记录完整命令 wall time、模型前向累计时间与 PyTorch 峰值显存。统一评估器重新计算 WER，核对样本/参考、resolved config、decoder、预算约束，并输出 JSON/CSV/Markdown。
+
+test 只能使用 dev 阶段冻结的 manifest hash：
+
+```bash
+MANIFEST_SHA256=<sha256-of-protocol_manifest.json>
+CUDA_VISIBLE_DEVICES=GPU-<healthy-uuid> \
+python tools/run_adaptive_baseline_matrix.py \
+  --split test --gpu-uuid GPU-<healthy-uuid> \
+  --allow-test --frozen-manifest-sha256 "$MANIFEST_SHA256"
+
+python tools/evaluate_adaptive_baseline_matrix.py \
+  --split test --allow-test --frozen-manifest-sha256 "$MANIFEST_SHA256"
+```
+
+由于本项目历史上已经查看过 Phoenix test，该输出必须标为 retrospective control。完整设计和验收规则见 [基础对照实施计划](experiments/adaptive_stride/baseline_evaluation_plan.md)。
+
 ## 6. CSL-Daily Top-800 R1
 
 R1 是 isolated dev 的零训练可靠性诊断，不是自适应步长 WER 实验：

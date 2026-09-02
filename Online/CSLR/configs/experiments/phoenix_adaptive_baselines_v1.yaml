@@ -1,0 +1,119 @@
+protocol_version: 1
+experiment_id: phoenix_adaptive_baselines_v1
+dataset: Phoenix-2014T
+task: online_cslr
+training_required: false
+
+model:
+  framework: Online/CSLR isolated-window recognizer
+  architecture: TwoStream S3D
+  input_streams:
+    - rgb
+    - keypoint_heatmap
+  fusion: triplehead_cat_bilateral
+  backbone: S3D block5
+
+base_config: configs/slide_phoenix-2014t.yaml
+training_config: configs/phoenix-2014t_ISLR.yaml
+checkpoint: results/phoenix-2014t_ISLR/ckpts/best.ckpt
+checkpoint_epoch_expected: 92
+output_root: results/phoenix-2014t_ISLR/baseline_matrix_v1
+
+data_policy:
+  development_split: dev
+  development_samples: 519
+  development_reference_glosses: 3747
+  test_split: test
+  test_samples: 642
+  test_reference_glosses: 4259
+  test_is_pristine: false
+  test_label: retrospective_control
+  parameter_selection_from_test: false
+
+provenance_files:
+  - prediction_slide.py
+  - utils/adaptive_stride.py
+  - utils/window_sampling.py
+  - tools/run_adaptive_baseline_matrix.py
+  - tools/evaluate_adaptive_baseline_matrix.py
+  - configs/slide_phoenix-2014t.yaml
+  - configs/phoenix-2014t_ISLR.yaml
+  - ../../data/phoenix_2014t/phoenix14t.train
+  - ../../data/phoenix_2014t/phoenix14t.dev
+  - ../../data/phoenix_2014t/phoenix14t.test
+  - ../../data/phoenix_2014t/phoenix_iso_with_blank.vocab
+  - ../../data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.pkl
+  - ../../data/phoenix_2014t/PHOENIX2014T_videos.zip
+  - results/phoenix-2014t_ISLR/ckpts/best.ckpt
+
+common_inference:
+  prediction_source: ensemble
+  window_frames: 16
+  split_size: 16
+  probability_threshold: -1
+  blank_threshold: 0.5
+  random_seed: 321
+  save_features: false
+  profile_model_forward: true
+  span_kernel: triangular
+  span_min_weight: 0.05
+  span_frames: 15
+
+runtime_protocol:
+  correctness_repetitions: 1
+  benchmark_repetitions: 3
+  max_wall_time_cv_percent: 5.0
+  alternate_variants_by_repetition: true
+  full_command_wall_time: true
+
+variants:
+  B0_fixed1_window7:
+    sampling:
+      mode: fixed
+      fixed_stride: 1
+    span_weighted_voting: true
+    report_decoder: window_greedy_7
+    additional_report_decoders:
+      - span_weighted_15
+
+  B1_fixed1_span15:
+    reuse_forward_from: B0_fixed1_window7
+    report_decoder: span_weighted_15
+
+  B2_uniform_rate_span15:
+    sampling:
+      mode: uniform_rate
+      uniform_mean_stride: 1.4827861225574903
+    span_weighted_voting: true
+    report_decoder: span_weighted_15
+    budget_reference: A0_adaptive_span15
+    maximum_budget_difference_percent: 2.0
+
+  B3_fixed2_span15:
+    sampling:
+      mode: fixed
+      fixed_stride: 2
+    span_weighted_voting: true
+    report_decoder: span_weighted_15
+
+  B4_fixed3_span15:
+    sampling:
+      mode: fixed
+      fixed_stride: 3
+    span_weighted_voting: true
+    report_decoder: span_weighted_15
+
+  A0_adaptive_span15:
+    sampling:
+      mode: adaptive_motion
+      min_stride: 1
+      max_stride: 3
+      keypoint_confidence_threshold: 0.2
+      min_valid_keypoints: 4
+      ema_decay: 0.4
+      quantile_low: 0.2
+      quantile_high: 0.7
+      calibration_window_frames: 48
+      warmup_frames: 16
+    span_weighted_voting: true
+    report_decoder: span_weighted_15

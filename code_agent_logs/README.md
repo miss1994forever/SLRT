@@ -25,3 +25,4 @@
 
 - `2026-09-02/repository_cleanup.md`：目录、配置、README、复现脚本和 `main` 发布整理记录。
 - `2026-09-02/adaptive_stride_result_consistency_audit.md`：冻结结果、历史版本、机器产物与 runtime 口径核对。
+- `2026-09-02/adaptive_baseline_framework_implementation.md`：B0--B4/A0 协议、统一采样/评估框架和离线验收记录。
