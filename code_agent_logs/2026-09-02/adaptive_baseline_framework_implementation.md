@@ -26,7 +26,7 @@ python -m py_compile prediction_slide.py utils/window_sampling.py \
   tools/run_adaptive_baseline_matrix.py tools/evaluate_adaptive_baseline_matrix.py
 ```
 
-结果：24 个测试全部通过；4 个修改/新增入口均通过语法编译。
+初次实施结果为 24 个测试全部通过；补充 manifest/commit 一致性保护后为 25 个测试全部通过。4 个修改/新增入口均通过语法编译。
 
 矩阵 dry-run 使用 `/tmp/slrt_baseline_matrix_smoke_20260902`，成功为 B0/B2/A0 生成 manifest、resolved config 和命令，未初始化 CUDA、未执行模型。
 
@@ -55,3 +55,17 @@ uniform_mean_stride = 55,775 / 37,615 = 1.4827861225574903
 4. 完整执行 dev 正确性矩阵，首先核对 B0 是否复现 519 样本、3,747 reference gloss、55,775 clips 和 22.2311% WER；
 5. B0 通过后执行三次独立 runtime 矩阵并统一聚合；
 6. 不根据 test 调参，test 是否补跑另行决定并标注 retrospective control。
+
+## 后续执行状态
+
+框架首先提交为 `0dfcb2d feat: add frozen adaptive baseline framework`。随后正式 manifest 完成了包括 41,720,845,149 字节视频 zip 在内的完整资产哈希。最终审计时增加“当前 Git commit 必须等于 manifest commit”的强制校验，避免未来代码变化后误用旧 manifest；因此旧 manifest 仅作为预冻结记录，最终 manifest 需在保护补丁提交后重新生成。
+
+GPU smoke 未启动。检查结果：
+
+- 全局 `nvidia-smi` 无法与 NVIDIA 驱动通信；
+- 直接绑定历史健康卡 PCI `81:00.0` 的 UUID `GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631` 后，PyTorch 仍为 `torch.cuda.is_available() == False`、device count 0；
+- `/proc/driver/nvidia/version` 存在，版本为 580.126.20；
+- `lspci` 仍能看到 8 张 RTX 3090；
+- `/dev/nvidia*` 设备节点全部缺失。
+
+结论：阻塞位于宿主机驱动/设备节点层，不是实验代码、CUDA UUID 选择或 checkpoint 问题。设备节点恢复前不应启动任何 GPU 实验。

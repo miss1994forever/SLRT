@@ -1,4 +1,5 @@
 import importlib.util
+import copy
 import unittest
 from pathlib import Path
 
@@ -66,6 +67,18 @@ class BaselineProtocolTests(unittest.TestCase):
             "uniform_mean_stride"
         ]
         self.assertAlmostEqual(value, 55775 / 37615, places=12)
+
+    def test_manifest_commit_must_match(self):
+        manifest = runner.build_manifest(
+            runner.DEFAULT_PROTOCOL,
+            self.protocol,
+            hash_assets=False,
+        )
+        runner.validate_manifest_state(manifest, runner.DEFAULT_PROTOCOL, allow_dirty=True)
+        changed = copy.deepcopy(manifest)
+        changed["git"]["commit"] = "0" * 40
+        with self.assertRaisesRegex(ValueError, "differs from current commit"):
+            runner.validate_manifest_state(changed, runner.DEFAULT_PROTOCOL, allow_dirty=True)
 
 
 if __name__ == "__main__":

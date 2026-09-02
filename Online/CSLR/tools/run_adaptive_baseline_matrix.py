@@ -111,6 +111,18 @@ def validate_gpu_uuid(value, required=True):
     return value
 
 
+def validate_manifest_state(manifest, protocol_path, allow_dirty=False):
+    if manifest["protocol_sha256"] != sha256_file(protocol_path):
+        raise ValueError("protocol changed after manifest creation; use a new experiment ID/output root")
+    current_commit = git_value("rev-parse", "HEAD")
+    if manifest["git"]["commit"] != current_commit:
+        raise ValueError(
+            f"manifest commit {manifest['git']['commit']} differs from current commit {current_commit}"
+        )
+    if manifest["git"]["status_porcelain"] and not allow_dirty:
+        raise ValueError("manifest was created from a dirty worktree")
+
+
 def resolved_model_config(protocol, variant):
     base_path = resolve_path(protocol["base_config"])
     with base_path.open(encoding="utf-8") as handle:
@@ -210,8 +222,7 @@ def main():
         manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     else:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-        if manifest["protocol_sha256"] != sha256_file(protocol_path):
-            raise ValueError("protocol changed after manifest creation; use a new experiment ID/output root")
+        validate_manifest_state(manifest, protocol_path, allow_dirty=args.allow_dirty or args.dry_run)
 
     print(f"manifest={manifest_path}")
     print(f"manifest_sha256={sha256_file(manifest_path)}")

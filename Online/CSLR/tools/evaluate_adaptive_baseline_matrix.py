@@ -7,6 +7,7 @@ import hashlib
 import json
 import pickle
 import statistics
+import subprocess
 import sys
 from pathlib import Path
 
@@ -361,6 +362,11 @@ def main():
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if manifest["protocol_sha256"] != sha256_file(protocol_path):
         raise ValueError("protocol and manifest hashes differ")
+    current_commit = subprocess.check_output(
+        ["git", "rev-parse", "HEAD"], cwd=CSLR_ROOT, text=True
+    ).strip()
+    if manifest["git"]["commit"] != current_commit:
+        raise ValueError("current Git commit differs from the frozen manifest")
     if args.split == "test":
         if not args.allow_test or not args.frozen_manifest_sha256:
             raise ValueError("test evaluation requires --allow-test and --frozen-manifest-sha256")
