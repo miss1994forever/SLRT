@@ -2,7 +2,7 @@
 
 ## 状态
 
-R1 工具、预注册指标、单元测试和 CPU smoke 已完成；完整 13,077 样本 isolated dev 前向尚未启动，原因是节点 CUDA runtime 被 PCI `C1:00.0` 的 `Unknown Error` 阻塞。该状态不是模型、数据或新工具错误。
+R1 已于 2026-07-26 在完整 13,077 样本 isolated dev 上完成。此前记录的 CUDA 阻塞已解除；正式运行只绑定 PCI `81:00.0` 对应的 UUID `GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631`，没有使用已知故障卡 PCI `01:00.0` 和 `25:00.0`。详细结果见 `../2026-07-26/reliability_r1_results.md`。
 
 ## 数据隔离
 
@@ -44,18 +44,20 @@ Smoke 产物：
 - 因此当前节点上的所有 CUDA 进程初始化都不可用，不能通过改逻辑编号解决；
 - 未尝试重置 GPU，以免影响正在 `25:00.0` 和 `61:00.0` 上运行的其他任务。
 
-## CUDA 恢复后的唯一正式命令
+## 正式运行命令
 
-先确认故障卡恢复或已由管理员隔离，再选择一张空闲健康卡，并用 UUID 运行：
+命令从 `Online/CSLR` 目录执行。必须使用 UUID 绑定，以免 CUDA 逻辑编号变化导致误用故障卡：
 
 ```bash
-CUDA_VISIBLE_DEVICES=<HEALTHY_GPU_UUID> \
+CUDA_VISIBLE_DEVICES=GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631 \
 /mnt/workspace/conda_envs/haojun/envs/slrt_legacy/bin/python \
-  Online/CSLR/tools/reliability_dev_diagnostic.py \
+  tools/reliability_dev_diagnostic.py \
   --device cuda:0 \
   --batch-size 4 \
   --num-workers 2 \
-  --output-dir Online/CSLR/results/csl-daily-top-800_ISLR_full_stable/diagnostics/reliability_r1_dev
+  --output-dir results/csl-daily-top-800_ISLR_full_stable/diagnostics/reliability_r1_dev
 ```
 
-正式运行后不改变预注册指标。完整结果只决定是否进入 R2，不触碰 test。
+完整运行处理 3,270 个 batch、13,077 个样本，耗时 936.42 秒（15 分 36 秒），无 CUDA 或 OOM 错误。运行期间显存约 3,981 MiB，温度 51--53°C，利用率约 66--78%。没有训练、没有更新 checkpoint，也没有读取 test。
+
+注意：首次从仓库根目录启动时，旧版 `two_stream.py` 的相对预训练模型路径解析失败，尚未进入 GPU 前向。切换到 `Online/CSLR` 后按上面的同一配置重新运行成功；该问题不影响实验结果。
