@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "status": "frozen_final",
+  "dataset": "Phoenix-2014T",
+  "checkpoint": {
+    "path": "Online/CSLR/results/phoenix-2014t_ISLR/ckpts/best.ckpt",
+    "epoch": 92
+  },
+  "common_config": {
+    "model": "Online Two-Stream S3D",
+    "inputs": ["rgb", "hrnet_wholebody_keypoints"],
+    "prediction_source": "ensemble",
+    "window_frames": 16,
+    "split_size": 16,
+    "blank_threshold": 0.5,
+    "probability_threshold": -1
+  },
+  "adaptive_config": {
+    "min_stride": 1,
+    "max_stride": 3,
+    "keypoint_confidence_threshold": 0.2,
+    "min_valid_keypoints": 4,
+    "ema_decay": 0.4,
+    "quantile_low": 0.2,
+    "quantile_high": 0.7,
+    "calibration_window_frames": 48,
+    "warmup_frames": 16,
+    "decoder": "span_weighted",
+    "kernel": "triangular",
+    "vote_span_frames": 15,
+    "min_weight": 0.05
+  },
+  "dev": {
+    "samples": 519,
+    "reference_glosses": 3747,
+    "fixed": {
+      "decoder": "window_greedy_7",
+      "wer": 22.231118227915667,
+      "del": 10.274886575927409,
+      "ins": 3.469442220443021,
+      "sub": 8.486789431545236,
+      "errors": 833,
+      "clips": 55775,
+      "wall_time_seconds": 1450.60
+    },
+    "adaptive": {
+      "decoder": "span_weighted_15",
+      "wer": 22.41793434747798,
+      "del": 11.582599412863624,
+      "ins": 2.7755537763544167,
+      "sub": 8.059781158259941,
+      "errors": 840,
+      "clips": 37615,
+      "wall_time_seconds": 1084.18
+    },
+    "clip_reduction_percent": 32.55939040788884,
+    "wall_time_reduction_percent": 25.25989245829311,
+    "wall_time_speedup": 1.3379697098267813
+  },
+  "test": {
+    "samples": 642,
+    "reference_glosses": 4259,
+    "fixed": {
+      "decoder": "window_greedy_7",
+      "wer": 22.00046959380136,
+      "del": 9.250997886827895,
+      "ins": 3.498473820145574,
+      "sub": 9.250997886827895,
+      "errors": 937,
+      "clips": 64627,
+      "wall_time_seconds": 1547.29
+    },
+    "adaptive": {
+      "decoder": "span_weighted_15",
+      "wer": 23.05705564686546,
+      "del": 11.129373092274008,
+      "ins": 3.4280347499413007,
+      "sub": 8.499647804649449,
+      "errors": 982,
+      "clips": 43932,
+      "wall_time_seconds": 1141.08,
+      "stride_counts": {
+        "1": 30110,
+        "2": 6505,
+        "3": 7317
+      }
+    },
+    "wer_change_percentage_points": 1.0565860530641018,
+    "relative_wer_change_percent": 4.802561366061919,
+    "clip_reduction_percent": 32.022219815247496,
+    "wall_time_reduction_percent": 26.252997175707204,
+    "wall_time_speedup": 1.355987310267466
+  },
+  "runtime_definition": "single full-command wall-clock real time including initialization, data loading, inference, decoding, and result serialization",
+  "tracked_audit": "code_agent_logs/2026-07-16/adaptive_stride_frozen_final_evaluation.md"
+}

@@ -3,6 +3,7 @@
 ## 使用与复现
 
 - [REPOSITORY_LAYOUT.md](REPOSITORY_LAYOUT.md)：目录职责、命名和产物管理规则；
+- [RESULTS.md](RESULTS.md)：WER、窗口减少、runtime、版本配置和权威数据位置；
 - [REPRODUCIBILITY.md](REPRODUCIBILITY.md)：环境、数据、checkpoint、GPU 和完整实验命令；
 - [reproduction/csl_daily_top800_pipeline.md](reproduction/csl_daily_top800_pipeline.md)：Top-800 三阶段历史流程说明。
 

@@ -1,5 +1,7 @@
 # 2026-07-15 Online CSLR 自适应步长实现日志
 
+> 口径状态：实现阶段记录。本文中的 span-13 是当时的推荐初值；后续只用 dev 冻结的正式配置为 span-15。当前对外结果统一引用 `docs/RESULTS.md`。
+
 ## 目标
 
 依据 `docs/experiments/adaptive_stride/implementation_plan.md` 实现推理侧自适应步长优化。实现不修改模型结构、训练逻辑或 checkpoint；所有新增功能默认关闭，确保现有固定 stride=1 部署不会自动改变。

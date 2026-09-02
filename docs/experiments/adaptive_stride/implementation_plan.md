@@ -2,6 +2,8 @@
 
 > 实施状态（2026-07-16）：核心自适应采样、时间跨度加权投票、离线脚本与实时后端接口已经完成；默认保持关闭。调参前 span-13 历史完整对照中，Phoenix test 的 clip 减少 32.02%、运行时间减少 28.84%、WER 从 22.00 变为 22.73；该结果见 `code_agent_logs/2026-07-16/adaptive_stride_full_comparison.md`。随后只用 dev 冻结的 span-15 最终 test WER 为 23.0571，见 `code_agent_logs/2026-07-16/adaptive_stride_frozen_final_evaluation.md`。实现记录见 `code_agent_logs/2026-07-15/adaptive_stride_implementation.md`。会话级增量缓存仍待执行。
 
+> 统一口径（2026-09-02）：对外只引用 `docs/RESULTS.md` 的 span-15 冻结结果。下文 21.86/24.18/39.11% 来自实施前旧服务器材料，不属于当前仓库已核验的正式结果。
+
 ## 1. 目标与范围
 
 本方案用于在当前工作区重新实现 Online CSLR 的自适应步长改进，并将其接入 Sign2Text iOS App 的服务端推理链路。

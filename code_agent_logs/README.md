@@ -10,6 +10,8 @@
 
 ## 自适应步长冻结基线
 
+对外统一口径以 `docs/RESULTS.md` 为准；以下文件保留完整审计过程。
+
 - `2026-07-15/adaptive_stride_implementation.md`：实现与验证记录。
 - `2026-07-16/adaptive_stride_dev_tuning.md`：只使用 dev 的预注册调参记录。
 - `2026-07-16/adaptive_stride_full_comparison.md`：调参前 span-13 历史完整对照。
@@ -22,3 +24,4 @@
 ## 仓库维护
 
 - `2026-09-02/repository_cleanup.md`：目录、配置、README、复现脚本和 `main` 发布整理记录。
+- `2026-09-02/adaptive_stride_result_consistency_audit.md`：冻结结果、历史版本、机器产物与 runtime 口径核对。

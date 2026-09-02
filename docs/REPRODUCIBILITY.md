@@ -82,12 +82,12 @@ ALLOW_TEST=1 CUDA_VISIBLE_DEVICES=GPU-<healthy-uuid> \
 
 冻结结果：
 
-| 划分 | 固定 stride=1 WER | 自适应 WER | clips 变化 |
-|---|---:|---:|---:|
-| dev | 22.23% | 22.42% | -32.56% |
-| test | 22.0005% | 23.0571% | -32.02% |
+| 划分 | 固定 stride=1 WER | 自适应 WER | clips 变化 | command wall time 变化 |
+|---|---:|---:|---:|---:|
+| dev | 22.2311% | 22.4179% | -32.56% | -25.26% |
+| test | 22.0005% | 23.0571% | -32.02% | -26.25% |
 
-完整审计见 `code_agent_logs/2026-07-16/adaptive_stride_dev_tuning.md` 和 `adaptive_stride_frozen_final_evaluation.md`。test 结果不能用于回调 span 或阈值。
+统一指标定义、版本关系和机器数据位置见 [RESULTS.md](RESULTS.md)。完整审计见 `code_agent_logs/2026-07-16/adaptive_stride_dev_tuning.md` 和 `adaptive_stride_frozen_final_evaluation.md`。test 结果不能用于回调 span 或阈值。
 
 ## 6. CSL-Daily Top-800 R1
 
