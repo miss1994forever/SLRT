@@ -2,7 +2,9 @@
 
 set -euo pipefail
 
-DATA_DIR="/home/haojun/projects/SLRT/data/csl-daily"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+DATA_DIR="${DATA_DIR:-$ROOT_DIR/data/csl-daily}"
 ARCHIVE_BASENAME="csl-daily-frames-512x512.tar.gz"
 PARTIAL_ARCHIVE="${ARCHIVE_BASENAME}.partial"
 FRAME_DIR="sentence_frames-512x512"
@@ -97,14 +99,16 @@ printf '  created zip: %s (%s)\n' "$zip_bytes" "$(human_size "$zip_bytes")"
 stage "6/6" "Preparing keypoint files for Online and CTC_fusion"
 ln -sfn "$RAW_KEYPOINT_FILE" "$WHOLEBODY_FILE"
 
-source /opt/miniconda3/etc/profile.d/conda.sh
-conda activate slrt_legacy
+CONDA_SH="${CONDA_SH:-/opt/miniconda3/etc/profile.d/conda.sh}"
+CONDA_ENV="${CONDA_ENV:-slrt_legacy}"
+source "$CONDA_SH"
+conda activate "$CONDA_ENV"
 
-python - <<'PY'
+python - "$RAW_KEYPOINT_FILE" "$WHOLEBODY_ISO_FILE" <<'PY'
 import pickle
+import sys
 
-raw_path = '/home/haojun/projects/SLRT/data/csl-daily/csl-daily-keypoints.pkl'
-iso_path = '/home/haojun/projects/SLRT/data/csl-daily/keypoints_hrnet_dark_coco_wholebody_iso.pkl'
+raw_path, iso_path = sys.argv[1:3]
 
 with open(raw_path, 'rb') as handle:
     data = pickle.load(handle)

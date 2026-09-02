@@ -23,6 +23,8 @@ Online/CSLR/results/
 Online/CTC_fusion/results/
 Online/SLT/results/
 Online/CSLR/run_logs/
+artifacts/*
+!artifacts/README.md
 
 # Local datasets and extracted media
 data/

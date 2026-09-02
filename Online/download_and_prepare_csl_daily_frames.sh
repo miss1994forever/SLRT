@@ -2,8 +2,10 @@
 
 set -euo pipefail
 
-DATA_DIR="/home/haojun/projects/SLRT/data/csl-daily"
-LOCAL_SCRIPT="/home/haojun/projects/SLRT/Online/download_csl_daily_frames_from_baidu.local.sh"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+DATA_DIR="${DATA_DIR:-$ROOT_DIR/data/csl-daily}"
+LOCAL_SCRIPT="${LOCAL_SCRIPT:-$SCRIPT_DIR/download_csl_daily_frames_from_baidu.local.sh}"
 ARCHIVE_BASENAME="csl-daily-frames-512x512.tar.gz"
 FINAL_ZIP="sentence_frames-512x512.zip"
 FRAME_DIR="sentence_frames-512x512"

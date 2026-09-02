@@ -4,16 +4,16 @@ data:
   input_streams:
     - keypoint
     - rgb
-  keypoint_file: /home/haojun/projects/SLRT/data/csl-daily/keypoints_hrnet_dark_coco_wholebody_iso.pkl
+  keypoint_file: ../../data/csl-daily/keypoints_hrnet_dark_coco_wholebody_iso.pkl
   use_keypoints:
     - pose
     - mouth_half
     - hand
-  zip_file: /home/haojun/projects/SLRT/data/csl-daily
-  train: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl_iso_top800_center_label_bag2items_halfblk.train
-  dev: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl_iso_top800_with_blank.dev
-  test: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl_iso_top800_with_blank.test
-  vocab_file: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl_iso_with_blank.vocab
+  zip_file: ../../data/csl-daily
+  train: ../../data/csl-daily-top-800-all/csl_iso_top800_center_label_bag2items_halfblk.train
+  dev: ../../data/csl-daily-top-800-all/csl_iso_top800_with_blank.dev
+  test: ../../data/csl-daily-top-800-all/csl_iso_top800_with_blank.test
+  vocab_file: ../../data/csl-daily-top-800-all/csl_iso_with_blank.vocab
   dataset_name: csl_iso
   level: word
   txt_lowercase: true
@@ -43,8 +43,8 @@ testing:
       beam_size: 1
 training:
   overwrite: true
-  model_dir: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR_v2
-  load_ckpt: /home/haojun/projects/models/checkpoints/online_slrt/cslr_best.ckpt
+  model_dir: results/csl-daily-top-800_ISLR_v2
+  load_ckpt: ../../artifacts/checkpoints/online_slrt/cslr_best.ckpt
   random_seed: 321
   shuffle: true
   num_workers: 4
@@ -70,14 +70,14 @@ training:
 model:
   RecognitionNetwork:
     GlossTokenizer:
-      gloss2id_file: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/gloss2ids.pkl
+      gloss2id_file: ../../data/csl-daily-top-800-all/gloss2ids.pkl
     s3d:
-      pretrained_ckpt: /home/haojun/projects/SLRT/pretrained_models/s3ds_actioncls_ckpt
+      pretrained_ckpt: ../../pretrained_models/s3ds_actioncls_ckpt
       use_block: 5
       freeze_block: 0
     keypoint_s3d:
       in_channel: 0
-      pretrained_ckpt: /home/haojun/projects/SLRT/pretrained_models/s3ds_actioncls_ckpt
+      pretrained_ckpt: ../../pretrained_models/s3ds_actioncls_ckpt
       use_block: 5
       freeze_block: 0
     heatmap_cfg:

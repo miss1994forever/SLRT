@@ -2,7 +2,7 @@
 
 ## 目标
 
-依据 `SLRT/Online/ADAPTIVE_STRIDE_IMPLEMENTATION_PLAN.md` 实现推理侧自适应步长优化。实现不修改模型结构、训练逻辑或 checkpoint；所有新增功能默认关闭，确保现有固定 stride=1 部署不会自动改变。
+依据 `docs/experiments/adaptive_stride/implementation_plan.md` 实现推理侧自适应步长优化。实现不修改模型结构、训练逻辑或 checkpoint；所有新增功能默认关闭，确保现有固定 stride=1 部署不会自动改变。
 
 ## 实现选择
 

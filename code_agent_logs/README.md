@@ -6,6 +6,7 @@
 
 - `2026-05-29/future_research_directions.md`：Top-800 Online CSLR 后续研究方向；当前主线是 Reliability- and Boundary-Aware Online CSLR。
 - `2026-07-21/reliability_boundary_experiment_plan.md`：组合方向下一阶段实验入口与数据隔离规则。
+- `2026-07-26/reliability_r1_results.md`：Top-800 isolated dev 的完整 R1 结果与 R2 入口约束。
 
 ## 自适应步长冻结基线
 
@@ -15,3 +16,9 @@
 - `2026-07-16/adaptive_stride_frozen_final_evaluation.md`：dev 冻结 span-15 后的唯一最终 test 评估。
 
 冻结基线使用 Git tag `adaptive-stride-v1`。后续研究从 `research/reliability-boundary-online-cslr` 分支开展，不重写冻结基线历史。
+
+稳定复现入口已统一到 `docs/REPRODUCIBILITY.md`；本目录保留按日期形成的原始审计链，不再承担 README 快速开始功能。
+
+## 仓库维护
+
+- `2026-09-02/repository_cleanup.md`：目录、配置、README、复现脚本和 `main` 发布整理记录。

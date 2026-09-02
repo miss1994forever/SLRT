@@ -1,9 +1,9 @@
 task: G2T
 data:
   dataset_name: csl
-  dev: /home/haojun/projects/SLRT/Online/SLT/data_smoke/top800_g2t_from_subset32768/csl_pred_smoke.dev
-  test: /home/haojun/projects/SLRT/Online/SLT/data_smoke/top800_g2t_from_subset32768/csl_pred_smoke.test
-  train: /home/haojun/projects/SLRT/Online/SLT/data_smoke/top800_g2t_from_subset32768/csl_pred_smoke.train
+  dev: data_smoke/top800_g2t_from_subset32768/csl_pred_smoke.dev
+  test: data_smoke/top800_g2t_from_subset32768/csl_pred_smoke.test
+  train: data_smoke/top800_g2t_from_subset32768/csl_pred_smoke.train
   input_data: gloss
   level: char
   max_sent_length: 400
@@ -29,7 +29,7 @@ testing:
 training:
   batch_size: 2
   keep_last_ckpts: 1
-  model_dir: /home/haojun/projects/SLRT/Online/SLT/results/g2t_wait2_csl_top800_smoke_debug
+  model_dir: results/g2t_wait2_csl_top800_smoke_debug
   num_workers: 0
   optimization:
     betas:

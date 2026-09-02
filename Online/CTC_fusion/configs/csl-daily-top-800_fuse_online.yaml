@@ -1,11 +1,11 @@
 task: S2G
 data:
   input_data: videos #features, gloss
-  zip_file: /home/haojun/projects/SLRT/data/csl-daily
+  zip_file: ../../data/csl-daily
   input_streams:
     - keypoint
     - rgb
-  keypoint_file: /home/haojun/projects/SLRT/data/csl-daily/keypoints_hrnet_dark_coco_wholebody.pkl
+  keypoint_file: ../../data/csl-daily/keypoints_hrnet_dark_coco_wholebody.pkl
   use_keypoints:
     - pose
     - mouth_half
@@ -15,12 +15,12 @@ data:
   level: char #word or char
   txt_lowercase: true
   max_sent_length: 400
-  train: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl-daily-top-800.train
-  dev: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl-daily-top-800.dev
-  test: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl-daily-top-800.test
-  train_sgn_features: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR/prediction_slide/train/train_features.pkl
-  dev_sgn_features: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR/prediction_slide/dev/dev_features.pkl
-  test_sgn_features: /home/haojun/projects/SLRT/Online/CSLR/results/csl-daily-top-800_ISLR/prediction_slide/test/test_features.pkl
+  train: ../../data/csl-daily-top-800-all/csl-daily-top-800.train
+  dev: ../../data/csl-daily-top-800-all/csl-daily-top-800.dev
+  test: ../../data/csl-daily-top-800-all/csl-daily-top-800.test
+  train_sgn_features: ../CSLR/results/csl-daily-top-800_ISLR/prediction_slide/train/train_features.pkl
+  dev_sgn_features: ../CSLR/results/csl-daily-top-800_ISLR/prediction_slide/dev/dev_features.pkl
+  test_sgn_features: ../CSLR/results/csl-daily-top-800_ISLR/prediction_slide/test/test_features.pkl
   transform_cfg:
     img_size: 224
     aug_hflip: false
@@ -44,9 +44,9 @@ testing:
     recognition:
       beam_size: 5
 training:
-  load_ckpt: /home/haojun/projects/SLRT/Online/CTC_fusion/results/csl-daily-top-800_s2g/ckpts/best.ckpt
+  load_ckpt: results/csl-daily-top-800_s2g/ckpts/best.ckpt
   overwrite: true
-  model_dir: /home/haojun/projects/SLRT/Online/CTC_fusion/results/csl-daily-top-800_fuse_online
+  model_dir: results/csl-daily-top-800_fuse_online
   random_seed: 321
   shuffle: true
   num_workers: 4
@@ -72,14 +72,14 @@ training:
 model:
   RecognitionNetwork:
     GlossTokenizer:
-      gloss2id_file: /home/haojun/projects/SLRT/data/csl-daily-top-800-all/csl_s2g_gloss2ids.pkl
+      gloss2id_file: ../../data/csl-daily-top-800-all/csl_s2g_gloss2ids.pkl
     s3d:
-      pretrained_ckpt: /home/haojun/projects/SLRT/pretrained_models/s3ds_actioncls_ckpt
+      pretrained_ckpt: ../../pretrained_models/s3ds_actioncls_ckpt
       use_block: 4
       freeze_block: 1
     keypoint_s3d:
       in_channel: 0
-      pretrained_ckpt: /home/haojun/projects/SLRT/pretrained_models/s3ds_actioncls_ckpt
+      pretrained_ckpt: ../../pretrained_models/s3ds_actioncls_ckpt
       use_block: 4
       freeze_block: 0
     heatmap_cfg:

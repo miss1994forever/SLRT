@@ -7,16 +7,18 @@ if [[ "${1:-}" == "--force" ]]; then
   FORCE=1
 fi
 
-CONDA_SH="/opt/miniconda3/etc/profile.d/conda.sh"
-CONDA_ENV="slrt_legacy"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+CONDA_SH="${CONDA_SH:-/opt/miniconda3/etc/profile.d/conda.sh}"
+CONDA_ENV="${CONDA_ENV:-slrt_legacy}"
 
-BUILDER="/home/haojun/projects/build_csl_daily_subset.py"
-SRC_DIR="/home/haojun/projects/SLRT/TwoStreamNetwork/data/csl-daily"
-DST_DIR="/home/haojun/projects/SLRT/data/csl-daily-top-800-all"
-TARGET_GLOSS_FILE="/home/haojun/projects/sign2text.app/research/srtp-SLR/outputs/csl_daily_800_vocab/target_glosses_top_800.txt"
+BUILDER="${BUILDER:-$ROOT_DIR/../build_csl_daily_subset.py}"
+SRC_DIR="${SRC_DIR:-$ROOT_DIR/TwoStreamNetwork/data/csl-daily}"
+DST_DIR="${DST_DIR:-$ROOT_DIR/data/csl-daily-top-800-all}"
+TARGET_GLOSS_FILE="${TARGET_GLOSS_FILE:-$ROOT_DIR/artifacts/csl_daily_800_vocab/target_glosses_top_800.txt}"
 SUBSET_PREFIX="csl-daily-top-800"
 
-TRAIN_ASSET_DIR="/home/haojun/projects/SLRT/data/csl-daily"
+TRAIN_ASSET_DIR="${TRAIN_ASSET_DIR:-$ROOT_DIR/data/csl-daily}"
 FRAME_DIR_CANDIDATES=(
   "$TRAIN_ASSET_DIR/sentence_frames-512x512"
   "$TRAIN_ASSET_DIR/frames_512x512"
@@ -251,5 +253,5 @@ PY
 print_training_asset_status
 
 printf '\nReady commands:\n'
-printf '  bash %s\n' "/home/haojun/projects/SLRT/Online/prepare_csl_daily_top_800.sh"
-printf '  bash %s --force\n' "/home/haojun/projects/SLRT/Online/prepare_csl_daily_top_800.sh"
+printf '  bash %s\n' "$SCRIPT_DIR/prepare_csl_daily_top_800.sh"
+printf '  bash %s --force\n' "$SCRIPT_DIR/prepare_csl_daily_top_800.sh"

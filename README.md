@@ -1,70 +1,52 @@
-# Sign Language Processing
+# Online Sign Language Recognition for iOS
 
-This repo contains the official implementations of the following papers on sign language processing:
+本仓库基于 [FangyunWei/SLRT](https://github.com/FangyunWei/SLRT)，用于实时手语视频到文本的 iOS 应用研究。当前维护重点是 `Online/CSLR`：Two-Stream S3D 孤立词识别、滑窗在线连续识别、自适应步长，以及后续可靠性/边界感知实验。
 
-- [EMNLP 2024] Towards Online Continuous Sign Language Recognition and Translation [[Paper]](https://arxiv.org/abs/2401.05336v2) [[Code]](https://github.com/FangyunWei/SLRT/tree/main/Online)
+> 原始 SLRT 的论文列表、引用信息和各子项目入口保存在 [docs/UPSTREAM_README.md](docs/UPSTREAM_README.md)。本项目改动不代表原作者的官方结果。
 
-- [ECCV 2024] A Simple Baseline for Spoken Language to Sign Language Translation with 3D Avatars [[Paper]](https://arxiv.org/abs/2401.04730) [[Code]](https://github.com/FangyunWei/SLRT/tree/main/Spoken2Sign)
+## 当前实验主线
 
-- [CVPR 2023] Natural Language-Assisted Sign Language Recognition [[Paper]](https://arxiv.org/abs/2303.12080) [[Code]](https://github.com/FangyunWei/SLRT/tree/main/NLA-SLR)
+仓库中有两条不同的数据线，结果不能混用：
 
-- [CVPR 2023] CiCo: Domain-Aware Sign Language Retrieval via Cross-Lingual Contrastive Learning [[Paper]](https://arxiv.org/abs/2303.12793) [[Code]](https://github.com/FangyunWei/SLRT/tree/main/CiCo)
+| 实验 | 数据集与划分 | 任务 | 当前结论 |
+|---|---|---|---|
+| 自适应步长冻结基线 | Phoenix-2014T dev/test | 在线 CSLR，指标为 WER | test：固定步长 22.0005%，自适应 23.0571%；clips 减少 32.02% |
+| R1 可靠性诊断 | CSL-Daily Top-800 isolated dev | ISLR，指标为 accuracy/AUROC | Keypoint accuracy 66.28%；原始置信度直接选流无收益 |
 
-- [NeurIPS 2022] Two-Stream Network for Sign Language Recognition and Translation [[Paper]](https://arxiv.org/abs/2211.01367) [[Code]](https://github.com/FangyunWei/SLRT/tree/main/TwoStreamNetwork)
+因此，当前**尚未**得到 CSL-Daily Top-800 自适应步长 WER，也不能用 Top-800 R1 的分类准确率解释 Phoenix 的 WER。
 
-- [CVPR 2022] A Simple Multi-Modality Transfer Learning Baseline for Sign Language Translation [[Paper]](https://arxiv.org/abs/2203.04287) [[Code]](https://github.com/FangyunWei/SLRT/tree/main/TwoStreamNetwork)
+## 推荐入口
 
-## Citation
-Please cite our works if you find this repo is helpful.
+- [仓库结构与目录规范](docs/REPOSITORY_LAYOUT.md)
+- [环境、资产和实验复现](docs/REPRODUCIBILITY.md)
+- [文档索引](docs/README.md)
+- [Online CSLR 代码说明](Online/CSLR/README.md)
+- [配置索引](Online/CSLR/configs/README.md)
+- [实验日志索引](code_agent_logs/README.md)
+
+## 最小验证
+
+以下命令从仓库根目录执行：
+
+```bash
+(cd Online/CSLR && python -m unittest discover -s tests -p 'test_*.py' -v)
 ```
-@inproceedings{zuo2024towards,
-  title={Towards Online Continuous Sign Language Recognition and Translation},
-  author={Zuo, Ronglai and Wei, Fangyun and Mak, Brian},
-  booktitle={EMNLP},
-  year={2024}
-}
 
-@inproceedings{zuo2024simple,
-  title={A Simple Baseline for Spoken Language to Sign Language Translation with 3D Avatars},
-  author={Zuo, Ronglai and Wei, Fangyun and Chen, Zenggui and Mak, Brian and Yang, Jiaolong and Tong, Xin},
-  booktitle={ECCV},
-  year={2024}
-}
+需要 GPU 的复现实验必须用 UUID 显式绑定，不能依赖会变化的逻辑编号：
 
-@inproceedings{zuo2023natural,
-  title={Natural Language-Assisted Sign Language Recognition},
-  author={Zuo, Ronglai and Wei, Fangyun and Mak, Brian},
-  booktitle={CVPR},
-  year={2023}
-}
-
-@inproceedings{cheng2023cico,
-  title={CiCo: Domain-Aware Sign Language Retrieval via Cross-Lingual Contrastive Learning},
-  author={Cheng, Yiting and Wei, Fangyun and Jianmin, Bao and Chen, Dong and Zhang, Wen Qiang},
-  booktitle={CVPR},
-  year={2023}
-}
-
-@article{chen2022two,
-title={Two-Stream Network for Sign Language Recognition and Translation},
-  author={Chen, Yutong and Zuo, Ronglai and Wei, Fangyun and Wu, Yu and Liu, Shujie and Mak, Brian},
-  journal={NeurIPS},
-  year={2022}
-}
-
-@inproceedings{chen2022simple,
-  title={A simple multi-modality transfer learning baseline for sign language translation},
-  author={Chen, Yutong and Wei, Fangyun and Sun, Xiao and Wu, Zhirong and Lin, Stephen},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  pages={5120--5130},
-  year={2022}
-}
-
-@inproceedings{wei2023improving,
-  title={Improving Continuous Sign Language Recognition with Cross-Lingual Signs},
-  author={Wei, Fangyun and Chen, Yutong},
-  booktitle={Proceedings of the IEEE/CVF International Conference on Computer Vision},
-  pages={23612--23621},
-  year={2023}
-}
+```bash
+CUDA_VISIBLE_DEVICES=GPU-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx \
+  bash scripts/reproduce/reliability_r1_dev.sh
 ```
+
+本节点已知故障卡 PCI `01:00.0` 与 `25:00.0` 禁止使用。脚本也会拒绝两张已登记故障卡的 UUID。
+
+## 目录约定
+
+- 源码：保持在原 SLRT 子项目目录，当前项目代码集中在 `Online/`；
+- 配置：跟随对应组件放在 `<component>/configs/`；
+- 可复现说明：统一放在 `docs/`；
+- 历史实验记录：统一放在 `code_agent_logs/YYYY-MM-DD/`；
+- 数据、checkpoint、logits 和 `results/`：只保存在本地，不进入 Git。
+
+所有推荐命令都从对应组件目录运行，例如 `Online/CSLR`。推荐配置只使用仓库相对路径，克隆位置不需要固定为 `/home/haojun/projects/SLRT`。
