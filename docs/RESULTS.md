@@ -35,6 +35,23 @@ Dev 预注册候选的完整选择表：
 
 D1、D2 的 WER 增量都未超过预注册的 +0.75 pp 约束，因此按“满足精度约束后优先减少 clips”的规则选择 D2。
 
+### Dev：基础对照矩阵 v1（2026-09-03）
+
+在 commit `2393728` 上用统一采样/评估接口完成了B0--B4/A0全量dev正确性矩阵。所有变体使用同一checkpoint、519样本和3,747参考gloss；B1复用B0前向。
+
+| ID | 采样 | 解码 | WER | Clips | 单次wall time |
+|---|---|---|---:|---:|---:|
+| B0 | fixed stride=1 | window-greedy-7 | 22.2311% | 55,775 | 1680.61s |
+| B1 | fixed stride=1 | span-weighted-15 | 22.6048% | 55,775 | 复用B0 |
+| B2 | uniform rate=1.482786... | span-weighted-15 | 22.5514% | 37,706 | 1183.30s |
+| B3 | fixed stride=2 | span-weighted-15 | 22.8183% | 28,014 | 904.25s |
+| B4 | fixed stride=3 | span-weighted-15 | 22.9250% | 18,766 | 641.32s |
+| A0 | adaptive stride=1--3 | span-weighted-15 | 22.4179% | 37,615 | 1191.51s |
+
+B2与A0的clips只差0.242%，满足预注册的2%等预算约束。A0相对B2的WER低0.1334 pp，paired bootstrap 95% CI为[-0.6687,+0.4183] pp；区间跨0，不能声称统计显著的精度改善。相对同解码B1，A0减少32.56%窗口且WER低0.1868 pp，95% CI同样跨0。当前最稳妥结论是：A0以约三分之一的窗口减少保持相近WER，尚无证据证明运动自适应显著优于等预算均匀采样。
+
+这些wall time来自一次正确性运行，不替代3次同卡交替runtime benchmark。完整审计见`code_agent_logs/2026-09-03/phoenix_adaptive_baseline_matrix_dev.md`。
+
 ### Test：唯一冻结最终评估
 
 | 指标 | 固定基线 | 冻结自适应 | 变化 |
@@ -104,6 +121,7 @@ P1 与 P2 的采样配置相同，所以窗口数和步长分布相同。WER 差
 - Dev 固定 D0：`Online/CSLR/results/phoenix-2014t_ISLR/prediction_slide_dev_tune_d0_fixed_s16/dev/`
 - Dev max-stride=2 D1：`Online/CSLR/results/phoenix-2014t_ISLR/prediction_slide_dev_tune_d1_max2_s16/dev/`
 - Dev 冻结 D2：`Online/CSLR/results/phoenix-2014t_ISLR/prediction_slide_dev_tune_d2_max3_s16/dev/`
+- Dev 基础对照矩阵v1：`Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1/`，统一摘要位于其`aggregate/dev_summary.{json,csv,md}`。
 
 每个 test 目录中的 `*_evaluation_results.pkl` 保存 WER 分项，`*_results.pkl` 保存逐样本预测和步长 metadata。Dev span 扫描结果在 `dev_span_sweep.json`。可提交的统一机器摘要位于 [results/phoenix_adaptive_stride_summary.json](results/phoenix_adaptive_stride_summary.json)。
 
@@ -111,6 +129,6 @@ P1 与 P2 的采样配置相同，所以窗口数和步长分布相同。WER 差
 
 CSL-Daily Top-800 R1 是 isolated dev 可靠性诊断，报告 accuracy/AUROC，不报告连续识别 WER，也没有验证自适应步长。其数据位于 `Online/CSLR/results/csl-daily-top-800_ISLR_full_stable/diagnostics/reliability_r1_dev/`，摘要见 `code_agent_logs/2026-07-26/reliability_r1_results.md`。
 
-## 下一步基础对照
+## 下一步实验
 
-当前结果尚未消除采样器与解码器差异，也缺少固定stride和预算匹配均匀采样对照。下一步预注册实施协议见 [baseline_evaluation_plan.md](experiments/adaptive_stride/baseline_evaluation_plan.md)。在该矩阵完成前，不声称自适应策略优于相同计算预算的普通降采样。
+基础正确性对照已完成。下一步按 [baseline_evaluation_plan.md](experiments/adaptive_stride/baseline_evaluation_plan.md) 在同一健康GPU上交替重复至少3次runtime测量；仍不根据test调整A0。由于A0对等预算B2的dev WER差异不显著，后续算法改进应以可靠性/边界信息带来的可验证增益为目标，而不是把本矩阵解释成现有自适应采样已经显著优于均匀采样。
