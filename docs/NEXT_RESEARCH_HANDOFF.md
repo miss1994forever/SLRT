@@ -4,11 +4,34 @@
 
 仓库：`/mnt/workspace/projects/haojun/SLRT`
 
-当前冻结提交：`a57825d`
+研究冻结基线：`a57825d`（P1）
+
+文档整理基线：`298ff76`
 
 本文件只描述**当前状态和下一步**。P0/P1 启动时的历史计划不再混入当前任务；历史入口见
 [`archive/NEXT_RESEARCH_HANDOFF_PRE_P1_2026-09-12.md`](archive/NEXT_RESEARCH_HANDOFF_PRE_P1_2026-09-12.md)。
 若本文与实验日志冲突，以对应阶段冻结文档、机器索引和 protocol manifest 为准。
+
+## 0. 交给新对话时怎么用
+
+新对话不需要继承旧聊天记录。直接提供本文件绝对路径：
+
+```text
+/mnt/workspace/projects/haojun/SLRT/docs/NEXT_RESEARCH_HANDOFF.md
+```
+
+并发送：
+
+> 阅读该 handoff，核对仓库与本地资产状态。先提出 P2 train-only protocol，再实施更强的
+> 因果 sign-interior predictor；不得用 dev/test 做训练或选择，不得覆盖 A0/P0/P1。
+
+新对话开始后应先确认：
+
+- 工作目录使用 `/mnt/workspace/projects/haojun/SLRT`；
+- `/home/haojun/projects/SLRT` 只是同一目录的符号链接别名；
+- `git status --short --branch` 没有未知改动；
+- A0/P0/P1 的冻结文件和本地数据 hash 仍匹配；
+- 当前没有需要接管的运行进程，再决定是否启动新实验。
 
 ## 1. 当前研究状态
 
