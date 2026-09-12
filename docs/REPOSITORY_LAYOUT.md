@@ -10,7 +10,11 @@ SLRT/
 │       ├── tools/             # 只读诊断和离线评估工具
 │       ├── tests/             # 自适应步长与可靠性分析测试
 │       └── results/           # 本地产物，Git 忽略
-├── docs/                      # 面向使用者的稳定文档与复现入口
+├── docs/                      # 稳定文档、当前 handoff 与复现入口
+│   ├── experiments/          # 尚未执行或历史实验设计
+│   ├── reproduction/         # 专项复现说明
+│   ├── results/              # compact 机器可读冻结索引
+│   └── archive/              # 已被替代的计划/交接摘要
 ├── scripts/reproduce/         # 可复现实验脚本
 ├── code_agent_logs/YYYY-MM-DD # 按日期保存的实施和实验审计记录
 ├── data/                      # 本地数据，Git 忽略
@@ -33,8 +37,18 @@ SLRT/
 
 - 稳定说明：放入 `docs/`，使用含义明确的英文文件名；
 - 实验日志：`code_agent_logs/YYYY-MM-DD/<topic>.md`；
-- 机器产物：放入 `results/`，不提交 CSV、PKL、logits、checkpoint 或运行日志；
+- 机器产物：放入组件 `results/`，默认不提交 CSV、PKL、logits、checkpoint 或运行日志；阶段
+  冻结时只通过 `.gitignore` 精确白名单保留 compact config、manifest、aggregate 和必要小模型；
 - 本地密钥、下载链接和机器专用脚本：使用 `*.local.sh`，不提交。
+
+## 文档生命周期
+
+1. `docs/NEXT_RESEARCH_HANDOFF.md` 只描述当前状态和下一步，不累积已经完成的启动计划；
+2. 已验证的阶段结论写入独立冻结文档，文件名包含阶段和版本；
+3. 跨阶段数字只在 `docs/RESULTS.md` 汇总，机器索引统一放 `docs/results/`；
+4. 实施过程和原始审计写入 `code_agent_logs/YYYY-MM-DD/`，不复制成第二份权威总结；
+5. 被替代但仍需显式追踪的 handoff/计划只保留摘要到 `docs/archive/`，完整旧文由 Git 历史保存；
+6. 上游子项目 README、已冻结文档和已有结果目录不为美观而移动或重命名。
 
 ## 兼容策略
 

@@ -2,6 +2,18 @@
 
 本目录保存与仓库提交对应的实现、诊断和实验记录。大体积 checkpoint、logits、视频和 `results/` 不进入 Git；记录中保留配置、命令、指标和结果路径。
 
+当前状态不要从日期日志猜测。统一从 `docs/README.md` 进入，当前任务看
+`docs/NEXT_RESEARCH_HANDOFF.md`，最终数字看 `docs/RESULTS.md`。日期日志是原始审计链，不是
+最新结论覆盖层。
+
+## 当前冻结阶段
+
+- A0：`docs/ADAPTIVE_BASELINE_V1.md`；
+- P0：`docs/P0_SCHEDULE_DIAGNOSTICS_V1.md`，调度诊断与 sign-center offline oracle；
+- P1：`docs/P1_CAUSAL_CENTER_PREDICTOR_V1.md`，train-only 最小因果 center predictor No-Go；
+- 对应机器索引：`docs/results/README.md`；
+- P0/P1 以前的 handoff 历史：`docs/archive/README.md`。
+
 ## 研究路线
 
 - `2026-05-29/future_research_directions.md`：Top-800 Online CSLR 后续研究方向；当前主线是 Reliability- and Boundary-Aware Online CSLR。
@@ -35,3 +47,10 @@
 - `2026-09-10/adaptive_vs_equal_budget_wer_analysis.md`：逐样本、句长、视频长度和 schedule 对比 A0 与等预算 B2，解释 WER 接近的证据、机制与下一步最小实验。
 - `2026-09-10/adaptive_baseline_freeze_audit.md`：核对配置、manifest、代码与修复后结果，并冻结 A0 v1 和 B0--B4 对照身份。
 - `2026-09-10/next_research_handoff_consolidation.md`：将冻结基线、数据恢复、结果归档和下一阶段 P0 实验收束为新工作对话 hand-off。
+
+## 维护规则
+
+- 新实施记录放入当天目录，不在根目录新增散落的 topic 文档；
+- 阶段完成后更新 `docs/RESULTS.md`、当前 handoff 和一个版本化冻结文档；
+- 同一结论不同时维护多份 summary；旧日志保持原样，由索引说明其历史身份；
+- 可复现脚本放 `scripts/reproduce/`，日志目录中的旧脚本只作为历史运行证据保留。

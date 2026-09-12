@@ -1,207 +1,123 @@
-# 下一阶段研究交接：Reliability- and Boundary-Aware Online CSLR
+# 下一阶段研究交接：P1 之后
 
-更新时间：2026-09-10
+更新时间：2026-09-12
 
-> **状态更新（2026-09-12）：** 本文规划的 P0 已完成并冻结。权威结论见
-> `docs/P0_SCHEDULE_DIAGNOSTICS_V1.md` 与
-> `docs/results/phoenix_p0_schedule_diagnostics_v1_frozen.json`。本文第 8--10 节保留为
-> P0 启动时的历史计划，不再表示待执行事项。下一步是只使用 train 构造并校准最小
-> causal sign-center predictor，继续以 repaired dev 评估；仍不得读取 test。
+仓库：`/mnt/workspace/projects/haojun/SLRT`
 
-> **P1 状态更新（2026-09-12）：** 最小 train-only causal center predictor 已完成并冻结为
-> No-Go。权威结论见 `docs/P1_CAUSAL_CENTER_PREDICTOR_V1.md` 与
-> `docs/results/phoenix_p1_causal_center_predictor_v1_frozen.json`。固定 11 维关键点统计逻辑
-> 回归在 calibration 上的最大 center recall 仅 17.83%，无法满足 recall ≥75% 且正延迟
-> ≤25% 的 gate；因此没有运行 scheduler，也没有新的 WER。后续不要在 dev 上继续调该阈值，
-> 应建立更强时序表征的新版本，或转向 window/decoder 与模态计算门控。
+当前冻结提交：`a57825d`
 
-本文件用于开启新的工作对话。它冻结已经完成的 Phoenix-2014T 自适应步长 v1，说明历史结果边界，并把下一阶段限定为只使用 dev 的可靠性/边界诊断。若本文与早期日志冲突，以本文、`ADAPTIVE_BASELINE_V1.md` 和机器可读 frozen JSON 为准。
+本文件只描述**当前状态和下一步**。P0/P1 启动时的历史计划不再混入当前任务；历史入口见
+[`archive/NEXT_RESEARCH_HANDOFF_PRE_P1_2026-09-12.md`](archive/NEXT_RESEARCH_HANDOFF_PRE_P1_2026-09-12.md)。
+若本文与实验日志冲突，以对应阶段冻结文档、机器索引和 protocol manifest 为准。
 
-## 1. 新对话的研究问题
+## 1. 当前研究状态
 
-下一阶段不是继续微调 motion-only 步长，也不是立即运行 test，而是回答：
-
-> 在与 uniform 相同的模型前向预算下，能否利用因果的边界、预测变化和跨模态可靠性信号，把窗口放到更有识别价值的位置？
-
-当前方向为 **Reliability- and Boundary-Aware Online CSLR**。先完成无需新训练的 boundary/oracle 诊断，再决定是否实现轻量 boundary/signness head 或可靠性校准器。
-
-## 2. 仓库与工作树状态
-
-- 仓库：`/mnt/workspace/projects/haojun/SLRT`
-- 分支：`main`
-- 当前 HEAD：`65c88e5d9686fe338f151890dc07878809abd94b`
-- `main` 相对 `origin/main`：ahead 5
-- 当前有一组尚未提交、彼此关联的冻结/恢复/归档/hand-off 修改。新对话开始后先运行 `git status --short --branch`，不要 reset、覆盖或拆散这些改动。
-- 本 hand-off 建立时没有正在运行的 GPU 实验。
-
-当前变更包含：A0 v1 冻结文档与 frozen JSON；数据完整性和 61 帧恢复；修复后 dev 矩阵与三重复 runtime；修复前结果归档；A0/B2 逐样本分析；README、RESULTS、REPRODUCIBILITY 和 `.gitignore` 统一更新。开始新算法前建议审阅 diff，并在用户授权后把整组变更作为“冻结已有基线”提交。
-
-## 3. 数据线不可混用
-
-| 数据线 | 任务与指标 | 当前用途 |
+| 阶段 | 冻结结论 | 权威文档 |
 |---|---|---|
-| Phoenix-2014T | Online CSLR，WER | A0 及下一阶段边界调度主线 |
-| CSL-Daily Top-800 | ISLR，accuracy/AUROC | R1 跨模态可靠性诊断 |
+| A0 自适应步长 | 约减少三分之一窗口，但未显著优于等预算 uniform | [`ADAPTIVE_BASELINE_V1.md`](ADAPTIVE_BASELINE_V1.md) |
+| P0 调度诊断 | boundary/prediction-change No-Go；label-derived sign-center 是 offline Strong-Go | [`P0_SCHEDULE_DIAGNOSTICS_V1.md`](P0_SCHEDULE_DIAGNOSTICS_V1.md) |
+| P1 最小因果 center predictor | 11 维廉价关键点统计无法通过检测 gate，No-Go | [`P1_CAUSAL_CENTER_PREDICTOR_V1.md`](P1_CAUSAL_CENTER_PREDICTOR_V1.md) |
 
-当前不存在“Top-800 自适应步长 WER”。不要用 Top-800 分类准确率解释 Phoenix WER。
+统一数字与声明边界见 [`RESULTS.md`](RESULTS.md)，机器可读索引见
+[`results/README.md`](results/README.md)。
 
-## 4. 已冻结的 A0 v1
+## 2. P1 留下的决定性事实
 
-权威定义：`docs/ADAPTIVE_BASELINE_V1.md`
-机器索引：`docs/results/phoenix_adaptive_baseline_v1_frozen.json`
+P0 的 50% dense budget、span-15 offline midpoint proxy 将 WER 从 `23.058447%` 降到
+`21.537230%`，少 57 errors。这只是 label/alignment-derived oracle 上界，不是可部署模型。
 
-### 4.1 不可变身份
+P1 只用 train 拟合和校准严格因果逻辑回归：
 
-| 项目 | 冻结值 |
-|---|---|
-| 数据 / split | 修复后 Phoenix-2014T dev |
-| 样本 / 清洗后参考 gloss | 519 / 3,747 |
-| 视频 ZIP SHA-256 | `49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457` |
-| checkpoint | `Online/CSLR/results/phoenix-2014t_ISLR/ckpts/best.ckpt`，epoch 92 |
-| checkpoint SHA-256 | `b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b` |
-| 模型 | Online/CSLR Two-Stream S3D block5，RGB + HRNet WholeBody keypoint heatmap |
-| 窗口 | 16 帧 |
-| 协议 | `Online/CSLR/configs/experiments/phoenix_adaptive_baselines_v1.yaml` |
-| 协议 SHA-256 | `3d583b1430def1ae0b517c79bf66abc8dae9528118b325c58620fd83e22f9f65` |
-| 修复后 manifest SHA-256 | `2e6889ec14777d938a3c7ac9265ab97f87118523e9258f5f93beba4b3e854b8f` |
+- calibration AUROC `0.5452`，AUPRC `0.2203`（prevalence `0.2016`）；
+- 任意阈值最大 center recall 只有 `17.83%`，此时 positive delay 为 `33.42%`；
+- 满足 positive delay ≤25% 时，最大 recall 只有 `2.37%`；
+- 预注册 gate 为 recall ≥75% 且 positive delay ≤25%；
+- gate 失败，因此没有选择阈值、没有 scheduler replay、没有新 WER；
+- 模型正常收敛，失败原因是表征能力，不是 CPU 或程序错误；
+- pre-dev freeze 后只做了一次 dev threshold-free detection，没有用 dev 改模型；
+- P1 从未打开或运行 test-only 文件。
 
-A0 是因果关键点运动调度：stride 1--3、EMA 0.4、分位数 0.2/0.7、历史 48 帧、warmup 16 帧、关键点阈值 0.2、至少 4 个有效点；解码为 triangular span-15、minimum weight 0.05。它只改变在线推理调度，不改变模型权重。
+不要继续在 dev 上微调 P1 的逻辑回归阈值，也不要把 P0 oracle WER 写成 P1 成绩。
 
-### 4.2 对照
+## 3. 不可变实验身份
 
-| ID | 采样 | 解码 | 角色 |
-|---|---|---|---|
-| B0 | fixed stride 1 | window-greedy-7 | 原工程完整预算基线 |
-| B1 | fixed stride 1，复用 B0 logits | span-weighted-15 | 隔离解码器变化 |
-| B2 | uniform rate `1.4827861225574903` | span-weighted-15 | A0 等窗口预算基线 |
-| B3 | fixed stride 2 | span-weighted-15 | 固定效率点 |
-| B4 | fixed stride 3 | span-weighted-15 | 固定效率点 |
-| A0 | causal adaptive stride 1--3 | span-weighted-15 | motion-only 冻结方法 |
+- 数据：修复后 Phoenix-2014T；dev 519 个样本、55,775 帧、3,747 个清洗后 reference gloss；
+- 视频 ZIP SHA-256：`49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457`；
+- checkpoint SHA-256：`b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b`；
+- 主窗口/解码：16-frame centered window、triangular span-weighted-15；
+- A0/B2 及 P0 坐标、预算和清洗规则保持冻结；
+- 改变数据、checkpoint、窗口、decoder 或 target 时必须建立新版本，不能覆盖已有目录。
 
-后续新方法至少保留 B0、B1、B2、A0。改变数据 hash、checkpoint、窗口、解码、清洗规则或 A0 参数时必须建立新版本和 manifest，不能覆盖 v1。
+关键点已经受控拆分：
 
-## 5. 修复后权威结果
+| split | 视频 | 帧 | SHA-256 前缀 | 后续用途 |
+|---|---:|---:|---|---|
+| train-only | 7,096 | 827,354 | `18a045bf` | 拟合与内部 calibration |
+| dev-only | 519 | 55,775 | `85d1f0e2` | train 方案冻结后评估 |
+| test-only | 642 | 64,627 | `5cb767b9` | 当前阶段禁止使用 |
 
-### 5.1 Dev 正确性
+大型 pickle 保持本地、不得提交。拆分完整性与完整哈希已冻结在 P1 文档和机器索引中。
 
-| ID | WER | DEL / INS / SUB（错误数） | errors / ref | clips |
-|---|---:|---:|---:|---:|
-| B0 | 22.231118% | 385 / 130 / 318 | 833 / 3,747 | 55,775 |
-| B1 | 22.604750% | 422 / 124 / 301 | 847 / 3,747 | 55,775 |
-| B2 | 22.551374% | 425 / 121 / 299 | 845 / 3,747 | 37,706 |
-| B3 | 22.818255% | 425 / 128 / 302 | 855 / 3,747 | 28,014 |
-| B4 | 22.925007% | 437 / 121 / 301 | 859 / 3,747 | 18,766 |
-| A0 | 22.417934% | 434 / 104 / 302 | 840 / 3,747 | 37,615 |
+## 4. 下一步候选
 
-A0 相对 B0：WER `+0.186816 pp`，clips `-32.559%`。A0 相对 B2：WER `-0.133440 pp`，只净少 5 个错误；paired bootstrap 95% CI `[-0.668713,+0.418291] pp`，跨 0，不能宣称显著优于 uniform。
+### 推荐主线：P2 更强的因果 center/interior 表征
 
-### 5.2 三重复 runtime
+目标不是继续调整阈值，而是验证更有信息量的视觉表示能否接近 P0 门槛。优先顺序：
 
-同一健康 RTX 3090（PCI `81:00.0`）交替运行三次：
+1. 左右手分离的速度、加速度、手间距离和相对躯干坐标；
+2. 局部手形/姿态变化和置信度变化，而不是只用整体运动中位数；
+3. 固定短历史的 causal temporal head；若使用 lookahead，必须明确建立 bounded-lookahead 版本；
+4. 先在 train fit/calibration 报告 center/event detection，再决定是否打开 dev；
+5. 只有 train calibration gate 通过，才连接 50% budget、span-15 scheduler。
 
-| ID | wall median | wall CV | forward median | 备注 |
-|---|---:|---:|---:|---|
-| B0 | 1642.57 s | 0.525% | 1036.95 s | 三重复 |
-| B2 | 1133.10 s | 0.114% | 702.72 s | 三重复 |
-| A0 | 1158.29 s | 0.771% | 701.09 s | 三重复 |
+新版本必须在读取 dev 前冻结：特征、归一化、模型、训练轮数、threshold grid、event emission、
+refractory period、匹配规则和 gate。不得使用 gloss identity 或 reference token 作为预测输入。
 
-A0 相对 B0：wall `-29.483%`、`1.418x`；model forward `-32.390%`、`1.479x`。A0 相对 B2：模型前向近似相同（A0 `-0.232%`），但 wall 多 `2.224%`，所以当前调度没有端到端速度优势。B1 复用 B0；B3/B4 只有单次时间，不能与三重复统计混称。
+### 备选主线：window/decoder 或模态计算门控
 
-### 5.3 权威机器结果
+如果更强 P2 仍无法定位 sign interior，应停止继续堆 center head，转而检查：
 
-- 正确性：`Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/aggregate/dev_summary.json`
-- 三重复 runtime：`Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_runtime_49faacc3/aggregate/dev_summary.json`
-- `/tmp` 中的完整 runtime 产物不是长期权威存储；新对话不要依赖其仍然存在。
+- centered 16-frame window 和 span-15 是否抹平了调度差异；
+- causal/bounded-lookahead window 的精度—延迟曲线；
+- RGB/keypoint 两流是否应按可靠性选择性计算，而不是只改变时间采样；
+- 固定等预算下 decoder 对窗口位置的敏感度。
 
-## 6. 数据恢复与历史边界
+这些方向必须新建协议，不能用 P0/P1 的 oracle 或 threshold-free detection 代替真实调度结果。
 
-原 ZIP 缺 61 帧（train 54、dev 7、test 0），已从原始 release tar 全部恢复。修复后 947,756 张预期 PNG 全部存在，缺失/额外/重复/零字节为 0，全量 CRC 通过。
+## 5. 数据与 test 边界
 
-- 修复前 hash：`81629b2f3879a189613d87dafcbe04fa5053315ea9f9cfdb2f855d7a35007e30`
-- 修复后 hash：`49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457`
-- 恢复日志：`code_agent_logs/2026-09-08/phoenix_video_frame_recovery.md`
-- 修复前结果索引：`Online/CSLR/results/_archive/phoenix_pre_repair_81629b2f/`
+- train 用于模型拟合；train 内按 source video 划分 calibration；
+- dev 只能在训练侧方案冻结后评估，不得循环查看并改规则；
+- P1 的 test-only 文件未使用；
+- 仓库存在更早的修复前 historical retrospective test 结果，说明 test 在历史上已被查看；它们
+  不能用于当前选择，也不能改称修复后正式 test；
+- alignment-derived midpoint 是 proxy，不是人工逐帧标注。
 
-修复前 13 个完整结果、4 个空/中断目录和 16 个日志已通过 inventory 与相对符号链接标记；原文件没有移动或复制。
+## 6. GPU 与存储
 
-历史 test（fixed 22.0005%、A0 23.0571%）绑定修复前资产。虽然 test split 缺帧为 0，但 test 已被查看，只能作为 **historical retrospective control**。尚未用修复后 manifest 运行新的 test。不得用 test 选择方法、阈值或预算，也不得把旧 test 改称修复后正式结果。
+已知故障 GPU：PCI `01:00.0` 和 `25:00.0`，禁止使用。需要 GPU 时先现场检查，再用健康卡
+UUID 单卡绑定，不能依赖逻辑编号。廉价 CPU 审计不需要为了形式切换 GPU；真正的时序 head
+训练可使用健康 GPU。
 
-train keypoints 仍有 9 个样本、13 个非有限 x/y 标量。如果下一阶段重新训练 ISLR，必须先冻结清洗、重提取或 fail-fast 方案。
+NFS 长期接近 99% 使用率。大型特征、logits 和临时模型写入 `/tmp`；最终必须把 compact
+manifest、config、aggregate、必要模型参数和日志持久化，不能把唯一结论留在 `/tmp`。
 
-## 7. A0 与等预算 B2 为什么接近
+## 7. 新任务启动清单
 
-报告：`code_agent_logs/2026-09-10/adaptive_vs_equal_budget_wer_analysis.md`
+1. 检查 `git status --short --branch` 和 `git diff --check`，不要 reset 用户改动；
+2. 阅读本文件、P1 冻结文档、P0 冻结文档和 `RESULTS.md`；
+3. 复核数据/模型 hash，不覆盖现有 `model_dir`；
+4. 先写 P2 train-only protocol 和输出目录；
+5. 先完成 train fit/calibration，gate 通过后才允许一次性 dev；
+6. 当前阶段禁止 test。
 
-- 393/519 句（75.7%）的 hypothesis 完全相同；A0 胜 45 句，B2 胜 39 句；
-- A0 改善 48 个错误、恶化 43 个，净改善只有 5 个；
-- 6--15 词句子占 81% 参考词且同样持平，不能简单归因于句子短；
-- A0/B2 中心精确 Jaccard 约 0.52，但 A0 中心距最近 B2 中心平均仅 0.314 帧、最大 1 帧；
-- 相差 1 帧的 16 帧窗口共享 15/16 输入，再经 span-15 投票平滑；
-- A0 只利用运动量，没有显式优化边界、blank 转换、不确定性或跨模态可靠性。
+建议首条任务：
 
-结论不是“WER 不受步长影响”，而是当前 motion-only A0 没有稳定地把等量计算放到比 uniform 更有价值的位置。
+> 基于冻结 P1，设计 P2 train-only 因果 sign-interior predictor。增强左右手与短历史表征，先
+> 冻结特征、训练、校准、事件与 gate 协议；不得读取 dev/test 做选择，不得覆盖 A0/P0/P1。
 
-## 8. 新对话的下一步实验
+## 8. 可声明与不可声明
 
-### P0：无训练、只用 dev 的诊断
-
-1. 分解 A0 相对 B2 多出的 2.224% wall time：运动计算、调度、加载和后处理；
-2. 增加等预算 random 多 seed，判断差异是否低于普通采样方差；
-3. 构造仅用于诊断的 boundary oracle 和 prediction-change oracle，与 B2/A0 严格等预算；
-4. 计算窗口到 gloss boundary、blank/non-blank 转换和高损失区域的距离与命中率；
-5. 输出决策：存在可利用 oracle 上界，或当前窗口/解码下优化空间很小。
-
-不要先增加新的启发式步长。若 oracle 无收益，先重审窗口、解码或任务定义；若 oracle 明显优于 B2，再进入 P1。
-
-### P1--P3
-
-- P1：人工审计一批 alignment，优先定义可复现的 `signness + event end` 或 center-offset target；先报告 boundary F1/endpoint error，再接 scheduler。
-- P2：可靠性必须在 train/calibration split 校准。Top-800 R1 中 Keypoint accuracy 66.28%，未校准 direct-confidence 选流仅 63.86%，禁止直接“谁 confidence 高选谁”。
-- P3：最终比较 B0/B1/B2/A0、boundary-only、reliability-only 和完整组合；所有选择只用 dev。
-
-参考研究文档：`code_agent_logs/2026-05-29/future_research_directions.md` 与 `code_agent_logs/2026-07-21/reliability_boundary_experiment_plan.md`。
-
-## 9. GPU 与存储约束
-
-禁止使用：
-
-| PCI | UUID |
-|---|---|
-| `01:00.0` | `GPU-dbd35875-dfa5-43f1-0cf0-f88ccb529c8a` |
-| `25:00.0` | `GPU-06afe121-c4ce-b981-bb86-399e4a85ae83` |
-
-此前健康卡为 PCI `81:00.0` / `GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631`，但每次仍需现场验证。始终用单个 UUID 绑定，不使用逻辑 index。
-
-本文建立时 NFS 使用率约 99%、剩余约 139 GiB；`/tmp` 剩余约 320 GiB。大型 logits/中间结果写 `/tmp`，最终只把 manifest、resolved config、runtime、aggregate、必要预测和日志持久化到 NFS；不能把唯一结果留在 `/tmp`。
-
-## 10. 新对话启动清单
-
-先执行：
-
-```bash
-cd /mnt/workspace/projects/haojun/SLRT
-git status --short --branch
-git diff --check
-python3 -m json.tool docs/results/phoenix_adaptive_baseline_v1_frozen.json >/dev/null
-df -h /mnt/workspace/projects/haojun /tmp
-```
-
-然后按顺序阅读：
-
-1. `docs/NEXT_RESEARCH_HANDOFF.md`
-2. `docs/ADAPTIVE_BASELINE_V1.md`
-3. `code_agent_logs/2026-09-10/adaptive_vs_equal_budget_wer_analysis.md`
-4. `code_agent_logs/2026-05-29/future_research_directions.md`
-5. `code_agent_logs/2026-07-21/reliability_boundary_experiment_plan.md`
-6. `docs/REPRODUCIBILITY.md`
-
-给新对话的首条任务建议：
-
-> 阅读 `docs/NEXT_RESEARCH_HANDOFF.md` 并核对工作树。仅使用修复后 Phoenix dev 的既有结果和冻结 A0/B2 协议，设计并实施 P0 等预算 oracle/随机采样/边界命中诊断；不得读取 test、不得改变 A0 v1、不得覆盖现有结果。先给可复现计划和输出目录，CPU 可完成的分析优先，确需新前向时才申请健康单卡 GPU。
-
-## 11. 声明边界
-
-可以说：A0 在 dev 上相对 B0 减少 32.56% 窗口和 29.48% wall time，同时 WER 增加 0.1868 pp。
-不可以说：A0 显著优于等预算 uniform、数据恢复提高了 WER、已有修复后 test、或 Top-800 已验证自适应 WER。
-
-下一阶段只有在等预算 B2 上取得可复现、配对统计支持的收益，或在相近 WER 下获得额外端到端成本下降，才能升级当前结论。
+可以说：P0 显示 label-derived sign-center 的 offline 上界；P1 当前廉价因果特征无法达到定位
+门槛。不能说：已有可部署 center scheduler、P1 改善了 WER、GPU 会自动解决表征失败，或
+当前存在未被历史查看的正式 test 结果。
