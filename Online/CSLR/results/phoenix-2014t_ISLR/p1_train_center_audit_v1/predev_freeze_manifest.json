@@ -1,0 +1,45 @@
+{
+  "dev_permission": "model, normalization, threshold grid, event policy and gate are frozen; dev detection may now run once",
+  "inputs": {
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p1_train_center_audit_v1/fit_calibration_split.json": {
+      "bytes": 354941,
+      "sha256": "33db242f4c2353ebcd71ca663d7b3faa59bff3b06856b45456cf5d27dbdcd65a"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.split_manifest.json": {
+      "bytes": 2160,
+      "sha256": "44376a9795f3ced9450cbb4386d9128e4fcca08e78a712c7a6bd74e31b14f1c7"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.train.pkl": {
+      "bytes": 660804988,
+      "sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_center_label_bag2items.train": {
+      "bytes": 95453968,
+      "sha256": "05a587562648191945129c704533735df79b5dfa3acdec0bdacdee02551e2564"
+    },
+    "/tmp/phoenix_p1_train_center_features_v1.npz": {
+      "bytes": 23638952,
+      "sha256": "900fb4f02a04c2a4d78bde66f4cbec87b3993fd2fb7114e1cedae3751421e5ba"
+    }
+  },
+  "outputs": {
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p1_train_center_audit_v1/aggregate/train_calibration_metrics.json": {
+      "bytes": 60613,
+      "sha256": "188b24a7652f7ae0dc3e55c28347681bcecf6fb6a4f6f5d16b043dc0f22d9f7d"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p1_train_center_audit_v1/model.json": {
+      "bytes": 2316,
+      "sha256": "242993c211d3481a615faf72be1ffd5119d676ccd0756ca730cbeb416cebf5a8"
+    }
+  },
+  "runtime": {
+    "device": "cpu",
+    "numpy": "1.26.4",
+    "python": "3.9.25",
+    "scipy": "1.13.1"
+  },
+  "scheduler_permission": "only if gate.qualified is true",
+  "schema_version": 1,
+  "status": "predev_frozen",
+  "test_opened_or_run": false
+}

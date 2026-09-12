@@ -1,0 +1,64 @@
+{
+  "schema_version": 2,
+  "stage": "P1 train-only causal sign-interior predictor",
+  "status": "complete_no_go_scheduler_skipped",
+  "keypoint_split_resolution": {
+    "manifest": "data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.split_manifest.json",
+    "manifest_sha256": "44376a9795f3ced9450cbb4386d9128e4fcca08e78a712c7a6bd74e31b14f1c7",
+    "train_only": "data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.train.pkl",
+    "train_only_sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "dev_only": "data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.dev.pkl",
+    "dev_only_sha256": "85d1f0e2ca5943786450c82a23bceb0254b779379d3776e4d394b6cf17b80811",
+    "test_policy": "test-only pickle was never opened or run in P1"
+  },
+  "split_policy": {
+    "unit": "source video",
+    "seed": 20260912,
+    "assignment": "first uint64 of SHA256('20260912:'+video_name), big-endian; calibration iff value < 0.2*2^64",
+    "fit_videos": 5655,
+    "calibration_videos": 1440,
+    "fit_names_sha256": "0d7d6005acfc2d58c025cf2bcf339cd92d3ee46f87648a3708a00a8fd7ac2937",
+    "calibration_names_sha256": "61660b1663890f6f1b216edb3be43db27367cf844308402fae001a88f49f9073",
+    "excluded_video": "train/25August_2009_Tuesday_heute-3301",
+    "dev_use": "one-shot threshold-free detection evaluation after pre-dev freeze; no feedback into choices",
+    "test_use": "forbidden"
+  },
+  "target": {
+    "identity": "alignment-derived nonblank segment midpoint proxy; not manual ground truth",
+    "midpoint": "floor((start+end-1)/2) for stored [start,end)",
+    "positive_frames": "midpoint +/-1, clipped to video",
+    "blank_policy": "blank segments never create positives",
+    "training_rows": 827338,
+    "training_positive_rows": 165672
+  },
+  "features": {
+    "causality": "features at t read keypoints only at frames <=t",
+    "names": [
+      "valid_fraction", "motion_now", "motion_mean_4", "motion_max_4",
+      "motion_mean_16", "motion_max_16", "motion_mean_48", "motion_max_48",
+      "motion_delta", "bbox_width", "bbox_height"
+    ],
+    "forbidden_inputs": ["gloss identity", "reference tokens", "dev alignment during fit", "future keypoints", "ISLR logits"],
+    "nonfinite_policy": "explicit validity mask; invalid landmark-frames excluded from motion/bbox and reflected in valid_fraction"
+  },
+  "predictor": {
+    "model": "standardized class-balanced logistic regression",
+    "standardization": "mean and scale from fit rows only",
+    "regularization": "C=1.0; equivalent summed-loss L2 coefficient 1.0; intercept unpenalized",
+    "optimizer": "deterministic SciPy CPU L-BFGS, maximum 200 iterations",
+    "actual_iterations": 23,
+    "execution_device": "cpu"
+  },
+  "calibration": {
+    "threshold_grid": "0.01 through 0.99 inclusive in 0.01 steps",
+    "event_policy": "causal upward threshold crossing followed by 4-frame refractory",
+    "gate": "center recall within +/-1 >=0.75 and matched positive-delay fraction <=0.25",
+    "selection": "highest feasible threshold; precision tie-break",
+    "outcome": "no feasible threshold; selected threshold is null",
+    "scheduler_policy": "do not run scheduler replay when gate fails"
+  },
+  "frozen_references": {
+    "uniform_50pct_span15": {"wer": 23.058446757405925, "errors": 864},
+    "offline_perfect_center_50pct_span15": {"wer": 21.537229783827062, "errors": 807}
+  }
+}

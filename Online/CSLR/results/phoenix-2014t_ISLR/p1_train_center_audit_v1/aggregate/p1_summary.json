@@ -1,0 +1,84 @@
+{
+  "schema_version": 2,
+  "decision": "no_go",
+  "reason": "the fixed causal motion/validity logistic predictor fails the train-calibration center-recall and delay gate",
+  "identity_warning": "all targets are alignment-derived midpoint proxies, not manual frame-level ground truth",
+  "data": {
+    "train_only_keypoints_sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "dev_only_keypoints_sha256": "85d1f0e2ca5943786450c82a23bceb0254b779379d3776e4d394b6cf17b80811",
+    "split_manifest_sha256": "44376a9795f3ced9450cbb4386d9128e4fcca08e78a712c7a6bd74e31b14f1c7",
+    "fit_videos": 5655,
+    "calibration_videos": 1440,
+    "excluded_before_split": ["train/25August_2009_Tuesday_heute-3301"]
+  },
+  "training": {
+    "device": "cpu",
+    "fit_rows": 660552,
+    "calibration_rows": 166786,
+    "features": 11,
+    "model": "fit-only standardized class-balanced logistic regression, fixed C=1.0",
+    "optimizer_converged": true,
+    "optimizer_iterations": 23,
+    "fit_frame_auroc": 0.5496782432111911,
+    "fit_frame_auprc": 0.22190225521942855,
+    "fit_positive_fraction": 0.19990856132446802
+  },
+  "calibration": {
+    "frame_auroc": 0.5451584718797143,
+    "frame_auprc": 0.2203400753976528,
+    "random_auprc": 0.20158766323312508,
+    "brier": 0.24867191030841446,
+    "ece_15_equal_width": 0.29662086192055337,
+    "true_centers": 11211,
+    "best_recall_any_threshold": {
+      "threshold": 0.51,
+      "center_recall_within_1": 0.1783070198911783,
+      "event_precision": 0.2155191020936758,
+      "event_f1": 0.1951550020616654,
+      "positive_delay_fraction": 0.3341670835417709,
+      "emitted_events": 9266
+    },
+    "best_recall_with_delay_requirement": {
+      "threshold": 0.45,
+      "center_recall_within_1": 0.023726696994023726,
+      "event_precision": 0.09204152249134948,
+      "positive_delay_fraction": 0.22932330827067668,
+      "emitted_events": 2890
+    },
+    "gate_requirement": {"center_recall_minimum": 0.75, "positive_delay_fraction_maximum": 0.25},
+    "gate_qualified": false,
+    "selected_threshold": null
+  },
+  "dev_one_shot_detection": {
+    "videos": 519,
+    "frames": 55775,
+    "proxy_centers": 3748,
+    "frame_positive_fraction": 0.2015419094576423,
+    "frame_auroc": 0.5521876381461251,
+    "frame_auprc": 0.22422052211600174,
+    "random_auprc": 0.2015419094576423,
+    "brier": 0.24879690837005947,
+    "ece_15_equal_width": 0.29730079258613024,
+    "event_metrics": null,
+    "note": "no threshold was frozen because calibration gate was infeasible; dev was not used to invent one"
+  },
+  "scheduler": {
+    "status": "skipped_no_go",
+    "reason": "pre-registered train-calibration gate failed before dev was opened",
+    "uniform_reference": {"wer": 23.058446757405925, "errors": 864},
+    "offline_perfect_center_reference": {"wer": 21.537229783827062, "errors": 807},
+    "new_dev_wer": null
+  },
+  "interpretation": {
+    "frame_metric_warning": "class imbalance makes accuracy-like frame metrics misleading; AUROC is only about 0.55 and AUPRC improves over prevalence by about 0.019",
+    "calibration_warning": "class-balanced logistic probabilities are not prevalence-calibrated, reflected by ECE near 0.30",
+    "research_conclusion": "these cheap causal motion/validity statistics do not localize sign interiors accurately enough; do not spend a scheduler replay on this predictor"
+  },
+  "runtime": {
+    "gpu_used": false,
+    "training_performed": true,
+    "dev_detection_performed_once": true,
+    "dev_scheduler_replay_performed": false,
+    "test_opened_or_run": false
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-09-12",
+  "base_commit": "fb1bb4ecbd1002fd46f4e4eac9048cde0db463c7",
+  "experiment": "Phoenix P1 train-only causal sign-center predictor v1",
+  "decision": "no_go",
+  "reason": "fixed 11-feature causal logistic predictor failed the train-calibration recall and positive-delay gate",
+  "target_warning": "alignment-derived midpoint plus/minus 1 frame proxy; not manual frame-level ground truth",
+  "data": {
+    "source_keypoints_sha256": "69c56c1902b6a528f644d7be6ce14bb902a86fa83dd4fbcaa0d78a6ef58dc5ff",
+    "split_manifest_sha256": "44376a9795f3ced9450cbb4386d9128e4fcca08e78a712c7a6bd74e31b14f1c7",
+    "train": {"videos": 7096, "frames": 827354, "sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763"},
+    "dev": {"videos": 519, "frames": 55775, "sha256": "85d1f0e2ca5943786450c82a23bceb0254b779379d3776e4d394b6cf17b80811"},
+    "test": {"videos": 642, "frames": 64627, "sha256": "5cb767b9ec1fc0dbc331245132e0383ee333d30adba1e9e4447667acddaa09d1", "p1_use": "never opened or run"}
+  },
+  "training": {
+    "fit_videos": 5655,
+    "fit_rows": 660552,
+    "calibration_videos": 1440,
+    "calibration_rows": 166786,
+    "features": 11,
+    "model": "standardized class-balanced logistic regression, fixed C=1.0",
+    "device": "cpu",
+    "optimizer_converged": true,
+    "optimizer_iterations": 23
+  },
+  "calibration": {
+    "frame_auroc": 0.5451584718797143,
+    "frame_auprc": 0.2203400753976528,
+    "prevalence": 0.20158766323312508,
+    "maximum_center_recall_any_threshold": 0.1783070198911783,
+    "positive_delay_at_that_threshold": 0.3341670835417709,
+    "maximum_recall_with_delay_at_most_0_25": 0.023726696994023726,
+    "gate": {"minimum_recall": 0.75, "maximum_positive_delay_fraction": 0.25, "qualified": false},
+    "selected_threshold": null
+  },
+  "dev_one_shot_detection": {
+    "frame_auroc": 0.5521876381461251,
+    "frame_auprc": 0.22422052211600174,
+    "prevalence": 0.2015419094576423,
+    "brier": 0.24879690837005947,
+    "ece_15_equal_width": 0.29730079258613024,
+    "used_for_selection": false
+  },
+  "scheduler": {
+    "status": "skipped_no_go",
+    "new_dev_wer": null,
+    "uniform_reference": {"wer": 23.058446757405925, "errors": 864},
+    "offline_perfect_center_reference": {"wer": 21.537229783827062, "errors": 807}
+  },
+  "artifacts": {
+    "result_directory": "Online/CSLR/results/phoenix-2014t_ISLR/p1_train_center_audit_v1",
+    "protocol_manifest_sha256": "5fb12807fc4bd041614bf0bf23fe536c7c194f695c6ebb9b5452d49361ad23c4",
+    "summary_sha256": "1337abddcaafa121d9e501b174bac2da1fb3773fd251aad4a8ead591aa68c43a",
+    "model_sha256": "242993c211d3481a615faf72be1ffd5119d676ccd0756ca730cbeb416cebf5a8",
+    "predev_freeze_manifest_sha256": "97ec09dd9a139aecbca8573596dc73ddb2d0c4e1700c2518a1185b9c4117c04a"
+  },
+  "verification": {
+    "full_tests_passed": 86,
+    "manifest_hash_mismatches": 0,
+    "p0_modified": false
+  }
+}

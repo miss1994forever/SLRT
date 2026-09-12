@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "base_commit": "fb1bb4ecbd1002fd46f4e4eac9048cde0db463c7",
+  "scope": "P1 train-fit/calibration causal center predictor and one-shot dev detection evaluation",
+  "split_policy": "train fit/calibration only; dev only after predev freeze; test never opened or run",
+  "inputs": {
+    "data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.split_manifest.json": "44376a9795f3ced9450cbb4386d9128e4fcca08e78a712c7a6bd74e31b14f1c7",
+    "data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.train.pkl": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.dev.pkl": "85d1f0e2ca5943786450c82a23bceb0254b779379d3776e4d394b6cf17b80811",
+    "data/phoenix_2014t/phoenix_iso_center_label_bag2items.train": "05a587562648191945129c704533735df79b5dfa3acdec0bdacdee02551e2564",
+    "data/phoenix_2014t/phoenix14t.train": "bc1708a98a84ed9d2983afed4fc561350e94f3f3a00c9e76252935e8b18b73ea",
+    "data/phoenix_2014t/phoenix_iso_center_label.dev": "e8614d3523cde8320679a466766c1e14a303aacbf9245db55cdaab752bc6ba52",
+    "/tmp/phoenix_p1_train_center_features_v1.npz": "900fb4f02a04c2a4d78bde66f4cbec87b3993fd2fb7114e1cedae3751421e5ba"
+  },
+  "forbidden_input": {
+    "data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.test.pkl": "never opened or run"
+  },
+  "code": {
+    "Online/CSLR/tools/build_phoenix_p1_center_features.py": "e7f6948bb33e9370af162c6028d17b690682e893e49cc5967fedb67f7dbbb697",
+    "Online/CSLR/tools/train_phoenix_p1_center_predictor.py": "c115c4c79c31283eb11ab4474a249ea31d56154f04e2eb8009eb29a5ab64095d",
+    "Online/CSLR/tools/evaluate_phoenix_p1_center_predictor.py": "2758596267fbcd45bd16e7fcef2442e1050802ebc564d698d5e50b59a5bea424",
+    "Online/CSLR/tests/test_p1_center_features.py": "3ffcfbc7993fd1b86915d963a8f9f989924a14afac67d3950bf879ab9df768cd",
+    "Online/CSLR/tests/test_p1_center_predictor.py": "266fea472a1e9b63f46ea4923f3fac275564731f8e75ad59d7a6c6f8c5babcf8",
+    "Online/CSLR/tests/test_p1_center_predictor_eval.py": "398e9c91c188fa161b7b3d590f30a1f7d2f04ca0960556ec18d46298a2096303"
+  },
+  "outputs": {
+    "resolved_config.json": "3626a50a5a202e2723c0b66d3aa1d70b2fca83541d9254469da21cc45669c647",
+    "fit_calibration_split.json": "33db242f4c2353ebcd71ca663d7b3faa59bff3b06856b45456cf5d27dbdcd65a",
+    "model.json": "242993c211d3481a615faf72be1ffd5119d676ccd0756ca730cbeb416cebf5a8",
+    "predev_freeze_manifest.json": "97ec09dd9a139aecbca8573596dc73ddb2d0c4e1700c2518a1185b9c4117c04a",
+    "aggregate/train_target_audit.json": "89af29e796971ae889f6ccc589fe92c60e51ae83d4ebc8cad74b905455a224ee",
+    "aggregate/train_calibration_metrics.json": "188b24a7652f7ae0dc3e55c28347681bcecf6fb6a4f6f5d16b043dc0f22d9f7d",
+    "aggregate/dev_detection_metrics.json": "951185948c80af14ee83f0f7bad2d3e656b166c260e0c9f8405dbeffae9d5e08",
+    "aggregate/p1_summary.json": "1337abddcaafa121d9e501b174bac2da1fb3773fd251aad4a8ead591aa68c43a"
+  },
+  "decision": {
+    "gate": "no_go",
+    "scheduler_replay": "skipped",
+    "new_dev_wer": null
+  },
+  "runtime": {
+    "gpu_used": false,
+    "training_performed": true,
+    "dev_detection_performed_once": true,
+    "dev_scheduler_replay_performed": false,
+    "test_opened_or_run": false
+  }
+}

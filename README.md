@@ -21,6 +21,7 @@
 - [统一实验结果口径](docs/RESULTS.md)
 - [Phoenix 自适应步长冻结基线 v1](docs/ADAPTIVE_BASELINE_V1.md)
 - [Phoenix P0 调度诊断冻结 v1](docs/P0_SCHEDULE_DIAGNOSTICS_V1.md)
+- [Phoenix P1 因果手语中心预测器冻结 v1](docs/P1_CAUSAL_CENTER_PREDICTOR_V1.md)
 - [下一阶段研究 hand-off](docs/NEXT_RESEARCH_HANDOFF.md)
 - [环境、资产和实验复现](docs/REPRODUCIBILITY.md)
 - [文档索引](docs/README.md)

@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "scope": "train target audit plus dev identity-only leakage check; test not opened",
+  "proxy_identity": "alignment-derived segment proxy; not manual frame-level ground truth",
+  "coverage": {
+    "train_meta_records": 7096,
+    "train_unique_videos": 7096,
+    "train_bags": 85379,
+    "train_base_segments": 85379,
+    "train_nonblank_segments": 55247,
+    "train_blank_segments": 30132,
+    "videos_with_segments": 7096,
+    "train_frame_rows": 827354,
+    "radius1_midpoint_positive_rows": 165678,
+    "radius1_midpoint_positive_fraction": 0.2002504369350967,
+    "missing_segment_videos": [],
+    "extra_segment_videos": []
+  },
+  "integrity": {
+    "empty_bags": 0,
+    "bags_without_exactly_one_base": 0,
+    "bag_id_mismatch": 0,
+    "duplicate_records_within_bags": 0,
+    "duplicate_exact_base_segments": 1,
+    "empty_or_reversed_base_segments": 0,
+    "out_of_range_base_segments": 0,
+    "base_start_end_mismatch": 0,
+    "adjacent_overlaps_all_segments": 42584,
+    "videos_with_any_adjacent_overlap": 6835,
+    "adjacent_overlaps_nonblank_segments": 614,
+    "videos_with_nonblank_overlap": 459,
+    "reference_mismatch_videos": 1,
+    "reference_mismatch_examples": [
+      {
+        "name": "train/25August_2009_Tuesday_heute-3301",
+        "reference": [
+          "HEUTE",
+          "KOMMEN",
+          "GEWITTER",
+          "REGEN",
+          "KOMMEN"
+        ],
+        "segments": [
+          "KOMMEN",
+          "KOMMEN",
+          "GEWITTER",
+          "HEUTE",
+          "REGEN"
+        ]
+      }
+    ]
+  },
+  "leakage": {
+    "dev_unique_videos_identity_check_only": 519,
+    "exact_train_dev_video_name_overlap": 0,
+    "train_dev_video_id_overlap_after_removing_split_prefix": 0,
+    "overlapping_video_ids": [],
+    "train_dev_bag_id_overlap": 5881,
+    "bag_id_interpretation": "bag ids are split-local integers and must be namespaced by split; numeric overlap is not video leakage"
+  },
+  "label_summary": {
+    "unique_labels_including_blank": 1086,
+    "top_10": [
+      [
+        "<blank>",
+        30132
+      ],
+      [
+        "regen",
+        2149
+      ],
+      [
+        "region",
+        1883
+      ],
+      [
+        "ix",
+        1505
+      ],
+      [
+        "kommen",
+        1324
+      ],
+      [
+        "morgen",
+        1263
+      ],
+      [
+        "nord",
+        1216
+      ],
+      [
+        "sonne",
+        1140
+      ],
+      [
+        "wolke",
+        1107
+      ],
+      [
+        "grad",
+        1049
+      ]
+    ]
+  },
+  "known_train_keypoint_nonfinite": {
+    "source": "code_agent_logs/2026-09-07/phoenix_data_integrity_audit.md",
+    "independently_rechecked_here": false,
+    "reason_not_rechecked": "the only local keypoint artifact is a monolithic train/dev/test pickle; opening it would violate the no-test-read policy",
+    "affected_videos": 9,
+    "nonfinite_xy_scalars": 13,
+    "affected_video_detail": {
+      "train/11September_2010_Saturday_tagesschau-5000": {
+        "nonfinite_xy_scalars_from_prior_audit": 1,
+        "num_frames": 59,
+        "base_segments": 6,
+        "nonblank_segments": 5,
+        "candidate_frame_rows_conservatively_affected_if_video_excluded": 59
+      },
+      "train/14October_2010_Thursday_tagesschau-288": {
+        "nonfinite_xy_scalars_from_prior_audit": 2,
+        "num_frames": 61,
+        "base_segments": 8,
+        "nonblank_segments": 7,
+        "candidate_frame_rows_conservatively_affected_if_video_excluded": 61
+      },
+      "train/10March_2011_Thursday_heute-50": {
+        "nonfinite_xy_scalars_from_prior_audit": 1,
+        "num_frames": 218,
+        "base_segments": 24,
+        "nonblank_segments": 15,
+        "candidate_frame_rows_conservatively_affected_if_video_excluded": 218
+      },
+      "train/06October_2011_Thursday_tagesschau-822": {
+        "nonfinite_xy_scalars_from_prior_audit": 2,
+        "num_frames": 140,
+        "base_segments": 12,
+        "nonblank_segments": 7,
+        "candidate_frame_rows_conservatively_affected_if_video_excluded": 140
+      },
+      "train/07December_2010_Tuesday_tagesschau-4151": {
+        "nonfinite_xy_scalars_from_prior_audit": 1,
+        "num_frames": 121,
+        "base_segments": 12,
+        "nonblank_segments": 8,
+        "candidate_frame_rows_conservatively_affected_if_video_excluded": 121
+      },
+      "train/01September_2010_Wednesday_tagesschau-5033": {
+        "nonfinite_xy_scalars_from_prior_audit": 2,
+        "num_frames": 91,
+        "base_segments": 10,
+        "nonblank_segments": 7,
+        "candidate_frame_rows_conservatively_affected_if_video_excluded": 91
+      },
+      "train/29August_2009_Saturday_tagesschau-5026": {
+        "nonfinite_xy_scalars_from_prior_audit": 1,
+        "num_frames": 99,
+        "base_segments": 11,
+        "nonblank_segments": 8,
+        "candidate_frame_rows_conservatively_affected_if_video_excluded": 99
+      },
+      "train/26November_2011_Saturday_tagesschau-5850": {
+        "nonfinite_xy_scalars_from_prior_audit": 2,
+        "num_frames": 134,
+        "base_segments": 15,
+        "nonblank_segments": 12,
+        "candidate_frame_rows_conservatively_affected_if_video_excluded": 134
+      },
+      "train/09August_2010_Monday_heute-5894": {
+        "nonfinite_xy_scalars_from_prior_audit": 1,
+        "num_frames": 85,
+        "base_segments": 9,
+        "nonblank_segments": 6,
+        "candidate_frame_rows_conservatively_affected_if_video_excluded": 85
+      }
+    },
+    "total_candidate_frame_rows_if_excluding_affected_videos": 1008,
+    "maximum_candidate_rows_influenced_by_13_separate_anomalies_with_48_frame_history": 637,
+    "impact_bound_note": "one invalid coordinate can affect validity/bbox at its frame, adjacent motion, and past-only rolling features through at most frame+48; exact frames/landmarks cannot be rechecked without opening the mixed-split pickle"
+  },
+  "inputs": {
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_center_label_bag2items.train": {
+      "sha256": "05a587562648191945129c704533735df79b5dfa3acdec0bdacdee02551e2564",
+      "bytes": 95453968
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix14t.train": {
+      "sha256": "bc1708a98a84ed9d2983afed4fc561350e94f3f3a00c9e76252935e8b18b73ea",
+      "bytes": 1720110
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_center_label.dev": {
+      "sha256": "e8614d3523cde8320679a466766c1e14a303aacbf9245db55cdaab752bc6ba52",
+      "bytes": 5457322
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "class_weight": "balanced from fit rows only",
+  "coefficients": [
+    0.0129574713015294,
+    -0.027753734921855636,
+    0.212068928662295,
+    -0.04062295238726851,
+    -0.036568099897282026,
+    0.001988291845024781,
+    0.051128576991262685,
+    -0.060963067183504485,
+    0.027204935651655392,
+    -0.10395540626175345,
+    0.0030285755036960436
+  ],
+  "event_policy": "upward probability threshold crossing, then 4-frame refractory",
+  "execution_device": "cpu",
+  "feature_names": [
+    "valid_fraction",
+    "motion_now",
+    "motion_mean_4",
+    "motion_max_4",
+    "motion_mean_16",
+    "motion_max_16",
+    "motion_mean_48",
+    "motion_max_48",
+    "motion_delta",
+    "bbox_width",
+    "bbox_height"
+  ],
+  "gate": {
+    "qualified": false,
+    "reason": "no calibration threshold satisfied both requirements",
+    "requirements": {
+      "center_recall_minimum": 0.75,
+      "positive_delay_fraction_maximum": 0.25
+    },
+    "selected_threshold": null,
+    "selection": "highest threshold on fixed 0.01..0.99 grid satisfying both; precision tie-break"
+  },
+  "intercept": -0.00651042130718465,
+  "mean_fit_only": [
+    0.9202057498616758,
+    0.019933595847719865,
+    0.01976245689654101,
+    0.031651947269514445,
+    0.01953784361529248,
+    0.04986954313588408,
+    0.019267319887789104,
+    0.06720479635182228,
+    0.00014044629400551637,
+    0.6319013167050899,
+    0.6655075655347029
+  ],
+  "model": "standardized_logistic_regression",
+  "optimizer": {
+    "final_objective": 0.6905412437091213,
+    "function_evaluations": 26,
+    "iterations": 23,
+    "message": "CONVERGENCE: REL_REDUCTION_OF_F_<=_FACTR*EPSMCH",
+    "success": true
+  },
+  "refractory_frames": 4,
+  "regularization": {
+    "C": 1.0,
+    "intercept_penalized": false,
+    "normalized_objective_l2_coefficient": 1.5138853564897238e-06,
+    "summed_loss_l2_coefficient": 1.0
+  },
+  "scale_fit_only": [
+    0.15169893921383729,
+    0.018795877971205847,
+    0.01406125337856479,
+    0.025907965841541473,
+    0.010353142137738651,
+    0.033811134543976544,
+    0.008509942209121804,
+    0.04068566483515043,
+    0.018242392276207855,
+    0.1472846234732129,
+    0.12127935168115919
+  ],
+  "schema_version": 1,
+  "threshold": null,
+  "threshold_grid": {
+    "start": 0.01,
+    "step": 0.01,
+    "stop_inclusive": 0.99
+  }
+}

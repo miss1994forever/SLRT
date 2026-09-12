@@ -76,6 +76,22 @@ Sign-center 使用 dev label/alignment 派生中心，是不可部署的 offline
 利用的窗口放置上界。下一阶段必须用 train-only target 训练 predictor，并在 dev 上报告
 center detection 与 scheduler 结果；在方案完全冻结前不得运行 test。
 
+### P1 train-only causal center predictor（2026-09-12 冻结）
+
+P1 使用 alignment-derived train midpoint `±1` 帧作为 proxy target，以 11 个严格 past-only
+关键点运动/有效性/人体框特征拟合固定逻辑回归。权威定义见
+[P1_CAUSAL_CENTER_PREDICTOR_V1.md](P1_CAUSAL_CENTER_PREDICTOR_V1.md)。
+
+| 阶段 | AUROC | AUPRC / prevalence | center recall | 正延迟比例 |
+|---|---:|---:|---:|---:|
+| Train calibration 最佳 recall 阈值 | 0.5452 | 0.2203 / 0.2016 | 17.83% | 33.42% |
+| Train calibration 满足 delay ≤25% | — | — | 2.37% | 22.93% |
+| Dev 一次性 threshold-free detection | 0.5522 | 0.2242 / 0.2015 | — | — |
+
+预注册 gate 要求 recall ≥75% 且正延迟 ≤25%，没有阈值合格，结论为 No-Go。scheduler
+replay 按协议跳过，P1 没有新的 WER；这不是 CPU 或优化器失败，而是当前廉价特征的定位
+能力不足。test-only 未打开或运行。
+
 ### Test：修复前历史 retrospective control
 
 以下结果绑定修复前视频资产，且 Phoenix test 已被历史实验查看。test split 自身没有缺帧，但这些结果不能重新标记成修复后资产的正式结果。截至 2026-09-10，尚未以修复后 hash 运行新的 test。

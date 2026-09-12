@@ -1,0 +1,108 @@
+{
+  "event_metrics_at_frozen_threshold": null,
+  "frame_metrics": {
+    "auprc": 0.22422052211600174,
+    "auroc": 0.5521876381461251,
+    "brier": 0.24879690837005947,
+    "ece_15_equal_width": 0.29730079258613024,
+    "ece_bins": [
+      {
+        "count": 2,
+        "left": 0.0,
+        "mean_probability": 0.012068898333423355,
+        "positive_fraction": 0.0,
+        "right": 0.06666666666666667
+      },
+      {
+        "count": 1,
+        "left": 0.26666666666666666,
+        "mean_probability": 0.29128690712057637,
+        "positive_fraction": 0.0,
+        "right": 0.3333333333333333
+      },
+      {
+        "count": 29,
+        "left": 0.3333333333333333,
+        "mean_probability": 0.39203718020199074,
+        "positive_fraction": 0.06896551724137931,
+        "right": 0.4
+      },
+      {
+        "count": 8950,
+        "left": 0.4,
+        "mean_probability": 0.45371421236019405,
+        "positive_fraction": 0.14614525139664805,
+        "right": 0.4666666666666667
+      },
+      {
+        "count": 38189,
+        "left": 0.4666666666666667,
+        "mean_probability": 0.4952874718204075,
+        "positive_fraction": 0.2080703867605855,
+        "right": 0.5333333333333333
+      },
+      {
+        "count": 7758,
+        "left": 0.5333333333333333,
+        "mean_probability": 0.5551109952914803,
+        "positive_fraction": 0.2306006702758443,
+        "right": 0.6
+      },
+      {
+        "count": 794,
+        "left": 0.6,
+        "mean_probability": 0.6213872085315593,
+        "positive_fraction": 0.23425692695214106,
+        "right": 0.6666666666666666
+      },
+      {
+        "count": 46,
+        "left": 0.6666666666666666,
+        "mean_probability": 0.6861827574012631,
+        "positive_fraction": 0.15217391304347827,
+        "right": 0.7333333333333333
+      },
+      {
+        "count": 6,
+        "left": 0.7333333333333333,
+        "mean_probability": 0.7491316171112823,
+        "positive_fraction": 0.5,
+        "right": 0.8
+      }
+    ],
+    "positive_fraction": 0.2015419094576423,
+    "positives": 11241,
+    "random_auprc": 0.2015419094576423,
+    "rows": 55775
+  },
+  "frames": 55775,
+  "identity_warning": "Targets are alignment-derived midpoint proxies, not manual frame-level ground truth.",
+  "inputs": {
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.dev.pkl": {
+      "bytes": 44549701,
+      "sha256": "85d1f0e2ca5943786450c82a23bceb0254b779379d3776e4d394b6cf17b80811"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_center_label.dev": {
+      "bytes": 5457322,
+      "sha256": "e8614d3523cde8320679a466766c1e14a303aacbf9245db55cdaab752bc6ba52"
+    }
+  },
+  "predev_freeze_manifest_sha256": "97ec09dd9a139aecbca8573596dc73ddb2d0c4e1700c2518a1185b9c4117c04a",
+  "proxy_centers": 3748,
+  "scheduler_replay": {
+    "offline_perfect_center_reference": {
+      "errors": 807,
+      "wer": 21.537229783827062
+    },
+    "reason": "train-calibration gate failed before dev was opened",
+    "status": "skipped_no_go",
+    "uniform_reference": {
+      "errors": 864,
+      "wer": 23.058446757405925
+    }
+  },
+  "schema_version": 1,
+  "selection_policy": "one-shot dev evaluation; no dev value changes model, features, normalization, threshold, event policy, or gate",
+  "test_opened_or_run": false,
+  "videos": 519
+}

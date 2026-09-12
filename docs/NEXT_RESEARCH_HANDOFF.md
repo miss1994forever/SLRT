@@ -8,6 +8,13 @@
 > P0 启动时的历史计划，不再表示待执行事项。下一步是只使用 train 构造并校准最小
 > causal sign-center predictor，继续以 repaired dev 评估；仍不得读取 test。
 
+> **P1 状态更新（2026-09-12）：** 最小 train-only causal center predictor 已完成并冻结为
+> No-Go。权威结论见 `docs/P1_CAUSAL_CENTER_PREDICTOR_V1.md` 与
+> `docs/results/phoenix_p1_causal_center_predictor_v1_frozen.json`。固定 11 维关键点统计逻辑
+> 回归在 calibration 上的最大 center recall 仅 17.83%，无法满足 recall ≥75% 且正延迟
+> ≤25% 的 gate；因此没有运行 scheduler，也没有新的 WER。后续不要在 dev 上继续调该阈值，
+> 应建立更强时序表征的新版本，或转向 window/decoder 与模态计算门控。
+
 本文件用于开启新的工作对话。它冻结已经完成的 Phoenix-2014T 自适应步长 v1，说明历史结果边界，并把下一阶段限定为只使用 dev 的可靠性/边界诊断。若本文与早期日志冲突，以本文、`ADAPTIVE_BASELINE_V1.md` 和机器可读 frozen JSON 为准。
 
 ## 1. 新对话的研究问题

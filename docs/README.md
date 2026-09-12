@@ -6,6 +6,7 @@
 - [RESULTS.md](RESULTS.md)：WER、窗口减少、runtime、版本配置和权威数据位置；
 - [ADAPTIVE_BASELINE_V1.md](ADAPTIVE_BASELINE_V1.md)：修复后 Phoenix dev 的冻结 A0 与 B0--B4 单一权威定义；
 - [P0_SCHEDULE_DIAGNOSTICS_V1.md](P0_SCHEDULE_DIAGNOSTICS_V1.md)：等预算 replay、random、prediction-change、boundary 与 sign-center oracle 的冻结诊断结论；
+- [P1_CAUSAL_CENTER_PREDICTOR_V1.md](P1_CAUSAL_CENTER_PREDICTOR_V1.md)：train-only 因果 center predictor 的数据隔离、检测结果与 No-Go 决策；
 - [NEXT_RESEARCH_HANDOFF.md](NEXT_RESEARCH_HANDOFF.md)：新工作对话入口、已冻结事实、历史结果边界和下一阶段实验清单；
 - [REPRODUCIBILITY.md](REPRODUCIBILITY.md)：环境、数据、checkpoint、GPU 和完整实验命令；
 - [reproduction/csl_daily_top800_pipeline.md](reproduction/csl_daily_top800_pipeline.md)：Top-800 三阶段历史流程说明。
