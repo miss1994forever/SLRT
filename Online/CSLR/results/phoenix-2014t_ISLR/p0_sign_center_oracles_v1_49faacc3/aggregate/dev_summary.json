@@ -1,0 +1,2822 @@
+{
+  "sample_count": 519,
+  "full_dev": true,
+  "identity_warning": "All centers are label/alignment-derived offline proxies, not verified manual ground truth or deployable schedulers.",
+  "main_proxy": "center-label first-record-per-bag nonblank segment midpoint (start+end-1)/2",
+  "secondary_variant": "closed central 50% interval over included frame-center endpoints; predeclared before results",
+  "coordinate": "fixed B0 padded-array coordinate, constant left pad 7",
+  "schedule": "half-ceiling uniform skeleton plus center-distance bonus; exact per-sample budget; unique 0/T-1 endpoints",
+  "budget_definitions": {
+    "a0_exact": "each sample exactly matches its frozen A0 clip count",
+    "dense_50pct": "round-half-up 0.5*T, at least 2 for T>1",
+    "dense_33pct": "round-half-up T/3, at least 2 for T>1"
+  },
+  "budget_total_clips": {
+    "a0_exact": 37615,
+    "dense_50pct": 28014,
+    "dense_33pct": 18587
+  },
+  "decoder_definitions": {
+    "span15": "triangular probability voting over selected centers within 15 frames; min weight .05",
+    "span7": "same rule with 7-frame span; min weight .05",
+    "direct_span1": "per-selected-window argmax, collapse consecutive repeated ids, then remove blank; no local voting"
+  },
+  "proxy_provenance": {
+    "center_label": "same audited first-record-per-bag proxy; stored start/end fallback because base fields are absent; upstream provenance unresolved",
+    "pami0_pami1_pami2": "midpoints of maximal constant nonzero integer runs with provisional 0=blank; integers may be states rather than gloss labels"
+  },
+  "uniform_cells": {
+    "a0_exact": {
+      "span15": {
+        "metrics": {
+          "wer": 22.63143848412063,
+          "del": 11.422471310381638,
+          "ins": 3.2025620496397114,
+          "sub": 8.00640512409928,
+          "ref_len": 3747,
+          "error": 848
+        }
+      },
+      "span7": {
+        "metrics": {
+          "wer": 24.95329597010942,
+          "del": 5.791299706431812,
+          "ins": 9.634374165999466,
+          "sub": 9.527622097678142,
+          "ref_len": 3747,
+          "error": 935
+        }
+      },
+      "direct_span1": {
+        "metrics": {
+          "wer": 40.352281825460366,
+          "del": 3.175874032559381,
+          "ins": 27.59540966106218,
+          "sub": 9.580998131838804,
+          "ref_len": 3747,
+          "error": 1512
+        }
+      }
+    },
+    "dense_50pct": {
+      "span15": {
+        "metrics": {
+          "wer": 23.058446757405925,
+          "del": 11.76941553242594,
+          "ins": 3.4427542033626897,
+          "sub": 7.846277021617294,
+          "ref_len": 3747,
+          "error": 864
+        }
+      },
+      "span7": {
+        "metrics": {
+          "wer": 25.70056044835869,
+          "del": 5.898051774753136,
+          "ins": 9.874566319722444,
+          "sub": 9.927942353883108,
+          "ref_len": 3747,
+          "error": 963
+        }
+      },
+      "direct_span1": {
+        "metrics": {
+          "wer": 33.520149452895645,
+          "del": 3.8697624766479852,
+          "ins": 19.80250867360555,
+          "sub": 9.847878302642114,
+          "ref_len": 3747,
+          "error": 1256
+        }
+      }
+    },
+    "dense_33pct": {
+      "span15": {
+        "metrics": {
+          "wer": 22.791566586602617,
+          "del": 11.689351481184948,
+          "ins": 3.3093141179610353,
+          "sub": 7.7929009874566315,
+          "ref_len": 3747,
+          "error": 854
+        }
+      },
+      "span7": {
+        "metrics": {
+          "wer": 26.63464104617027,
+          "del": 5.657859621030157,
+          "ins": 11.128903122497999,
+          "sub": 9.847878302642114,
+          "ref_len": 3747,
+          "error": 998
+        }
+      },
+      "direct_span1": {
+        "metrics": {
+          "wer": 29.997331198291967,
+          "del": 4.697091006138244,
+          "ins": 15.238857752868961,
+          "sub": 10.06138243928476,
+          "ref_len": 3747,
+          "error": 1124
+        }
+      }
+    }
+  },
+  "strategy_cells": {
+    "center_label__midpoint__a0_exact__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.07099012543368,
+        "del": 10.435014678409395,
+        "ins": 3.3893781692020286,
+        "sub": 8.246597277822259,
+        "ref_len": 3747,
+        "error": 827
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.5604483586869478,
+        "error_count": -21,
+        "del_count": -37,
+        "ins_count": 7,
+        "sub_count": 9
+      },
+      "hypotheses_changed_vs_uniform": 133,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0018676627534685165,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.978388473852721,
+        "mean_selected_centers_within_4_per_midpoint": 7.894610458911419,
+        "selected_center_inside_any_central50_band_fraction": 0.45625415392795426
+      },
+      "paired_bootstrap_primary": {
+        "unit": "WER percentage points (center - same-cell uniform)",
+        "sentence_bootstrap_seed": 260913,
+        "repetitions": 10000,
+        "ci95_unadjusted": [
+          -1.0562545281570077,
+          -0.05360493165371214
+        ],
+        "ci_bonferroni_9_primary_cells": [
+          -1.249977677385065,
+          0.1342292256050487
+        ],
+        "probability_less_than_zero": 0.9829
+      }
+    },
+    "center_label__center_band_50__a0_exact__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 21.80410995463037,
+        "del": 10.168134507606084,
+        "ins": 3.1491860154790494,
+        "sub": 8.486789431545235,
+        "ref_len": 3747,
+        "error": 817
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.8273285294902593,
+        "error_count": -31,
+        "del_count": -47,
+        "ins_count": -2,
+        "sub_count": 18
+      },
+      "hypotheses_changed_vs_uniform": 144,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 0.9997331910352187,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0021344717182497333,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 1.0
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.915421558164354,
+        "mean_selected_centers_within_4_per_midpoint": 7.7097118463180365,
+        "selected_center_inside_any_central50_band_fraction": 0.46643626212946965
+      }
+    },
+    "pami0__midpoint__a0_exact__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.81825460368295,
+        "del": 11.529223378702962,
+        "ins": 3.2025620496397114,
+        "sub": 8.086469175340271,
+        "ref_len": 3747,
+        "error": 855
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.18681611956231947,
+        "error_count": 7,
+        "del_count": 4,
+        "ins_count": 0,
+        "sub_count": 3
+      },
+      "hypotheses_changed_vs_uniform": 126,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.9977813480223395,
+        "midpoint_hit_within_1": 0.9977813480223395,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.27767577079029915,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.41022110014536,
+        "mean_selected_centers_within_4_per_midpoint": 6.081478081248566,
+        "selected_center_inside_any_central50_band_fraction": 0.48478000797554166
+      }
+    },
+    "pami0__center_band_50__a0_exact__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.898318654923937,
+        "del": 11.849479583666934,
+        "ins": 3.042433947157726,
+        "sub": 8.00640512409928,
+        "ref_len": 3747,
+        "error": 858
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.26688017080330795,
+        "error_count": 10,
+        "del_count": 16,
+        "ins_count": -6,
+        "sub_count": 0
+      },
+      "hypotheses_changed_vs_uniform": 140,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.9603702853645475,
+        "midpoint_hit_within_1": 0.9618238849361181,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.3150868334480912,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.0910412363246884,
+        "mean_selected_centers_within_4_per_midpoint": 5.5404330196618465,
+        "selected_center_inside_any_central50_band_fraction": 0.5833842881829058
+      }
+    },
+    "pami1__midpoint__a0_exact__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.81825460368295,
+        "del": 11.609287429943956,
+        "ins": 3.042433947157726,
+        "sub": 8.166533226581265,
+        "ref_len": 3747,
+        "error": 855
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.18681611956231947,
+        "error_count": 7,
+        "del_count": 7,
+        "ins_count": -6,
+        "sub_count": 6
+      },
+      "hypotheses_changed_vs_uniform": 142,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9979538385987887,
+        "midpoint_hit_within_1": 0.9979538385987887,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2982894090685873,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.665657227042069,
+        "mean_selected_centers_within_4_per_midpoint": 6.521607464396792,
+        "selected_center_inside_any_central50_band_fraction": 0.32364748105808855
+      }
+    },
+    "pami1__center_band_50__a0_exact__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.9516946890846,
+        "del": 11.71603949826528,
+        "ins": 3.1491860154790494,
+        "sub": 8.086469175340271,
+        "ref_len": 3747,
+        "error": 860
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.32025620496397167,
+        "error_count": 12,
+        "del_count": 11,
+        "ins_count": -2,
+        "sub_count": 3
+      },
+      "hypotheses_changed_vs_uniform": 142,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.98518579145523,
+        "midpoint_hit_within_1": 0.9852676379112785,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.31105745621214603,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.4884596496971683,
+        "mean_selected_centers_within_4_per_midpoint": 6.254624324766738,
+        "selected_center_inside_any_central50_band_fraction": 0.3713678053967832
+      }
+    },
+    "pami2__midpoint__a0_exact__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.764878569522285,
+        "del": 11.529223378702962,
+        "ins": 3.2559380838003733,
+        "sub": 7.979717107018948,
+        "ref_len": 3747,
+        "error": 853
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.13344008540165575,
+        "error_count": 5,
+        "del_count": 4,
+        "ins_count": 2,
+        "sub_count": -1
+      },
+      "hypotheses_changed_vs_uniform": 130,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2655819774718398,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.4425531914893615,
+        "mean_selected_centers_within_4_per_midpoint": 7.482352941176471,
+        "selected_center_inside_any_central50_band_fraction": 0.4714608533829589
+      }
+    },
+    "pami2__center_band_50__a0_exact__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.41793434747798,
+        "del": 11.18227915665866,
+        "ins": 3.2025620496397114,
+        "sub": 8.033093141179611,
+        "ref_len": 3747,
+        "error": 840
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.21350413664264778,
+        "error_count": -8,
+        "del_count": -9,
+        "ins_count": 0,
+        "sub_count": 1
+      },
+      "hypotheses_changed_vs_uniform": 139,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 0.9989987484355445,
+        "midpoint_hit_within_1": 0.9989987484355445,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2665832290362954,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.2052565707133915,
+        "mean_selected_centers_within_4_per_midpoint": 6.952690863579474,
+        "selected_center_inside_any_central50_band_fraction": 0.5200053170277815
+      }
+    },
+    "center_label__midpoint__a0_exact__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.60635174806512,
+        "del": 5.711235655190819,
+        "ins": 9.127301841473178,
+        "sub": 9.76781425140112,
+        "ref_len": 3747,
+        "error": 922
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.3469442220443,
+        "error_count": -13,
+        "del_count": -3,
+        "ins_count": -19,
+        "sub_count": 9
+      },
+      "hypotheses_changed_vs_uniform": 191,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0018676627534685165,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.978388473852721,
+        "mean_selected_centers_within_4_per_midpoint": 7.894610458911419,
+        "selected_center_inside_any_central50_band_fraction": 0.45625415392795426
+      },
+      "paired_bootstrap_primary": {
+        "unit": "WER percentage points (center - same-cell uniform)",
+        "sentence_bootstrap_seed": 260913,
+        "repetitions": 10000,
+        "ci95_unadjusted": [
+          -1.0971849764722466,
+          0.38127141017213634
+        ],
+        "ci_bonferroni_9_primary_cells": [
+          -1.4323405664420117,
+          0.7128953484298569
+        ],
+        "probability_less_than_zero": 0.8059
+      }
+    },
+    "center_label__center_band_50__a0_exact__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.873231918868427,
+        "del": 5.631171603949826,
+        "ins": 9.420870029356818,
+        "sub": 9.821190285561784,
+        "ref_len": 3747,
+        "error": 932
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.08006405124099203,
+        "error_count": -3,
+        "del_count": -6,
+        "ins_count": -8,
+        "sub_count": 11
+      },
+      "hypotheses_changed_vs_uniform": 193,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 0.9997331910352187,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0021344717182497333,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 1.0
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.915421558164354,
+        "mean_selected_centers_within_4_per_midpoint": 7.7097118463180365,
+        "selected_center_inside_any_central50_band_fraction": 0.46643626212946965
+      }
+    },
+    "pami0__midpoint__a0_exact__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.793167867627435,
+        "del": 5.764611689351481,
+        "ins": 9.260741926874832,
+        "sub": 9.76781425140112,
+        "ref_len": 3747,
+        "error": 929
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.16012810248198406,
+        "error_count": -6,
+        "del_count": -1,
+        "ins_count": -14,
+        "sub_count": 9
+      },
+      "hypotheses_changed_vs_uniform": 174,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.9977813480223395,
+        "midpoint_hit_within_1": 0.9977813480223395,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.27767577079029915,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.41022110014536,
+        "mean_selected_centers_within_4_per_midpoint": 6.081478081248566,
+        "selected_center_inside_any_central50_band_fraction": 0.48478000797554166
+      }
+    },
+    "pami0__center_band_50__a0_exact__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.793167867627435,
+        "del": 5.791299706431812,
+        "ins": 9.367493995196156,
+        "sub": 9.634374165999466,
+        "ref_len": 3747,
+        "error": 929
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.16012810248198406,
+        "error_count": -6,
+        "del_count": 0,
+        "ins_count": -10,
+        "sub_count": 4
+      },
+      "hypotheses_changed_vs_uniform": 184,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.9603702853645475,
+        "midpoint_hit_within_1": 0.9618238849361181,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.3150868334480912,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.0910412363246884,
+        "mean_selected_centers_within_4_per_midpoint": 5.5404330196618465,
+        "selected_center_inside_any_central50_band_fraction": 0.5833842881829058
+      }
+    },
+    "pami1__midpoint__a0_exact__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.89991993594876,
+        "del": 5.844675740592474,
+        "ins": 9.127301841473178,
+        "sub": 9.927942353883108,
+        "ref_len": 3747,
+        "error": 933
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.05337603416066017,
+        "error_count": -2,
+        "del_count": 2,
+        "ins_count": -19,
+        "sub_count": 15
+      },
+      "hypotheses_changed_vs_uniform": 184,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9979538385987887,
+        "midpoint_hit_within_1": 0.9979538385987887,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2982894090685873,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.665657227042069,
+        "mean_selected_centers_within_4_per_midpoint": 6.521607464396792,
+        "selected_center_inside_any_central50_band_fraction": 0.32364748105808855
+      }
+    },
+    "pami1__center_band_50__a0_exact__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 25.00667200427008,
+        "del": 5.817987723512143,
+        "ins": 9.367493995196156,
+        "sub": 9.821190285561784,
+        "ref_len": 3747,
+        "error": 937
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.05337603416066017,
+        "error_count": 2,
+        "del_count": 1,
+        "ins_count": -10,
+        "sub_count": 11
+      },
+      "hypotheses_changed_vs_uniform": 182,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.98518579145523,
+        "midpoint_hit_within_1": 0.9852676379112785,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.31105745621214603,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.4884596496971683,
+        "mean_selected_centers_within_4_per_midpoint": 6.254624324766738,
+        "selected_center_inside_any_central50_band_fraction": 0.3713678053967832
+      }
+    },
+    "pami2__midpoint__a0_exact__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.713103816386443,
+        "del": 5.657859621030157,
+        "ins": 9.287429943955164,
+        "sub": 9.76781425140112,
+        "ref_len": 3747,
+        "error": 926
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.2401921537229761,
+        "error_count": -9,
+        "del_count": -5,
+        "ins_count": -13,
+        "sub_count": 9
+      },
+      "hypotheses_changed_vs_uniform": 192,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2655819774718398,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.4425531914893615,
+        "mean_selected_centers_within_4_per_midpoint": 7.482352941176471,
+        "selected_center_inside_any_central50_band_fraction": 0.4714608533829589
+      }
+    },
+    "pami2__center_band_50__a0_exact__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.206031491860156,
+        "del": 5.684547638110488,
+        "ins": 8.807045636509207,
+        "sub": 9.71443821724046,
+        "ref_len": 3747,
+        "error": 907
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.7472644782492637,
+        "error_count": -28,
+        "del_count": -4,
+        "ins_count": -31,
+        "sub_count": 7
+      },
+      "hypotheses_changed_vs_uniform": 196,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 0.9989987484355445,
+        "midpoint_hit_within_1": 0.9989987484355445,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2665832290362954,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.2052565707133915,
+        "mean_selected_centers_within_4_per_midpoint": 6.952690863579474,
+        "selected_center_inside_any_central50_band_fraction": 0.5200053170277815
+      }
+    },
+    "center_label__midpoint__a0_exact__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 45.82332532692821,
+        "del": 3.015745930077395,
+        "ins": 33.57352548705631,
+        "sub": 9.234053909794502,
+        "ref_len": 3747,
+        "error": 1717
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 5.471043501467847,
+        "error_count": 205,
+        "del_count": -6,
+        "ins_count": 224,
+        "sub_count": -13
+      },
+      "hypotheses_changed_vs_uniform": 248,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0018676627534685165,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.978388473852721,
+        "mean_selected_centers_within_4_per_midpoint": 7.894610458911419,
+        "selected_center_inside_any_central50_band_fraction": 0.45625415392795426
+      },
+      "paired_bootstrap_primary": {
+        "unit": "WER percentage points (center - same-cell uniform)",
+        "sentence_bootstrap_seed": 260913,
+        "repetitions": 10000,
+        "ci95_unadjusted": [
+          4.069447877820513,
+          6.965715508463525
+        ],
+        "ci_bonferroni_9_primary_cells": [
+          3.47632969849452,
+          7.63648286272535
+        ],
+        "probability_less_than_zero": 0.0
+      }
+    },
+    "center_label__center_band_50__a0_exact__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 44.542300507072326,
+        "del": 3.069121964238057,
+        "ins": 32.29250066720042,
+        "sub": 9.18067787563384,
+        "ref_len": 3747,
+        "error": 1669
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 4.19001868161196,
+        "error_count": 157,
+        "del_count": -4,
+        "ins_count": 176,
+        "sub_count": -15
+      },
+      "hypotheses_changed_vs_uniform": 250,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 0.9997331910352187,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0021344717182497333,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 1.0
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.915421558164354,
+        "mean_selected_centers_within_4_per_midpoint": 7.7097118463180365,
+        "selected_center_inside_any_central50_band_fraction": 0.46643626212946965
+      }
+    },
+    "pami0__midpoint__a0_exact__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 42.727515345609824,
+        "del": 2.989057912997064,
+        "ins": 30.050707232452627,
+        "sub": 9.687750200160128,
+        "ref_len": 3747,
+        "error": 1601
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 2.3752335201494574,
+        "error_count": 89,
+        "del_count": -7,
+        "ins_count": 92,
+        "sub_count": 4
+      },
+      "hypotheses_changed_vs_uniform": 238,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.9977813480223395,
+        "midpoint_hit_within_1": 0.9977813480223395,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.27767577079029915,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.41022110014536,
+        "mean_selected_centers_within_4_per_midpoint": 6.081478081248566,
+        "selected_center_inside_any_central50_band_fraction": 0.48478000797554166
+      }
+    },
+    "pami0__center_band_50__a0_exact__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 41.47317854283427,
+        "del": 3.2826261008807047,
+        "ins": 28.689618361355752,
+        "sub": 9.500934080597812,
+        "ref_len": 3747,
+        "error": 1554
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.1208967173739026,
+        "error_count": 42,
+        "del_count": 4,
+        "ins_count": 41,
+        "sub_count": -3
+      },
+      "hypotheses_changed_vs_uniform": 234,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.9603702853645475,
+        "midpoint_hit_within_1": 0.9618238849361181,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.3150868334480912,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.0910412363246884,
+        "mean_selected_centers_within_4_per_midpoint": 5.5404330196618465,
+        "selected_center_inside_any_central50_band_fraction": 0.5833842881829058
+      }
+    },
+    "pami1__midpoint__a0_exact__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 42.08700293568188,
+        "del": 3.416066186282359,
+        "ins": 29.170002668801708,
+        "sub": 9.500934080597812,
+        "ref_len": 3747,
+        "error": 1577
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.734721110221514,
+        "error_count": 65,
+        "del_count": 9,
+        "ins_count": 59,
+        "sub_count": -3
+      },
+      "hypotheses_changed_vs_uniform": 249,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9979538385987887,
+        "midpoint_hit_within_1": 0.9979538385987887,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2982894090685873,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.665657227042069,
+        "mean_selected_centers_within_4_per_midpoint": 6.521607464396792,
+        "selected_center_inside_any_central50_band_fraction": 0.32364748105808855
+      }
+    },
+    "pami1__center_band_50__a0_exact__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 41.553242594075265,
+        "del": 3.522818254603683,
+        "ins": 28.60955431011476,
+        "sub": 9.420870029356818,
+        "ref_len": 3747,
+        "error": 1557
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.2009607686148982,
+        "error_count": 45,
+        "del_count": 13,
+        "ins_count": 38,
+        "sub_count": -6
+      },
+      "hypotheses_changed_vs_uniform": 244,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.98518579145523,
+        "midpoint_hit_within_1": 0.9852676379112785,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.31105745621214603,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.4884596496971683,
+        "mean_selected_centers_within_4_per_midpoint": 6.254624324766738,
+        "selected_center_inside_any_central50_band_fraction": 0.3713678053967832
+      }
+    },
+    "pami2__midpoint__a0_exact__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 44.515612489991994,
+        "del": 3.3093141179610353,
+        "ins": 31.705364291433145,
+        "sub": 9.500934080597812,
+        "ref_len": 3747,
+        "error": 1668
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 4.163330664531628,
+        "error_count": 156,
+        "del_count": 5,
+        "ins_count": 154,
+        "sub_count": -3
+      },
+      "hypotheses_changed_vs_uniform": 252,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2655819774718398,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.4425531914893615,
+        "mean_selected_centers_within_4_per_midpoint": 7.482352941176471,
+        "selected_center_inside_any_central50_band_fraction": 0.4714608533829589
+      }
+    },
+    "pami2__center_band_50__a0_exact__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 42.56738724312783,
+        "del": 3.4427542033626897,
+        "ins": 29.62369895916733,
+        "sub": 9.500934080597812,
+        "ref_len": 3747,
+        "error": 1595
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 2.2151054176674663,
+        "error_count": 83,
+        "del_count": 10,
+        "ins_count": 76,
+        "sub_count": -3
+      },
+      "hypotheses_changed_vs_uniform": 251,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 0.9989987484355445,
+        "midpoint_hit_within_1": 0.9989987484355445,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2665832290362954,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.2052565707133915,
+        "mean_selected_centers_within_4_per_midpoint": 6.952690863579474,
+        "selected_center_inside_any_central50_band_fraction": 0.5200053170277815
+      }
+    },
+    "center_label__midpoint__dense_50pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 21.537229783827062,
+        "del": 9.874566319722444,
+        "ins": 2.8823058446757406,
+        "sub": 8.780357619428877,
+        "ref_len": 3747,
+        "error": 807
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.5212169735788628,
+        "error_count": -57,
+        "del_count": -71,
+        "ins_count": -21,
+        "sub_count": 35
+      },
+      "hypotheses_changed_vs_uniform": 193,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0018676627534685165,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.67102454642476,
+        "mean_selected_centers_within_4_per_midpoint": 6.061099252934898,
+        "selected_center_inside_any_central50_band_fraction": 0.5600057114299993
+      },
+      "paired_bootstrap_primary": {
+        "unit": "WER percentage points (center - same-cell uniform)",
+        "sentence_bootstrap_seed": 260913,
+        "repetitions": 10000,
+        "ci95_unadjusted": [
+          -2.155980936558008,
+          -0.8893273306110325
+        ],
+        "ci_bonferroni_9_primary_cells": [
+          -2.4162419599328118,
+          -0.6262845580303809
+        ],
+        "probability_less_than_zero": 1.0
+      }
+    },
+    "center_label__center_band_50__dense_50pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 21.670669869228718,
+        "del": 10.274886575927408,
+        "ins": 2.8022417934347477,
+        "sub": 8.593541499866559,
+        "ref_len": 3747,
+        "error": 812
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.387776888177207,
+        "error_count": -52,
+        "del_count": -56,
+        "ins_count": -24,
+        "sub_count": 28
+      },
+      "hypotheses_changed_vs_uniform": 200,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 0.9677161152614728,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.03415154749199573,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 1.0
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.352187833511206,
+        "mean_selected_centers_within_4_per_midpoint": 5.963713980789755,
+        "selected_center_inside_any_central50_band_fraction": 0.6013064896123367
+      }
+    },
+    "pami0__midpoint__dense_50pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.085134774486253,
+        "del": 11.822791566586604,
+        "ins": 3.416066186282359,
+        "sub": 7.846277021617294,
+        "ref_len": 3747,
+        "error": 865
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.026688017080328308,
+        "error_count": 1,
+        "del_count": 2,
+        "ins_count": -1,
+        "sub_count": 0
+      },
+      "hypotheses_changed_vs_uniform": 171,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.9929615178639737,
+        "midpoint_hit_within_1": 0.9931910335858006,
+        "midpoint_hit_within_2": 0.999923494759391,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.282572106189274,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.5546629944151173,
+        "mean_selected_centers_within_4_per_midpoint": 4.60033662305868,
+        "selected_center_inside_any_central50_band_fraction": 0.52256014849718
+      }
+    },
+    "pami0__center_band_50__dense_50pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.885775286896184,
+        "del": 12.650120096076861,
+        "ins": 3.095809981318388,
+        "sub": 8.139845209500935,
+        "ref_len": 3747,
+        "error": 895
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.8273285294902593,
+        "error_count": 31,
+        "del_count": 33,
+        "ins_count": -13,
+        "sub_count": 11
+      },
+      "hypotheses_changed_vs_uniform": 188,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.8062122255374493,
+        "midpoint_hit_within_1": 0.8622905669038329,
+        "midpoint_hit_within_2": 0.9964807589319868,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.4727641343432025,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.1866727870859153,
+        "mean_selected_centers_within_4_per_midpoint": 3.9141611200367223,
+        "selected_center_inside_any_central50_band_fraction": 0.6834439922895695
+      }
+    },
+    "pami1__midpoint__dense_50pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.45876701361089,
+        "del": 11.929543634907928,
+        "ins": 3.2559380838003733,
+        "sub": 8.273285294902589,
+        "ref_len": 3747,
+        "error": 879
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.4003202562049637,
+        "error_count": 15,
+        "del_count": 6,
+        "ins_count": -7,
+        "sub_count": 16
+      },
+      "hypotheses_changed_vs_uniform": 189,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9930430512358814,
+        "midpoint_hit_within_1": 0.9931248976919299,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.30320019643149454,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.794238009494189,
+        "mean_selected_centers_within_4_per_midpoint": 4.974791291537077,
+        "selected_center_inside_any_central50_band_fraction": 0.36106946526736633
+      }
+    },
+    "pami1__center_band_50__dense_50pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.352014945289564,
+        "del": 11.876167600747264,
+        "ins": 3.175874032559381,
+        "sub": 8.299973311982919,
+        "ref_len": 3747,
+        "error": 875
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.2935681878836398,
+        "error_count": 11,
+        "del_count": 4,
+        "ins_count": -10,
+        "sub_count": 17
+      },
+      "hypotheses_changed_vs_uniform": 187,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9299394336225242,
+        "midpoint_hit_within_1": 0.9346046816172859,
+        "midpoint_hit_within_2": 0.9986086102471763,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.36769520379767556,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.5310198068423637,
+        "mean_selected_centers_within_4_per_midpoint": 4.5304468816500245,
+        "selected_center_inside_any_central50_band_fraction": 0.4911115870636111
+      }
+    },
+    "pami2__midpoint__dense_50pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.257806244995997,
+        "del": 11.20896717373899,
+        "ins": 2.8556178275954096,
+        "sub": 8.193221243661595,
+        "ref_len": 3747,
+        "error": 834
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.8006405124099274,
+        "error_count": -30,
+        "del_count": -21,
+        "ins_count": -22,
+        "sub_count": 13
+      },
+      "hypotheses_changed_vs_uniform": 197,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2655819774718398,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.182978723404255,
+        "mean_selected_centers_within_4_per_midpoint": 5.745932415519399,
+        "selected_center_inside_any_central50_band_fraction": 0.5326265438709217
+      }
+    },
+    "pami2__center_band_50__dense_50pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.92500667200427,
+        "del": 11.502535361622632,
+        "ins": 2.7755537763544167,
+        "sub": 8.646917534027223,
+        "ref_len": 3747,
+        "error": 859
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.13344008540165575,
+        "error_count": -5,
+        "del_count": -10,
+        "ins_count": -25,
+        "sub_count": 30
+      },
+      "hypotheses_changed_vs_uniform": 194,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 0.9356695869837297,
+        "midpoint_hit_within_1": 0.9704630788485608,
+        "midpoint_hit_within_2": 0.9992490613266584,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.3306633291614518,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.403754693366708,
+        "mean_selected_centers_within_4_per_midpoint": 5.260575719649562,
+        "selected_center_inside_any_central50_band_fraction": 0.6382166059827229
+      }
+    },
+    "center_label__midpoint__dense_50pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.68641579930611,
+        "del": 5.577795569789164,
+        "ins": 9.207365892714172,
+        "sub": 9.901254336802776,
+        "ref_len": 3747,
+        "error": 925
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.0141446490525787,
+        "error_count": -38,
+        "del_count": -12,
+        "ins_count": -25,
+        "sub_count": -1
+      },
+      "hypotheses_changed_vs_uniform": 223,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0018676627534685165,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.67102454642476,
+        "mean_selected_centers_within_4_per_midpoint": 6.061099252934898,
+        "selected_center_inside_any_central50_band_fraction": 0.5600057114299993
+      },
+      "paired_bootstrap_primary": {
+        "unit": "WER percentage points (center - same-cell uniform)",
+        "sentence_bootstrap_seed": 260913,
+        "repetitions": 10000,
+        "ci95_unadjusted": [
+          -1.8381565497029841,
+          -0.1851827369410659
+        ],
+        "ci_bonferroni_9_primary_cells": [
+          -2.191714009855435,
+          0.17053923328313
+        ],
+        "probability_less_than_zero": 0.9906
+      }
+    },
+    "center_label__center_band_50__dense_50pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.60635174806512,
+        "del": 5.684547638110488,
+        "ins": 9.047237790232186,
+        "sub": 9.874566319722444,
+        "ref_len": 3747,
+        "error": 922
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.0942087002935708,
+        "error_count": -41,
+        "del_count": -8,
+        "ins_count": -31,
+        "sub_count": -2
+      },
+      "hypotheses_changed_vs_uniform": 228,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 0.9677161152614728,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.03415154749199573,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 1.0
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.352187833511206,
+        "mean_selected_centers_within_4_per_midpoint": 5.963713980789755,
+        "selected_center_inside_any_central50_band_fraction": 0.6013064896123367
+      }
+    },
+    "pami0__midpoint__dense_50pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.873231918868427,
+        "del": 5.711235655190819,
+        "ins": 9.100613824392848,
+        "sub": 10.06138243928476,
+        "ref_len": 3747,
+        "error": 932
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.8273285294902628,
+        "error_count": -31,
+        "del_count": -7,
+        "ins_count": -29,
+        "sub_count": 5
+      },
+      "hypotheses_changed_vs_uniform": 211,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.9929615178639737,
+        "midpoint_hit_within_1": 0.9931910335858006,
+        "midpoint_hit_within_2": 0.999923494759391,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.282572106189274,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.5546629944151173,
+        "mean_selected_centers_within_4_per_midpoint": 4.60033662305868,
+        "selected_center_inside_any_central50_band_fraction": 0.52256014849718
+      }
+    },
+    "pami0__center_band_50__dense_50pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.89991993594876,
+        "del": 6.244995996797438,
+        "ins": 8.753669602348547,
+        "sub": 9.901254336802776,
+        "ref_len": 3747,
+        "error": 933
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.800640512409931,
+        "error_count": -30,
+        "del_count": 13,
+        "ins_count": -42,
+        "sub_count": -1
+      },
+      "hypotheses_changed_vs_uniform": 213,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.8062122255374493,
+        "midpoint_hit_within_1": 0.8622905669038329,
+        "midpoint_hit_within_2": 0.9964807589319868,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.4727641343432025,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.1866727870859153,
+        "mean_selected_centers_within_4_per_midpoint": 3.9141611200367223,
+        "selected_center_inside_any_central50_band_fraction": 0.6834439922895695
+      }
+    },
+    "pami1__midpoint__dense_50pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 25.46036829463571,
+        "del": 5.657859621030157,
+        "ins": 9.634374165999466,
+        "sub": 10.168134507606084,
+        "ref_len": 3747,
+        "error": 954
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.24019215372297964,
+        "error_count": -9,
+        "del_count": -9,
+        "ins_count": -9,
+        "sub_count": 9
+      },
+      "hypotheses_changed_vs_uniform": 226,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9930430512358814,
+        "midpoint_hit_within_1": 0.9931248976919299,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.30320019643149454,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.794238009494189,
+        "mean_selected_centers_within_4_per_midpoint": 4.974791291537077,
+        "selected_center_inside_any_central50_band_fraction": 0.36106946526736633
+      }
+    },
+    "pami1__center_band_50__dense_50pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 25.193488123832395,
+        "del": 5.73792367227115,
+        "ins": 9.100613824392848,
+        "sub": 10.354950627168401,
+        "ref_len": 3747,
+        "error": 944
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.5070723245262947,
+        "error_count": -19,
+        "del_count": -6,
+        "ins_count": -29,
+        "sub_count": 16
+      },
+      "hypotheses_changed_vs_uniform": 231,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9299394336225242,
+        "midpoint_hit_within_1": 0.9346046816172859,
+        "midpoint_hit_within_2": 0.9986086102471763,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.36769520379767556,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.5310198068423637,
+        "mean_selected_centers_within_4_per_midpoint": 4.5304468816500245,
+        "selected_center_inside_any_central50_band_fraction": 0.4911115870636111
+      }
+    },
+    "pami2__midpoint__dense_50pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.526287696824127,
+        "del": 5.684547638110488,
+        "ins": 8.940485721910862,
+        "sub": 9.901254336802776,
+        "ref_len": 3747,
+        "error": 919
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.1742727515345628,
+        "error_count": -44,
+        "del_count": -8,
+        "ins_count": -35,
+        "sub_count": -1
+      },
+      "hypotheses_changed_vs_uniform": 227,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2655819774718398,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.182978723404255,
+        "mean_selected_centers_within_4_per_midpoint": 5.745932415519399,
+        "selected_center_inside_any_central50_band_fraction": 0.5326265438709217
+      }
+    },
+    "pami2__center_band_50__dense_50pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.526287696824127,
+        "del": 5.73792367227115,
+        "ins": 8.299973311982919,
+        "sub": 10.488390712570055,
+        "ref_len": 3747,
+        "error": 919
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.1742727515345628,
+        "error_count": -44,
+        "del_count": -6,
+        "ins_count": -59,
+        "sub_count": 21
+      },
+      "hypotheses_changed_vs_uniform": 230,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 0.9356695869837297,
+        "midpoint_hit_within_1": 0.9704630788485608,
+        "midpoint_hit_within_2": 0.9992490613266584,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.3306633291614518,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.403754693366708,
+        "mean_selected_centers_within_4_per_midpoint": 5.260575719649562,
+        "selected_center_inside_any_central50_band_fraction": 0.6382166059827229
+      }
+    },
+    "center_label__midpoint__dense_50pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 39.41820122764879,
+        "del": 3.522818254603683,
+        "ins": 26.71470509741126,
+        "sub": 9.18067787563384,
+        "ref_len": 3747,
+        "error": 1477
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 5.898051774753142,
+        "error_count": 221,
+        "del_count": -13,
+        "ins_count": 259,
+        "sub_count": -25
+      },
+      "hypotheses_changed_vs_uniform": 278,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0018676627534685165,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.67102454642476,
+        "mean_selected_centers_within_4_per_midpoint": 6.061099252934898,
+        "selected_center_inside_any_central50_band_fraction": 0.5600057114299993
+      },
+      "paired_bootstrap_primary": {
+        "unit": "WER percentage points (center - same-cell uniform)",
+        "sentence_bootstrap_seed": 260913,
+        "repetitions": 10000,
+        "ci95_unadjusted": [
+          4.2592293906810035,
+          7.554622271828917
+        ],
+        "ci_bonferroni_9_primary_cells": [
+          3.573320904539962,
+          8.284474928319737
+        ],
+        "probability_less_than_zero": 0.0
+      }
+    },
+    "center_label__center_band_50__dense_50pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 36.642647451294366,
+        "del": 3.416066186282359,
+        "ins": 23.618895116092876,
+        "sub": 9.607686148919136,
+        "ref_len": 3747,
+        "error": 1373
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 3.122497998398721,
+        "error_count": 117,
+        "del_count": -17,
+        "ins_count": 143,
+        "sub_count": -9
+      },
+      "hypotheses_changed_vs_uniform": 281,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 0.9677161152614728,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.03415154749199573,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 1.0
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.352187833511206,
+        "mean_selected_centers_within_4_per_midpoint": 5.963713980789755,
+        "selected_center_inside_any_central50_band_fraction": 0.6013064896123367
+      }
+    },
+    "pami0__midpoint__dense_50pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 36.13557512676808,
+        "del": 3.576194288764345,
+        "ins": 22.63143848412063,
+        "sub": 9.927942353883108,
+        "ref_len": 3747,
+        "error": 1354
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 2.615425673872437,
+        "error_count": 98,
+        "del_count": -11,
+        "ins_count": 106,
+        "sub_count": 3
+      },
+      "hypotheses_changed_vs_uniform": 255,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.9929615178639737,
+        "midpoint_hit_within_1": 0.9931910335858006,
+        "midpoint_hit_within_2": 0.999923494759391,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.282572106189274,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.5546629944151173,
+        "mean_selected_centers_within_4_per_midpoint": 4.60033662305868,
+        "selected_center_inside_any_central50_band_fraction": 0.52256014849718
+      }
+    },
+    "pami0__center_band_50__dense_50pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 34.53429410194823,
+        "del": 3.8697624766479852,
+        "ins": 20.469709100613827,
+        "sub": 10.194822524686415,
+        "ref_len": 3747,
+        "error": 1294
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.0141446490525823,
+        "error_count": 38,
+        "del_count": 0,
+        "ins_count": 25,
+        "sub_count": 13
+      },
+      "hypotheses_changed_vs_uniform": 258,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.8062122255374493,
+        "midpoint_hit_within_1": 0.8622905669038329,
+        "midpoint_hit_within_2": 0.9964807589319868,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.4727641343432025,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.1866727870859153,
+        "mean_selected_centers_within_4_per_midpoint": 3.9141611200367223,
+        "selected_center_inside_any_central50_band_fraction": 0.6834439922895695
+      }
+    },
+    "pami1__midpoint__dense_50pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 35.17480651187617,
+        "del": 3.7630104083266613,
+        "ins": 21.297037630104082,
+        "sub": 10.114758473445423,
+        "ref_len": 3747,
+        "error": 1318
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.6546570589805256,
+        "error_count": 62,
+        "del_count": -4,
+        "ins_count": 56,
+        "sub_count": 10
+      },
+      "hypotheses_changed_vs_uniform": 262,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9930430512358814,
+        "midpoint_hit_within_1": 0.9931248976919299,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.30320019643149454,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 1.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.794238009494189,
+        "mean_selected_centers_within_4_per_midpoint": 4.974791291537077,
+        "selected_center_inside_any_central50_band_fraction": 0.36106946526736633
+      }
+    },
+    "pami1__center_band_50__dense_50pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 34.267413931144915,
+        "del": 3.789698425406992,
+        "ins": 20.176140912730183,
+        "sub": 10.30157459300774,
+        "ref_len": 3747,
+        "error": 1284
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.7472644782492708,
+        "error_count": 28,
+        "del_count": -3,
+        "ins_count": 14,
+        "sub_count": 17
+      },
+      "hypotheses_changed_vs_uniform": 251,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9299394336225242,
+        "midpoint_hit_within_1": 0.9346046816172859,
+        "midpoint_hit_within_2": 0.9986086102471763,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.36769520379767556,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.5310198068423637,
+        "mean_selected_centers_within_4_per_midpoint": 4.5304468816500245,
+        "selected_center_inside_any_central50_band_fraction": 0.4911115870636111
+      }
+    },
+    "pami2__midpoint__dense_50pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 36.93621563917801,
+        "del": 3.843074459567654,
+        "ins": 23.352014945289564,
+        "sub": 9.74112623432079,
+        "ref_len": 3747,
+        "error": 1384
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 3.4160661862823645,
+        "error_count": 128,
+        "del_count": -1,
+        "ins_count": 133,
+        "sub_count": -4
+      },
+      "hypotheses_changed_vs_uniform": 280,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2655819774718398,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 4.182978723404255,
+        "mean_selected_centers_within_4_per_midpoint": 5.745932415519399,
+        "selected_center_inside_any_central50_band_fraction": 0.5326265438709217
+      }
+    },
+    "pami2__center_band_50__dense_50pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 34.374165999466236,
+        "del": 4.270082732852949,
+        "ins": 20.069388844408863,
+        "sub": 10.034694422204431,
+        "ref_len": 3747,
+        "error": 1288
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.8540165465705911,
+        "error_count": 32,
+        "del_count": 15,
+        "ins_count": 10,
+        "sub_count": 7
+      },
+      "hypotheses_changed_vs_uniform": 278,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 0.9356695869837297,
+        "midpoint_hit_within_1": 0.9704630788485608,
+        "midpoint_hit_within_2": 0.9992490613266584,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.3306633291614518,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 2.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.403754693366708,
+        "mean_selected_centers_within_4_per_midpoint": 5.260575719649562,
+        "selected_center_inside_any_central50_band_fraction": 0.6382166059827229
+      }
+    },
+    "center_label__midpoint__dense_33pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 21.99092607419269,
+        "del": 9.71443821724046,
+        "ins": 3.2559380838003733,
+        "sub": 9.020549773151854,
+        "ref_len": 3747,
+        "error": 824
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.8006405124099274,
+        "error_count": -30,
+        "del_count": -74,
+        "ins_count": -2,
+        "sub_count": 46
+      },
+      "hypotheses_changed_vs_uniform": 224,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0018676627534685165,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.233991462113127,
+        "mean_selected_centers_within_4_per_midpoint": 3.9479722518676628,
+        "selected_center_inside_any_central50_band_fraction": 0.6302792274170119
+      },
+      "paired_bootstrap_primary": {
+        "unit": "WER percentage points (center - same-cell uniform)",
+        "sentence_bootstrap_seed": 260913,
+        "repetitions": 10000,
+        "ci95_unadjusted": [
+          -1.533092613601088,
+          -0.07818100189967597
+        ],
+        "ci_bonferroni_9_primary_cells": [
+          -1.8456439088196874,
+          0.25031107919257845
+        ],
+        "probability_less_than_zero": 0.9827
+      }
+    },
+    "center_label__center_band_50__dense_33pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.177742193755005,
+        "del": 10.088070456365092,
+        "ins": 3.2025620496397114,
+        "sub": 8.8871096877502,
+        "ref_len": 3747,
+        "error": 831
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.6138243928476115,
+        "error_count": -23,
+        "del_count": -60,
+        "ins_count": -4,
+        "sub_count": 41
+      },
+      "hypotheses_changed_vs_uniform": 208,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 0.6270010672358591,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.37486659551760937,
+          "median": 0.0,
+          "p90": 1.0,
+          "max": 1.0
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.901547491995731,
+        "mean_selected_centers_within_4_per_midpoint": 3.892742796157951,
+        "selected_center_inside_any_central50_band_fraction": 0.6399634152902566
+      }
+    },
+    "pami0__midpoint__dense_33pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.53883106485188,
+        "del": 11.956231651988256,
+        "ins": 3.069121964238057,
+        "sub": 8.513477448625567,
+        "ref_len": 3747,
+        "error": 882
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.7472644782492637,
+        "error_count": 28,
+        "del_count": 10,
+        "ins_count": -9,
+        "sub_count": 27
+      },
+      "hypotheses_changed_vs_uniform": 194,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.8957998622905669,
+        "midpoint_hit_within_1": 0.8969474408997016,
+        "midpoint_hit_within_2": 0.9866115828934282,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.39396373651595135,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.6578685639966337,
+        "mean_selected_centers_within_4_per_midpoint": 3.00451380919593,
+        "selected_center_inside_any_central50_band_fraction": 0.5792220369075161
+      }
+    },
+    "pami0__center_band_50__dense_33pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.992527355217508,
+        "del": 12.730184147317855,
+        "ins": 3.1491860154790494,
+        "sub": 8.113157192420603,
+        "ref_len": 3747,
+        "error": 899
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.200960768614891,
+        "error_count": 45,
+        "del_count": 39,
+        "ins_count": -6,
+        "sub_count": 12
+      },
+      "hypotheses_changed_vs_uniform": 216,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.6115063881875908,
+        "midpoint_hit_within_1": 0.7837961900390177,
+        "midpoint_hit_within_2": 0.908040700788004,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.7631015224542881,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.4516104353148191,
+        "mean_selected_centers_within_4_per_midpoint": 2.6411904215438757,
+        "selected_center_inside_any_central50_band_fraction": 0.6790767740894174
+      }
+    },
+    "pami1__midpoint__dense_33pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.31278356018148,
+        "del": 12.489991993594876,
+        "ins": 3.2559380838003733,
+        "sub": 8.566853482786229,
+        "ref_len": 3747,
+        "error": 911
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.5212169735788628,
+        "error_count": 57,
+        "del_count": 30,
+        "ins_count": -2,
+        "sub_count": 29
+      },
+      "hypotheses_changed_vs_uniform": 222,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9066131936487151,
+        "midpoint_hit_within_1": 0.9070224259289573,
+        "midpoint_hit_within_2": 0.9925519724995908,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.39740546734326404,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.8266492060893764,
+        "mean_selected_centers_within_4_per_midpoint": 3.2600261908659354,
+        "selected_center_inside_any_central50_band_fraction": 0.4341206219400656
+      }
+    },
+    "pami1__center_band_50__dense_33pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.36615959434214,
+        "del": 12.463303976514545,
+        "ins": 3.2826261008807047,
+        "sub": 8.62022951694689,
+        "ref_len": 3747,
+        "error": 913
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.574593007739523,
+        "error_count": 59,
+        "del_count": 29,
+        "ins_count": -1,
+        "sub_count": 31
+      },
+      "hypotheses_changed_vs_uniform": 231,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.6566541168767392,
+        "midpoint_hit_within_1": 0.7354722540513996,
+        "midpoint_hit_within_2": 0.8909805205434604,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.7548289409068587,
+          "median": 0.5,
+          "p90": 2.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.6201505974791293,
+        "mean_selected_centers_within_4_per_midpoint": 2.913079063676543,
+        "selected_center_inside_any_central50_band_fraction": 0.5853015548501641
+      }
+    },
+    "pami2__midpoint__dense_33pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.0725914064585,
+        "del": 12.06298372030958,
+        "ins": 3.122497998398719,
+        "sub": 8.8871096877502,
+        "ref_len": 3747,
+        "error": 902
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.2810248198558831,
+        "error_count": 48,
+        "del_count": 14,
+        "ins_count": -7,
+        "sub_count": 41
+      },
+      "hypotheses_changed_vs_uniform": 236,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2655819774718398,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.993491864831039,
+        "mean_selected_centers_within_4_per_midpoint": 3.781727158948686,
+        "selected_center_inside_any_central50_band_fraction": 0.5759939742831011
+      }
+    },
+    "pami2__center_band_50__dense_33pct__span15": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.939151321056844,
+        "del": 11.74272751534561,
+        "ins": 3.4427542033626897,
+        "sub": 8.753669602348547,
+        "ref_len": 3747,
+        "error": 897
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.1475847344542274,
+        "error_count": 43,
+        "del_count": 2,
+        "ins_count": 5,
+        "sub_count": 36
+      },
+      "hypotheses_changed_vs_uniform": 227,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 0.6886107634543179,
+        "midpoint_hit_within_1": 0.872090112640801,
+        "midpoint_hit_within_2": 0.9602002503128911,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.6200250312891114,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.254067584480601,
+        "mean_selected_centers_within_4_per_midpoint": 3.4688360450563205,
+        "selected_center_inside_any_central50_band_fraction": 0.6544358960563835
+      }
+    },
+    "center_label__midpoint__dense_33pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.472911662663464,
+        "del": 6.325060048038431,
+        "ins": 7.926341072858286,
+        "sub": 10.221510541766747,
+        "ref_len": 3747,
+        "error": 917
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -2.161729383506806,
+        "error_count": -81,
+        "del_count": 25,
+        "ins_count": -120,
+        "sub_count": 14
+      },
+      "hypotheses_changed_vs_uniform": 249,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0018676627534685165,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.233991462113127,
+        "mean_selected_centers_within_4_per_midpoint": 3.9479722518676628,
+        "selected_center_inside_any_central50_band_fraction": 0.6302792274170119
+      },
+      "paired_bootstrap_primary": {
+        "unit": "WER percentage points (center - same-cell uniform)",
+        "sentence_bootstrap_seed": 260913,
+        "repetitions": 10000,
+        "ci95_unadjusted": [
+          -3.0432604889630896,
+          -1.277610313936248
+        ],
+        "ci_bonferroni_9_primary_cells": [
+          -3.420941001930113,
+          -0.9553691263577268
+        ],
+        "probability_less_than_zero": 1.0
+      }
+    },
+    "center_label__center_band_50__dense_33pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.965839338137176,
+        "del": 6.218307979717107,
+        "ins": 7.472644782492662,
+        "sub": 10.274886575927408,
+        "ref_len": 3747,
+        "error": 898
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -2.6688017080330937,
+        "error_count": -100,
+        "del_count": 21,
+        "ins_count": -137,
+        "sub_count": 16
+      },
+      "hypotheses_changed_vs_uniform": 248,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 0.6270010672358591,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.37486659551760937,
+          "median": 0.0,
+          "p90": 1.0,
+          "max": 1.0
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.901547491995731,
+        "mean_selected_centers_within_4_per_midpoint": 3.892742796157951,
+        "selected_center_inside_any_central50_band_fraction": 0.6399634152902566
+      }
+    },
+    "pami0__midpoint__dense_33pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.766479850547103,
+        "del": 6.218307979717107,
+        "ins": 8.219909260741927,
+        "sub": 10.328262610088071,
+        "ref_len": 3747,
+        "error": 928
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.8681611956231663,
+        "error_count": -70,
+        "del_count": 21,
+        "ins_count": -109,
+        "sub_count": 18
+      },
+      "hypotheses_changed_vs_uniform": 224,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.8957998622905669,
+        "midpoint_hit_within_1": 0.8969474408997016,
+        "midpoint_hit_within_2": 0.9866115828934282,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.39396373651595135,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.6578685639966337,
+        "mean_selected_centers_within_4_per_midpoint": 3.00451380919593,
+        "selected_center_inside_any_central50_band_fraction": 0.5792220369075161
+      }
+    },
+    "pami0__center_band_50__dense_33pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 25.273552175073394,
+        "del": 6.992260475046703,
+        "ins": 8.166533226581265,
+        "sub": 10.114758473445423,
+        "ref_len": 3747,
+        "error": 947
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.3610888710968752,
+        "error_count": -51,
+        "del_count": 50,
+        "ins_count": -111,
+        "sub_count": 10
+      },
+      "hypotheses_changed_vs_uniform": 243,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.6115063881875908,
+        "midpoint_hit_within_1": 0.7837961900390177,
+        "midpoint_hit_within_2": 0.908040700788004,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.7631015224542881,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.4516104353148191,
+        "mean_selected_centers_within_4_per_midpoint": 2.6411904215438757,
+        "selected_center_inside_any_central50_band_fraction": 0.6790767740894174
+      }
+    },
+    "pami1__midpoint__dense_33pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 25.113424072591407,
+        "del": 6.672004270082733,
+        "ins": 8.139845209500935,
+        "sub": 10.30157459300774,
+        "ref_len": 3747,
+        "error": 941
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.5212169735788628,
+        "error_count": -57,
+        "del_count": 38,
+        "ins_count": -112,
+        "sub_count": 17
+      },
+      "hypotheses_changed_vs_uniform": 240,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9066131936487151,
+        "midpoint_hit_within_1": 0.9070224259289573,
+        "midpoint_hit_within_2": 0.9925519724995908,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.39740546734326404,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.8266492060893764,
+        "mean_selected_centers_within_4_per_midpoint": 3.2600261908659354,
+        "selected_center_inside_any_central50_band_fraction": 0.4341206219400656
+      }
+    },
+    "pami1__center_band_50__dense_33pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.739791833466775,
+        "del": 6.672004270082733,
+        "ins": 7.339204697091006,
+        "sub": 10.728582866293035,
+        "ref_len": 3747,
+        "error": 927
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.8948492127034946,
+        "error_count": -71,
+        "del_count": 38,
+        "ins_count": -142,
+        "sub_count": 33
+      },
+      "hypotheses_changed_vs_uniform": 244,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.6566541168767392,
+        "midpoint_hit_within_1": 0.7354722540513996,
+        "midpoint_hit_within_2": 0.8909805205434604,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.7548289409068587,
+          "median": 0.5,
+          "p90": 2.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.6201505974791293,
+        "mean_selected_centers_within_4_per_midpoint": 2.913079063676543,
+        "selected_center_inside_any_central50_band_fraction": 0.5853015548501641
+      }
+    },
+    "pami2__midpoint__dense_33pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.39284761142247,
+        "del": 6.832132372564718,
+        "ins": 6.965572457966374,
+        "sub": 10.59514278089138,
+        "ref_len": 3747,
+        "error": 914
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -2.241793434747798,
+        "error_count": -84,
+        "del_count": 44,
+        "ins_count": -156,
+        "sub_count": 28
+      },
+      "hypotheses_changed_vs_uniform": 259,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2655819774718398,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.993491864831039,
+        "mean_selected_centers_within_4_per_midpoint": 3.781727158948686,
+        "selected_center_inside_any_central50_band_fraction": 0.5759939742831011
+      }
+    },
+    "pami2__center_band_50__dense_33pct__span7": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 24.739791833466775,
+        "del": 6.85882038964505,
+        "ins": 7.232452628769683,
+        "sub": 10.648518815052041,
+        "ref_len": 3747,
+        "error": 927
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.8948492127034946,
+        "error_count": -71,
+        "del_count": 45,
+        "ins_count": -146,
+        "sub_count": 30
+      },
+      "hypotheses_changed_vs_uniform": 251,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 0.6886107634543179,
+        "midpoint_hit_within_1": 0.872090112640801,
+        "midpoint_hit_within_2": 0.9602002503128911,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.6200250312891114,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.254067584480601,
+        "mean_selected_centers_within_4_per_midpoint": 3.4688360450563205,
+        "selected_center_inside_any_central50_band_fraction": 0.6544358960563835
+      }
+    },
+    "center_label__midpoint__dense_33pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 31.46517213771017,
+        "del": 4.323458767013611,
+        "ins": 17.10701894849213,
+        "sub": 10.034694422204431,
+        "ref_len": 3747,
+        "error": 1179
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 1.4678409394182026,
+        "error_count": 55,
+        "del_count": -14,
+        "ins_count": 70,
+        "sub_count": -1
+      },
+      "hypotheses_changed_vs_uniform": 276,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.0018676627534685165,
+          "median": 0.0,
+          "p90": 0.0,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 3.233991462113127,
+        "mean_selected_centers_within_4_per_midpoint": 3.9479722518676628,
+        "selected_center_inside_any_central50_band_fraction": 0.6302792274170119
+      },
+      "paired_bootstrap_primary": {
+        "unit": "WER percentage points (center - same-cell uniform)",
+        "sentence_bootstrap_seed": 260913,
+        "repetitions": 10000,
+        "ci95_unadjusted": [
+          0.2938034188034188,
+          2.6983048737424378
+        ],
+        "ci_bonferroni_9_primary_cells": [
+          -0.24175921289068253,
+          3.1982034403452984
+        ],
+        "probability_less_than_zero": 0.0075
+      }
+    },
+    "center_label__center_band_50__dense_33pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 29.436882839605016,
+        "del": 4.456898852415265,
+        "ins": 14.571657325860688,
+        "sub": 10.408326661329063,
+        "ref_len": 3747,
+        "error": 1103
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.5604483586869513,
+        "error_count": -21,
+        "del_count": -9,
+        "ins_count": -25,
+        "sub_count": 13
+      },
+      "hypotheses_changed_vs_uniform": 262,
+      "center_coverage": {
+        "segment_midpoint_count": 3748,
+        "midpoint_hit_within_0_5": 0.6270010672358591,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.37486659551760937,
+          "median": 0.0,
+          "p90": 1.0,
+          "max": 1.0
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.901547491995731,
+        "mean_selected_centers_within_4_per_midpoint": 3.892742796157951,
+        "selected_center_inside_any_central50_band_fraction": 0.6399634152902566
+      }
+    },
+    "pami0__midpoint__dense_33pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 29.543634907926343,
+        "del": 4.483586869495596,
+        "ins": 14.171337069655724,
+        "sub": 10.88871096877502,
+        "ref_len": 3747,
+        "error": 1107
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.45369629036562387,
+        "error_count": -17,
+        "del_count": -8,
+        "ins_count": -40,
+        "sub_count": 31
+      },
+      "hypotheses_changed_vs_uniform": 245,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.8957998622905669,
+        "midpoint_hit_within_1": 0.8969474408997016,
+        "midpoint_hit_within_2": 0.9866115828934282,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.39396373651595135,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.6578685639966337,
+        "mean_selected_centers_within_4_per_midpoint": 3.00451380919593,
+        "selected_center_inside_any_central50_band_fraction": 0.5792220369075161
+      }
+    },
+    "pami0__center_band_50__dense_33pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 29.62369895916733,
+        "del": 5.417667467307179,
+        "ins": 13.690952762209768,
+        "sub": 10.515078729650387,
+        "ref_len": 3747,
+        "error": 1110
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.3736322391246354,
+        "error_count": -14,
+        "del_count": 27,
+        "ins_count": -58,
+        "sub_count": 17
+      },
+      "hypotheses_changed_vs_uniform": 256,
+      "center_coverage": {
+        "segment_midpoint_count": 13071,
+        "midpoint_hit_within_0_5": 0.6115063881875908,
+        "midpoint_hit_within_1": 0.7837961900390177,
+        "midpoint_hit_within_2": 0.908040700788004,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.7631015224542881,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.4516104353148191,
+        "mean_selected_centers_within_4_per_midpoint": 2.6411904215438757,
+        "selected_center_inside_any_central50_band_fraction": 0.6790767740894174
+      }
+    },
+    "pami1__midpoint__dense_33pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 29.036562583400055,
+        "del": 4.990659194021884,
+        "ins": 13.504136642647453,
+        "sub": 10.541766746730719,
+        "ref_len": 3747,
+        "error": 1088
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -0.9607686148919115,
+        "error_count": -36,
+        "del_count": 11,
+        "ins_count": -65,
+        "sub_count": 18
+      },
+      "hypotheses_changed_vs_uniform": 255,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.9066131936487151,
+        "midpoint_hit_within_1": 0.9070224259289573,
+        "midpoint_hit_within_2": 0.9925519724995908,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.39740546734326404,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.8266492060893764,
+        "mean_selected_centers_within_4_per_midpoint": 3.2600261908659354,
+        "selected_center_inside_any_central50_band_fraction": 0.4341206219400656
+      }
+    },
+    "pami1__center_band_50__dense_33pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 28.796370429677076,
+        "del": 5.390979450226848,
+        "ins": 12.836936215639177,
+        "sub": 10.568454763811049,
+        "ref_len": 3747,
+        "error": 1079
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.200960768614891,
+        "error_count": -45,
+        "del_count": 26,
+        "ins_count": -90,
+        "sub_count": 19
+      },
+      "hypotheses_changed_vs_uniform": 268,
+      "center_coverage": {
+        "segment_midpoint_count": 12218,
+        "midpoint_hit_within_0_5": 0.6566541168767392,
+        "midpoint_hit_within_1": 0.7354722540513996,
+        "midpoint_hit_within_2": 0.8909805205434604,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.7548289409068587,
+          "median": 0.5,
+          "p90": 2.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 1.6201505974791293,
+        "mean_selected_centers_within_4_per_midpoint": 2.913079063676543,
+        "selected_center_inside_any_central50_band_fraction": 0.5853015548501641
+      }
+    },
+    "pami2__midpoint__dense_33pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 30.10408326661329,
+        "del": 4.963971176941554,
+        "ins": 14.785161462503336,
+        "sub": 10.354950627168401,
+        "ref_len": 3747,
+        "error": 1128
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": 0.10675206832132389,
+        "error_count": 4,
+        "del_count": 10,
+        "ins_count": -17,
+        "sub_count": 11
+      },
+      "hypotheses_changed_vs_uniform": 287,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 1.0,
+        "midpoint_hit_within_1": 1.0,
+        "midpoint_hit_within_2": 1.0,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.2655819774718398,
+          "median": 0.5,
+          "p90": 0.5,
+          "max": 0.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.993491864831039,
+        "mean_selected_centers_within_4_per_midpoint": 3.781727158948686,
+        "selected_center_inside_any_central50_band_fraction": 0.5759939742831011
+      }
+    },
+    "pami2__center_band_50__dense_33pct__direct_span1": {
+      "identity": "label/alignment-derived offline sign-center proxy; not ground truth or deployable",
+      "metrics": {
+        "wer": 28.769682412596744,
+        "del": 5.44435548438751,
+        "ins": 12.756872164398187,
+        "sub": 10.568454763811049,
+        "ref_len": 3747,
+        "error": 1078
+      },
+      "delta_vs_same_cell_uniform": {
+        "wer_pp": -1.227648785695223,
+        "error_count": -46,
+        "del_count": 28,
+        "ins_count": -93,
+        "sub_count": 19
+      },
+      "hypotheses_changed_vs_uniform": 273,
+      "center_coverage": {
+        "segment_midpoint_count": 3995,
+        "midpoint_hit_within_0_5": 0.6886107634543179,
+        "midpoint_hit_within_1": 0.872090112640801,
+        "midpoint_hit_within_2": 0.9602002503128911,
+        "midpoint_hit_within_4": 1.0,
+        "midpoint_nearest_distance": {
+          "mean": 0.6200250312891114,
+          "median": 0.5,
+          "p90": 1.5,
+          "max": 3.5
+        },
+        "mean_selected_centers_within_2_per_midpoint": 2.254067584480601,
+        "mean_selected_centers_within_4_per_midpoint": 3.4688360450563205,
+        "selected_center_inside_any_central50_band_fraction": 0.6544358960563835
+      }
+    }
+  },
+  "external_frozen_reference_only_for_a0_exact_span15": {
+    "B2": {
+      "wer": 22.551374432879637,
+      "del": 11.342407259140645,
+      "ins": 3.2292500667200428,
+      "sub": 7.979717107018948,
+      "ref_len": 3747,
+      "error": 845
+    },
+    "A0": {
+      "wer": 22.41793434747798,
+      "del": 11.582599412863624,
+      "ins": 2.7755537763544167,
+      "sub": 8.059781158259941,
+      "ref_len": 3747,
+      "error": 840
+    }
+  },
+  "decision": {
+    "strong_go_rule": "primary center-label midpoint gains >=.5 pp in a cell, Bonferroni-9 CI excludes zero, and >=1 PAMI midpoint agrees in direction",
+    "weak_go_rule": "best primary gain >=.2 pp but strong rule not met",
+    "posthoc_best_primary": "center_label__midpoint__dense_33pct__span7",
+    "posthoc_best_all": "center_label__center_band_50__dense_33pct__span7",
+    "posthoc_selection_criterion": "most negative WER delta versus its own same-budget/same-decoder uniform cell",
+    "best_primary_gain_wer_pp": 2.161729383506806,
+    "pami_proxies_same_direction_at_best_primary_cell": 3,
+    "strong_qualifying_primary_cells": [
+      {
+        "cell": "center_label__midpoint__dense_50pct__span15",
+        "gain_wer_pp": 1.5212169735788628,
+        "bonferroni_upper": -0.6262845580303809,
+        "agreeing_pami_proxies": 1
+      },
+      {
+        "cell": "center_label__midpoint__dense_33pct__span7",
+        "gain_wer_pp": 2.161729383506806,
+        "bonferroni_upper": -0.9553691263577268,
+        "agreeing_pami_proxies": 3
+      }
+    ],
+    "outcome": "strong_go"
+  },
+  "limitations": [
+    "Every proxy consumes dev label/alignment information and is offline.",
+    "Center-label provenance and PAMI integer semantics remain unresolved.",
+    "The matrix changes only schedule, budget, and decoder over fixed dense logits; it does not test a learned center detector.",
+    "Centered 16-frame inputs and span15/span7 include lookahead; direct span1 removes voting but not centered-input lookahead."
+  ]
+}

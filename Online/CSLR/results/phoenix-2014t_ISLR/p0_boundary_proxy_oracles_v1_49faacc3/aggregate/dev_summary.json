@@ -1,0 +1,1413 @@
+{
+  "sample_count": 519,
+  "full_dev": true,
+  "identity_warning": "All four sources are label-aware/alignment-derived offline proxies, not independently verified manual ground truth, not deployable methods, and not evidence that a causal boundary detector works.",
+  "preregistered_main_proxy": "center_label first-record-per-bag nonblank segments",
+  "preregistered_main_coordinate": "fixed B0 padded-array starts; constant left padding 7",
+  "schedule": "half-ceiling uniform skeleton plus nearest-boundary bonus; exact per-sample A0 budget; endpoints 0/T-1; unique centers",
+  "window_decoder": "centered 16-frame; triangular span-weighted-15; min weight 0.05; no tuning",
+  "exploration_notice": "12 strategies were predeclared and all are reported; best identifiers are post-hoc descriptions",
+  "proxy_audit": {
+    "identity_warning": "All four sources are label-aware/alignment-derived offline proxies, not independently verified manual ground truth, not deployable methods, and not evidence that a causal boundary detector works.",
+    "center_label": {
+      "rule": "first stored record per bag; nonblank [base_start,base_end), falling back to stored [start,end) because base fields are absent; end proxy uses end-1 frame-center",
+      "sample_coverage": "519/519",
+      "nonblank_segments": 3748,
+      "blank_segments_excluded": 2133,
+      "reference_sequences_equal_ignoring_case": "519/519",
+      "invalid_ranges": 0,
+      "empty_segments": 0,
+      "duplicate_base_segments": 0,
+      "records_missing_base_start_or_base_end": 5881,
+      "videos_with_adjacent_nonblank_overlap": 52,
+      "overlapping_adjacent_nonblank_pairs": 65,
+      "provenance_limitation": "sign_augment.py shows first records originate from upstream segments, but phoenix_iso.dev is absent; human-versus-forced-alignment provenance cannot be resolved locally."
+    },
+    "pami": {
+      "rule": "parse each full-length integer sequence; provisionally treat integer 0 as blank; each maximal constant nonzero run is a segment; start is its first frame-center and end is its last frame-center; every nonzero integer transition closes and opens runs",
+      "field_semantics_uncertainty": "pami0/pami1/pami2 vocabulary and generator are undocumented locally; integer changes may be HMM/state changes rather than gloss changes",
+      "sample_coverage": "519/519 for each pami field"
+    }
+  },
+  "proxy_boundary_counts": {
+    "center_label": {
+      "start_only": 3748,
+      "end_only": 3748,
+      "start_and_end": 7434
+    },
+    "pami0": {
+      "start_only": 13071,
+      "end_only": 13071,
+      "start_and_end": 24823
+    },
+    "pami1": {
+      "start_only": 12218,
+      "end_only": 12218,
+      "start_and_end": 22442
+    },
+    "pami2": {
+      "start_only": 3995,
+      "end_only": 3995,
+      "start_and_end": 7881
+    }
+  },
+  "proxy_pairwise_tolerance_agreement": {
+    "center_label__pami0": {
+      "left_boundary_count": 7434,
+      "right_boundary_count": 24823,
+      "tolerance_0": {
+        "left_to_right_recall": 0.5299973096583266,
+        "right_to_left_recall": 0.15872376425089635,
+        "symmetric_mean": 0.34436053695461144
+      },
+      "tolerance_2": {
+        "left_to_right_recall": 0.8900995426419155,
+        "right_to_left_recall": 0.6542722475123877,
+        "symmetric_mean": 0.7721858950771516
+      },
+      "tolerance_4": {
+        "left_to_right_recall": 0.9643529728275491,
+        "right_to_left_recall": 0.8575917495870765,
+        "symmetric_mean": 0.9109723612073128
+      }
+    },
+    "center_label__pami1": {
+      "left_boundary_count": 7434,
+      "right_boundary_count": 22442,
+      "tolerance_0": {
+        "left_to_right_recall": 0.4651600753295669,
+        "right_to_left_recall": 0.15408608858390518,
+        "symmetric_mean": 0.30962308195673605
+      },
+      "tolerance_2": {
+        "left_to_right_recall": 0.8151735270379338,
+        "right_to_left_recall": 0.6513679707690937,
+        "symmetric_mean": 0.7332707489035137
+      },
+      "tolerance_4": {
+        "left_to_right_recall": 0.905030938929244,
+        "right_to_left_recall": 0.8687282773371358,
+        "symmetric_mean": 0.8868796081331899
+      }
+    },
+    "center_label__pami2": {
+      "left_boundary_count": 7434,
+      "right_boundary_count": 7881,
+      "tolerance_0": {
+        "left_to_right_recall": 0.18818940005380683,
+        "right_to_left_recall": 0.17751554371272682,
+        "symmetric_mean": 0.1828524718832668
+      },
+      "tolerance_2": {
+        "left_to_right_recall": 0.6111111111111112,
+        "right_to_left_recall": 0.7094277375967517,
+        "symmetric_mean": 0.6602694243539314
+      },
+      "tolerance_4": {
+        "left_to_right_recall": 0.8077750874361044,
+        "right_to_left_recall": 0.8968405024743052,
+        "symmetric_mean": 0.8523077949552048
+      }
+    },
+    "pami0__pami1": {
+      "left_boundary_count": 24823,
+      "right_boundary_count": 22442,
+      "tolerance_0": {
+        "left_to_right_recall": 0.4808443781976393,
+        "right_to_left_recall": 0.5318599055342661,
+        "symmetric_mean": 0.5063521418659527
+      },
+      "tolerance_2": {
+        "left_to_right_recall": 0.816984248479233,
+        "right_to_left_recall": 0.9004990642545228,
+        "symmetric_mean": 0.8587416563668779
+      },
+      "tolerance_4": {
+        "left_to_right_recall": 0.9042420335978729,
+        "right_to_left_recall": 0.972997059085643,
+        "symmetric_mean": 0.9386195463417579
+      }
+    },
+    "pami0__pami2": {
+      "left_boundary_count": 24823,
+      "right_boundary_count": 7881,
+      "tolerance_0": {
+        "left_to_right_recall": 0.20593804133263505,
+        "right_to_left_recall": 0.6486486486486487,
+        "symmetric_mean": 0.42729334499064187
+      },
+      "tolerance_2": {
+        "left_to_right_recall": 0.6201506667203803,
+        "right_to_left_recall": 0.9602842278898617,
+        "symmetric_mean": 0.790217447305121
+      },
+      "tolerance_4": {
+        "left_to_right_recall": 0.8073157958345083,
+        "right_to_left_recall": 0.9903565537368354,
+        "symmetric_mean": 0.8988361747856719
+      }
+    },
+    "pami1__pami2": {
+      "left_boundary_count": 22442,
+      "right_boundary_count": 7881,
+      "tolerance_0": {
+        "left_to_right_recall": 0.16442384814187683,
+        "right_to_left_recall": 0.46821469356680623,
+        "symmetric_mean": 0.3163192708543415
+      },
+      "tolerance_2": {
+        "left_to_right_recall": 0.5454504946083237,
+        "right_to_left_recall": 0.8321279025504378,
+        "symmetric_mean": 0.6887891985793808
+      },
+      "tolerance_4": {
+        "left_to_right_recall": 0.7540771767222173,
+        "right_to_left_recall": 0.91676183225479,
+        "symmetric_mean": 0.8354195044885037
+      }
+    }
+  },
+  "references": {
+    "fixed_coordinate_uniform_exact_A0_per_sample_budget": {
+      "wer": 22.63143848412063,
+      "del": 11.422471310381638,
+      "ins": 3.2025620496397114,
+      "sub": 8.00640512409928,
+      "ref_len": 3747,
+      "error": 848
+    },
+    "frozen_B2": {
+      "wer": 22.551374432879637,
+      "del": 11.342407259140645,
+      "ins": 3.2292500667200428,
+      "sub": 7.979717107018948,
+      "ref_len": 3747,
+      "error": 845
+    },
+    "frozen_A0": {
+      "wer": 22.41793434747798,
+      "del": 11.582599412863624,
+      "ins": 2.7755537763544167,
+      "sub": 8.059781158259941,
+      "ref_len": 3747,
+      "error": 840
+    }
+  },
+  "strategies": {
+    "center_label__start_only": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.57806244995997,
+        "del": 10.568454763811049,
+        "ins": 3.362690152121697,
+        "sub": 8.646917534027223,
+        "ref_len": 3747,
+        "error": 846
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": -0.05337603416066017,
+            "error_count": -2,
+            "del_count": -32,
+            "ins_count": 6,
+            "sub_count": 24
+          },
+          "hypotheses_changed": 123,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.5666525013600878,
+              0.4599941657148492
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.8249355971630948,
+              0.6939188674113976
+            ],
+            "probability_less_than_zero": 0.5532
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.02668801708033186,
+            "error_count": 1,
+            "del_count": -29,
+            "ins_count": 5,
+            "sub_count": 25
+          },
+          "hypotheses_changed": 120,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.4894030677362265,
+              0.5588119669281645
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.7208438742688583,
+              0.7920326452473082
+            ],
+            "probability_less_than_zero": 0.435
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.1601281024819876,
+            "error_count": 6,
+            "del_count": -38,
+            "ins_count": 22,
+            "sub_count": 22
+          },
+          "hypotheses_changed": 138,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.3667994524777678,
+              0.6845748114420588
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.6404627745045528,
+              0.9114746919021783
+            ],
+            "probability_less_than_zero": 0.256
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 3748,
+        "exact_recall": 1.0,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.0,
+        "mean_selected_centers_within_2_per_boundary": 4.872732123799359,
+        "mean_selected_centers_within_4_per_boundary": 7.876734258271078,
+        "selected_center_within_2_of_boundary_fraction": 0.4836634321414329
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.0,
+        "random_mean_minus_strategy_wer_pp": 0.634285205942529,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "center_label__end_only": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.53883106485188,
+        "del": 12.516680010675207,
+        "ins": 2.9089938617560716,
+        "sub": 8.113157192420603,
+        "ref_len": 3747,
+        "error": 882
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.9073925807312513,
+            "error_count": 34,
+            "del_count": 41,
+            "ins_count": -11,
+            "sub_count": 4
+          },
+          "hypotheses_changed": 136,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.3452809415378042,
+              1.4683230396840299
+            ],
+            "ci_bonferroni_12_strategies": [
+              0.08051827465735018,
+              1.739328441477748
+            ],
+            "probability_less_than_zero": 0.0011
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.9874566319722433,
+            "error_count": 37,
+            "del_count": 44,
+            "ins_count": -12,
+            "sub_count": 5
+          },
+          "hypotheses_changed": 146,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.38492734779932336,
+              1.5924641471353238
+            ],
+            "ci_bonferroni_12_strategies": [
+              0.13355229765946727,
+              1.8458353127575016
+            ],
+            "probability_less_than_zero": 0.0003
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 1.120896717373899,
+            "error_count": 42,
+            "del_count": 35,
+            "ins_count": 5,
+            "sub_count": 2
+          },
+          "hypotheses_changed": 161,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.49907245283167184,
+              1.7664118112312155
+            ],
+            "ci_bonferroni_12_strategies": [
+              0.19368128372912638,
+              2.0131192900073764
+            ],
+            "probability_less_than_zero": 0.0001
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 3748,
+        "exact_recall": 1.0,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.0,
+        "mean_selected_centers_within_2_per_boundary": 4.967982924226254,
+        "mean_selected_centers_within_4_per_boundary": 7.9188900747065105,
+        "selected_center_within_2_of_boundary_fraction": 0.4935796889538748
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.8666666666666667,
+        "random_mean_minus_strategy_wer_pp": -0.32648340894938244,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "center_label__start_and_end": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.57806244995997,
+        "del": 10.995463037096345,
+        "ins": 3.095809981318388,
+        "sub": 8.486789431545235,
+        "ref_len": 3747,
+        "error": 846
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": -0.05337603416066017,
+            "error_count": -2,
+            "del_count": -16,
+            "ins_count": -4,
+            "sub_count": 18
+          },
+          "hypotheses_changed": 132,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.5668092727091831,
+              0.46107946840249525
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.7925312479745277,
+              0.670725228619159
+            ],
+            "probability_less_than_zero": 0.5619
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.02668801708033186,
+            "error_count": 1,
+            "del_count": -13,
+            "ins_count": -5,
+            "sub_count": 19
+          },
+          "hypotheses_changed": 116,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.46791838608006237,
+              0.5317770002319436
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.7099919669352313,
+              0.7746885914528756
+            ],
+            "probability_less_than_zero": 0.431
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.1601281024819876,
+            "error_count": 6,
+            "del_count": -22,
+            "ins_count": 12,
+            "sub_count": 16
+          },
+          "hypotheses_changed": 140,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.3977777510415011,
+              0.729556148085035
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.6666691285528131,
+              0.9971301142695036
+            ],
+            "probability_less_than_zero": 0.268
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 7434,
+        "exact_recall": 1.0,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.0,
+        "mean_selected_centers_within_2_per_boundary": 4.294457896152811,
+        "mean_selected_centers_within_4_per_boundary": 6.949018025289211,
+        "selected_center_within_2_of_boundary_fraction": 0.7633390934467632
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.0,
+        "random_mean_minus_strategy_wer_pp": 0.634285205942529,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "pami0__start_only": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.81825460368295,
+        "del": 12.03629570322925,
+        "ins": 3.015745930077395,
+        "sub": 7.766212970376301,
+        "ref_len": 3747,
+        "error": 855
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.18681611956231947,
+            "error_count": 7,
+            "del_count": 23,
+            "ins_count": -7,
+            "sub_count": -9
+          },
+          "hypotheses_changed": 138,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.37615957787640764,
+              0.7582005574451781
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.6299228367242735,
+              1.0351442017978325
+            ],
+            "probability_less_than_zero": 0.2456
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.2668801708033115,
+            "error_count": 10,
+            "del_count": 26,
+            "ins_count": -8,
+            "sub_count": -8
+          },
+          "hypotheses_changed": 152,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.343016975469965,
+              0.88615583539335
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.6077160354795894,
+              1.1746018003621699
+            ],
+            "probability_less_than_zero": 0.1895
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.40032025620496725,
+            "error_count": 15,
+            "del_count": 17,
+            "ins_count": 9,
+            "sub_count": -11
+          },
+          "hypotheses_changed": 163,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.18667789361133386,
+              1.0149708266524138
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.4691017464196966,
+              1.2674091561751695
+            ],
+            "probability_less_than_zero": 0.0865
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 13071,
+        "exact_recall": 0.999846989518782,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.00015301048121796343,
+        "mean_selected_centers_within_2_per_boundary": 3.9310687782113076,
+        "mean_selected_centers_within_4_per_boundary": 6.604620916532783,
+        "selected_center_within_2_of_boundary_fraction": 0.8695467233816296
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.06666666666666667,
+        "random_mean_minus_strategy_wer_pp": 0.3940930522195494,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "pami0__end_only": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.57806244995997,
+        "del": 11.76941553242594,
+        "ins": 2.8289298105150786,
+        "sub": 7.979717107018948,
+        "ref_len": 3747,
+        "error": 846
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": -0.05337603416066017,
+            "error_count": -2,
+            "del_count": 13,
+            "ins_count": -14,
+            "sub_count": -1
+          },
+          "hypotheses_changed": 141,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.6422306823540737,
+              0.5326231691078562
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.9206394558121578,
+              0.8507661526949593
+            ],
+            "probability_less_than_zero": 0.5566
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.02668801708033186,
+            "error_count": 1,
+            "del_count": 16,
+            "ins_count": -15,
+            "sub_count": 0
+          },
+          "hypotheses_changed": 147,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.6073489260869155,
+              0.668809085394332
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.8689660374837567,
+              0.9838066626859743
+            ],
+            "probability_less_than_zero": 0.4472
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.1601281024819876,
+            "error_count": 6,
+            "del_count": 7,
+            "ins_count": 2,
+            "sub_count": -3
+          },
+          "hypotheses_changed": 164,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.44678348816032915,
+              0.7945073183907062
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.729868855326977,
+              1.0756434800332009
+            ],
+            "probability_less_than_zero": 0.2835
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 13071,
+        "exact_recall": 0.999770484278173,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.00022951572182694515,
+        "mean_selected_centers_within_2_per_boundary": 3.929079641955474,
+        "mean_selected_centers_within_4_per_boundary": 6.590849973223166,
+        "selected_center_within_2_of_boundary_fraction": 0.8703442775488502
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.0,
+        "random_mean_minus_strategy_wer_pp": 0.634285205942529,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "pami0__start_and_end": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.764878569522285,
+        "del": 11.876167600747264,
+        "ins": 3.069121964238057,
+        "sub": 7.8195890045369625,
+        "ref_len": 3747,
+        "error": 853
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.13344008540165575,
+            "error_count": 5,
+            "del_count": 17,
+            "ins_count": -5,
+            "sub_count": -7
+          },
+          "hypotheses_changed": 141,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.4047517866857771,
+              0.6978273855903585
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.6485744456302959,
+              0.9735823589094703
+            ],
+            "probability_less_than_zero": 0.296
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.21350413664264778,
+            "error_count": 8,
+            "del_count": 20,
+            "ins_count": -6,
+            "sub_count": -6
+          },
+          "hypotheses_changed": 145,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.34583895935545006,
+              0.8119088698147299
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.6037483886907873,
+              1.0583656351925013
+            ],
+            "probability_less_than_zero": 0.211
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.34694422204430353,
+            "error_count": 13,
+            "del_count": 11,
+            "ins_count": 11,
+            "sub_count": -9
+          },
+          "hypotheses_changed": 156,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.23413721058792925,
+              0.9536914740936412
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.5191811261064875,
+              1.2098244673611267
+            ],
+            "probability_less_than_zero": 0.1153
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 24823,
+        "exact_recall": 0.97091407162712,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.02908592837287999,
+        "mean_selected_centers_within_2_per_boundary": 3.929098013938686,
+        "mean_selected_centers_within_4_per_boundary": 6.606050839946824,
+        "selected_center_within_2_of_boundary_fraction": 0.9051708095174797
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.03333333333333333,
+        "random_mean_minus_strategy_wer_pp": 0.4474690863802131,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "pami1__start_only": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.791566586602617,
+        "del": 11.929543634907928,
+        "ins": 2.8556178275954096,
+        "sub": 8.00640512409928,
+        "ref_len": 3747,
+        "error": 854
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.1601281024819876,
+            "error_count": 6,
+            "del_count": 19,
+            "ins_count": -13,
+            "sub_count": 0
+          },
+          "hypotheses_changed": 129,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.3094163377226022,
+              0.6169381214811319
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.5135369402248964,
+              0.8263823029645878
+            ],
+            "probability_less_than_zero": 0.2303
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.24019215372297964,
+            "error_count": 9,
+            "del_count": 22,
+            "ins_count": -14,
+            "sub_count": 1
+          },
+          "hypotheses_changed": 122,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.26253782229615397,
+              0.7483602059942313
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.47767018676768286,
+              0.9944052876100288
+            ],
+            "probability_less_than_zero": 0.1648
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.3736322391246354,
+            "error_count": 14,
+            "del_count": 13,
+            "ins_count": 3,
+            "sub_count": -2
+          },
+          "hypotheses_changed": 149,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.1896517861141765,
+              0.9452435932943307
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.475039908958777,
+              1.2218599194240842
+            ],
+            "probability_less_than_zero": 0.0893
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 12218,
+        "exact_recall": 1.0,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.0,
+        "mean_selected_centers_within_2_per_boundary": 4.2285153052872815,
+        "mean_selected_centers_within_4_per_boundary": 7.009576035357669,
+        "selected_center_within_2_of_boundary_fraction": 0.816296690150206
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.06666666666666667,
+        "random_mean_minus_strategy_wer_pp": 0.42078106929988124,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "pami1__end_only": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.218574859887912,
+        "del": 12.32986389111289,
+        "ins": 2.989057912997064,
+        "sub": 7.899653055777955,
+        "ref_len": 3747,
+        "error": 870
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.5871363757672832,
+            "error_count": 22,
+            "del_count": 34,
+            "ins_count": -8,
+            "sub_count": -4
+          },
+          "hypotheses_changed": 143,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.07999946680885098,
+              1.10218019722907
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.15864206408802364,
+              1.3601543277082206
+            ],
+            "probability_less_than_zero": 0.0093
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.6672004270082752,
+            "error_count": 25,
+            "del_count": 37,
+            "ins_count": -9,
+            "sub_count": -3
+          },
+          "hypotheses_changed": 150,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.10669440739752822,
+              1.2232561446931456
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.16898957210375895,
+              1.533018803035131
+            ],
+            "probability_less_than_zero": 0.0088
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.800640512409931,
+            "error_count": 30,
+            "del_count": 28,
+            "ins_count": 8,
+            "sub_count": -6
+          },
+          "hypotheses_changed": 165,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.1888243110278768,
+              1.4058558955816205
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.07860829787789407,
+              1.710504107607263
+            ],
+            "probability_less_than_zero": 0.0045
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 12218,
+        "exact_recall": 0.9996726141758062,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.0003273858241938124,
+        "mean_selected_centers_within_2_per_boundary": 4.263463742019971,
+        "mean_selected_centers_within_4_per_boundary": 7.058683908986741,
+        "selected_center_within_2_of_boundary_fraction": 0.8091984580619433
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.6,
+        "random_mean_minus_strategy_wer_pp": -0.00622720398541432,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "pami1__start_and_end": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.005070723245264,
+        "del": 12.143047771550574,
+        "ins": 3.015745930077395,
+        "sub": 7.846277021617294,
+        "ref_len": 3747,
+        "error": 862
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.3736322391246354,
+            "error_count": 14,
+            "del_count": 27,
+            "ins_count": -7,
+            "sub_count": -6
+          },
+          "hypotheses_changed": 120,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.08152284736506135,
+              0.8399115595184169
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.3019005946457876,
+              1.0630291754492505
+            ],
+            "probability_less_than_zero": 0.0521
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.4536962903656274,
+            "error_count": 17,
+            "del_count": 30,
+            "ins_count": -8,
+            "sub_count": -5
+          },
+          "hypotheses_changed": 125,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.053009270813633935,
+              0.9675013758903529
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.2866087275284662,
+              1.211938459238462
+            ],
+            "probability_less_than_zero": 0.0348
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.5871363757672832,
+            "error_count": 22,
+            "del_count": 21,
+            "ins_count": 9,
+            "sub_count": -8
+          },
+          "hypotheses_changed": 150,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.0,
+              1.1780350218570952
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.2977649647094059,
+              1.466016426275173
+            ],
+            "probability_less_than_zero": 0.0221
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 22442,
+        "exact_recall": 0.9791908029587381,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.02080919704126192,
+        "mean_selected_centers_within_2_per_boundary": 4.176365742803672,
+        "mean_selected_centers_within_4_per_boundary": 6.962213706443276,
+        "selected_center_within_2_of_boundary_fraction": 0.858434135318357
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.23333333333333334,
+        "random_mean_minus_strategy_wer_pp": 0.20727693265723346,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "pami2__start_only": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.57806244995997,
+        "del": 11.369095276220976,
+        "ins": 3.175874032559381,
+        "sub": 8.033093141179611,
+        "ref_len": 3747,
+        "error": 846
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": -0.05337603416066017,
+            "error_count": -2,
+            "del_count": -2,
+            "ins_count": -1,
+            "sub_count": 1
+          },
+          "hypotheses_changed": 129,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.5526315789473685,
+              0.4419925425141354
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.7677702337937827,
+              0.6833105992260498
+            ],
+            "probability_less_than_zero": 0.5671
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.02668801708033186,
+            "error_count": 1,
+            "del_count": 1,
+            "ins_count": -2,
+            "sub_count": 2
+          },
+          "hypotheses_changed": 137,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.5227425697583442,
+              0.5812417437252312
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.7649757871182546,
+              0.8460710181813763
+            ],
+            "probability_less_than_zero": 0.4352
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.1601281024819876,
+            "error_count": 6,
+            "del_count": -8,
+            "ins_count": 15,
+            "sub_count": -1
+          },
+          "hypotheses_changed": 142,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.39853078362826516,
+              0.7232280077659428
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.6528729873807515,
+              0.9796653358126811
+            ],
+            "probability_less_than_zero": 0.2695
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 3995,
+        "exact_recall": 1.0,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.0,
+        "mean_selected_centers_within_2_per_boundary": 4.884105131414268,
+        "mean_selected_centers_within_4_per_boundary": 7.977471839799749,
+        "selected_center_within_2_of_boundary_fraction": 0.498976472152067
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.0,
+        "random_mean_minus_strategy_wer_pp": 0.634285205942529,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "pami2__end_only": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 23.965839338137176,
+        "del": 13.344008540165467,
+        "ins": 2.8289298105150786,
+        "sub": 7.7929009874566315,
+        "ref_len": 3747,
+        "error": 898
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 1.3344008540165468,
+            "error_count": 50,
+            "del_count": 72,
+            "ins_count": -14,
+            "sub_count": -8
+          },
+          "hypotheses_changed": 157,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.7082887185029539,
+              1.9540662435269767
+            ],
+            "ci_bonferroni_12_strategies": [
+              0.3801411237303814,
+              2.251361362527348
+            ],
+            "probability_less_than_zero": 0.0
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 1.4144649052575389,
+            "error_count": 53,
+            "del_count": 75,
+            "ins_count": -15,
+            "sub_count": -7
+          },
+          "hypotheses_changed": 170,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.7452358960926767,
+              2.0822213875788362
+            ],
+            "ci_bonferroni_12_strategies": [
+              0.44791650602710537,
+              2.3848715424250475
+            ],
+            "probability_less_than_zero": 0.0
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 1.5479049906591946,
+            "error_count": 58,
+            "del_count": 66,
+            "ins_count": 2,
+            "sub_count": -10
+          },
+          "hypotheses_changed": 175,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.8833214891568475,
+              2.2210477764745047
+            ],
+            "ci_bonferroni_12_strategies": [
+              0.5869533013855277,
+              2.521599925507778
+            ],
+            "probability_less_than_zero": 0.0
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 3995,
+        "exact_recall": 1.0,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.0,
+        "mean_selected_centers_within_2_per_boundary": 4.861827284105131,
+        "mean_selected_centers_within_4_per_boundary": 7.912140175219024,
+        "selected_center_within_2_of_boundary_fraction": 0.4957330852053702
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 1.0,
+        "random_mean_minus_strategy_wer_pp": -0.753491682234678,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "pami2__start_and_end": {
+      "identity": "label-aware/alignment-derived offline proxy oracle; not ground truth or deployable",
+      "metrics": {
+        "wer": 22.9516946890846,
+        "del": 12.169735788630904,
+        "ins": 2.9089938617560716,
+        "sub": 7.872965038697624,
+        "ref_len": 3747,
+        "error": 860
+      },
+      "comparisons": {
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.32025620496397167,
+            "error_count": 12,
+            "del_count": 28,
+            "ins_count": -11,
+            "sub_count": -5
+          },
+          "hypotheses_changed": 135,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.2705682653387771,
+              0.9085906762620757
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.5336947791164659,
+              1.1823514999993685
+            ],
+            "probability_less_than_zero": 0.1387
+          }
+        },
+        "B2": {
+          "delta": {
+            "wer_pp": 0.4003202562049637,
+            "error_count": 15,
+            "del_count": 31,
+            "ins_count": -12,
+            "sub_count": -4
+          },
+          "hypotheses_changed": 150,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.18731853647754876,
+              0.9906291834002677
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.4471013867333097,
+              1.3095755168497905
+            ],
+            "probability_less_than_zero": 0.0843
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.5337603416066194,
+            "error_count": 20,
+            "del_count": 22,
+            "ins_count": 5,
+            "sub_count": -7
+          },
+          "hypotheses_changed": 153,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260912,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.054348195398087856,
+              1.1518415795469212
+            ],
+            "ci_bonferroni_12_strategies": [
+              -0.35634840377174815,
+              1.39700886959804
+            ],
+            "probability_less_than_zero": 0.038
+          }
+        }
+      },
+      "boundary_coverage": {
+        "boundary_count": 7881,
+        "exact_recall": 1.0,
+        "within_2_recall": 1.0,
+        "within_4_recall": 1.0,
+        "mean_boundary_to_selected_distance": 0.0,
+        "mean_selected_centers_within_2_per_boundary": 4.664002030199213,
+        "mean_selected_centers_within_4_per_boundary": 7.42532673518589,
+        "selected_center_within_2_of_boundary_fraction": 0.6900704506181045
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.13333333333333333,
+        "random_mean_minus_strategy_wer_pp": 0.2606529668178972,
+        "note": "descriptive 30-seed distribution; not pooled with sentence bootstrap"
+      }
+    }
+  },
+  "decision": {
+    "strong_go_rule": "main proxy gain vs U >= 0.5 pp, Bonferroni-adjusted CI excludes zero, and same variant improves for at least two proxies",
+    "weak_go_rule": "main proxy gain vs U >= 0.2 pp with at least two proxies improving in the same variant",
+    "posthoc_best_main": "center_label__start_only",
+    "posthoc_best_all": "center_label__start_only",
+    "best_main_gain_vs_U_wer_pp": 0.05337603416066017,
+    "same_variant_improving_proxy_count": 2,
+    "outcome": "no_go"
+  },
+  "limitations": [
+    "Proxy boundaries consume dev labels/alignments and cannot be deployed.",
+    "PAMI integer semantics and center-label human/forced provenance are unresolved.",
+    "Centered inputs and symmetric span decoding are not strict zero-lookahead streaming.",
+    "A proxy oracle result cannot establish that a causal learned boundary detector will reproduce it."
+  ]
+}

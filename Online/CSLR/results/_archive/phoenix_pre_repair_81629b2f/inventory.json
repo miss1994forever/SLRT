@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "generated_at_utc": "2026-09-09",
+  "policy": "non-destructive link-only provenance index",
+  "pre_repair_video_sha256": "81629b2f3879a189613d87dafcbe04fa5053315ea9f9cfdb2f855d7a35007e30",
+  "post_repair_video_sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+  "groups": {
+    "confirmed_pre_repair_completed": {
+      "count": 13,
+      "bytes": 2791228054,
+      "paths": [
+        "phoenix-2014t_ISLR/baseline_matrix_v1",
+        "phoenix-2014t_ISLR/baseline_matrix_v1_smoke_5",
+        "phoenix-2014t_ISLR/prediction_slide",
+        "phoenix-2014t_ISLR/prediction_slide_adaptive_dev_tuned_span15_final_test",
+        "phoenix-2014t_ISLR/prediction_slide_adaptive_v2_fixed_full642",
+        "phoenix-2014t_ISLR/prediction_slide_adaptive_v2_fixed_smoke5",
+        "phoenix-2014t_ISLR/prediction_slide_adaptive_v2_span13_full642",
+        "phoenix-2014t_ISLR/prediction_slide_adaptive_v2_span13_smoke5",
+        "phoenix-2014t_ISLR/prediction_slide_current_fixed",
+        "phoenix-2014t_ISLR/prediction_slide_dev_tune_d0_fixed_s16",
+        "phoenix-2014t_ISLR/prediction_slide_dev_tune_d1_max2_s16",
+        "phoenix-2014t_ISLR/prediction_slide_dev_tune_d2_max3_s16",
+        "phoenix-2014t_ISLR/prediction_slide_origin_recheck"
+      ]
+    },
+    "confirmed_pre_repair_incomplete": {
+      "count": 4,
+      "bytes": 0,
+      "paths": [
+        "phoenix-2014t_ISLR/prediction_slide_current_adaptive",
+        "phoenix-2014t_ISLR/prediction_slide_dev_tune_d0_fixed",
+        "phoenix-2014t_ISLR/prediction_slide_dev_tune_d1_max2",
+        "phoenix-2014t_ISLR/prediction_slide_dev_tune_d1_max2_retry"
+      ]
+    },
+    "confirmed_pre_repair_logs": {"count": 16, "bytes": 35581, "link_directory": "links/logs"},
+    "confirmed_post_repair": {
+      "count": 3,
+      "bytes": 914655251,
+      "paths": [
+        "phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3",
+        "phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3_smoke_1",
+        "phoenix-2014t_ISLR/baseline_matrix_v1_repaired_runtime_49faacc3"
+      ]
+    },
+    "unverified_or_non_result": {"count": 3, "bytes": 456070204, "inventory": "unverified.csv"}
+  },
+  "evidence": [
+    "code_agent_logs/2026-09-07/phoenix_data_integrity_audit.md",
+    "code_agent_logs/2026-09-08/phoenix_video_frame_recovery.md",
+    "code_agent_logs/2026-09-08/phoenix_repaired_dev_matrix.md",
+    "code_agent_logs/2026-09-08/phoenix_repaired_runtime_repeats.md"
+  ]
+}

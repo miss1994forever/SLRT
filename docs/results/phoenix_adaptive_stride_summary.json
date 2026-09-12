@@ -1,6 +1,8 @@
 {
   "schema_version": 1,
-  "status": "frozen_final",
+  "status": "historical_mixed_asset_summary",
+  "superseded_for_current_dev_by": "docs/results/phoenix_adaptive_baseline_v1_frozen.json",
+  "warning": "The runtime values and test results in this file bind the pre-repair video asset. Do not label them as repaired-asset results.",
   "dataset": "Phoenix-2014T",
   "checkpoint": {
     "path": "Online/CSLR/results/phoenix-2014t_ISLR/ckpts/best.ckpt",
@@ -31,6 +33,7 @@
     "min_weight": 0.05
   },
   "dev": {
+    "asset_status": "pre_repair_historical_runtime; WER/clips happen to equal repaired-asset rerun",
     "samples": 519,
     "reference_glosses": 3747,
     "fixed": {
@@ -58,6 +61,7 @@
     "wall_time_speedup": 1.3379697098267813
   },
   "test": {
+    "asset_status": "pre_repair_historical_retrospective_control; no repaired-asset test has been run",
     "samples": 642,
     "reference_glosses": 4259,
     "fixed": {

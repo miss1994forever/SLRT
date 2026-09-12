@@ -10,7 +10,7 @@
 
 | 实验 | 数据集与划分 | 任务 | 当前结论 |
 |---|---|---|---|
-| 自适应步长冻结基线 | Phoenix-2014T dev/test | 在线 CSLR，指标为 WER | test：固定步长 22.0005%，自适应 23.0571%；clips 减少 32.02% |
+| 自适应步长冻结基线 | Phoenix-2014T dev | 在线 CSLR，指标为 WER | 修复后 dev：B0 22.2311%，A0 22.4179%；A0 clips 减少 32.56% |
 | R1 可靠性诊断 | CSL-Daily Top-800 isolated dev | ISLR，指标为 accuracy/AUROC | Keypoint accuracy 66.28%；原始置信度直接选流无收益 |
 
 因此，当前**尚未**得到 CSL-Daily Top-800 自适应步长 WER，也不能用 Top-800 R1 的分类准确率解释 Phoenix 的 WER。
@@ -19,6 +19,9 @@
 
 - [仓库结构与目录规范](docs/REPOSITORY_LAYOUT.md)
 - [统一实验结果口径](docs/RESULTS.md)
+- [Phoenix 自适应步长冻结基线 v1](docs/ADAPTIVE_BASELINE_V1.md)
+- [Phoenix P0 调度诊断冻结 v1](docs/P0_SCHEDULE_DIAGNOSTICS_V1.md)
+- [下一阶段研究 hand-off](docs/NEXT_RESEARCH_HANDOFF.md)
 - [环境、资产和实验复现](docs/REPRODUCIBILITY.md)
 - [文档索引](docs/README.md)
 - [Online CSLR 代码说明](Online/CSLR/README.md)

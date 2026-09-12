@@ -1,0 +1,4 @@
+path,kind,bytes,reason
+phoenix-2014t_ISLR/ckpts,checkpoint,456022647,model asset is data-version independent and is not an experiment result
+phoenix-2014t_ISLR/prediction_slide.py,source_snapshot,45109,source file is not an experiment result
+phoenix-2014t_ISLR/sign2text_service.log,service_log,2448,no evidence that this is a Phoenix benchmark result

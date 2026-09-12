@@ -1,0 +1,1117 @@
+{
+  "sample_count": 519,
+  "full_dev": true,
+  "preregistered_main_coordinate": "fixed B0 padded-array starts; constant left padding 7",
+  "coordinate_reason": "independent of final schedule start and exactly covered by dense B0 logits",
+  "window_decoder": "centered 16-frame inputs; triangular span-weighted-15; min weight 0.05",
+  "exploration_notice": "10 predeclared strategy combinations; best_id is post-hoc descriptive and Bonferroni 10-comparison CI is reported",
+  "alignment_audit": {
+    "decision": "no independently verified manual gloss temporal ground truth found",
+    "candidates": {
+      "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix14t.dev": {
+        "sample_coverage": "519/519",
+        "fields": [
+          "num_frames",
+          "gloss",
+          "alignments: pami0, pami1, pami2"
+        ],
+        "alignment_lengths_equal_num_frames": {
+          "pami0": 519,
+          "pami1": 519,
+          "pami2": 519
+        },
+        "semantics": "three full-length integer alignment sequences; provenance/model vocabulary not documented locally",
+        "classification": "undocumented alignment-derived candidate; not verified manual ground truth"
+      },
+      "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_center_label.dev": {
+        "record_count": 57408,
+        "unique_bags": 5881,
+        "video_coverage": "519/519",
+        "nonblank_base_segments": 3748,
+        "blank_base_segments": 2133,
+        "reference_token_sequences_equal_ignoring_case": "519/519",
+        "invalid_base_ranges": 0,
+        "videos_with_overlapping_adjacent_nonblank_segments": 52,
+        "field_semantics": "start inclusive, end exclusive; sign_augment.py expands each upstream base segment into centered 16-frame items",
+        "provenance_limit": "upstream phoenix_iso.dev is absent; local files do not establish independent human timing labels",
+        "classification": "complete label-aware boundary proxy only; not ground truth"
+      },
+      "release_README": {
+        "semantics": "corpus segment boundaries are mixed: mostly matched from Phoenix 2014, otherwise estimated by a training alignment; README warns some are incorrect",
+        "classification": "does not establish independent per-gloss manual boundaries for this analysis"
+      }
+    },
+    "minimum_unambiguous_boundary_proxy": "Use only the first record per bag from phoenix_iso_center_label.dev; treat [start,end) of nonblank segments as label-aware proxy boundaries, publish overlap/range audit, and label all resulting selection as offline proxy oracle."
+  },
+  "references": {
+    "frozen_physical_baselines": {
+      "B2": {
+        "wer": 22.551374432879637,
+        "del": 11.342407259140645,
+        "ins": 3.2292500667200428,
+        "sub": 7.979717107018948,
+        "ref_len": 3747,
+        "error": 845
+      },
+      "A0": {
+        "wer": 22.41793434747798,
+        "del": 11.582599412863624,
+        "ins": 2.7755537763544167,
+        "sub": 8.059781158259941,
+        "ref_len": 3747,
+        "error": 840
+      }
+    },
+    "fixed_coordinate_uniform_exact_A0_per_sample_budget": {
+      "wer": 22.63143848412063,
+      "del": 11.422471310381638,
+      "ins": 3.2025620496397114,
+      "sub": 8.00640512409928,
+      "ref_len": 3747,
+      "error": 848
+    }
+  },
+  "strategies": {
+    "offline_full_sequence_rank__top1_change": {
+      "policy_classification": "offline upper-bound diagnostic; full sequence scores are ranked before selection",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 22.81825460368295,
+        "del": 10.968775020016013,
+        "ins": 3.682946357085669,
+        "sub": 8.166533226581265,
+        "ref_len": 3747,
+        "error": 855
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.2668801708033115,
+            "error_count": 10,
+            "del_count": -14,
+            "ins_count": 17,
+            "sub_count": 7
+          },
+          "hypotheses_changed": 132,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.24167724047080982,
+              0.7966091949242268
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.47989021601456566,
+              1.0032568223194924
+            ],
+            "probability_less_than_zero": 0.144
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.40032025620496725,
+            "error_count": 15,
+            "del_count": -23,
+            "ins_count": 34,
+            "sub_count": 4
+          },
+          "hypotheses_changed": 146,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.13419396489844349,
+              0.9387543755242425
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.35559089332364807,
+              1.1869445988584673
+            ],
+            "probability_less_than_zero": 0.0646
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.18681611956231947,
+            "error_count": 7,
+            "del_count": -17,
+            "ins_count": 18,
+            "sub_count": 6
+          },
+          "hypotheses_changed": 124,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.29506635691756367,
+              0.6824261690042089
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.48335677675440286,
+              0.8830642891020911
+            ],
+            "probability_less_than_zero": 0.2038
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "all positive binary transitions"
+        ],
+        "event_count": 8709,
+        "exact_event_recall": 1.0,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.0,
+        "selected_center_event_precision": 0.23152997474411804
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.06666666666666667,
+        "random_mean_minus_strategy_wer_pp": 0.3940930522195494,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "offline_full_sequence_rank__blank_transition": {
+      "policy_classification": "offline upper-bound diagnostic; full sequence scores are ranked before selection",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 22.978382706164933,
+        "del": 11.982919669068588,
+        "ins": 3.2826261008807047,
+        "sub": 7.7128369362156395,
+        "ref_len": 3747,
+        "error": 861
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.42700827328529556,
+            "error_count": 16,
+            "del_count": 24,
+            "ins_count": 2,
+            "sub_count": -10
+          },
+          "hypotheses_changed": 131,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.1070126789869022,
+              0.9695729183112456
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.3546133275850015,
+              1.1984083085725594
+            ],
+            "probability_less_than_zero": 0.0536
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.5604483586869513,
+            "error_count": 21,
+            "del_count": 15,
+            "ins_count": 19,
+            "sub_count": -13
+          },
+          "hypotheses_changed": 134,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.0,
+              1.116430689766603
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.21534451062952006,
+              1.3488113274249636
+            ],
+            "probability_less_than_zero": 0.0195
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.34694422204430353,
+            "error_count": 13,
+            "del_count": 21,
+            "ins_count": 3,
+            "sub_count": -11
+          },
+          "hypotheses_changed": 114,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.1315166642310445,
+              0.8324443524893419
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.3328760322724249,
+              1.0263217379534393
+            ],
+            "probability_less_than_zero": 0.0647
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "all positive binary transitions"
+        ],
+        "event_count": 6403,
+        "exact_event_recall": 1.0,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.0,
+        "selected_center_event_precision": 0.1702246444237671
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.23333333333333334,
+        "random_mean_minus_strategy_wer_pp": 0.23396494973756532,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "offline_full_sequence_rank__js_divergence": {
+      "policy_classification": "offline upper-bound diagnostic; full sequence scores are ranked before selection",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 22.738190552441953,
+        "del": 10.808646917534027,
+        "ins": 3.6562583400053374,
+        "sub": 8.273285294902589,
+        "ref_len": 3747,
+        "error": 852
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.18681611956231592,
+            "error_count": 7,
+            "del_count": -20,
+            "ins_count": 16,
+            "sub_count": 11
+          },
+          "hypotheses_changed": 107,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.27085773922865286,
+              0.6553820799337402
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.4811576723042053,
+              0.8562558624874288
+            ],
+            "probability_less_than_zero": 0.2033
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.32025620496397167,
+            "error_count": 12,
+            "del_count": -29,
+            "ins_count": 33,
+            "sub_count": 8
+          },
+          "hypotheses_changed": 133,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.2412933390320032,
+              0.906051855609446
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.4793653369952066,
+              1.1729407346257037
+            ],
+            "probability_less_than_zero": 0.1294
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.10675206832132389,
+            "error_count": 4,
+            "del_count": -23,
+            "ins_count": 17,
+            "sub_count": 10
+          },
+          "hypotheses_changed": 108,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.3447407175693009,
+              0.5739892061797501
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.5496105698105438,
+              0.7708757701496309
+            ],
+            "probability_less_than_zero": 0.3073
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "per-sample top decile"
+        ],
+        "event_count": 5756,
+        "exact_event_recall": 1.0,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.0,
+        "selected_center_event_precision": 0.15302405955071116
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.03333333333333333,
+        "random_mean_minus_strategy_wer_pp": 0.47415710346054496,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "offline_full_sequence_rank__entropy_increase": {
+      "policy_classification": "offline upper-bound diagnostic; full sequence scores are ranked before selection",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 23.43207899653056,
+        "del": 12.116359754470244,
+        "ins": 3.175874032559381,
+        "sub": 8.139845209500935,
+        "ref_len": 3747,
+        "error": 878
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.880704563650923,
+            "error_count": 33,
+            "del_count": 29,
+            "ins_count": -2,
+            "sub_count": 6
+          },
+          "hypotheses_changed": 151,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.26852666181272933,
+              1.5151515151515151
+            ],
+            "ci_bonferroni_10_comparisons": [
+              0.0,
+              1.7866620620914806
+            ],
+            "probability_less_than_zero": 0.0021
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 1.0141446490525787,
+            "error_count": 38,
+            "del_count": 20,
+            "ins_count": 15,
+            "sub_count": 3
+          },
+          "hypotheses_changed": 167,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.384921795008085,
+              1.64937897019031
+            ],
+            "ci_bonferroni_10_comparisons": [
+              0.16185551205425555,
+              1.9322643602884326
+            ],
+            "probability_less_than_zero": 0.0006
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.800640512409931,
+            "error_count": 30,
+            "del_count": 26,
+            "ins_count": -1,
+            "sub_count": 5
+          },
+          "hypotheses_changed": 140,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.23986090100177485,
+              1.3925416851658237
+            ],
+            "ci_bonferroni_10_comparisons": [
+              0.0,
+              1.6320092156978623
+            ],
+            "probability_less_than_zero": 0.0024
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "per-sample top decile"
+        ],
+        "event_count": 5756,
+        "exact_event_recall": 1.0,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.0,
+        "selected_center_event_precision": 0.15302405955071116
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.7666666666666667,
+        "random_mean_minus_strategy_wer_pp": -0.2197313406280621,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "offline_full_sequence_rank__margin_drop": {
+      "policy_classification": "offline upper-bound diagnostic; full sequence scores are ranked before selection",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 23.352014945289564,
+        "del": 12.116359754470244,
+        "ins": 3.2025620496397114,
+        "sub": 8.033093141179611,
+        "ref_len": 3747,
+        "error": 875
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.8006405124099274,
+            "error_count": 30,
+            "del_count": 29,
+            "ins_count": -1,
+            "sub_count": 2
+          },
+          "hypotheses_changed": 150,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.18830499391429142,
+              1.4301321497916746
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.07985105122900633,
+              1.6617594813265808
+            ],
+            "probability_less_than_zero": 0.0048
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.9340805978115831,
+            "error_count": 35,
+            "del_count": 20,
+            "ins_count": 16,
+            "sub_count": -1
+          },
+          "hypotheses_changed": 169,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.3160368978419398,
+              1.5557134116685736
+            ],
+            "ci_bonferroni_10_comparisons": [
+              0.07714667536649465,
+              1.8263716306734186
+            ],
+            "probability_less_than_zero": 0.001
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.7205764611689354,
+            "error_count": 27,
+            "del_count": 26,
+            "ins_count": 0,
+            "sub_count": 1
+          },
+          "hypotheses_changed": 149,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.15889830508474576,
+              1.2983812791011873
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.08092968028313344,
+              1.5380565934860795
+            ],
+            "probability_less_than_zero": 0.0059
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "per-sample top decile"
+        ],
+        "event_count": 5756,
+        "exact_event_recall": 1.0,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.0,
+        "selected_center_event_precision": 0.15302405955071116
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.7333333333333333,
+        "random_mean_minus_strategy_wer_pp": -0.13966728938706652,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "past_only_causal_paced_known_length__top1_change": {
+      "policy_classification": "past-only score decisions with known T/K quota pacing; not unknown-EOS streaming",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 22.63143848412063,
+        "del": 11.555911395783292,
+        "ins": 3.2292500667200428,
+        "sub": 7.846277021617294,
+        "ref_len": 3747,
+        "error": 848
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.08006405124099203,
+            "error_count": 3,
+            "del_count": 8,
+            "ins_count": 0,
+            "sub_count": -5
+          },
+          "hypotheses_changed": 126,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.45262122182333425,
+              0.6175027291656553
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.6727741277435648,
+              0.8695759029278392
+            ],
+            "probability_less_than_zero": 0.3581
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.21350413664264778,
+            "error_count": 8,
+            "del_count": -1,
+            "ins_count": 17,
+            "sub_count": -8
+          },
+          "hypotheses_changed": 143,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.34704843501962995,
+              0.7827313288621119
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.5704998649067723,
+              1.0548530163044387
+            ],
+            "probability_less_than_zero": 0.2161
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.0,
+            "error_count": 0,
+            "del_count": 5,
+            "ins_count": 1,
+            "sub_count": -6
+          },
+          "hypotheses_changed": 131,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.5120086459895269,
+              0.5222000321937298
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.768808874944742,
+              0.7494765720936862
+            ],
+            "probability_less_than_zero": 0.4739
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "all positive binary transitions"
+        ],
+        "event_count": 8709,
+        "exact_event_recall": 0.9073372373406821,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.09277758640486852,
+        "selected_center_event_precision": 0.21007576764588595
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.0,
+        "random_mean_minus_strategy_wer_pp": 0.5809091717818688,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "past_only_causal_paced_known_length__blank_transition": {
+      "policy_classification": "past-only score decisions with known T/K quota pacing; not unknown-EOS streaming",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 22.791566586602617,
+        "del": 12.00960768614892,
+        "ins": 3.1491860154790494,
+        "sub": 7.632772884974647,
+        "ref_len": 3747,
+        "error": 854
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.24019215372297964,
+            "error_count": 9,
+            "del_count": 25,
+            "ins_count": -3,
+            "sub_count": -13
+          },
+          "hypotheses_changed": 121,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.2960232021608539,
+              0.7896866931390857
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.5323438970885855,
+              1.0204157208264415
+            ],
+            "probability_less_than_zero": 0.1758
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.3736322391246354,
+            "error_count": 14,
+            "del_count": 16,
+            "ins_count": 14,
+            "sub_count": -16
+          },
+          "hypotheses_changed": 138,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.17870400395116895,
+              0.9480085117752584
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.4023624073377755,
+              1.1994943159223168
+            ],
+            "probability_less_than_zero": 0.0887
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.1601281024819876,
+            "error_count": 6,
+            "del_count": 22,
+            "ins_count": -2,
+            "sub_count": -14
+          },
+          "hypotheses_changed": 124,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.36861506055818855,
+              0.6885593220338984
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.6329299677127379,
+              0.9388458102358338
+            ],
+            "probability_less_than_zero": 0.2584
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "all positive binary transitions"
+        ],
+        "event_count": 6403,
+        "exact_event_recall": 0.9479931282211463,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.052006871778853665,
+        "selected_center_event_precision": 0.1613717931676193
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.06666666666666667,
+        "random_mean_minus_strategy_wer_pp": 0.42078106929988124,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "past_only_causal_paced_known_length__js_divergence": {
+      "policy_classification": "past-only score decisions with known T/K quota pacing; not unknown-EOS streaming",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 23.058446757405925,
+        "del": 11.635975447024286,
+        "ins": 3.362690152121697,
+        "sub": 8.059781158259941,
+        "ref_len": 3747,
+        "error": 864
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.5070723245262876,
+            "error_count": 19,
+            "del_count": 11,
+            "ins_count": 5,
+            "sub_count": 3
+          },
+          "hypotheses_changed": 125,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.026681074493176898,
+              1.0444633418327338
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.2396183729530748,
+              1.2820547830105458
+            ],
+            "probability_less_than_zero": 0.0281
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.6405124099279433,
+            "error_count": 24,
+            "del_count": 2,
+            "ins_count": 22,
+            "sub_count": 0
+          },
+          "hypotheses_changed": 149,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              0.05390835579514825,
+              1.2394541416384406
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.18742411125175715,
+              1.4846302091010202
+            ],
+            "probability_less_than_zero": 0.0133
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.42700827328529556,
+            "error_count": 16,
+            "del_count": 8,
+            "ins_count": 6,
+            "sub_count": 2
+          },
+          "hypotheses_changed": 125,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.10724004418414664,
+              0.9756258446489475
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.32726473608782175,
+              1.1856746616952618
+            ],
+            "probability_less_than_zero": 0.0531
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "per-sample top decile"
+        ],
+        "event_count": 5756,
+        "exact_event_recall": 0.8877692842251563,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.11223071577484364,
+        "selected_center_event_precision": 0.13585005981656254
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.3333333333333333,
+        "random_mean_minus_strategy_wer_pp": 0.1539008984965733,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "past_only_causal_paced_known_length__entropy_increase": {
+      "policy_classification": "past-only score decisions with known T/K quota pacing; not unknown-EOS streaming",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 22.764878569522285,
+        "del": 11.982919669068588,
+        "ins": 2.8556178275954096,
+        "sub": 7.926341072858286,
+        "ref_len": 3747,
+        "error": 853
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.21350413664264778,
+            "error_count": 8,
+            "del_count": 24,
+            "ins_count": -14,
+            "sub_count": -2
+          },
+          "hypotheses_changed": 121,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.3520436214380363,
+              0.7774903203350629
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.5899913598282555,
+              1.0364081207611093
+            ],
+            "probability_less_than_zero": 0.2188
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.34694422204430353,
+            "error_count": 13,
+            "del_count": 15,
+            "ins_count": 3,
+            "sub_count": -5
+          },
+          "hypotheses_changed": 154,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.2728520965603032,
+              0.9592517985611508
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.5385036871204947,
+              1.2475818890682242
+            ],
+            "probability_less_than_zero": 0.1264
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.13344008540165575,
+            "error_count": 5,
+            "del_count": 21,
+            "ins_count": -13,
+            "sub_count": -3
+          },
+          "hypotheses_changed": 123,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.4280737285488058,
+              0.6740551965788841
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.677514614446444,
+              0.9044982853402173
+            ],
+            "probability_less_than_zero": 0.2958
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "per-sample top decile"
+        ],
+        "event_count": 5756,
+        "exact_event_recall": 0.9294649061848506,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.0707088255733148,
+        "selected_center_event_precision": 0.14223049315432673
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.03333333333333333,
+        "random_mean_minus_strategy_wer_pp": 0.4474690863802131,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    },
+    "past_only_causal_paced_known_length__margin_drop": {
+      "policy_classification": "past-only score decisions with known T/K quota pacing; not unknown-EOS streaming",
+      "signal_read_range": "current and immediately previous dense logit only",
+      "budget": "exact per-sample A0 clip count; half-ceiling uniform skeleton",
+      "metrics": {
+        "wer": 22.764878569522285,
+        "del": 12.00960768614892,
+        "ins": 2.8823058446757406,
+        "sub": 7.872965038697624,
+        "ref_len": 3747,
+        "error": 853
+      },
+      "comparisons": {
+        "B2": {
+          "delta": {
+            "wer_pp": 0.21350413664264778,
+            "error_count": 8,
+            "del_count": 25,
+            "ins_count": -13,
+            "sub_count": -4
+          },
+          "hypotheses_changed": 120,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.31983155593476426,
+              0.7472309549090788
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.5463135674814439,
+              0.9769382704084206
+            ],
+            "probability_less_than_zero": 0.2003
+          }
+        },
+        "A0": {
+          "delta": {
+            "wer_pp": 0.34694422204430353,
+            "error_count": 13,
+            "del_count": 16,
+            "ins_count": 4,
+            "sub_count": -7
+          },
+          "hypotheses_changed": 141,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.21715821489170842,
+              0.9298865794650324
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.46272481996559334,
+              1.1656340332334334
+            ],
+            "probability_less_than_zero": 0.1092
+          }
+        },
+        "U_A0_budget": {
+          "delta": {
+            "wer_pp": 0.13344008540165575,
+            "error_count": 5,
+            "del_count": 22,
+            "ins_count": -12,
+            "sub_count": -5
+          },
+          "hypotheses_changed": 126,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "sentence_bootstrap_seed": 260911,
+            "repetitions": 10000,
+            "ci95_unadjusted": [
+              -0.4253056884635832,
+              0.6860627157764155
+            ],
+            "ci_bonferroni_10_comparisons": [
+              -0.7082763505199184,
+              0.9086283739227343
+            ],
+            "probability_less_than_zero": 0.3001
+          }
+        }
+      },
+      "events": {
+        "definitions": [
+          "per-sample top decile"
+        ],
+        "event_count": 5756,
+        "exact_event_recall": 0.9299861014593468,
+        "within_2_frames_event_recall": 1.0,
+        "mean_event_to_selected_distance": 0.07001389854065324,
+        "selected_center_event_precision": 0.1423102485710488
+      },
+      "random_distribution_comparison": {
+        "fraction_random_seed_wer_at_or_below_strategy": 0.03333333333333333,
+        "random_mean_minus_strategy_wer_pp": 0.4474690863802131,
+        "note": "descriptive 30-seed scheduler distribution; not pooled with sentence bootstrap"
+      }
+    }
+  },
+  "posthoc_best": {
+    "strategy": "past_only_causal_paced_known_length__top1_change",
+    "metrics": {
+      "wer": 22.63143848412063,
+      "del": 11.555911395783292,
+      "ins": 3.2292500667200428,
+      "sub": 7.846277021617294,
+      "ref_len": 3747,
+      "error": 848
+    },
+    "gain_vs_B2_wer_pp": -0.08006405124099203,
+    "gain_vs_exact_budget_uniform_wer_pp": -0.0,
+    "decision": "no_go_for_prediction_change_scheduler"
+  },
+  "conclusion": {
+    "prediction_change_upper_bound": "not observed under the registered half-uniform/half-event design",
+    "strong_go_rule": "gain versus B2 >= 0.5 pp and Bonferroni-adjusted CI excludes zero",
+    "observed_decision": "no_go_for_prediction_change_scheduler",
+    "recommended_next": "Review decoder/schedule coupling first. If boundary work continues, manually audit a fixed subset before running the explicitly label-aware center-label proxy oracle. Do not train a causal scheduler or spend GPU on these prediction-change signals yet."
+  },
+  "streaming_limit": "Signals are one-step past-only, but centered inputs require lookahead; causal-paced policy also assumes known T and K."
+}

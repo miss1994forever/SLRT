@@ -31,6 +31,8 @@ Phoenix 自适应步长复现需要：
 - `data/phoenix_2014t/` 的 train/dev/test metadata、视频压缩包和 HRNet WholeBody isolated keypoints；
 - `Online/CSLR/results/phoenix-2014t_ISLR/ckpts/best.ckpt`（历史记录为 epoch 92）。
 
+当前完整视频 ZIP 的 SHA-256 必须为 `49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457`。旧 hash `81629b2f...07e30` 缺少 metadata 声明的 61 帧，只用于历史结果审计；对应结果索引位于 `Online/CSLR/results/_archive/phoenix_pre_repair_81629b2f/`。
+
 Top-800 R1 需要：
 
 - `data/csl-daily/` 视频帧资产和 isolated keypoints；
@@ -80,14 +82,14 @@ ALLOW_TEST=1 CUDA_VISIBLE_DEVICES=GPU-<healthy-uuid> \
   bash "$SLRT_ROOT/scripts/reproduce/phoenix_adaptive_stride.sh" adaptive test
 ```
 
-冻结结果：
+修复后 dev 冻结结果（runtime 为同卡三重复中位数）：
 
 | 划分 | 固定 stride=1 WER | 自适应 WER | clips 变化 | command wall time 变化 |
 |---|---:|---:|---:|---:|
-| dev | 22.2311% | 22.4179% | -32.56% | -25.26% |
-| test | 22.0005% | 23.0571% | -32.02% | -26.25% |
+| dev | 22.2311% | 22.4179% | -32.56% | -29.48% |
+| historical test（修复前资产） | 22.0005% | 23.0571% | -32.02% | -26.25% |
 
-统一指标定义、版本关系和机器数据位置见 [RESULTS.md](RESULTS.md)。完整审计见 `code_agent_logs/2026-07-16/adaptive_stride_dev_tuning.md` 和 `adaptive_stride_frozen_final_evaluation.md`。test 结果不能用于回调 span 或阈值。
+完整冻结身份、参数、对照和机器数据位置见 [ADAPTIVE_BASELINE_V1.md](ADAPTIVE_BASELINE_V1.md)，历史叙事见 [RESULTS.md](RESULTS.md)。旧 test 结果不能用于回调 span 或阈值，也不能视为修复后资产的新 test。
 
 ### 5.1 注册基础对照矩阵（v1）
 
@@ -116,7 +118,7 @@ python tools/run_adaptive_baseline_matrix.py \
 python tools/evaluate_adaptive_baseline_matrix.py --split dev
 ```
 
-性能重复测量使用同一协议，在新的输出根目录执行三次，避免与正确性 run 混写：
+性能重复测量已按同一协议完成；复跑时仍应使用新的输出根目录执行三次，避免与正确性 run 混写：
 
 ```bash
 CUDA_VISIBLE_DEVICES=GPU-<healthy-uuid> \

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "status": "frozen_dev_baseline",
+  "authority": "docs/ADAPTIVE_BASELINE_V1.md",
+  "dataset": "Phoenix-2014T",
+  "split": "dev",
+  "samples": 519,
+  "reference_tokens": 3747,
+  "video_sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+  "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+  "protocol_sha256": "3d583b1430def1ae0b517c79bf66abc8dae9528118b325c58620fd83e22f9f65",
+  "manifest_sha256": "2e6889ec14777d938a3c7ac9265ab97f87118523e9258f5f93beba4b3e854b8f",
+  "correctness_result": "Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/aggregate/dev_summary.json",
+  "runtime_result": "Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_runtime_49faacc3/aggregate/dev_summary.json",
+  "variants": {
+    "B0_fixed1_window7": {"wer": 22.231118227915665, "del": 385, "ins": 130, "sub": 318, "errors": 833, "clips": 55775},
+    "B1_fixed1_span15": {"wer": 22.6047504670403, "del": 422, "ins": 124, "sub": 301, "errors": 847, "clips": 55775},
+    "B2_uniform_rate_span15": {"wer": 22.551374432879637, "del": 425, "ins": 121, "sub": 299, "errors": 845, "clips": 37706},
+    "B3_fixed2_span15": {"wer": 22.81825460368295, "del": 425, "ins": 128, "sub": 302, "errors": 855, "clips": 28014},
+    "B4_fixed3_span15": {"wer": 22.92500667200427, "del": 437, "ins": 121, "sub": 301, "errors": 859, "clips": 18766},
+    "A0_adaptive_span15": {"wer": 22.41793434747798, "del": 434, "ins": 104, "sub": 302, "errors": 840, "clips": 37615}
+  },
+  "runtime_three_repeat": {
+    "B0_fixed1_window7": {"mean_seconds": 1642.7608553254977, "median_seconds": 1642.573579907883, "std_seconds": 8.62437123476723, "cv_percent": 0.5249924970398927},
+    "B2_uniform_rate_span15": {"mean_seconds": 1133.6763765259336, "median_seconds": 1133.0969938929193, "std_seconds": 1.2934226253124363, "cv_percent": 0.11409099211152599},
+    "A0_adaptive_span15": {"mean_seconds": 1154.5838924539275, "median_seconds": 1158.2924016839825, "std_seconds": 8.905846662495678, "cv_percent": 0.7713468653687334}
+  },
+  "test_status": "not_run_with_repaired_asset; historical old-asset test is retrospective only"
+}

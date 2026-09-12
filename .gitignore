@@ -20,6 +20,25 @@ Online/*.local.sh
 
 # Generated experiment outputs
 Online/CSLR/results/
+# Keep lightweight, link-only audit indexes while continuing to ignore model outputs.
+!Online/CSLR/results/
+Online/CSLR/results/*
+!Online/CSLR/results/_archive/
+Online/CSLR/results/_archive/*
+!Online/CSLR/results/_archive/phoenix_pre_repair_81629b2f/
+!Online/CSLR/results/_archive/phoenix_pre_repair_81629b2f/**
+
+# Frozen lightweight Phoenix P0 diagnostics. Keep aggregate/config/manifest,
+# while per-sample JSONL and dense logits remain local-only.
+!Online/CSLR/results/phoenix-2014t_ISLR/
+Online/CSLR/results/phoenix-2014t_ISLR/*
+!Online/CSLR/results/phoenix-2014t_ISLR/p0_*_v1_49faacc3/
+Online/CSLR/results/phoenix-2014t_ISLR/p0_*_v1_49faacc3/*
+!Online/CSLR/results/phoenix-2014t_ISLR/p0_*_v1_49faacc3/resolved_config.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p0_*_v1_49faacc3/protocol_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p0_*_v1_49faacc3/aggregate/
+Online/CSLR/results/phoenix-2014t_ISLR/p0_*_v1_49faacc3/aggregate/*
+!Online/CSLR/results/phoenix-2014t_ISLR/p0_*_v1_49faacc3/aggregate/dev_summary.json
 Online/CTC_fusion/results/
 Online/SLT/results/
 Online/CSLR/run_logs/

@@ -1,0 +1,126 @@
+{
+  "sample_count": 519,
+  "full_dev": true,
+  "span_frames": 15.0,
+  "span_kernel": "triangular",
+  "span_min_weight": 0.05,
+  "window_frames": 16,
+  "frozen_matrix_manifest_sha256": "2e6889ec14777d938a3c7ac9265ab97f87118523e9258f5f93beba4b3e854b8f",
+  "variants": {
+    "B0_fixed1_span15_replay": {
+      "schedule_source": "B0_fixed1_window7",
+      "extraction_coordinates": "same_input_frames_after_centered_padding_correction",
+      "clip_count": 55775,
+      "dense_input_start_offset_sample_counts": {
+        "0": 519
+      },
+      "metrics": {
+        "wer": 22.6047504670403,
+        "del": 11.262343207899653,
+        "ins": 3.3093141179610353,
+        "sub": 8.033093141179611,
+        "ref_len": 3747,
+        "error": 847
+      },
+      "stored_metrics": {
+        "wer": 22.6047504670403,
+        "del": 11.262343207899653,
+        "ins": 3.3093141179610353,
+        "sub": 8.033093141179611,
+        "ref_len": 3747,
+        "error": 847
+      },
+      "native_replay_metrics": {
+        "wer": 22.6047504670403,
+        "del": 11.262343207899653,
+        "ins": 3.3093141179610353,
+        "sub": 8.033093141179611,
+        "ref_len": 3747,
+        "error": 847
+      },
+      "replay_vs_stored_hypotheses_equal": 519,
+      "native_replay_vs_stored_hypotheses_equal": 519,
+      "selected_vs_native_exact_logit_arrays": 519,
+      "selected_vs_native_differing_logit_values": 0,
+      "selected_vs_native_max_abs_difference": 0.0,
+      "frozen_reproduction_passed": true
+    },
+    "B2_uniform_rate_span15_from_B0": {
+      "schedule_source": "B2_uniform_rate_span15",
+      "extraction_coordinates": "same_input_frames_after_centered_padding_correction",
+      "clip_count": 37706,
+      "dense_input_start_offset_sample_counts": {
+        "0": 519
+      },
+      "metrics": {
+        "wer": 22.551374432879637,
+        "del": 11.342407259140645,
+        "ins": 3.2292500667200428,
+        "sub": 7.979717107018948,
+        "ref_len": 3747,
+        "error": 845
+      },
+      "stored_metrics": {
+        "wer": 22.551374432879637,
+        "del": 11.342407259140645,
+        "ins": 3.2292500667200428,
+        "sub": 7.979717107018948,
+        "ref_len": 3747,
+        "error": 845
+      },
+      "native_replay_metrics": {
+        "wer": 22.551374432879637,
+        "del": 11.342407259140645,
+        "ins": 3.2292500667200428,
+        "sub": 7.979717107018948,
+        "ref_len": 3747,
+        "error": 845
+      },
+      "replay_vs_stored_hypotheses_equal": 519,
+      "native_replay_vs_stored_hypotheses_equal": 519,
+      "selected_vs_native_exact_logit_arrays": 0,
+      "selected_vs_native_differing_logit_values": 5204243,
+      "selected_vs_native_max_abs_difference": 0.016485214233398438,
+      "frozen_reproduction_passed": true
+    },
+    "A0_adaptive_span15_from_B0": {
+      "schedule_source": "A0_adaptive_span15",
+      "extraction_coordinates": "same_input_frames_after_centered_padding_correction",
+      "clip_count": 37615,
+      "dense_input_start_offset_sample_counts": {
+        "0": 437,
+        "1": 82
+      },
+      "metrics": {
+        "wer": 22.41793434747798,
+        "del": 11.582599412863624,
+        "ins": 2.7755537763544167,
+        "sub": 8.059781158259941,
+        "ref_len": 3747,
+        "error": 840
+      },
+      "stored_metrics": {
+        "wer": 22.41793434747798,
+        "del": 11.582599412863624,
+        "ins": 2.7755537763544167,
+        "sub": 8.059781158259941,
+        "ref_len": 3747,
+        "error": 840
+      },
+      "native_replay_metrics": {
+        "wer": 22.41793434747798,
+        "del": 11.582599412863624,
+        "ins": 2.7755537763544167,
+        "sub": 8.059781158259941,
+        "ref_len": 3747,
+        "error": 840
+      },
+      "replay_vs_stored_hypotheses_equal": 519,
+      "native_replay_vs_stored_hypotheses_equal": 519,
+      "selected_vs_native_exact_logit_arrays": 8,
+      "selected_vs_native_differing_logit_values": 4947633,
+      "selected_vs_native_max_abs_difference": 0.015274524688720703,
+      "frozen_reproduction_passed": true
+    }
+  }
+}

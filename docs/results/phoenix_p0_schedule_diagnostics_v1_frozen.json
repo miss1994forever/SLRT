@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "status": "frozen_dev_diagnostics",
+  "authority": "docs/P0_SCHEDULE_DIAGNOSTICS_V1.md",
+  "dataset": "Phoenix-2014T",
+  "split": "dev",
+  "samples": 519,
+  "reference_tokens": 3747,
+  "video_sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+  "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+  "baseline_manifest_sha256": "2e6889ec14777d938a3c7ac9265ab97f87118523e9258f5f93beba4b3e854b8f",
+  "test_status": "not_read_or_run_for_p0",
+  "identity_warning": "All boundary/center results are label- or alignment-derived offline proxies, not manual ground truth or deployable methods.",
+  "baseline": {
+    "B1": {"wer": 22.6047504670403, "errors": 847, "clips": 55775},
+    "B2": {"wer": 22.551374432879637, "errors": 845, "clips": 37706},
+    "A0": {"wer": 22.41793434747798, "errors": 840, "clips": 37615}
+  },
+  "experiments": {
+    "schedule_replay": {
+      "decision": "validated",
+      "summary": "Online/CSLR/results/phoenix-2014t_ISLR/p0_schedule_diagnostics_v1_49faacc3/aggregate/dev_summary.json",
+      "summary_sha256": "418a2ed52bdc488fbb3d55c99c0e2639a41f5caa9072bd82adb73f8780c7037f",
+      "manifest_sha256": "9236a4700135d3789d5320ed505adc4a8c6c20edbb0960c2f69bea5962089e71"
+    },
+    "random_schedule": {
+      "decision": "no_go",
+      "wer_mean": 23.212347655902498,
+      "wer_sample_std": 0.27563414027352495,
+      "seeds": 30,
+      "summary": "Online/CSLR/results/phoenix-2014t_ISLR/p0_random_schedule_v1_49faacc3/aggregate/dev_summary.json",
+      "summary_sha256": "5e3de46bfee2bd4bd2cede6f2af29c3bff70e71c6a90b5b080e6e94eefe1d065",
+      "manifest_sha256": "ed0d046bd9d78553b5f6e5ab1367f047aee59eb79d16a57b6c97f27192e89283"
+    },
+    "prediction_change": {
+      "decision": "no_go",
+      "best_wer": 22.63143848412063,
+      "best_errors": 848,
+      "summary": "Online/CSLR/results/phoenix-2014t_ISLR/p0_structured_oracles_v1_49faacc3/aggregate/dev_summary.json",
+      "summary_sha256": "eef72bfc52d4b35ee04a146e3509966faa59c32c19b5bcd5af4d204a8347aa08",
+      "manifest_sha256": "baa485a617fc55c4efcbbe48e1e8d121bd13adccac92f277d48c309beb638cd8"
+    },
+    "boundary_proxy": {
+      "decision": "no_go",
+      "uniform_wer": 22.63143848412063,
+      "best_proxy_wer": 22.57806244995997,
+      "gain_wer_pp": 0.05337603416066017,
+      "summary": "Online/CSLR/results/phoenix-2014t_ISLR/p0_boundary_proxy_oracles_v1_49faacc3/aggregate/dev_summary.json",
+      "summary_sha256": "9e1822ab9bc4387856055faaaf89a18e0f3422d5ed86defb530ccfee2c0fe2b7",
+      "manifest_sha256": "c2169f9f47e6b466c1b7f213e2f22d80ee14480c2125e4d8b5cdf71bc9a4d269"
+    },
+    "sign_center_proxy": {
+      "decision": "offline_strong_go",
+      "primary_cell": "center_label__midpoint__dense_50pct__span15",
+      "clips": 28014,
+      "uniform_wer": 23.058446757405925,
+      "uniform_errors": 864,
+      "proxy_wer": 21.537229783827062,
+      "proxy_errors": 807,
+      "gain_wer_pp": 1.5212169735788628,
+      "bonferroni_9_ci95": [-2.4162419599328118, -0.6262845580303809],
+      "summary": "Online/CSLR/results/phoenix-2014t_ISLR/p0_sign_center_oracles_v1_49faacc3/aggregate/dev_summary.json",
+      "summary_sha256": "40c41c6dc46b3573805d2b6de42f275072ea013f834c1b1f67130f3cb54b94b9",
+      "manifest_sha256": "d313b9683e24bac08a25897e051a2846a7599e30a467c109b366ee381e9417b7"
+    },
+    "noisy_sign_center": {
+      "decision": "proceed_to_minimal_train_only_predictor_with_caution",
+      "maximum_strong_fixed_positive_delay_frames": 0,
+      "strong_random_jitter_frames": 1,
+      "minimum_strong_recall": 0.75,
+      "maximum_strong_false_positive_ratio": 1.0,
+      "combined_stress_decision": "no_go",
+      "summary": "Online/CSLR/results/phoenix-2014t_ISLR/p0_noisy_sign_center_v1_49faacc3/aggregate/dev_summary.json",
+      "summary_sha256": "6b15d720c1eb747248bfd0b059853c106e5c32704de3ce55aa3f203b5a81e3be",
+      "manifest_sha256": "15afa8d7897463f3699c6bbd5c446a009958d6350919f9138634c4f8d71526e3"
+    }
+  },
+  "next_stage": "audit train-only center targets and build a minimal causal sign-interior predictor; evaluate only on repaired dev"
+}

@@ -1,0 +1,20 @@
+{
+  "matrix_root": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3",
+  "vocab": "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_with_blank.vocab",
+  "meta": "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix14t.dev",
+  "center_label": "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_center_label.dev",
+  "output_root": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p0_structured_oracles_v1_49faacc3",
+  "max_samples": null,
+  "device": "cpu",
+  "signals": [
+    "top1_change",
+    "blank_transition",
+    "js_divergence",
+    "entropy_increase",
+    "margin_drop"
+  ],
+  "policies": [
+    "offline_full_sequence_rank",
+    "past_only_causal_paced_known_length"
+  ]
+}
