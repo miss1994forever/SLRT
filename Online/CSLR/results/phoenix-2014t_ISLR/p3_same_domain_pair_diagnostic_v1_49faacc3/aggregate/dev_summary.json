@@ -1,0 +1,113 @@
+{
+  "full_dev_audit_samples": 519,
+  "eligible_all_single_utilities_zero": 246,
+  "selected_samples": 100,
+  "selection": {
+    "method": "proportional 3x3 empirical-tertile cells; largest-remainder allocation; SHA-256 seeded order within cell",
+    "seed": 260915,
+    "video_length_tertile_edges": [
+      76.0,
+      112.0
+    ],
+    "reference_length_tertile_edges": [
+      5.0,
+      7.0
+    ],
+    "cell_population": {
+      "0,0": 64,
+      "0,1": 14,
+      "0,2": 2,
+      "1,0": 7,
+      "1,1": 36,
+      "1,2": 39,
+      "2,0": 1,
+      "2,1": 9,
+      "2,2": 74
+    },
+    "cell_selected": {
+      "0,0": 26,
+      "0,1": 6,
+      "0,2": 1,
+      "1,0": 3,
+      "1,1": 14,
+      "1,2": 16,
+      "2,0": 0,
+      "2,1": 4,
+      "2,2": 30
+    }
+  },
+  "state": "initial 50% skeleton within a per-sample 50%-of-dense total budget",
+  "candidate_domain": "all dense windows not in the initial skeleton, identical for greedy and exhaustive pair search",
+  "decoder": "frozen triangular span-15 replay decoder",
+  "runtime": {
+    "workers": 4,
+    "wall_seconds": 59.124343181960285,
+    "sum_per_sample_pair_seconds": 191.61643458344042,
+    "total_pairs_evaluated": 287855
+  },
+  "greedy_vs_exhaustive": {
+    "best_minus_greedy_error_distribution": {
+      "-1": 8,
+      "0": 92
+    },
+    "greedy_positive_regret_samples": 8,
+    "greedy_positive_regret_fraction": 0.08,
+    "greedy_regret_sum": 8,
+    "greedy_regret_max": 1
+  },
+  "zero_plus_zero_complementarity": {
+    "positive_joint_pair_count": 24,
+    "samples_with_positive_joint_pair": 9,
+    "maximum_joint_utility": 1
+  },
+  "strata_video_by_reference_tertile": {
+    "0,0": {
+      "samples": 26,
+      "greedy_positive_regret_samples": 3,
+      "greedy_regret_sum": 3,
+      "zero_zero_positive_joint_pairs": 14
+    },
+    "0,1": {
+      "samples": 6,
+      "greedy_positive_regret_samples": 0,
+      "greedy_regret_sum": 0,
+      "zero_zero_positive_joint_pairs": 0
+    },
+    "0,2": {
+      "samples": 1,
+      "greedy_positive_regret_samples": 0,
+      "greedy_regret_sum": 0,
+      "zero_zero_positive_joint_pairs": 0
+    },
+    "1,0": {
+      "samples": 3,
+      "greedy_positive_regret_samples": 0,
+      "greedy_regret_sum": 0,
+      "zero_zero_positive_joint_pairs": 0
+    },
+    "1,1": {
+      "samples": 14,
+      "greedy_positive_regret_samples": 2,
+      "greedy_regret_sum": 2,
+      "zero_zero_positive_joint_pairs": 3
+    },
+    "1,2": {
+      "samples": 16,
+      "greedy_positive_regret_samples": 0,
+      "greedy_regret_sum": 0,
+      "zero_zero_positive_joint_pairs": 0
+    },
+    "2,1": {
+      "samples": 4,
+      "greedy_positive_regret_samples": 0,
+      "greedy_regret_sum": 0,
+      "zero_zero_positive_joint_pairs": 0
+    },
+    "2,2": {
+      "samples": 30,
+      "greedy_positive_regret_samples": 3,
+      "greedy_regret_sum": 3,
+      "zero_zero_positive_joint_pairs": 7
+    }
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "sample_count": 519,
+  "full_dev": true,
+  "oracle_scope": "offline reference-aware dense-logit replay; no runtime claim",
+  "budget": "nearest-integer 50% of dense windows independently per sample",
+  "decoder": "frozen triangular span-15 voting, blank removal, repeat collapse, Phoenix cleanup",
+  "utility": "decrease in frozen decoder sentence error count after adding one window",
+  "tie_break": "maximum distance to current selected set, then earlier index",
+  "primary_ratio": 0.5,
+  "strong_go_rule": "primary WER delta <= -0.5 pp and paired bootstrap CI95 upper < 0",
+  "cells": {
+    "0.00": {
+      "skeleton_ratio": 0.0,
+      "role": "exploratory_ablation",
+      "metrics": {
+        "wer": 12.089671737389912,
+        "del": 6.778756338404057,
+        "ins": 0.0,
+        "sub": 5.3109153989858555,
+        "ref_len": 3747,
+        "error": 453
+      },
+      "delta_vs_uniform": {
+        "wer_pp": -10.968775020016013,
+        "error_count": -411
+      },
+      "paired_bootstrap_vs_uniform": {
+        "unit": "WER percentage points (candidate - uniform)",
+        "resampling_unit": "dev sentence, paired with replacement",
+        "seed": 260914,
+        "repetitions": 10000,
+        "ci95": [
+          -12.079835579052503,
+          -9.898411044542849
+        ],
+        "mean": -10.964974374380356,
+        "probability_less_than_zero": 1.0
+      },
+      "meets_numeric_threshold": true,
+      "strong_go": false
+    },
+    "0.25": {
+      "skeleton_ratio": 0.25,
+      "role": "exploratory_ablation",
+      "metrics": {
+        "wer": 15.612489991993595,
+        "del": 8.059781158259941,
+        "ins": 0.8273285294902588,
+        "sub": 6.725380304243394,
+        "ref_len": 3747,
+        "error": 585
+      },
+      "delta_vs_uniform": {
+        "wer_pp": -7.44595676541233,
+        "error_count": -279
+      },
+      "paired_bootstrap_vs_uniform": {
+        "unit": "WER percentage points (candidate - uniform)",
+        "resampling_unit": "dev sentence, paired with replacement",
+        "seed": 260914,
+        "repetitions": 10000,
+        "ci95": [
+          -8.333333333333334,
+          -6.562063272547948
+        ],
+        "mean": -7.438314714179945,
+        "probability_less_than_zero": 1.0
+      },
+      "meets_numeric_threshold": true,
+      "strong_go": false
+    },
+    "0.50": {
+      "skeleton_ratio": 0.5,
+      "role": "preregistered_primary",
+      "metrics": {
+        "wer": 17.69415532425941,
+        "del": 9.100613824392848,
+        "ins": 1.200960768614892,
+        "sub": 7.392580731251668,
+        "ref_len": 3747,
+        "error": 663
+      },
+      "delta_vs_uniform": {
+        "wer_pp": -5.364291433146516,
+        "error_count": -201
+      },
+      "paired_bootstrap_vs_uniform": {
+        "unit": "WER percentage points (candidate - uniform)",
+        "resampling_unit": "dev sentence, paired with replacement",
+        "seed": 260914,
+        "repetitions": 10000,
+        "ci95": [
+          -6.110224586288416,
+          -4.603300323649633
+        ],
+        "mean": -5.360363790321669,
+        "probability_less_than_zero": 1.0
+      },
+      "meets_numeric_threshold": true,
+      "strong_go": true
+    },
+    "0.75": {
+      "skeleton_ratio": 0.75,
+      "role": "exploratory_ablation",
+      "metrics": {
+        "wer": 19.18868428075794,
+        "del": 9.554310114758474,
+        "ins": 1.7614091273018415,
+        "sub": 7.872965038697624,
+        "ref_len": 3747,
+        "error": 719
+      },
+      "delta_vs_uniform": {
+        "wer_pp": -3.869762476647985,
+        "error_count": -145
+      },
+      "paired_bootstrap_vs_uniform": {
+        "unit": "WER percentage points (candidate - uniform)",
+        "resampling_unit": "dev sentence, paired with replacement",
+        "seed": 260914,
+        "repetitions": 10000,
+        "ci95": [
+          -4.576728782162401,
+          -3.1824231249100507
+        ],
+        "mean": -3.86814946443089,
+        "probability_less_than_zero": 1.0
+      },
+      "meets_numeric_threshold": true,
+      "strong_go": false
+    },
+    "1.00": {
+      "skeleton_ratio": 1.0,
+      "role": "exact_equal_budget_uniform_baseline",
+      "metrics": {
+        "wer": 23.058446757405925,
+        "del": 11.76941553242594,
+        "ins": 3.4427542033626897,
+        "sub": 7.846277021617294,
+        "ref_len": 3747,
+        "error": 864
+      },
+      "delta_vs_uniform": {
+        "wer_pp": 0.0,
+        "error_count": 0
+      },
+      "paired_bootstrap_vs_uniform": null,
+      "meets_numeric_threshold": false,
+      "strong_go": false
+    }
+  },
+  "local_pair_diagnostic": {
+    "definition": "at the primary skeleton, exhaust all pairs among top five one-step candidates",
+    "samples": 519,
+    "samples_exact_pair_better": 0,
+    "total_error_improvement": -6
+  }
+}

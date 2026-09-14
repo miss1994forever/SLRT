@@ -1,0 +1,17 @@
+{
+  "matrix_root": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3",
+  "vocab": "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_with_blank.vocab",
+  "output_root": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_decoder_utility_oracle_v1_49faacc3",
+  "max_samples": null,
+  "bootstrap_repetitions": 10000,
+  "workers": 4,
+  "device": "cpu",
+  "skeleton_ratios": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "primary_ratio": 0.5
+}

@@ -1,0 +1,51 @@
+{
+  "manifest_version": 1,
+  "created_utc": "2026-09-14T03:51:05.577128+00:00",
+  "policy": "Phoenix repaired dev only; CPU dense-logit replay; reference-aware offline oracle",
+  "inputs": {
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/dev/A0_adaptive_span15/run_01/dev_logits.pkl": {
+      "bytes": 167959312,
+      "sha256": "91209e73edc9c304eeecae98511d6df0615723b600bc7519ce63488e95b03b86"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/dev/A0_adaptive_span15/run_01/dev_results.pkl": {
+      "bytes": 6086031,
+      "sha256": "96182f8fe270789f82164bdbb883451dfc12d7b19af3f2f9f94b22558b414160"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/dev/B0_fixed1_window7/run_01/dev_logits.pkl": {
+      "bytes": 249025553,
+      "sha256": "1bb643f84032710c39c4bbd5125b51bb4bdf20e4b5f7a6f1dd85914a7dcdaec3"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/dev/B0_fixed1_window7/run_01/dev_results.pkl": {
+      "bytes": 8010828,
+      "sha256": "798d32866d3080c862d2575006208404652223fd2f3a262f18f124149cc54207"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/dev/B2_uniform_rate_span15/run_01/dev_logits.pkl": {
+      "bytes": 168365518,
+      "sha256": "e8f749f48579a14d1074b37728960687997afa2e1237c13709afa982d06edb99"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/dev/B2_uniform_rate_span15/run_01/dev_results.pkl": {
+      "bytes": 5714076,
+      "sha256": "fdde844dc10926c03d4e01aae078d79e27ad9afa6cbbab6c3165a400c055798f"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/protocol_manifest.json": {
+      "bytes": 4739,
+      "sha256": "2e6889ec14777d938a3c7ac9265ab97f87118523e9258f5f93beba4b3e854b8f"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/tools/analyze_phoenix_decoder_utility_oracle.py": {
+      "bytes": 21280,
+      "sha256": "3dae7bd80ac022eddb3974aaec1308b4855ee4038348e829adebf55a05b763ef"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/tools/analyze_phoenix_random_schedule.py": {
+      "bytes": 20027,
+      "sha256": "a01914b07253116065c68c0f0047834f098dd372ed34fdc54d21fa7470b0bd39"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/tools/analyze_phoenix_schedule_replay.py": {
+      "bytes": 16261,
+      "sha256": "e78ccd3b60d9266e9d96648ff2977e09cf8d5b15cbd4d8370f8b8dbaf11cf876"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_with_blank.vocab": {
+      "bytes": 12551,
+      "sha256": "d79c8ef31d8ec4345b511d641a832a67f1d8045020bee35521edee3b773fcc34"
+    }
+  }
+}
