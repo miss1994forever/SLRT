@@ -1,0 +1,12 @@
+{
+  "matrix_root": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3",
+  "vocab": "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_with_blank.vocab",
+  "output_root": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_counterfactual_utility_dataset_v1_49faacc3",
+  "pair_diagnostic": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_same_domain_pair_diagnostic_v1_49faacc3/per_sample_results.jsonl",
+  "max_samples": null,
+  "shard_samples": 32,
+  "workers": 4,
+  "total_budget_rate": 0.5,
+  "uniform_skeleton_share": 0.5,
+  "decoder": "span15"
+}

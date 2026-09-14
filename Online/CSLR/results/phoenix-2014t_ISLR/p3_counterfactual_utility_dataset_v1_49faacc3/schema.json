@@ -1,0 +1,24 @@
+{
+  "schema_version": "phoenix_decoder_utility_states_v1",
+  "record_unit": "one oracle set-building decision state",
+  "primary_label": "candidates[].label.utility = current edit errors - errors after adding candidate",
+  "predictor_input_contract": {
+    "allowed_location": "candidates[].predictor_inputs only",
+    "excluded": [
+      "decoder_hypothesis",
+      "eos",
+      "error",
+      "error_after",
+      "exact_budget",
+      "future",
+      "gloss_reference",
+      "logits",
+      "probabilities",
+      "reference",
+      "total_windows",
+      "utility"
+    ],
+    "warning": "oracle trajectory is not chronological streaming; causal pose/prefix features must be joined later under an audited time index"
+  },
+  "state_reconstruction": "initial_skeleton union selected_bonus_before; verify selected_set_sha256"
+}

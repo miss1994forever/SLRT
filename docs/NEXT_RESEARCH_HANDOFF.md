@@ -1,146 +1,135 @@
-# 下一阶段研究交接：P1 之后
+# 下一阶段研究交接：decoder-aware 因果 ranking predictor
 
-更新时间：2026-09-12
+更新时间：2026-09-14
 
 仓库：`/mnt/workspace/projects/haojun/SLRT`
 
-研究冻结基线：`a57825d`（P1）
+当前冻结提交：
 
-文档整理基线：`298ff76`
+- `3540ac7`：decoder marginal-utility oracle 与同域二窗口诊断；
+- `697cd63`：Phoenix P2 关键点 causal center TCN；
+- 本交接所在提交：完整反事实 utility 数据集生成器与紧凑索引。
 
-本文件只描述**当前状态和下一步**。P0/P1 启动时的历史计划不再混入当前任务；历史入口见
-[`archive/NEXT_RESEARCH_HANDOFF_PRE_P1_2026-09-12.md`](archive/NEXT_RESEARCH_HANDOFF_PRE_P1_2026-09-12.md)。
-若本文与实验日志冲突，以对应阶段冻结文档、机器索引和 protocol manifest 为准。
+本文件只描述当前状态与下一步。出现冲突时，以对应实验的 `protocol_manifest.json`、
+`dataset_manifest.json` 和机器可读摘要为准。
 
 ## 0. 交给新对话时怎么用
 
-新对话不需要继承旧聊天记录。直接提供本文件绝对路径：
+新对话直接读取：
 
 ```text
 /mnt/workspace/projects/haojun/SLRT/docs/NEXT_RESEARCH_HANDOFF.md
 ```
 
-并发送：
+建议任务描述：
 
-> 阅读该 handoff，核对仓库与本地资产状态。先提出 P2 train-only protocol，再实施更强的
-> 因果 sign-interior predictor；不得用 dev/test 做训练或选择，不得覆盖 A0/P0/P1。
+> 核对 decoder-utility oracle、pair diagnostic 和反事实 utility 数据集。先设计 train-side
+> dense replay 与互斥的 fit/calibration/evaluation 划分，再冻结严格因果 ranking predictor
+> 协议；不得使用同一 dev 数据训练 predictor 后再把该 dev 的 WER 改善当成独立证据。
 
-新对话开始后应先确认：
-
-- 工作目录使用 `/mnt/workspace/projects/haojun/SLRT`；
-- `/home/haojun/projects/SLRT` 只是同一目录的符号链接别名；
-- `git status --short --branch` 没有未知改动；
-- A0/P0/P1 的冻结文件和本地数据 hash 仍匹配；
-- 当前没有需要接管的运行进程，再决定是否启动新实验。
+开始前检查工作区、冻结哈希和是否存在运行中的实验。不得覆盖 A0、P0、P1、P2 或 P3 的已有
+结果目录，当前阶段禁止使用 test。
 
 ## 1. 当前研究状态
 
-| 阶段 | 冻结结论 | 权威文档 |
-|---|---|---|
-| A0 自适应步长 | 约减少三分之一窗口，但未显著优于等预算 uniform | [`ADAPTIVE_BASELINE_V1.md`](ADAPTIVE_BASELINE_V1.md) |
-| P0 调度诊断 | boundary/prediction-change No-Go；label-derived sign-center 是 offline Strong-Go | [`P0_SCHEDULE_DIAGNOSTICS_V1.md`](P0_SCHEDULE_DIAGNOSTICS_V1.md) |
-| P1 最小因果 center predictor | 11 维廉价关键点统计无法通过检测 gate，No-Go | [`P1_CAUSAL_CENTER_PREDICTOR_V1.md`](P1_CAUSAL_CENTER_PREDICTOR_V1.md) |
+| 阶段 | 冻结结论 |
+|---|---|
+| A0 自适应步长 | 相对 dense 节省窗口与 wall time，但未显著优于等预算 uniform |
+| P0 调度诊断 | label-derived center oracle 有上界；boundary 等简单 proxy 无可靠收益 |
+| P1 最小因果 center predictor | 11 维廉价特征未通过 train calibration gate，No-Go |
+| P2 关键点 causal TCN | AUROC/AUPRC 提升，但最大 center recall 38.89%，仍未通过 gate，No-Go |
+| P3 decoder utility oracle | 50% 总预算、50% skeleton 主配置显著优于等预算 uniform，Strong-Go |
+| P3 同域二窗口诊断 | 存在稀疏互补性；单步 utility 保持主标签，二步 rollout 仅作困难状态辅助监督 |
+| P3 反事实 utility 数据集 | dev oracle 数据已完整生成；只能用于开发和标签审计，不能直接充当独立训练—评测证据 |
 
-统一数字与声明边界见 [`RESULTS.md`](RESULTS.md)，机器可读索引见
-[`results/README.md`](results/README.md)。
+P2 的权威结论见 [`P2_CAUSAL_CENTER_TCN_V1.md`](P2_CAUSAL_CENTER_TCN_V1.md)。统一历史数字见
+[`RESULTS.md`](RESULTS.md)。
 
-## 2. P1 留下的决定性事实
+## 2. Decoder-utility oracle 的决定性结果
 
-P0 的 50% dense budget、span-15 offline midpoint proxy 将 WER 从 `23.058447%` 降到
-`21.537230%`，少 57 errors。这只是 label/alignment-derived oracle 上界，不是可部署模型。
+实验固定修复后 Phoenix dev、逐样本 50% dense 窗口预算、triangular span-15 decoder，并以
+uniform coverage skeleton 加 reference-aware greedy bonus。主配置把总预算的一半给 skeleton、
+一半给 bonus：
 
-P1 只用 train 拟合和校准严格因果逻辑回归：
+- 等预算 uniform：WER `23.058447%`，864 errors；
+- 50% skeleton + 50% bonus：WER `17.694155%`，663 errors；
+- 差值 `-5.364291` 个百分点，少 201 errors；
+- 配对 bootstrap 95% CI `[-6.110225, -4.603300]`，满足预注册 Strong-Go。
 
-- calibration AUROC `0.5452`，AUPRC `0.2203`（prevalence `0.2016`）；
-- 任意阈值最大 center recall 只有 `17.83%`，此时 positive delay 为 `33.42%`；
-- 满足 positive delay ≤25% 时，最大 recall 只有 `2.37%`；
-- 预注册 gate 为 recall ≥75% 且 positive delay ≤25%；
-- gate 失败，因此没有选择阈值、没有 scheduler replay、没有新 WER；
-- 模型正常收敛，失败原因是表征能力，不是 CPU 或程序错误；
-- pre-dev freeze 后只做了一次 dev threshold-free detection，没有用 dev 改模型；
-- P1 从未打开或运行 test-only 文件。
+这是使用 reference 和 dense logits 的离线上界，只证明 decoder-aware 非均匀分配值得预测，
+不证明存在可部署 scheduler，也不产生真实 wall time 或在线延迟结论。
 
-不要继续在 dev 上微调 P1 的逻辑回归阈值，也不要把 P0 oracle WER 写成 P1 成绩。
+同域 pair diagnostic 在 246 个初始单步 utility 全零样本中分层抽取 100 个，穷举 287,855 个
+窗口对：8 个样本的最佳二窗口组合比两步 greedy 少 1 个错误；9 个样本存在“两个单独为零、
+联合为正”的组合，共 24 对，最大联合 utility 为 1。互补性真实但稀疏，因此冻结为：单步
+marginal utility 是主要监督，二步 rollout 只用于全零困难状态的辅助监督与诊断。
 
-## 3. 不可变实验身份
+## 3. 完整反事实 utility 数据集
 
-- 数据：修复后 Phoenix-2014T；dev 519 个样本、55,775 帧、3,747 个清洗后 reference gloss；
+目录：
+
+```text
+Online/CSLR/results/phoenix-2014t_ISLR/p3_counterfactual_utility_dataset_v1_49faacc3/
+```
+
+它沿 50% skeleton 主配置的 reference-aware greedy 轨迹，在每个决策状态对所有未选候选窗口
+进行反事实解码，标签定义为：
+
+```text
+utility = 当前 edit errors - 加入候选窗口后的 edit errors
+```
+
+冻结规模：519 个 dev 样本、13,881 个状态、1,095,130 条候选记录；其中正 utility 671 条、
+零 utility 1,062,937 条、负 utility 31,522 条，6,947 个状态的全部单步 utility 为零。类别极度
+不平衡，后续应使用候选排序、hard negatives、recall@K/NDCG/utility regret 等中间指标，最终仍以
+逐样本等预算 WER 为准。
+
+17 个压缩 shard 共 20,390,810 bytes，只保留本地；Git 提交生成器、schema、config、summary 和
+manifest。manifest 保存每个 shard 的大小与 SHA-256，可验证本地数据而无需把约 19.45 MiB
+训练记录写入仓库。
+
+重要边界：
+
+- 数据集来自 dev，包含 reference-aware oracle 标签；
+- oracle 的集合构造步不是实际流式时间步；
+- `predictor_inputs` 仅含无 oracle 泄漏的基础字段，但尚未接入 pose、phase/hazard 或 decoder
+  prefix；
+- exact per-sample budget 和 EOS 信息只存在于 `oracle_state`，禁止作为部署 predictor 输入；
+- candidate logits、reference、当前错误和 future 信息只能生成标签或做审计，禁止作为输入。
+
+## 4. 下一阶段：先解决数据隔离，再训练 predictor
+
+不能在当前 519-sample dev utility 数据上拟合模型，再用同一 dev 的 WER 宣称 predictor 成功。
+下一步优先级固定如下：
+
+1. 在 train split 建立与 dev 同定义的 dense ISLR replay；若算力暂不允许，则对现有 dev 做按
+   source/video group 的互斥开发拆分，并把结论明确限定为开发性结果；
+2. 冻结 fit、calibration 和 evaluation 身份，任何归一化、模型选择、阈值和 early stopping
+   只能读取 fit/calibration；
+3. 给每个候选窗口按可审计时间索引接入截至当前的廉价 pose/手形/运动、coverage、距上次执行、
+   token-bucket，以及可选 CTC prefix/decoder 不确定性；
+4. 分别训练和评估 `0/4/8` 帧 lookahead，严格区分 causal 与 bounded-lookahead；
+5. uniform skeleton 始终保底，predictor 只分配 bonus；先报告排序指标，再做逐样本等预算 replay；
+6. evaluation 通过后才运行真实流式系统，计入 controller、数据搬运、队列积压、wall time 和
+   P95 稳定提交延迟。
+
+若 0 帧失败而 4/8 帧成功，只能声称 bounded-lookahead 有效并报告帧延迟。若排序指标好但 WER
+不提升，应检查 ranking-to-schedule、coverage、互补性与 decoder 耦合，而不是直接扩大模型。
+
+## 5. 不可变实验身份与边界
+
+- 数据：修复后 Phoenix-2014T；现有 dev 为 519 个样本、55,775 帧、3,747 个 reference gloss；
 - 视频 ZIP SHA-256：`49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457`；
 - checkpoint SHA-256：`b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b`；
-- 主窗口/解码：16-frame centered window、triangular span-weighted-15；
-- A0/B2 及 P0 坐标、预算和清洗规则保持冻结；
-- 改变数据、checkpoint、窗口、decoder 或 target 时必须建立新版本，不能覆盖已有目录。
+- 当前窗口/解码：16-frame centered window、triangular span-weighted-15；
+- 当前 oracle：逐样本 50% 总预算，主配置 50% skeleton share；
+- 改变数据、checkpoint、窗口、decoder、预算或 utility 时必须建立新版本；
+- test 当前禁止使用；仓库中的历史 retrospective test 不能用于新方法选择或正式验证。
 
-关键点已经受控拆分：
+## 6. 允许与禁止的声明
 
-| split | 视频 | 帧 | SHA-256 前缀 | 后续用途 |
-|---|---:|---:|---|---|
-| train-only | 7,096 | 827,354 | `18a045bf` | 拟合与内部 calibration |
-| dev-only | 519 | 55,775 | `85d1f0e2` | train 方案冻结后评估 |
-| test-only | 642 | 64,627 | `5cb767b9` | 当前阶段禁止使用 |
+当前可以说：decoder marginal-utility 在冻结 dev replay 中具有很大的 reference-aware 上界；
+单步标签虽有稀疏互补反例，仍适合作为第一版主要监督；完整候选标签已经生成并可验证。
 
-大型 pickle 保持本地、不得提交。拆分完整性与完整哈希已冻结在 P1 文档和机器索引中。
-
-## 4. 下一步候选
-
-### 推荐主线：P2 更强的因果 center/interior 表征
-
-目标不是继续调整阈值，而是验证更有信息量的视觉表示能否接近 P0 门槛。优先顺序：
-
-1. 左右手分离的速度、加速度、手间距离和相对躯干坐标；
-2. 局部手形/姿态变化和置信度变化，而不是只用整体运动中位数；
-3. 固定短历史的 causal temporal head；若使用 lookahead，必须明确建立 bounded-lookahead 版本；
-4. 先在 train fit/calibration 报告 center/event detection，再决定是否打开 dev；
-5. 只有 train calibration gate 通过，才连接 50% budget、span-15 scheduler。
-
-新版本必须在读取 dev 前冻结：特征、归一化、模型、训练轮数、threshold grid、event emission、
-refractory period、匹配规则和 gate。不得使用 gloss identity 或 reference token 作为预测输入。
-
-### 备选主线：window/decoder 或模态计算门控
-
-如果更强 P2 仍无法定位 sign interior，应停止继续堆 center head，转而检查：
-
-- centered 16-frame window 和 span-15 是否抹平了调度差异；
-- causal/bounded-lookahead window 的精度—延迟曲线；
-- RGB/keypoint 两流是否应按可靠性选择性计算，而不是只改变时间采样；
-- 固定等预算下 decoder 对窗口位置的敏感度。
-
-这些方向必须新建协议，不能用 P0/P1 的 oracle 或 threshold-free detection 代替真实调度结果。
-
-## 5. 数据与 test 边界
-
-- train 用于模型拟合；train 内按 source video 划分 calibration；
-- dev 只能在训练侧方案冻结后评估，不得循环查看并改规则；
-- P1 的 test-only 文件未使用；
-- 仓库存在更早的修复前 historical retrospective test 结果，说明 test 在历史上已被查看；它们
-  不能用于当前选择，也不能改称修复后正式 test；
-- alignment-derived midpoint 是 proxy，不是人工逐帧标注。
-
-## 6. GPU 与存储
-
-已知故障 GPU：PCI `01:00.0` 和 `25:00.0`，禁止使用。需要 GPU 时先现场检查，再用健康卡
-UUID 单卡绑定，不能依赖逻辑编号。廉价 CPU 审计不需要为了形式切换 GPU；真正的时序 head
-训练可使用健康 GPU。
-
-NFS 长期接近 99% 使用率。大型特征、logits 和临时模型写入 `/tmp`；最终必须把 compact
-manifest、config、aggregate、必要模型参数和日志持久化，不能把唯一结论留在 `/tmp`。
-
-## 7. 新任务启动清单
-
-1. 检查 `git status --short --branch` 和 `git diff --check`，不要 reset 用户改动；
-2. 阅读本文件、P1 冻结文档、P0 冻结文档和 `RESULTS.md`；
-3. 复核数据/模型 hash，不覆盖现有 `model_dir`；
-4. 先写 P2 train-only protocol 和输出目录；
-5. 先完成 train fit/calibration，gate 通过后才允许一次性 dev；
-6. 当前阶段禁止 test。
-
-建议首条任务：
-
-> 基于冻结 P1，设计 P2 train-only 因果 sign-interior predictor。增强左右手与短历史表征，先
-> 冻结特征、训练、校准、事件与 gate 协议；不得读取 dev/test 做选择，不得覆盖 A0/P0/P1。
-
-## 8. 可声明与不可声明
-
-可以说：P0 显示 label-derived sign-center 的 offline 上界；P1 当前廉价因果特征无法达到定位
-门槛。不能说：已有可部署 center scheduler、P1 改善了 WER、GPU 会自动解决表征失败，或
-当前存在未被历史查看的正式 test 结果。
+当前不能说：因果 predictor 已学会 utility、scheduler 已优于 uniform、严格在线系统已加速，或
+当前 dev 同时提供了无偏训练和独立评测证据。
