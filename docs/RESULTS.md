@@ -92,6 +92,22 @@ P1 使用 alignment-derived train midpoint `±1` 帧作为 proxy target，以 11
 replay 按协议跳过，P1 没有新的 WER；这不是 CPU 或优化器失败，而是当前廉价特征的定位
 能力不足。test-only 未打开或运行。
 
+### P2 train-only causal center TCN（2026-09-12 冻结）
+
+P2 复用 P1 的 train fit/calibration split、midpoint `±1` proxy target、事件规则和 gate，把输入
+增强为 211 维左右手/手形/躯干相对表征，并使用 receptive field 31 帧的严格因果 TCN。权威
+定义见 [P2_CAUSAL_CENTER_TCN_V1.md](P2_CAUSAL_CENTER_TCN_V1.md)。
+
+| 阶段 | AUROC | AUPRC / prevalence | 最大 center recall | delay ≤25% 最大 recall |
+|---|---:|---:|---:|---:|
+| P1 train calibration | 0.5452 | 0.2203 / 0.2016 | 17.83% | 2.37% |
+| P2 train calibration | **0.7372** | **0.3923 / 0.2016** | **38.89%** | **22.45%** |
+
+P2 表征明显强于 P1，但仍没有阈值达到 recall ≥75% 且 positive delay ≤25% 的预注册 gate，
+因此结论仍为 No-Go。P2 没有打开 dev、没有 scheduler replay、没有新 WER；test-only 未打开或
+运行。下一步不应继续小幅调整同一 TCN，而应新建 RGB/预训练视觉 feature causal probe，或
+转向 window/decoder 的 causal/bounded-lookahead 敏感性研究。
+
 ### Test：修复前历史 retrospective control
 
 以下结果绑定修复前视频资产，且 Phoenix test 已被历史实验查看。test split 自身没有缺帧，但这些结果不能重新标记成修复后资产的正式结果。截至 2026-09-10，尚未以修复后 hash 运行新的 test。

@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "frozen_at": "2026-09-12",
+  "base_commit": "576e76c",
+  "experiment": "Phoenix P2 train-only causal center TCN v1",
+  "decision": "no_go",
+  "reason": "no train-calibration threshold satisfied center recall >=0.75 and positive delay <=0.25",
+  "data": {
+    "train_keypoints_sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "split_sha256": "33db242f4c2353ebcd71ca663d7b3faa59bff3b06856b45456cf5d27dbdcd65a",
+    "fit_videos": 5655,
+    "calibration_videos": 1440,
+    "rows": 827338,
+    "positive_rows": 165672,
+    "target_warning": "alignment-derived midpoint plus/minus 1 frame proxy; not manual ground truth"
+  },
+  "model": {
+    "features": 211,
+    "type": "32-channel 4-block causal residual TCN",
+    "dilations": [1, 2, 4, 8],
+    "receptive_field_frames": 31,
+    "epochs": 8,
+    "model_selection": "none",
+    "model_sha256": "1ca707ab66d402f593f388314338d17564f816275661f7f18f20ddf757887f68"
+  },
+  "calibration": {
+    "frame_auroc": 0.7371585958319704,
+    "frame_auprc": 0.3923095347508083,
+    "prevalence": 0.20158766323312508,
+    "maximum_center_recall_any_threshold": 0.3889037552403889,
+    "threshold_at_maximum_recall": 0.59,
+    "positive_delay_at_maximum_recall": 0.30091743119266057,
+    "maximum_recall_with_delay_at_most_0_25": 0.22451164035322452,
+    "threshold_at_delay_constrained_maximum": 0.39,
+    "gate": {
+      "minimum_recall": 0.75,
+      "maximum_positive_delay_fraction": 0.25,
+      "qualified": false
+    },
+    "selected_threshold": null
+  },
+  "downstream": {
+    "dev_opened_or_run": false,
+    "scheduler_replay": "skipped_no_go",
+    "new_dev_wer": null,
+    "test_opened_or_run": false
+  },
+  "artifacts": {
+    "result_directory": "Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1",
+    "feature_archive_sha256": "abdccf8e1f0af1b71aaab2834fce2182bff375917879d8acc5ece644e8d4ebd5",
+    "protocol_manifest_sha256": "bd03b68b8cbe5ab2feddf3e4f00aae6406dca692de89a4db60f769c3d776bdb7",
+    "predev_freeze_manifest_sha256": "e8cfe4506fdeda684a9b7253edb4ec6ffa3f2fe6ed5b593be13e18792bf7087d",
+    "metrics_sha256": "93e92b63587691ae261f4184601603cdfc61481e7becd7476301580d1ecfc833"
+  },
+  "runtime": {
+    "gpu_uuid": "GPU-2c6a50cb-f770-c785-dc1d-7f8cc7b7b9aa",
+    "gpu_pci": "41:00.0",
+    "gpu_name": "NVIDIA GeForce RTX 3090"
+  }
+}

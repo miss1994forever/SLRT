@@ -19,6 +19,7 @@
 | A0 | [`ADAPTIVE_BASELINE_V1.md`](ADAPTIVE_BASELINE_V1.md) | 降低窗口量；未显著优于等预算 uniform |
 | P0 | [`P0_SCHEDULE_DIAGNOSTICS_V1.md`](P0_SCHEDULE_DIAGNOSTICS_V1.md) | sign-center offline Strong-Go；其余主要调度信号 No-Go |
 | P1 | [`P1_CAUSAL_CENTER_PREDICTOR_V1.md`](P1_CAUSAL_CENTER_PREDICTOR_V1.md) | 最小因果 center predictor No-Go |
+| P2 | [`P2_CAUSAL_CENTER_TCN_V1.md`](P2_CAUSAL_CENTER_TCN_V1.md) | 增强关键点 causal TCN No-Go；未打开 dev/test |
 
 对应的 compact、机器可读冻结索引统一列在 [`results/README.md`](results/README.md)。阶段冻结
 文档一旦提交不重写结论；新实验建立新版本并由 `RESULTS.md` 说明关系。

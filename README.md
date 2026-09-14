@@ -18,11 +18,12 @@ Phoenix-2014T 是当前在线 CSLR 主线，指标为 WER。CSL-Daily Top-800 �
 | A0 | motion-only 自适应步长 | Dev 相对 B0 减少 32.56% clips；未显著优于等预算 uniform |
 | P0 | 等预算调度诊断 | boundary/prediction-change No-Go；label-derived sign-center 是 offline Strong-Go |
 | P1 | train-only 最小因果 center predictor | Calibration gate 失败，No-Go；未运行 scheduler，没有新 WER |
-| P2 | 更强因果 sign-interior 表征 | 下一阶段，尚未开始 |
+| P2 | 211 维关键点 + 31 帧因果 TCN | Detection 明显提升但 gate 失败，No-Go；未打开 dev/test |
 
-P0 的 sign-center 结果是 alignment-derived offline oracle，不是可部署模型。P1 正常训练收敛，
-但当前 11 维运动/有效性/人体框特征的最大 calibration center recall 只有 17.83%，未达到
-75% gate；失败原因是表征能力，而不是 CPU 或程序错误。P1 没有读取或运行 test-only 文件。
+P0 的 sign-center 结果是 alignment-derived offline oracle，不是可部署模型。P1 的 11 维廉价
+特征最多命中 17.83% calibration centers；P2 增强到左右手/手形表征和 causal TCN 后提高到
+38.89%，但仍远低于预注册的 75% gate。P2 因此没有打开 dev、没有 scheduler WER，也没有
+读取或运行 test-only 文件。
 
 ## 从这里开始
 
@@ -38,6 +39,7 @@ P0 的 sign-center 结果是 alignment-derived offline oracle，不是可部署�
 - [A0 自适应步长 v1](docs/ADAPTIVE_BASELINE_V1.md)
 - [P0 调度诊断 v1](docs/P0_SCHEDULE_DIAGNOSTICS_V1.md)
 - [P1 因果 center predictor v1](docs/P1_CAUSAL_CENTER_PREDICTOR_V1.md)
+- [P2 因果 center TCN v1](docs/P2_CAUSAL_CENTER_TCN_V1.md)
 
 ## 本地路径
 
@@ -70,7 +72,7 @@ python -m unittest discover -s tests -p 'test_*.py' -v
 - 阶段冻结时，仅通过 `.gitignore` 精确白名单提交 compact config、manifest、aggregate、
   必要小模型和机器索引；
 - train 用于拟合和内部 calibration；dev 只在训练侧方案冻结后评估；当前阶段禁止 test；
-- 新实验必须使用新输出目录，不能覆盖 A0、P0 或 P1。
+- 新实验必须使用新输出目录，不能覆盖 A0、P0、P1 或 P2。
 
 ## 目录概览
 

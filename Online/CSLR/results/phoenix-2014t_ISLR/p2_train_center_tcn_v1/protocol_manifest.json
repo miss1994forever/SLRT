@@ -1,0 +1,35 @@
+{
+  "code": {
+    "CSLR/tools/build_phoenix_p2_center_sequences.py": "5cef599e11cff3629b9b775a52a960d4d12858101d397034d5519e19e7ea7429",
+    "CSLR/tools/train_phoenix_p2_center_predictor.py": "f17e4807b492abb56565f948b3417b19d35855ed262ed1479657c63b3cb83e58"
+  },
+  "decision": {
+    "gate": "no_go",
+    "selected_threshold": null
+  },
+  "inputs": {
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/fit_calibration_split.json": "33db242f4c2353ebcd71ca663d7b3faa59bff3b06856b45456cf5d27dbdcd65a",
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.split_manifest.json": "44376a9795f3ced9450cbb4386d9128e4fcca08e78a712c7a6bd74e31b14f1c7",
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.train.pkl": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_center_label_bag2items.train": "05a587562648191945129c704533735df79b5dfa3acdec0bdacdee02551e2564",
+    "/mnt/workspace/projects/haojun/SLRT/docs/P2_TRAIN_ONLY_PROTOCOL_V1.md": "91935ae17e4b3cd67bc6b76d36fb63c8280c8fb44d173f64c8d6373f03864cbf",
+    "/tmp/phoenix_p2_train_center_sequences_v1.npz": "abdccf8e1f0af1b71aaab2834fce2182bff375917879d8acc5ece644e8d4ebd5"
+  },
+  "outputs": {
+    "aggregate/train_calibration_metrics.json": "93e92b63587691ae261f4184601603cdfc61481e7becd7476301580d1ecfc833",
+    "fit_calibration_split.json": "33db242f4c2353ebcd71ca663d7b3faa59bff3b06856b45456cf5d27dbdcd65a",
+    "model.pt": "1ca707ab66d402f593f388314338d17564f816275661f7f18f20ddf757887f68",
+    "predev_freeze_manifest.json": "e8cfe4506fdeda684a9b7253edb4ec6ffa3f2fe6ed5b593be13e18792bf7087d",
+    "resolved_config.json": "76b0b8fa142b9f712d40dfb1f1a90deb484c28c1cf3eb69033b920e5377272fd"
+  },
+  "runtime": {
+    "device": "NVIDIA GeForce RTX 3090",
+    "numpy": "1.26.4",
+    "python": "3.9.25",
+    "torch": "1.10.2+cu113",
+    "visible_device_uuid": "GPU-2c6a50cb-f770-c785-dc1d-7f8cc7b7b9aa"
+  },
+  "schema_version": 1,
+  "scope": "P2 train-fit/calibration causal TCN center predictor",
+  "split_policy": "train fit/calibration only; dev conditional on frozen gate; test forbidden"
+}

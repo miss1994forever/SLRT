@@ -55,6 +55,16 @@ Online/CSLR/results/phoenix-2014t_ISLR/p1_train_center_audit_v1/aggregate/*
 !Online/CSLR/results/phoenix-2014t_ISLR/p1_train_center_audit_v1/aggregate/train_calibration_metrics.json
 !Online/CSLR/results/phoenix-2014t_ISLR/p1_train_center_audit_v1/aggregate/dev_detection_metrics.json
 !Online/CSLR/results/phoenix-2014t_ISLR/p1_train_center_audit_v1/aggregate/p1_summary.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/
+Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/*
+!Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/resolved_config.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/fit_calibration_split.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/model.pt
+!Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/predev_freeze_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/protocol_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/aggregate/
+Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/aggregate/*
+!Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/aggregate/train_calibration_metrics.json
 Online/CTC_fusion/results/
 Online/SLT/results/
 Online/CSLR/run_logs/

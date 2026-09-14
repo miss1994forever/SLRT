@@ -1,0 +1,67 @@
+{
+  "dev_opened_or_run": false,
+  "dev_permission": "one-shot dev detection and scheduler only if gate.qualified is true",
+  "gate": {
+    "qualified": false,
+    "reason": "no calibration threshold satisfied both requirements",
+    "requirements": {
+      "center_recall_minimum": 0.75,
+      "positive_delay_fraction_maximum": 0.25
+    },
+    "selected_threshold": null
+  },
+  "inputs": {
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/fit_calibration_split.json": {
+      "bytes": 354941,
+      "sha256": "33db242f4c2353ebcd71ca663d7b3faa59bff3b06856b45456cf5d27dbdcd65a"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.split_manifest.json": {
+      "bytes": 2160,
+      "sha256": "44376a9795f3ced9450cbb4386d9128e4fcca08e78a712c7a6bd74e31b14f1c7"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.train.pkl": {
+      "bytes": 660804988,
+      "sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_center_label_bag2items.train": {
+      "bytes": 95453968,
+      "sha256": "05a587562648191945129c704533735df79b5dfa3acdec0bdacdee02551e2564"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/docs/P2_TRAIN_ONLY_PROTOCOL_V1.md": {
+      "bytes": 5176,
+      "sha256": "91935ae17e4b3cd67bc6b76d36fb63c8280c8fb44d173f64c8d6373f03864cbf"
+    },
+    "/tmp/phoenix_p2_train_center_sequences_v1.npz": {
+      "bytes": 216350163,
+      "sha256": "abdccf8e1f0af1b71aaab2834fce2182bff375917879d8acc5ece644e8d4ebd5"
+    }
+  },
+  "outputs": {
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/aggregate/train_calibration_metrics.json": {
+      "bytes": 65943,
+      "sha256": "93e92b63587691ae261f4184601603cdfc61481e7becd7476301580d1ecfc833"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/fit_calibration_split.json": {
+      "bytes": 354941,
+      "sha256": "33db242f4c2353ebcd71ca663d7b3faa59bff3b06856b45456cf5d27dbdcd65a"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/model.pt": {
+      "bytes": 90177,
+      "sha256": "1ca707ab66d402f593f388314338d17564f816275661f7f18f20ddf757887f68"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p2_train_center_tcn_v1/resolved_config.json": {
+      "bytes": 6446,
+      "sha256": "76b0b8fa142b9f712d40dfb1f1a90deb484c28c1cf3eb69033b920e5377272fd"
+    }
+  },
+  "runtime": {
+    "device": "NVIDIA GeForce RTX 3090",
+    "numpy": "1.26.4",
+    "python": "3.9.25",
+    "torch": "1.10.2+cu113",
+    "visible_device_uuid": "GPU-2c6a50cb-f770-c785-dc1d-7f8cc7b7b9aa"
+  },
+  "schema_version": 1,
+  "status": "predev_frozen",
+  "test_opened_or_run": false
+}
