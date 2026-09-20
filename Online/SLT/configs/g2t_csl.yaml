@@ -1,0 +1,69 @@
+task: G2T
+data:
+  dataset_name: csl
+  dev: ../CSLR/results/online_slr_csl/prediction_slide/csl_pred.dev
+  test: ../CSLR/results/online_slr_csl/prediction_slide/csl_pred.test
+  train: ../../data/csl-daily/csl.train
+  input_data: gloss
+  level: char
+  max_sent_length: 400
+  txt_lowercase: true
+testing:
+  checkpoint: ../../../models/checkpoints/online_slrt/csl_daily_g2t_best.ckpt
+  cfg:
+    translation:
+      length_penalty: 1
+      max_length: 100
+      num_beams: 5
+training:
+  batch_size: 8
+  keep_last_ckpts: 1
+  model_dir: results/g2t_csl
+  num_workers: 4
+  optimization:
+    betas:
+      - 0.9
+      - 0.998
+    learning_rate:
+      default: 0.0001
+      translation: 1.0e-05
+    optimizer: Adam
+    scheduler: cosineannealing
+    t_max: 80
+    weight_decay: 0.001
+  overwrite: true
+  random_seed: 0
+  shuffle: true
+  total_epoch: 4
+  validation:
+    cfg:
+      translation:
+        length_penalty: 1
+        max_length: 100
+        num_beams: 4
+    freq: 1000
+    unit: step
+# The downloaded text_embeddings.bin exactly matches all 6308 checkpoint rows.
+# The G2T gloss map is recovered by unique exact embedding-row matches.
+model:
+  TranslationNetwork:
+    GlossEmbedding:
+      # Restore trained gloss embeddings from the G2T checkpoint.
+      from_scratch: true
+      freeze: false
+      gloss2embed_file: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g/gloss_embeddings.bin
+    GlossTokenizer:
+      gloss2id_file: ../../../models/checkpoints/online_slrt/csl_daily_g2t_gloss2ids.pkl
+      src_lang: zh_CSL
+    TextTokenizer:
+      pretrained_model_name_or_path: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g/
+      pruneids_file: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g/old2new_vocab.pkl
+      tgt_lang: zh_CN
+    freeze_txt_embed: true
+    label_smoothing: 0.2
+    overwrite_cfg:
+      # Base T2G heads are replaced by the complete G2T inference checkpoint.
+      ignore_mismatched_sizes: true
+      attention_dropout: 0.1
+      dropout: 0.3
+    pretrained_model_name_or_path: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g/

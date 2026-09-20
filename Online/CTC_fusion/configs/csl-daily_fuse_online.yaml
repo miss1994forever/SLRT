@@ -72,7 +72,7 @@ training:
 model:
   RecognitionNetwork:
     GlossTokenizer:
-      gloss2id_file: ../../data/csl-daily/csl_s2g_gloss2ids.pkl
+      gloss2id_file: ../../TwoStreamNetwork/data/csl-daily/gloss2ids.pkl
     s3d:
       pretrained_ckpt: ../../pretrained_models/s3ds_actioncls_ckpt
       use_block: 4

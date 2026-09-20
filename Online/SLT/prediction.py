@@ -278,19 +278,19 @@ if __name__ == "__main__":
     #per-dataset
     for datasetname in cfg['datanames']:
         logger.info('Evaluate '+datasetname)
-        load_model_path = os.path.join(model_dir,'ckpts',args.ckpt_name)
-        if not os.path.isfile(load_model_path):
-            load_model_path = os.path.join(model_dir,'ckpts',f'{datasetname}_{args.ckpt_name}')
-        if not os.path.isfile(load_model_path):
-            load_model_path = os.path.join(model_dir,'ckpts',f'phoenixcomb_{args.ckpt_name}')
-        if os.path.isfile(load_model_path):
-            state_dict = torch.load(load_model_path, map_location='cuda')
-            neq_load_customized(model, state_dict['model_state'], verbose=True)
-            epoch, global_step = state_dict.get('epoch',0), state_dict.get('global_step',0)
-            logger.info('Load model ckpt from '+load_model_path)
-        else:
-            logger.info(f'{load_model_path} does not exist')
-            epoch, global_step = 0, 0
+        configured_checkpoint = cfg.get('testing', {}).get('checkpoint')
+        candidates = [configured_checkpoint] if configured_checkpoint else [
+            os.path.join(model_dir, 'ckpts', args.ckpt_name),
+            os.path.join(model_dir, 'ckpts', f'{datasetname}_{args.ckpt_name}'),
+            os.path.join(model_dir, 'ckpts', f'phoenixcomb_{args.ckpt_name}'),
+        ]
+        load_model_path = next((p for p in candidates if os.path.isfile(p)), None)
+        if load_model_path is None:
+            raise FileNotFoundError('Inference checkpoint not found: ' + ', '.join(candidates))
+        state_dict = torch.load(load_model_path, map_location=cfg['device'])
+        model.load_state_dict(state_dict['model_state'], strict=True)
+        epoch, global_step = state_dict.get('epoch', 0), state_dict.get('global_step', 0)
+        logger.info('Load model ckpt from ' + load_model_path)
         cfg_ = deepcopy(cfg)
         cfg_['datanames'] = [datasetname]
         cfg_['data'] = {k:v for k,v in cfg['data'].items() if not k in cfg['datanames'] or k==datasetname}

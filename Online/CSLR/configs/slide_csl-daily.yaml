@@ -9,10 +9,13 @@ data:
     - pose
     - mouth_half
     - hand
-  zip_file: ../../data/csl-daily/sentence_frames-512x512.zip
-  train: ../../data/csl-daily/csl.train
-  dev: ../../data/csl-daily/csl.dev
-  test: ../../data/csl-daily/csl.test
+  # Directory reader appends sentence_frames-512x512/<sample>/<frame>.jpg.
+  zip_file: ../../data/csl-daily
+  strict_frame_loading: true  # Reject missing/corrupt images instead of placeholders.
+  # Original sentence annotations; regenerated csl.* files alter lengths/glosses.
+  train: ../../TwoStreamNetwork/data/csl-daily/csl-daily.train
+  dev: ../../TwoStreamNetwork/data/csl-daily/csl-daily.dev
+  test: ../../TwoStreamNetwork/data/csl-daily/csl-daily.test
   vocab_file: ../../data/csl-daily/csl_iso_with_blank.vocab
   dataset_name: csl
   level: word #word or char
@@ -58,6 +61,8 @@ postprocess:
     kernel: triangular
     min_weight: 0.05
 testing:
+  # Full CSL-Daily Online ISLR: 2001 classes (2000 glosses + blank).
+  checkpoint: ../../../models/checkpoints/online_slrt/csl_daily_cslr_best.ckpt
   cfg:
     recognition:
       beam_size: 10

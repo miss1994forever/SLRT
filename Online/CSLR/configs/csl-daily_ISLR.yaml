@@ -9,7 +9,9 @@ data:
     - pose
     - mouth_half
     - hand
-  zip_file: /tmp/csl-daily/sentence_frames-512x512.zip
+  # Directory reader appends sentence_frames-512x512/<sample>/<frame>.jpg.
+  zip_file: ../../data/csl-daily
+  strict_frame_loading: true  # Reject missing/corrupt images instead of placeholders.
   train: ../../data/csl-daily/csl_iso_center_label_bag2items_halfblk.train
   dev: ../../data/csl-daily/csl_iso_with_blank.dev
   test: ../../data/csl-daily/csl_iso_with_blank.test
@@ -38,6 +40,7 @@ data:
       tmin: 0.5
       tmax: 1.5
 testing:
+  checkpoint: ../../../models/checkpoints/online_slrt/csl_daily_cslr_best.ckpt
   cfg:
     recognition:
       beam_size: 1

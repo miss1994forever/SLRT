@@ -764,6 +764,7 @@ if __name__ == "__main__":
     parser.add_argument("--save_subdir", default='prediction_slide', type=str)
     parser.add_argument('--output_dir', default=None, type=str, help='Exact result directory override.')
     parser.add_argument('--ckpt_name', default='best.ckpt', type=str)
+    parser.add_argument('--checkpoint', default=None, type=str, help='Explicit inference checkpoint path')
     parser.add_argument('--eval_setting', default='origin', type=str)
     parser.add_argument('--blank_thr', default=0.5, type=float)
     parser.add_argument('--adaptive_stride', default=None, choices=[0, 1], type=int)
@@ -853,6 +854,10 @@ if __name__ == "__main__":
         cfg_ex = load_config(args.config_ex)
         cfg_ex['device'] = cfg['device']
 
+    load_model_path = args.checkpoint or cfg.get('testing', {}).get('checkpoint') or os.path.join(model_dir, 'ckpts', args.ckpt_name)
+    if not os.path.isfile(load_model_path):
+        raise FileNotFoundError(f'Inference checkpoint not found: {load_model_path}')
+
     dataset = build_dataset(cfg['data'], 'train')
     vocab = dataset.vocab
     cls_num = len(vocab)
@@ -861,16 +866,12 @@ if __name__ == "__main__":
     model = build_model(cfg, cls_num, word_emb_tab=None)
     # model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
     #load model
-    load_model_path = os.path.join(model_dir, 'ckpts', args.ckpt_name)
-    if os.path.isfile(load_model_path):
-        state_dict = torch.load(load_model_path, map_location='cuda')
-        neq_load_customized(model, state_dict['model_state'], verbose=True)
-        epoch, global_step = state_dict.get('epoch', 0), state_dict.get('global_step', 0)
-        logger.info('Load model ckpt from ' + load_model_path)
-    else:
-        logger.info(f'{load_model_path} does not exist')
-        epoch, global_step = 0, 0
-    
+    state_dict = torch.load(load_model_path, map_location=cfg['device'])
+    # Inference requires all weights, unlike transfer-training initialization.
+    model.load_state_dict(state_dict['model_state'], strict=True)
+    epoch, global_step = state_dict.get('epoch', 0), state_dict.get('global_step', 0)
+    logger.info('Load model ckpt from ' + load_model_path)
+
     # model = DDP(model, 
     #         device_ids=[cfg['local_rank']], 
     #         output_device=cfg['local_rank'],

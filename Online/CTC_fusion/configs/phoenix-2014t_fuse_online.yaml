@@ -67,7 +67,7 @@ training:
 model:
   RecognitionNetwork:
     GlossTokenizer:
-      gloss2id_file: ../../data/phoenix_2014t/gloss2ids.pkl
+      gloss2id_file: ../../TwoStreamNetwork/data/phoenix-2014t/gloss2ids.pkl
     s3d:
       pretrained_ckpt: ../../pretrained_models/s3ds_actioncls_ckpt #from K400
       use_block: 4

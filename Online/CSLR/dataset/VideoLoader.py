@@ -77,7 +77,7 @@ def make_missing_frame_placeholder(dataset_name, reference_frame=None):
     return np.zeros((224, 224, 3), dtype=np.uint8)
 
 
-def read_jpg(zip_file, dataset_name, decoded_frames, seq_len, img_dir):
+def read_jpg(zip_file, dataset_name, decoded_frames, seq_len, img_dir, strict_frame_loading=False):
     video_arrays = []
     for f in decoded_frames:
         # assert f<seq_len, (f, seq_len, img_dir)
@@ -95,7 +95,11 @@ def read_jpg(zip_file, dataset_name, decoded_frames, seq_len, img_dir):
             img_path = '{}@{}{:04d}.png'.format(zip_file, img_dir, f)
         try:
             img = read_img(img_path, dataset_name, csl_cut=False, csl_resize=[320,320])
-        except Exception:
+        except Exception as exc:
+            if strict_frame_loading:
+                raise RuntimeError(
+                    f"Failed to read frame for {img_dir}: {img_path}"
+                ) from exc
             if img_dir not in _WARNED_MISSING_FRAME_SAMPLES:
                 _WARNED_MISSING_FRAME_SAMPLES.add(img_dir)
                 print(f'[WARN] Missing frame asset for {img_dir}: {img_path}. Using placeholder frames.')
@@ -273,7 +277,7 @@ def even_replicate(vlen, num_frames=64, pre_index=None, is_train=True):
 
 
 def load_video(zip_file, name, vlen, raw_vlen, num_frames, dataset_name, is_train, 
-                index_setting=['consecutive', 'pad', 'central', 'pad'], temp_scale=[1.0,1.0], ori_vfile=''):
+                index_setting=['consecutive', 'pad', 'central', 'pad'], temp_scale=[1.0,1.0], ori_vfile='', strict_frame_loading=False):
     if 'WLASL' in dataset_name or 'SLR500' in dataset_name:
         vlen = vlen - 2  # a bug in lintel when load .mp4
 
@@ -327,12 +331,12 @@ def load_video(zip_file, name, vlen, raw_vlen, num_frames, dataset_name, is_trai
         if dataset_name in ['phoenix_comb_iso', 'phoenixcomb']:
             if 'fullFrame' in ori_vfile:
                 real_datasetname = 'phoenix2014_iso' if 'iso' in dataset_name else 'phoenix2014'
-                video_arrays = read_jpg(zip_file, real_datasetname, selected_index, vlen, ori_vfile)
+                video_arrays = read_jpg(zip_file, real_datasetname, selected_index, vlen, ori_vfile, strict_frame_loading=strict_frame_loading)
             else:
                 real_datasetname = 'phoenix_iso' if 'iso' in dataset_name else 'phoenix'
-                video_arrays = read_jpg(zip_file, real_datasetname, selected_index, vlen, ori_vfile)
+                video_arrays = read_jpg(zip_file, real_datasetname, selected_index, vlen, ori_vfile, strict_frame_loading=strict_frame_loading)
         else:
-            video_arrays = read_jpg(zip_file, dataset_name, selected_index, vlen, ori_vfile)
+            video_arrays = read_jpg(zip_file, dataset_name, selected_index, vlen, ori_vfile, strict_frame_loading=strict_frame_loading)
 
     train_p, train_m, test_p, test_m = index_setting
     if is_train:
@@ -380,7 +384,7 @@ def load_video(zip_file, name, vlen, raw_vlen, num_frames, dataset_name, is_trai
 
 def load_batch_video(zip_file, names, vlens, raw_vlens, dataset_name, is_train, 
                     num_output_frames=64, name2keypoint=None, index_setting=['consecutive','pad','central','pad'], temp_scale=[1.0,1.0],
-                    ori_video_files=[], fps=1, from64=False):
+                    ori_video_files=[], fps=1, from64=False, strict_frame_loading=False):
     #load_video and keypoints, used in collate_fn
     sgn_videos, sgn_keypoints = [], []
     if type(num_output_frames) == int:
@@ -391,7 +395,7 @@ def load_batch_video(zip_file, names, vlens, raw_vlens, dataset_name, is_train,
     for n_frames, f in zip(num_output_frames, fps):
         batch_videos, batch_keypoints = [], []
         for name, vlen, raw_vlen, ori_vfile in zip(names, vlens, raw_vlens, ori_video_files):
-            video, selected_index, pad = load_video(zip_file, name, vlen, raw_vlen, n_frames, dataset_name, is_train, index_setting, temp_scale, ori_vfile)
+            video, selected_index, pad = load_video(zip_file, name, vlen, raw_vlen, n_frames, dataset_name, is_train, index_setting, temp_scale, ori_vfile, strict_frame_loading=strict_frame_loading)
             # video = torch.tensor(video).to(torch.uint8)
             video = torch.tensor(video).float()  #T,H,W,C
             if 'NMFs-CSL' in dataset_name:

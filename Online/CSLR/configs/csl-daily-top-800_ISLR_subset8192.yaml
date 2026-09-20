@@ -44,7 +44,9 @@ testing:
 training:
   overwrite: true
   model_dir: results/csl-daily-top-800_ISLR_subset8192
-  load_ckpt: ../../artifacts/checkpoints/online_slrt/cslr_best.ckpt
+  # Phoenix Online ISLR initialization for transfer training; the 801-class
+  # CSL Top-800 output heads are trained locally, not restored from this file.
+  load_ckpt: ../../../models/checkpoints/online_slrt/phoenix_2014t_islr_best.ckpt
   random_seed: 321
   shuffle: true
   num_workers: 4
