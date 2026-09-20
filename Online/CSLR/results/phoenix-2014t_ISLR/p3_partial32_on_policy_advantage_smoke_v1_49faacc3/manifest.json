@@ -1,0 +1,23 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-15T08:12:07.271849+00:00",
+  "metrics_sha256": "7eaa7f8edac4c2bffc5726abf464f2f15d1d99d69706a5c0c1a15f6a9e44509a",
+  "traces": {
+    "B2_old": {
+      "rows": 19488,
+      "sha256": "8fa5ea05ba8b4a9963a8976ba2a1f3c6a729e7189b6b3ef62ea63ae398a3908d"
+    },
+    "B2_DA1": {
+      "rows": 29166,
+      "sha256": "83f19ad80c6bfbf3b4e6ebafff22f011d1af977755d3ac7dfb7d4488acea9fe9"
+    },
+    "B3_old": {
+      "rows": 21930,
+      "sha256": "bc092621325ded3e8d391005a3d2ad7dc5107004141f171e154e8e33c96145b4"
+    },
+    "B3_DA1": {
+      "rows": 29270,
+      "sha256": "2e4dfa756f1b42d6f13df57adadac5f55e88cfc56bd8b91200a179f80c114f9f"
+    }
+  }
+}

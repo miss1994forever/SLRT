@@ -1,0 +1,22 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-19T01:36:10.968269+00:00",
+  "counts": {
+    "blocks": 14863,
+    "side_choices": 47,
+    "samples": 512,
+    "uniform_error": 160,
+    "robust_error": 112,
+    "ref_len": 4041
+  },
+  "oracle_reproduction": {
+    "uniform_error": 160,
+    "robust_error": 112,
+    "blocks": 14863,
+    "side_choices": 47
+  },
+  "config_sha256": "e6fccbe509de69b302c0380d9ca4fd0cf43a424b6b30d1dd966b9073f0fa9231",
+  "data_sha256": "ef8dbc4402aa8931ed22626ba441b4b4442a29b5d242976fd226e9c5b55f938d",
+  "bytes": 1839619,
+  "elapsed_seconds": 344.23163146246225
+}

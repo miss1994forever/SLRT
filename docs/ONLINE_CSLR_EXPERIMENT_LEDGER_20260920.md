@@ -1,0 +1,81 @@
+# 在线 CSLR 实验账本（2026-09-20）
+
+本账本只整理仓库中已落盘的事实；`unknown` 表示从现有产物无法确认，不能用对话记忆补齐。2026-09-20 已在完整 train fit 范围完成 robust continuation oracle、反事实标签集、因果特征归档、标签稳定性审计与 source-disjoint OOF predictor；没有读取新的 held-out dev/test 结果。
+
+## 固定身份与解释约束
+
+- 当前主链 ISLR checkpoint SHA256：`b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b`。
+- 完整 train dense replay 已有 56/56 shards、7,096 样本和 827,354 个窗口。完整 robust 主链使用其中 fit 6,378 样本、578 个 source；没有把 train OOF 结果当作最终泛化结论。证据：`Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3/protocol_manifest.json`。
+- 所有 midpoint/center、terminal、rollout、robust utility 标签都是训练或诊断标签；凡读取 reference、未来或真实 EOS 的 oracle 都不可部署。
+- replay WER 不是实际 wall time 或稳定提交延迟证据。
+
+## 核心实验索引
+
+| ID | 实验与假设 | 数据范围 | 因果输入；标签可见性 | 预算/解码 | 核心结果 | 结论与完整数据分类 | 证据 |
+|---|---|---|---|---|---|---|---|
+| A0 | 运动自适应 stride 能否相对 dense 降算力且保持 WER | historical dev，519 句；55,775 dense clips | 调度输入细节见冻结配置；最终 WER 用 reference。不是严格 trailing-window 流式实验 | A0 37,615 clips；span-weighted-15 | dense B0 WER 22.2311%，A0 22.4179%（+0.1868 pp）；clips -32.56%；runtime 1675.88→1179.60 s（-29.61%，与项目口述的 29.48% 不一致，需核来源）。A0 840 errors，原 B2 uniform 845 errors，但 B2 有 37,706 clips，非逐样本等预算 | 只能证明效率/精度折中，不能证明 adaptive 比等预算 uniform 更聪明。**停止作为核心 learned bonus 证据；保留基线** | `baseline_matrix_v1_repaired_49faacc3/aggregate/dev_summary.md`；`p0_schedule_diagnostics_v1_49faacc3/aggregate/dev_summary.json` |
+| P0-random | coverage 是否比任意稀疏选择重要 | historical dev，519；30 个预声明 seed | random 不读未来/reference；评价读 reference | 每样本精确匹配 A0 clip 数并保端点；span15 | random WER 均值 23.2123%，范围 22.6581–23.7790%；首 seed 23.1118%。首 seed vs A0 CI [0.0525,1.3319] pp；vs B2 CI [-0.0532,1.1734] | random 明显弱于 A0；对 B2 首-seed CI 跨 0，但 30 seeds 均未优于 B2。支持 coverage skeleton。**保留，不重跑 predictor** | `p0_random_schedule_v1_49faacc3/aggregate/dev_summary.json` |
+| P0-center oracle | 非均匀分配是否存在上界 | historical dev，519；label/alignment-derived center proxy | 标签读取完整 alignment/reference；未来、reference：是；EOS：是；不可部署 | 每样本 50% budget，uniform skeleton + center bonus；span15 | uniform 50% WER 23.0584%/864 errors；offline perfect-center reference 21.5372%/807（见 P1 summary）；center midpoint A0-budget 22.0710%，unadjusted CI [-1.0563,-0.0536]，Bonferroni-9 CI [-1.2500,0.1342] | 说明非均匀分配有上界，但多重校正后中心证据不稳，且 target 因果不友好。**停止精确 midpoint 主线** | `p0_sign_center_oracles_v1_49faacc3/aggregate/dev_summary.json`；`p1_train_center_audit_v1/aggregate/p1_summary.json` |
+| P1 | 简单运动/有效性统计能否因果预测 center | train fit 5,655 videos、cal 1,440；后续一次 dev detection | 11 个廉价因果统计；标签为 alignment-derived midpoint，读 reference/未来构造；部署输入不读 EOS | 只做 detector gate；未运行 scheduler | cal AUROC .5452、AUPRC .2203（prevalence .2016）；满足 delay≤.25 的最好 recall .0237；gate 要求 recall≥.75，失败 | 简单运动统计不能定位中心。**停止** | `p1_train_center_audit_v1/aggregate/p1_summary.json` |
+| P2 | 手形/pose + 31-frame causal TCN 能否改善 center ranking | train fit/cal；cal 166,786 rows，11,211 centers | 严格因果历史；标签仍为 alignment-derived midpoint（未来/reference 用于训练标签）；EOS unknown | detector gate，未进入 dev scheduler | cal AUROC .7372、AUPRC .3923；最大 recall .3889（delay .3009）；delay≤.25 最大 recall .2245；要求 .75/.25，失败 | 表征改善但精确 midpoint 仍不适合作为因果 target。**停止 midpoint；特征可条件复用** | `p2_train_center_tcn_v1/aggregate/train_calibration_metrics.json`；`predev_freeze_manifest.json` |
+| P3 decoder utility oracle | decoder 边际 utility 是否有足够上界 | historical dev，519 | 标签逐候选读取 reference 与完整 dense replay；未来/reference/EOS：是 | 每样本 nearest-integer 50%；uniform skeleton 比例 .5；span15 | uniform 23.0584%/864；primary oracle 17.6942%/663，Δ=-5.3643 pp，CI [-6.1102,-4.6033]；strong-go。top-5 pair 诊断没有样本优于 greedy，累计改善 -6 | 证明 decoder-aware 方向上界，不证明 predictor。**在完整 train 上必须复现对应 oracle/标签链** | `p3_decoder_utility_oracle_v1_49faacc3/aggregate/dev_summary.json` |
+| Chronological rollout oracle | 单步 utility 是否漏掉长期 credit | partial32 train，527 samples，32/56 non-random shards | oracle 分支用 reference 与未来 rollout；lookahead=8；unknown-EOS、不 flush | token bucket；约 49%；不保证恰好半数 | uniform 4.8661%/198；myopic 4.5711%/186（-0.2949 pp）；rollout16 3.9813%/162（-0.8847 pp） | 未来 rollout ceiling 强，诊断长期 credit；不构成因果 predictor。**完整数据条件重跑** | `p3_partial32_chronological_oracle_smoke_v1_49faacc3/metrics.json` |
+| Terminal advantage/oracle | terminal utility 是否解释 local16 失败 | train calibration 固定 128；32/56 shards | terminal 标签用未来/reference/真实 endpoint；不可部署 | structured online uniform，约 50%，max gap 3/4 | uniform subset 70 errors/6.7633%；B2-old terminal oracle 53/5.1208%，Δ=-1.6425 pp，CI [-2.5813,-.8901]；PI1 oracle 51/4.9275%，CI [-2.8293,-1.0485] | terminal target 有上界；local/terminal 在非零状态一致性低。**完整数据必须复现标签稳定性/robust 版本** | `p3_partial32_terminal_advantage_audit_smoke_v1_49faacc3/metrics.json` |
+| Terminal predictor | 因果特征能否预测 terminal advantage | partial32 train fit 512、cal 128；23,736 rows（由 positive/.008552 反推仅供核对，原文件应为准） | T0 bookkeeping，T1 加因果视觉；标签用未来/reference/EOS | 过 offline gate 才闭环 | T0 PR-AUC .01625；T1 .01530；recall@10% 都 .15517；gate 失败，无闭环 | 新视觉未优于 bookkeeping。**由 robust 完整链取代；旧 target 停止** | `p3_partial32_terminal_predictor_smoke_v1_49faacc3/metrics.json` |
+| Rollout predictor + closed loop | prefix/视觉能否预测 rollout16 utility 并转成策略 | partial32 train，fit 204,141 rows、cal 30,181；闭环 526 samples | bookkeeping、causal visual TCN、decoder prefix；label 用未来 dense replay/reference；EOS flag 隐藏 | unknown-EOS no tail top-up；约 50%，max gap 4 | offline B3 gate 通过；闭环 uniform 4.7736%/194，B0 4.7982%/195，B3 4.9705%/202；rollout oracle 3.8878%/158，CI [-1.2094,-.5921] | 有离线排序信号但闭环失败，存在状态分布偏移。**完整数据条件重跑，不直接全量复刻所有变体** | `p3_partial32_rollout_predictor_closed_loop_smoke_v2_49faacc3/metrics.json` |
+| DA1/on-policy | 一轮 dataset aggregation 能否修复闭环偏移 | partial32，526 closed-loop samples | 与 rollout predictor 相同；self states 因果，teacher label 仍未来/reference-aware | unknown EOS，约 49.2% | B2 DA1 4.7982%/195；B3 DA1 4.8967%/199；CI 均跨 0。状态偏移变小，但未优于 uniform | covariate shift 不是充分解释。**条件重跑，仅当完整 predictor 有排序信号** | `p3_partial32_rollout_dagger_da1_smoke_v1_49faacc3/metrics.json` |
+| Fresh terminal listwise | 增大 fit 数据后，listwise terminal predictor 是否改善 | partial32 fit 2,541、cal 459；86,430 blocks | T0 与 preview；terminal labels 用未来/reference/EOS | center/left/right block，span15 | cal T0 reward 0/regret58；preview512 reward -16；preview2541 reward -7；gate 失败，evaluation 未读 | 增样未解决目标预测。**由 robust target 取代；停止** | `p3_partial32_fresh_terminal_listwise_exploratory_v1_49faacc3/metrics.json` |
+| Phase/hazard | 因果 phase/hazard 是否比几何 midpoint 更贴合 utility | fit 512（14,584 blocks），cal 459（12,984） | causal pose/hand/motion 特征；phase/hazard proxy 标签构造细节见配置；terminal评价用 future/reference | coverage skeleton + side override；约50%，max gap3 | hazard4 fit closed-loop -13 errors/-0.3306 pp，CI [-.5836,-.0763]；cal -14/-0.3971 pp，CI [-.6731,-.1141]，但 block reward/fold gate失败且 <0.5 pp。hazard8 cal +1 error | 有弱闭环信号但未过预注册 gate。**完整数据条件重跑 hazard4 一项** | `p3_partial32_phase_hazard_two_stage_smoke_v1_49faacc3/metrics.json` |
+| Dense semantic distillation | 廉价因果特征能否蒸馏 dense ISLR semantics | fit512，211 recorded sources，14,584 blocks | causal cheap features；teacher dense logits 读未执行候选（训练时未来/昂贵证据）；terminal utility evaluation 用 reference | 固定 center + 0.5–10% overrides | PCA32 解释率逐 fold约 .782–.784；heldout embedding R²约 .065–.098，top1 agreement约 .388–.422；所有 coverage reward≤-1（5%=-6） | 能弱预测语义但不预测正 utility。**停止** | `p3_partial32_dense_semantic_distillation_fit512_oof_v1_49faacc3/metrics.json` |
+| Full decoder-history GRU | 完整过去 paid logits 是否优于 prefix summary | fit2,541，235 sources，73,446 blocks | 最多16个历史 paid logits，严格过去；terminal labels future/reference-aware | 0.5–10% overrides | full-history rewards -4,-4,-4,-7,-17；各 coverage 均不优于 summary；gate 失败 | 更长历史未解决稀疏正例。**停止** | `p3_partial32_full_decoder_history_fit2541_oof_v1_49faacc3/metrics.json` |
+| Surprise/change-point | 自监督可预测性误差能否定位 useful side window | fit512，211 recorded sources，14,584 blocks | causal self-supervised history；utility 评价 future/reference-aware | fixed center + side choice | learned surprise reward -32（34 positive/66 harmful）；positive PR-AUC .00216 vs prevalence .00201；nonneutral PR-AUC .01026，informativeness enrichment 1.797 | 找到变化但不是正 utility。**停止单独策略** | `p3_partial32_self_supervised_surprise_fit512_oof_v1_49faacc3/metrics.json` |
+| Complementarity | 失败 predictor 的互补是否可组合 | fit512 OOF，14,584 blocks | hazard/history/surprise 均为因果 score；pair oracle 用 terminal label，因此不可部署 | fixed AND/veto 或 pair oracle | hazard+surprise pair oracle +48，但 fixed AND -20；history+surprise pair oracle +37，固定 veto -2；均未过 gate | 存在事后互补上界，但简单规则抓不到。**停止固定组合；meta-gate另列** | `p3_partial32_predictor_complementarity_fit512_oof_v1_49faacc3/metrics.json` |
+| Contextual meta-gate | 上下文 gate 能否学会何时相信互补 predictor | fit512 source-group nested OOF，14,584 blocks | 68维上下文；label 为 terminal best action，future/reference-aware | left/center/right | v2 meta-gate 选择 center 14,584/14,584，reward0；pair oracle +48；捕获率0；gate失败 | 极端不平衡导致退化。**停止** | `p3_partial32_contextual_meta_gate_fit512_oof_v2_49faacc3/metrics.json` |
+| Terminal-label stability | utility 标签是否依赖 future continuation/decoder | fit512；erratum：261 sources、14,863 blocks | 标签读取 future/reference/EOS | future fixed-center vs fixed-offset3；span15 vs span7 sensitivity | baseline 58 positive sides；换 continuation 后仅29保留（.50，CI [.3653,.6191]）；换 span 后11保留（.1897，CI [.0727,.3200]） | target 对 continuation 强依赖；span变化是不同任务敏感性。**已由下方完整 stability 审计取代** | `p3_partial32_terminal_label_stability_fullfit_v2_49faacc3/metrics.json` 与 `erratum.json` |
+| Robust continuation oracle | 只保留在两种 future continuation 下都严格有益的 side action，是否仍有上界 | fit512，261 sources，14,863 blocks | 双 continuation 与 terminal error 均用未来/reference/EOS；不可部署 | 50.0066%，max coverage skeleton；span15 | uniform 160 errors/3.9594%；robust 112/2.7716%，Δ=-48/-1.1878 pp，source-cluster CI [-1.5227,-.8689]；47 side choices | 稳健 target 仍有强上界。**已由下方完整 oracle 复现** | `p3_partial32_robust_continuation_oracle_fit512_v2_49faacc3/metrics.json` |
+| Robust binary OOF | 因果特征能否识别 robust positive | fit512 OOF，261 sources；29,726 candidate rows | bookkeeping+prefix，及加 causal visual；label future/reference/EOS-aware | top-K，K=61；仅中间指标 | B0 PR-AUC .00586；B1 .01263（prevalence .002052）；B1 top-K 1 positive/1 harmful，signed utility 0；gate失败 | 有富集，无可用累计 utility。**已由下方完整 OOF 复现并判 no-go** | `p3_partial32_robust_predictability_oof_v2_49faacc3/metrics.json` |
+| Robust signed OOF | 显式区分 harmful/neutral/beneficial 能否改善选择 | 同上；143 harmful、29,522 neutral、61 beneficial | 同上；三分类 label future/reference/EOS-aware | top-K=61 | PR-AUC .01450；top-K 4 positive/2 harmful，signed utility +2；post-hoc最佳 +7；strong headroom需≥21，失败 | 比 binary 好但远不足闭环门槛。**已由下方完整 OOF 复现并判 no-go** | `p3_partial32_robust_signed_objective_oof_v1_49faacc3/metrics.json` |
+| Full robust continuation oracle | robust target 在完整 train fit 上是否仍有上界 | fit 6,378，578 sources，183,401 blocks | 双 continuation、reference、未来与 EOS；不可部署 | coverage skeleton，window rate 50.0028%，span15 | uniform 2,325 errors/4.6863%；oracle 1,688/3.4023%，Δ=-637/-1.2839 pp，source-cluster CI [-1.3913,-1.1797] | 完整数据仍为 strong go，说明“存在可选的好窗口”不是 partial32 偶然。**仅证明上界** | `p3_fulltrain_robust_continuation_oracle_fit6378_v1_49faacc3/metrics.json` |
+| Full robust labels + causal archive | 完整 predictor 输入与标签是否覆盖且可复现 | labels: 6,378/578；features: 7,096 samples、827,354 frames | 标签 future/reference/EOS-aware；211 维特征只由截至当前的 pose/手形/运动序列生成 | 366,802 side rows；769 beneficial、2,015 harmful、364,018 neutral | 标签逐项重放精确复现 oracle 2,325→1,688 errors；56/56 label shards 与 feature shards 完整；20 samples/209 decoder states parity 无 token mismatch，数值差≤9.537e-7 | 完整训练资产通过覆盖与数值一致性检查，可用于冻结 OOF；不是准确率结果 | `p3_fulltrain_robust_continuation_fit6378_dataset_v2_49faacc3/dataset_manifest.json`；`p3_fulltrain_causal_pose_hand_motion_v1_49faacc3/manifest.json` |
+| Full continuation stability | robust 取交集是否仍有必要 | fit 6,378，578 sources，183,401 blocks | 描述性审计读取两种 future continuation、reference、EOS；不可部署 | fixed-center future vs fixed-late future；同一 span15 decoder | center positive 1,219；其中769仍为正，survival .6308，source CI [.6065,.6572]；仅3个反转为负；union-nonzero sign agreement .4624；informative-block best-action agreement .7400，CI [.7257,.7546] | 比 partial32 的.50稳定，但绝非策略无关；robust intersection 仍必要 | `p3_fulltrain_robust_label_stability_fit6378_v1_49faacc3/metrics.json` |
+| Full robust predictor OOF | 冻结的 causal skeleton/prefix 能否选出足够 robust utility | fit 6,378，578 sources；366,802 rows；5-fold source-disjoint OOF | B0=bookkeeping+prefix；K=B0+冻结的17个 P2 temporal features/31步历史；标签 future/reference/EOS-aware | binary 兼容诊断；signed 三分类为主；top-K=769；strong headroom=249 errors | signed K PR-AUC .002549（prevalence .002096）；recall@769 .01040；top-K 只捕获8正效用、10 harmful，累计 utility=-2；K-B0 source CI [-5,19]；binary K utility=-4 | 冻结 gate 失败，**停止当前 robust predictor 分支，不进入闭环、不做 threshold tuning**。完整 oracle 强而 predictor 弱，瓶颈在可预测性而非上界 | `p3_fulltrain_robust_predictor_oof_v1_49faacc3/metrics.json` |
+
+## 协议冲突与口径风险
+
+1. **A0 与 B2 不是严格逐样本等预算。** A0=37,615 clips，B2=37,706；A0少5 errors不能直接归因于更聪明的选择。后续必须逐样本等预算。
+2. **坐标/物理窗口口径。** A0 有82/519样本 padding offset=1；fixed-B0 coordinate 会把 A0 WER 从22.4179改为22.3379。后续必须冻结物理输入定义。
+3. **“严格 online”冲突。** P0 使用 centered 16-frame B0 dense logits和离线 symmetric span15；产物明确说不能声称 zero-lookahead trailing-window WER。partial32 robust 的 offset3 decision 又声明 bounded candidate lookahead，不能标为0帧严格因果。
+4. **预算冲突。** historical dev oracle 使用已知 T 的精确每样本50%；chronological token-bucket unknown-EOS 不保证恰好半数且不尾部补 token。两者只能分别解释为 oracle 上界和部署协议。
+5. **数据范围冲突。** P0/decoder oracle 已读取 historical dev；partial32 多次读取 train calibration。未来冻结评价不能把这些 split 再称为从未观察的 confirmatory 集。
+6. **partial32 不是随机代表性样本。** 多个文件明确写 32/56 non-random shards；完整数据可能改变正例数与 source 覆盖。
+7. **source 计数不一致。** 多个 fit512 OOF 文件记录211 sources；terminal stability 原文件又误写211，erratum确认该运行实际261。可能是 source-key 定义不同，也可能是旧元数据错误；完整重跑前必须统一 source grouping 并断言。
+8. **标签随策略/decoder改变。** partial32 terminal positive 在更换 continuation 后仅50%存活；完整 fit 为63.08%。span15→7的 partial32 存活率仅18.97%。不能把单一 rollout/decoder 下的 label 当成策略无关真值。
+9. **calibration 重复查看。** DA1 产物明确注明 calibration repeatedly inspected；这些结果只能算探索性，不能作为最终显著性检验。
+10. **wall-time 数字冲突。** 从落盘 runtime 计算 A0 相对 B0 为29.61%，而项目既有口述为29.48%；在找到原始计时定义前不要混用。
+
+## 重复、失败或被替代的实验产物
+
+- `baseline_matrix_v1`、`*_smoke_*`、`*_repaired_runtime_*` 与正式 repaired 目录并存；正式账本采用 `baseline_matrix_v1_repaired_49faacc3`。
+- chronological oracle 有 `failed_summary_*` 与 `interrupted_alltrain_*`；只采用完成的 `...smoke_v1_49faacc3`。
+- contextual meta-gate v1/v2；采用 v2，v1保留追溯。
+- rollout closed-loop v1/v2；采用 v2，v1不作为独立证据。
+- robust oracle v1只有预注册配置、无 metrics；采用 v2。
+- robust predictability v1只有预注册配置、无 metrics；采用 v2。
+- rich predictor 有 `ablation_incomplete_no_linear`；不作为完成实验。
+- predictor pipeline 曾有 `failed_serialization_*`；不作为结果。
+
+## 缺失证据
+
+- 没有冻结后的 held-out 最终 WER、真实 wall time、controller cost、队列积压、P95稳定提交延迟。
+- 没有同协议的0/4/8帧 lookahead完整比较。
+- 没有逐样本等预算的 AdaBrowse-inspired stride/offset policy 与 decoder-aware policy 的最终比较。
+- 没有论文级多重比较校正后的最终 dev/test 证据。
+- A0项目口述29.48% wall-time降幅的精确原始定义/文件尚未定位。
+
+## 下一阶段冻结顺序
+
+1. 当前 skeleton robust predictor 已按预注册门槛 no-go；不运行闭环、不在同一标签上调 threshold，也不机械复刻 partial32 失败变体。
+2. 若继续 predictor 研究，应把 RGB/手形外观等新表征作为独立 rescue 假设，复用相同 labels、source folds、B0/K 对照和 top-K utility gate；这不是当前 skeleton 结果的追调参。
+3. 只有新的表示在 train OOF 达到冻结 headroom，才解锁 unknown-EOS token-bucket 闭环、逐样本等预算 uniform 与0/4/8 lookahead。
+4. 通过闭环后才运行冻结 held-out WER、真实 wall time、controller cost、队列积压与P95稳定提交延迟。
+5. AdaBrowse-inspired 同协议比较和论文级多重校正留到主方法通过上述 gate 之后。

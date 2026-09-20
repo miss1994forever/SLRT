@@ -1,0 +1,8 @@
+{
+  "status": "stopped_at_stage_A",
+  "created_utc": "2026-09-18T07:23:42.547556+00:00",
+  "stage_a_sha256": "d500b2c087fe4a30f5a7e210518e58ce82c95d8a489daf751baf0dcf0cfad9a0",
+  "calibration_used_for_target_alignment": true,
+  "predictor_trained": false,
+  "evaluation_outcomes_read": false
+}

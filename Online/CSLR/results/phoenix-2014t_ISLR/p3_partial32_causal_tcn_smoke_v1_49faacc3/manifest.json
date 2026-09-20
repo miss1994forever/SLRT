@@ -1,0 +1,60 @@
+{
+  "created_utc": "2026-09-14T13:25:57.764708+00:00",
+  "status": "partial32_ordered_tcn_smoke_not_frozen",
+  "inputs": {
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/tools/analyze_phoenix_partial_causal_tcn.py": {
+      "bytes": 27079,
+      "sha256": "301513fd44fe5e953353b472c46763c1466480178574d669038449dd650f4aec"
+    },
+    "/tmp/phoenix_p2_train_center_sequences_v1.npz": {
+      "bytes": 216350163,
+      "sha256": "abdccf8e1f0af1b71aaab2834fce2182bff375917879d8acc5ece644e8d4ebd5"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_partial32_rich_predictors_smoke_v1_49faacc3/metrics.json": {
+      "bytes": 5690,
+      "sha256": "5cc75c6279a6b3f3dc929c7994ae4ead998de76160862c58de4398c5e5004833"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_train_counterfactual_utility_partial32_smoke_v1_49faacc3/dataset_summary.json": {
+      "bytes": 1056,
+      "sha256": "86f7a45186e545a61a23e6b3e5091058d7df7ff4e09448d2961724560f61f89f"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_train_counterfactual_utility_partial32_smoke_v1_49faacc3/protocol_manifest.json": {
+      "bytes": 1928,
+      "sha256": "09b2d82af68dbea3ebd8806f5ac0e57a9b44aedf4ebd23b4fe4b317615c227db"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_train_counterfactual_utility_partial32_smoke_v1_49faacc3/fit_calibration_split.json": {
+      "bytes": 410640,
+      "sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3/protocol_manifest.json": {
+      "bytes": 2262,
+      "sha256": "30331c1701c95b5c720b92a17ae905522d911164caf66b795ed93c5a6c8d1d85"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_with_blank.vocab": {
+      "bytes": 12551,
+      "sha256": "d79c8ef31d8ec4345b511d641a832a67f1d8045020bee35521edee3b773fcc34"
+    }
+  },
+  "outputs": {
+    "metrics.json": {
+      "bytes": 9913,
+      "sha256": "3f050395ed5e918c14a8ebbc06d0e5e23879feff4dc5ed7ee03fc8ee8cb54564"
+    },
+    "resolved_config.json": {
+      "bytes": 1167,
+      "sha256": "0cc4812179117ecf149872cd05fa9e7abf8a99340c3abda963737dfe6bb63829"
+    },
+    "calibration_schedules.jsonl.gz": {
+      "bytes": 49232,
+      "sha256": "b56e76b802d10d0408ae4b15595f2aa0d28d1fcf6decc124f52d154ae13d526d"
+    },
+    "causal_ordered_tcn.pt": {
+      "bytes": 11591,
+      "sha256": "0948da26f46c3cbe6347aa5514878ffb61bb18ef493facb8ed8c96dfd541d1d2"
+    },
+    "fixed_time_shuffled_tcn.pt": {
+      "bytes": 11911,
+      "sha256": "c688958d04ecc9c944c76b5f2fc1763bbedc8beca56f62eebed41eb8ec24c2c1"
+    }
+  }
+}

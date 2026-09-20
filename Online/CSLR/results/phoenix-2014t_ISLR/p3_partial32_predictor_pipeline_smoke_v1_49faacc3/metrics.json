@@ -1,0 +1,98 @@
+{
+  "scope": "partial-train pipeline smoke only; not a research result",
+  "limitations": [
+    "only 32/56 non-random available train dense shards",
+    "oracle training states are non-chronological",
+    "equal-budget schedule replay uses known per-sample length/EOS",
+    "features are bookkeeping-only; no causal pose, phase/hazard, or decoder prefix",
+    "no hyperparameter selection, paired bootstrap, wall time, or latency claim"
+  ],
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "partial_utility_dataset": {
+    "selected_shards": 32,
+    "samples": 4096,
+    "states": 118665,
+    "candidate_records": 10246925,
+    "utility_counts": {
+      "-3": 154,
+      "-2": 4223,
+      "-1": 128399,
+      "0": 10111050,
+      "1": 3059,
+      "2": 40
+    },
+    "all_zero_states": 79605
+  },
+  "train_partition": {
+    "samples": {
+      "calibration": 527,
+      "fit": 3569
+    },
+    "source_videos": {
+      "fit": 328,
+      "calibration": 47
+    },
+    "source_video_overlap": 0
+  },
+  "fit": {
+    "states": 103377,
+    "sampled_candidates": 293901,
+    "sampled_positive_candidates": 2645,
+    "sampled_utility_counts": {
+      "-3": 154,
+      "-2": 3492,
+      "-1": 112225,
+      "0": 175385,
+      "1": 2612,
+      "2": 33
+    },
+    "negative_zero_sampling": "all nonzero plus deterministic 2% of zero labels",
+    "training_loss": [
+      0.693147180559945,
+      0.392053714334637,
+      0.3602013591729785,
+      0.3557584523738334,
+      0.35547342797212933,
+      0.3554711767034526
+    ]
+  },
+  "ranking": {
+    "calibration_states": 15288,
+    "positive_utility_states": 111,
+    "candidate_records": 1360109,
+    "positive_candidates": 454,
+    "pr_auc_average_precision": 0.006142377426487827,
+    "positive_recall_at_top_10pct": 0.10792951541850221,
+    "mean_ndcg_at_top_10pct_positive_states": 0.06782017824171918,
+    "top1_utility_regret": {
+      "mean": 0.033686551543694404,
+      "positive_fraction": 0.029827315541601257
+    }
+  },
+  "schedule_replay": {
+    "samples": 527,
+    "learned": {
+      "wer": 5.627918407471123,
+      "error": 229,
+      "del": 115,
+      "ins": 86,
+      "sub": 28,
+      "ref_len": 4069
+    },
+    "equal_budget_uniform": {
+      "wer": 5.2592774637503075,
+      "error": 214,
+      "del": 100,
+      "ins": 88,
+      "sub": 26,
+      "ref_len": 4069
+    },
+    "delta_learned_minus_uniform": {
+      "wer_pp": 0.36864094372081535,
+      "error_count": 15
+    }
+  },
+  "runtime_seconds": 311.68594982102513
+}

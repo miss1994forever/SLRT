@@ -1,0 +1,339 @@
+{
+  "stage": "A target alignment/oracle audit",
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "evaluation_outcomes_read": false,
+  "targets": {
+    "broad_interior": {
+      "fit_block": {
+        "blocks": 14584,
+        "target_positive_blocks": 5487,
+        "choice_counts": {
+          "0": 1464,
+          "1": 11662,
+          "2": 1458
+        },
+        "cumulative_terminal_reward": -1,
+        "total_terminal_regret": 66,
+        "fixed_center_regret": 65,
+        "fold_reward": {
+          "0": 0,
+          "1": -1,
+          "2": -1,
+          "3": 1,
+          "4": 0
+        }
+      },
+      "fit_closed_loop": {
+        "summary": {
+          "metrics": {
+            "wer": 4.323499491353001,
+            "error": 170,
+            "del": 67,
+            "ins": 83,
+            "sub": 20,
+            "ref_len": 3932
+          },
+          "delta_wer_pp_vs_structured_uniform": -0.02543234994913579,
+          "error_delta_vs_structured_uniform": -1,
+          "executed_windows": 29540,
+          "dense_windows": 59108,
+          "actual_window_rate": 0.49976314542870676,
+          "max_gap": 3,
+          "paired_bootstrap_vs_structured_uniform": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "seed": 260923,
+            "repetitions": 2000,
+            "ci95": [
+              -0.10387317701412735,
+              0.0514668039114771
+            ],
+            "mean": -0.024904862781919133
+          }
+        },
+        "cumulative_error_reward": 1,
+        "fold_reward": {
+          "0": 0,
+          "1": -1,
+          "2": 0,
+          "3": 2,
+          "4": 0
+        }
+      },
+      "calibration_block": {
+        "blocks": 12984,
+        "target_positive_blocks": 4896,
+        "choice_counts": {
+          "0": 1279,
+          "1": 10431,
+          "2": 1274
+        },
+        "cumulative_terminal_reward": -4,
+        "total_terminal_regret": 62,
+        "fixed_center_regret": 58
+      },
+      "calibration_closed_loop": {
+        "summary": {
+          "metrics": {
+            "wer": 4.99149177538287,
+            "error": 176,
+            "del": 86,
+            "ins": 77,
+            "sub": 13,
+            "ref_len": 3526
+          },
+          "delta_wer_pp_vs_structured_uniform": -0.08508224617129923,
+          "error_delta_vs_structured_uniform": -3,
+          "executed_windows": 26299,
+          "dense_windows": 52603,
+          "actual_window_rate": 0.49995247419348704,
+          "max_gap": 3,
+          "paired_bootstrap_vs_structured_uniform": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "seed": 260923,
+            "repetitions": 2000,
+            "ci95": [
+              -0.2209201142619725,
+              0.029063012440665757
+            ],
+            "mean": -0.08447815857816975
+          }
+        },
+        "cumulative_error_reward": 3
+      },
+      "gate": {
+        "passed": false,
+        "checks": {
+          "fit_block_reward_gt_0": false,
+          "fit_closed_reward_gt_0": true,
+          "all_fit_fold_closed_rewards_ge_0": false,
+          "cal_block_reward_gt_0": false,
+          "cal_closed_reward_gt_0": true
+        }
+      }
+    },
+    "interior_entry_hazard4": {
+      "fit_block": {
+        "blocks": 14584,
+        "target_positive_blocks": 6524,
+        "choice_counts": {
+          "0": 1303,
+          "1": 11931,
+          "2": 1350
+        },
+        "cumulative_terminal_reward": -9,
+        "total_terminal_regret": 74,
+        "fixed_center_regret": 65,
+        "fold_reward": {
+          "0": 0,
+          "1": -3,
+          "2": -5,
+          "3": 0,
+          "4": -1
+        }
+      },
+      "fit_closed_loop": {
+        "summary": {
+          "metrics": {
+            "wer": 4.018311291963378,
+            "error": 158,
+            "del": 62,
+            "ins": 74,
+            "sub": 22,
+            "ref_len": 3932
+          },
+          "delta_wer_pp_vs_structured_uniform": -0.33062054933875906,
+          "error_delta_vs_structured_uniform": -13,
+          "executed_windows": 29540,
+          "dense_windows": 59108,
+          "actual_window_rate": 0.49976314542870676,
+          "max_gap": 3,
+          "paired_bootstrap_vs_structured_uniform": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "seed": 260923,
+            "repetitions": 2000,
+            "ci95": [
+              -0.5835557227729703,
+              -0.07627522944309569
+            ],
+            "mean": -0.33102192453376345
+          }
+        },
+        "cumulative_error_reward": 13,
+        "fold_reward": {
+          "0": 6,
+          "1": 1,
+          "2": -1,
+          "3": 4,
+          "4": 3
+        }
+      },
+      "calibration_block": {
+        "blocks": 12984,
+        "target_positive_blocks": 5879,
+        "choice_counts": {
+          "0": 1222,
+          "1": 10573,
+          "2": 1189
+        },
+        "cumulative_terminal_reward": 1,
+        "total_terminal_regret": 57,
+        "fixed_center_regret": 58
+      },
+      "calibration_closed_loop": {
+        "summary": {
+          "metrics": {
+            "wer": 4.6795235394214405,
+            "error": 165,
+            "del": 80,
+            "ins": 70,
+            "sub": 15,
+            "ref_len": 3526
+          },
+          "delta_wer_pp_vs_structured_uniform": -0.39705048213272853,
+          "error_delta_vs_structured_uniform": -14,
+          "executed_windows": 26299,
+          "dense_windows": 52603,
+          "actual_window_rate": 0.49995247419348704,
+          "max_gap": 3,
+          "paired_bootstrap_vs_structured_uniform": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "seed": 260923,
+            "repetitions": 2000,
+            "ci95": [
+              -0.6730560882437343,
+              -0.114146320076385
+            ],
+            "mean": -0.3963684723384611
+          }
+        },
+        "cumulative_error_reward": 14
+      },
+      "gate": {
+        "passed": false,
+        "checks": {
+          "fit_block_reward_gt_0": false,
+          "fit_closed_reward_gt_0": true,
+          "all_fit_fold_closed_rewards_ge_0": false,
+          "cal_block_reward_gt_0": true,
+          "cal_closed_reward_gt_0": true
+        }
+      }
+    },
+    "interior_entry_hazard8": {
+      "fit_block": {
+        "blocks": 14584,
+        "target_positive_blocks": 9250,
+        "choice_counts": {
+          "0": 897,
+          "1": 12746,
+          "2": 941
+        },
+        "cumulative_terminal_reward": -7,
+        "total_terminal_regret": 72,
+        "fixed_center_regret": 65,
+        "fold_reward": {
+          "0": -1,
+          "1": -1,
+          "2": -3,
+          "3": -2,
+          "4": 0
+        }
+      },
+      "fit_closed_loop": {
+        "summary": {
+          "metrics": {
+            "wer": 4.170905391658189,
+            "error": 164,
+            "del": 68,
+            "ins": 76,
+            "sub": 20,
+            "ref_len": 3932
+          },
+          "delta_wer_pp_vs_structured_uniform": -0.17802644964394787,
+          "error_delta_vs_structured_uniform": -7,
+          "executed_windows": 29540,
+          "dense_windows": 59108,
+          "actual_window_rate": 0.49976314542870676,
+          "max_gap": 3,
+          "paired_bootstrap_vs_structured_uniform": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "seed": 260923,
+            "repetitions": 2000,
+            "ci95": [
+              -0.40032029537319697,
+              0.05072505510434256
+            ],
+            "mean": -0.1765930293856767
+          }
+        },
+        "cumulative_error_reward": 7,
+        "fold_reward": {
+          "0": 3,
+          "1": 1,
+          "2": 0,
+          "3": 1,
+          "4": 2
+        }
+      },
+      "calibration_block": {
+        "blocks": 12984,
+        "target_positive_blocks": 8306,
+        "choice_counts": {
+          "0": 846,
+          "1": 11316,
+          "2": 822
+        },
+        "cumulative_terminal_reward": -8,
+        "total_terminal_regret": 66,
+        "fixed_center_regret": 58
+      },
+      "calibration_closed_loop": {
+        "summary": {
+          "metrics": {
+            "wer": 5.104934770277936,
+            "error": 180,
+            "del": 87,
+            "ins": 78,
+            "sub": 15,
+            "ref_len": 3526
+          },
+          "delta_wer_pp_vs_structured_uniform": 0.028360748723766704,
+          "error_delta_vs_structured_uniform": 1,
+          "executed_windows": 26299,
+          "dense_windows": 52603,
+          "actual_window_rate": 0.49995247419348704,
+          "max_gap": 3,
+          "paired_bootstrap_vs_structured_uniform": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "seed": 260923,
+            "repetitions": 2000,
+            "ci95": [
+              -0.19791764279038027,
+              0.23189078704988766
+            ],
+            "mean": 0.0281910894711954
+          }
+        },
+        "cumulative_error_reward": -1
+      },
+      "gate": {
+        "passed": false,
+        "checks": {
+          "fit_block_reward_gt_0": false,
+          "fit_closed_reward_gt_0": true,
+          "all_fit_fold_closed_rewards_ge_0": true,
+          "cal_block_reward_gt_0": false,
+          "cal_closed_reward_gt_0": false
+        }
+      }
+    }
+  },
+  "gate": {
+    "passed": false,
+    "passing_targets": []
+  },
+  "decision": "stop: no phase/hazard target aligned with terminal utility",
+  "stage_B": null
+}

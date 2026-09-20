@@ -1,0 +1,1150 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-20T02:47:53.783566+00:00",
+  "scope": {
+    "samples": 6378,
+    "sources": 578,
+    "sample_ids_sha256": "ea9f022ef1160bc3be5786fc31ec745b7007222c400864bbe16cb5101a6ec28e"
+  },
+  "counts": {
+    "samples": 6378,
+    "uniform_error": 2325,
+    "robust_error": 1688,
+    "ref_len": 49613,
+    "selected_windows": 371594,
+    "dense_windows": 743147,
+    "blocks": 183401,
+    "side_choices": 625,
+    "positive_side_labels": 769,
+    "harmful_side_labels": 2015
+  },
+  "oracle_reproduction": {
+    "uniform_error": 2325,
+    "robust_error": 1688,
+    "blocks": 183401,
+    "side_choices": 625
+  },
+  "config_sha256": "e07999ed3f83f353b8579546c83e329a61f75239fff1a7c08ffc1b3f16a07ae2",
+  "shards": [
+    {
+      "status": "complete",
+      "shard": 0,
+      "shards": 56,
+      "counts": {
+        "samples": 94,
+        "uniform_error": 19,
+        "robust_error": 12,
+        "ref_len": 784,
+        "selected_windows": 5772,
+        "dense_windows": 11543,
+        "blocks": 2852,
+        "side_choices": 7,
+        "positive_side_labels": 11,
+        "harmful_side_labels": 30
+      },
+      "sha256": "720c6b33e6460fd481e14d84dade1e6ca2c8daa47c4807e37f03b449dc103380",
+      "bytes": 357816,
+      "seconds": 55.52202178000152
+    },
+    {
+      "status": "complete",
+      "shard": 1,
+      "shards": 56,
+      "counts": {
+        "samples": 112,
+        "uniform_error": 38,
+        "robust_error": 27,
+        "ref_len": 862,
+        "selected_windows": 6608,
+        "dense_windows": 13212,
+        "blocks": 3266,
+        "side_choices": 11,
+        "positive_side_labels": 13,
+        "harmful_side_labels": 35
+      },
+      "sha256": "9752532dd5929e9c3de35f6f5628fbaaf22d85c50d758a8e06947018367be4d0",
+      "bytes": 407726,
+      "seconds": 65.69145134100108
+    },
+    {
+      "status": "complete",
+      "shard": 2,
+      "shards": 56,
+      "counts": {
+        "samples": 108,
+        "uniform_error": 45,
+        "robust_error": 33,
+        "ref_len": 833,
+        "selected_windows": 6228,
+        "dense_windows": 12460,
+        "blocks": 3073,
+        "side_choices": 12,
+        "positive_side_labels": 15,
+        "harmful_side_labels": 40
+      },
+      "sha256": "e6f2f11e38588797c515a51d60ad417b6ff05826f639546aa51be8ee75405d44",
+      "bytes": 383900,
+      "seconds": 56.112150695997116
+    },
+    {
+      "status": "complete",
+      "shard": 3,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 34,
+        "robust_error": 25,
+        "ref_len": 903,
+        "selected_windows": 7330,
+        "dense_windows": 14660,
+        "blocks": 3619,
+        "side_choices": 9,
+        "positive_side_labels": 11,
+        "harmful_side_labels": 41
+      },
+      "sha256": "7cb018659115dd4f8624b787ea4a0692452d6bc202089237e5f188c7e1a13d25",
+      "bytes": 444731,
+      "seconds": 65.90504293199774
+    },
+    {
+      "status": "complete",
+      "shard": 4,
+      "shards": 56,
+      "counts": {
+        "samples": 119,
+        "uniform_error": 38,
+        "robust_error": 29,
+        "ref_len": 1010,
+        "selected_windows": 7222,
+        "dense_windows": 14458,
+        "blocks": 3568,
+        "side_choices": 9,
+        "positive_side_labels": 10,
+        "harmful_side_labels": 42
+      },
+      "sha256": "8485be5324742aea044d9d73ffaeb103f4298699a88e7201e38ee12a14353a16",
+      "bytes": 446165,
+      "seconds": 69.8016429499985
+    },
+    {
+      "status": "complete",
+      "shard": 5,
+      "shards": 56,
+      "counts": {
+        "samples": 117,
+        "uniform_error": 30,
+        "robust_error": 20,
+        "ref_len": 844,
+        "selected_windows": 6318,
+        "dense_windows": 12621,
+        "blocks": 3120,
+        "side_choices": 10,
+        "positive_side_labels": 12,
+        "harmful_side_labels": 23
+      },
+      "sha256": "b93fc48c638acb457260bb102c23a164a369ece43f3b77a396e22a21654b7738",
+      "bytes": 381825,
+      "seconds": 51.09505138699751
+    },
+    {
+      "status": "complete",
+      "shard": 6,
+      "shards": 56,
+      "counts": {
+        "samples": 115,
+        "uniform_error": 55,
+        "robust_error": 44,
+        "ref_len": 894,
+        "selected_windows": 6716,
+        "dense_windows": 13444,
+        "blocks": 3315,
+        "side_choices": 11,
+        "positive_side_labels": 13,
+        "harmful_side_labels": 27
+      },
+      "sha256": "a6d6e4b94dc098c54908df7779260f90f8c325bf970ce8095e0945ccbead7f1f",
+      "bytes": 415025,
+      "seconds": 59.0269927019981
+    },
+    {
+      "status": "complete",
+      "shard": 7,
+      "shards": 56,
+      "counts": {
+        "samples": 109,
+        "uniform_error": 42,
+        "robust_error": 31,
+        "ref_len": 869,
+        "selected_windows": 6773,
+        "dense_windows": 13544,
+        "blocks": 3343,
+        "side_choices": 11,
+        "positive_side_labels": 16,
+        "harmful_side_labels": 33
+      },
+      "sha256": "004a5ef204f5f7bd22837f6486aa2bf743fea7a87686a215413b1dd3afa48d27",
+      "bytes": 416322,
+      "seconds": 69.23963892600295
+    },
+    {
+      "status": "complete",
+      "shard": 8,
+      "shards": 56,
+      "counts": {
+        "samples": 103,
+        "uniform_error": 44,
+        "robust_error": 32,
+        "ref_len": 863,
+        "selected_windows": 6315,
+        "dense_windows": 12630,
+        "blocks": 3120,
+        "side_choices": 12,
+        "positive_side_labels": 14,
+        "harmful_side_labels": 42
+      },
+      "sha256": "559e88ea7ece150b271950ea42a66da199828d32ebf0f0037d2ee1abab3b325f",
+      "bytes": 390172,
+      "seconds": 63.71913843999937
+    },
+    {
+      "status": "complete",
+      "shard": 9,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 61,
+        "robust_error": 42,
+        "ref_len": 1002,
+        "selected_windows": 7057,
+        "dense_windows": 14122,
+        "blocks": 3483,
+        "side_choices": 18,
+        "positive_side_labels": 23,
+        "harmful_side_labels": 51
+      },
+      "sha256": "518a1f8d11a920c94d83c61bfe3519c2e3939580464455985eadaed33ab770ec",
+      "bytes": 427907,
+      "seconds": 64.73795657700248
+    },
+    {
+      "status": "complete",
+      "shard": 10,
+      "shards": 56,
+      "counts": {
+        "samples": 117,
+        "uniform_error": 53,
+        "robust_error": 42,
+        "ref_len": 936,
+        "selected_windows": 6762,
+        "dense_windows": 13521,
+        "blocks": 3336,
+        "side_choices": 11,
+        "positive_side_labels": 12,
+        "harmful_side_labels": 40
+      },
+      "sha256": "b4a58aacffebcfcb5fc47bda6038a2370f58f77808d810a4a659392df3115160",
+      "bytes": 413028,
+      "seconds": 66.8646672649993
+    },
+    {
+      "status": "complete",
+      "shard": 11,
+      "shards": 56,
+      "counts": {
+        "samples": 119,
+        "uniform_error": 23,
+        "robust_error": 18,
+        "ref_len": 915,
+        "selected_windows": 6638,
+        "dense_windows": 13279,
+        "blocks": 3268,
+        "side_choices": 5,
+        "positive_side_labels": 6,
+        "harmful_side_labels": 49
+      },
+      "sha256": "c74a4a90ccf5d6470e9fbdd64ab68e926a089f8ce4fbd946cd3bced187820b28",
+      "bytes": 402425,
+      "seconds": 58.12150375300553
+    },
+    {
+      "status": "complete",
+      "shard": 12,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 59,
+        "robust_error": 47,
+        "ref_len": 1048,
+        "selected_windows": 8142,
+        "dense_windows": 16266,
+        "blocks": 4020,
+        "side_choices": 12,
+        "positive_side_labels": 14,
+        "harmful_side_labels": 49
+      },
+      "sha256": "9fdd5029152cdb1c78ef251206c1e0ed668f6459146fc04d047d1d7d9d193a91",
+      "bytes": 505777,
+      "seconds": 86.6854204409974
+    },
+    {
+      "status": "complete",
+      "shard": 13,
+      "shards": 56,
+      "counts": {
+        "samples": 123,
+        "uniform_error": 52,
+        "robust_error": 41,
+        "ref_len": 959,
+        "selected_windows": 7495,
+        "dense_windows": 14981,
+        "blocks": 3698,
+        "side_choices": 10,
+        "positive_side_labels": 12,
+        "harmful_side_labels": 39
+      },
+      "sha256": "ac2eafd96f45da7bf926afe128ce42f72b7a7f77cc4f3ba12de2ffb4fc827907",
+      "bytes": 460253,
+      "seconds": 74.4153863620013
+    },
+    {
+      "status": "complete",
+      "shard": 14,
+      "shards": 56,
+      "counts": {
+        "samples": 115,
+        "uniform_error": 46,
+        "robust_error": 30,
+        "ref_len": 918,
+        "selected_windows": 6846,
+        "dense_windows": 13679,
+        "blocks": 3378,
+        "side_choices": 16,
+        "positive_side_labels": 20,
+        "harmful_side_labels": 32
+      },
+      "sha256": "4a496ba764cf0849352b15d03eae4e1d75b147a6e3f9a14e79087208c285e4ad",
+      "bytes": 420762,
+      "seconds": 65.18074143400008
+    },
+    {
+      "status": "complete",
+      "shard": 15,
+      "shards": 56,
+      "counts": {
+        "samples": 105,
+        "uniform_error": 37,
+        "robust_error": 29,
+        "ref_len": 876,
+        "selected_windows": 6708,
+        "dense_windows": 13412,
+        "blocks": 3312,
+        "side_choices": 7,
+        "positive_side_labels": 7,
+        "harmful_side_labels": 38
+      },
+      "sha256": "8d396e7440155a26634be85cc55b45a71b6c0dc854bcd2e512f1516becdd0e18",
+      "bytes": 415119,
+      "seconds": 70.34380332900037
+    },
+    {
+      "status": "complete",
+      "shard": 16,
+      "shards": 56,
+      "counts": {
+        "samples": 107,
+        "uniform_error": 52,
+        "robust_error": 36,
+        "ref_len": 856,
+        "selected_windows": 6505,
+        "dense_windows": 13018,
+        "blocks": 3213,
+        "side_choices": 16,
+        "positive_side_labels": 22,
+        "harmful_side_labels": 33
+      },
+      "sha256": "dfb5312181b19446ce8f97c78093fca338fe950d30d431fe5bcc7fea9240adb8",
+      "bytes": 400495,
+      "seconds": 69.16395668800396
+    },
+    {
+      "status": "complete",
+      "shard": 17,
+      "shards": 56,
+      "counts": {
+        "samples": 119,
+        "uniform_error": 56,
+        "robust_error": 43,
+        "ref_len": 946,
+        "selected_windows": 7569,
+        "dense_windows": 15135,
+        "blocks": 3744,
+        "side_choices": 13,
+        "positive_side_labels": 13,
+        "harmful_side_labels": 46
+      },
+      "sha256": "03a15e438856c08466011a72b449e8dac8e04ce6cd7c682e7da7aeb97c8a4996",
+      "bytes": 472592,
+      "seconds": 74.27620094699523
+    },
+    {
+      "status": "complete",
+      "shard": 18,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 47,
+        "robust_error": 34,
+        "ref_len": 969,
+        "selected_windows": 7506,
+        "dense_windows": 15006,
+        "blocks": 3705,
+        "side_choices": 13,
+        "positive_side_labels": 19,
+        "harmful_side_labels": 40
+      },
+      "sha256": "7cde748f2d592bd855386cdede0d217f9263583c7a3455d913276ce929219287",
+      "bytes": 458149,
+      "seconds": 69.21654371100158
+    },
+    {
+      "status": "complete",
+      "shard": 19,
+      "shards": 56,
+      "counts": {
+        "samples": 118,
+        "uniform_error": 55,
+        "robust_error": 39,
+        "ref_len": 993,
+        "selected_windows": 7338,
+        "dense_windows": 14695,
+        "blocks": 3623,
+        "side_choices": 16,
+        "positive_side_labels": 17,
+        "harmful_side_labels": 46
+      },
+      "sha256": "f41ec281c3be8eed8120beb327d799ef52a8436569b7435f00990f0aff7269ec",
+      "bytes": 454256,
+      "seconds": 78.5755892590023
+    },
+    {
+      "status": "complete",
+      "shard": 20,
+      "shards": 56,
+      "counts": {
+        "samples": 87,
+        "uniform_error": 18,
+        "robust_error": 12,
+        "ref_len": 611,
+        "selected_windows": 4444,
+        "dense_windows": 8874,
+        "blocks": 2188,
+        "side_choices": 6,
+        "positive_side_labels": 9,
+        "harmful_side_labels": 30
+      },
+      "sha256": "a1f1aca7ccae5631f703a8b7290937ba8fe2aafc2f278690f93d588652e9c722",
+      "bytes": 264400,
+      "seconds": 35.813418697005545
+    },
+    {
+      "status": "complete",
+      "shard": 21,
+      "shards": 56,
+      "counts": {
+        "samples": 104,
+        "uniform_error": 48,
+        "robust_error": 32,
+        "ref_len": 730,
+        "selected_windows": 5882,
+        "dense_windows": 11757,
+        "blocks": 2904,
+        "side_choices": 16,
+        "positive_side_labels": 21,
+        "harmful_side_labels": 25
+      },
+      "sha256": "0ecaf34e6901673ffedc18cebd00418623b91d4b00bfa52546d214598ce09241",
+      "bytes": 358808,
+      "seconds": 54.67564957799914
+    },
+    {
+      "status": "complete",
+      "shard": 22,
+      "shards": 56,
+      "counts": {
+        "samples": 105,
+        "uniform_error": 73,
+        "robust_error": 62,
+        "ref_len": 811,
+        "selected_windows": 5906,
+        "dense_windows": 11822,
+        "blocks": 2915,
+        "side_choices": 11,
+        "positive_side_labels": 15,
+        "harmful_side_labels": 35
+      },
+      "sha256": "789abe4d70f70a485bce6c5fa274fa92c96df0f3b3c124951d1b8f9f6809e9da",
+      "bytes": 357596,
+      "seconds": 53.594990570993104
+    },
+    {
+      "status": "complete",
+      "shard": 23,
+      "shards": 56,
+      "counts": {
+        "samples": 115,
+        "uniform_error": 46,
+        "robust_error": 37,
+        "ref_len": 986,
+        "selected_windows": 7179,
+        "dense_windows": 14355,
+        "blocks": 3544,
+        "side_choices": 9,
+        "positive_side_labels": 11,
+        "harmful_side_labels": 48
+      },
+      "sha256": "e1c1377ffc1c8e2cc0babd498576a3fc93325d34bfe0cd1e7cb2b1a7eb643d92",
+      "bytes": 440012,
+      "seconds": 84.12002146500163
+    },
+    {
+      "status": "complete",
+      "shard": 24,
+      "shards": 56,
+      "counts": {
+        "samples": 109,
+        "uniform_error": 25,
+        "robust_error": 17,
+        "ref_len": 861,
+        "selected_windows": 6456,
+        "dense_windows": 12928,
+        "blocks": 3186,
+        "side_choices": 8,
+        "positive_side_labels": 8,
+        "harmful_side_labels": 26
+      },
+      "sha256": "2b624d2c8f0e358801a5bae75c6625e188d56d9807cd844da6814e5b8b153c49",
+      "bytes": 397386,
+      "seconds": 58.02593073200114
+    },
+    {
+      "status": "complete",
+      "shard": 25,
+      "shards": 56,
+      "counts": {
+        "samples": 118,
+        "uniform_error": 36,
+        "robust_error": 30,
+        "ref_len": 924,
+        "selected_windows": 7125,
+        "dense_windows": 14245,
+        "blocks": 3515,
+        "side_choices": 6,
+        "positive_side_labels": 8,
+        "harmful_side_labels": 12
+      },
+      "sha256": "8885a7a92f5461c8f056882ac1b95654d42511043176f848d2e227fca0caa42f",
+      "bytes": 441960,
+      "seconds": 66.69958531900193
+    },
+    {
+      "status": "complete",
+      "shard": 26,
+      "shards": 56,
+      "counts": {
+        "samples": 107,
+        "uniform_error": 49,
+        "robust_error": 29,
+        "ref_len": 879,
+        "selected_windows": 6390,
+        "dense_windows": 12780,
+        "blocks": 3156,
+        "side_choices": 19,
+        "positive_side_labels": 22,
+        "harmful_side_labels": 56
+      },
+      "sha256": "6a9590a3a7190495e7ee3eddf79266acd93bfc92852153f4832c253a8d480284",
+      "bytes": 393306,
+      "seconds": 60.077083160002076
+    },
+    {
+      "status": "complete",
+      "shard": 27,
+      "shards": 56,
+      "counts": {
+        "samples": 105,
+        "uniform_error": 31,
+        "robust_error": 24,
+        "ref_len": 811,
+        "selected_windows": 6057,
+        "dense_windows": 12114,
+        "blocks": 2988,
+        "side_choices": 7,
+        "positive_side_labels": 9,
+        "harmful_side_labels": 23
+      },
+      "sha256": "847902003a5d9c1604a433fcc317dbb9ffe3298fe421061a452658026db1d2e9",
+      "bytes": 372426,
+      "seconds": 53.59415018100117
+    },
+    {
+      "status": "complete",
+      "shard": 28,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 35,
+        "robust_error": 28,
+        "ref_len": 956,
+        "selected_windows": 7285,
+        "dense_windows": 14563,
+        "blocks": 3595,
+        "side_choices": 7,
+        "positive_side_labels": 9,
+        "harmful_side_labels": 34
+      },
+      "sha256": "5dec99510814040792b53c4b4a09ebb14ea17c311cee8888371924138d5fedbd",
+      "bytes": 444016,
+      "seconds": 62.428082796002855
+    },
+    {
+      "status": "complete",
+      "shard": 29,
+      "shards": 56,
+      "counts": {
+        "samples": 122,
+        "uniform_error": 44,
+        "robust_error": 29,
+        "ref_len": 1023,
+        "selected_windows": 7319,
+        "dense_windows": 14634,
+        "blocks": 3617,
+        "side_choices": 15,
+        "positive_side_labels": 16,
+        "harmful_side_labels": 43
+      },
+      "sha256": "9020c714c1e383c4dc8588352e18e21bb184c2dd5991bbb369fb5453a914006a",
+      "bytes": 453546,
+      "seconds": 71.67322391399648
+    },
+    {
+      "status": "complete",
+      "shard": 30,
+      "shards": 56,
+      "counts": {
+        "samples": 116,
+        "uniform_error": 44,
+        "robust_error": 32,
+        "ref_len": 831,
+        "selected_windows": 6465,
+        "dense_windows": 12933,
+        "blocks": 3190,
+        "side_choices": 12,
+        "positive_side_labels": 13,
+        "harmful_side_labels": 44
+      },
+      "sha256": "7a0103ca6d870ddc1e55094ba3e9b7dcd046a286ffc3558117dd295874f1ccd5",
+      "bytes": 394584,
+      "seconds": 55.65419891299098
+    },
+    {
+      "status": "complete",
+      "shard": 31,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 36,
+        "robust_error": 23,
+        "ref_len": 979,
+        "selected_windows": 7275,
+        "dense_windows": 14540,
+        "blocks": 3591,
+        "side_choices": 13,
+        "positive_side_labels": 15,
+        "harmful_side_labels": 38
+      },
+      "sha256": "3e0761303e45633879fed63799b5933782dc19288c7c7f8f65e36be4bfb020d3",
+      "bytes": 445010,
+      "seconds": 60.70645113599312
+    },
+    {
+      "status": "complete",
+      "shard": 32,
+      "shards": 56,
+      "counts": {
+        "samples": 119,
+        "uniform_error": 40,
+        "robust_error": 29,
+        "ref_len": 945,
+        "selected_windows": 6878,
+        "dense_windows": 13755,
+        "blocks": 3391,
+        "side_choices": 11,
+        "positive_side_labels": 13,
+        "harmful_side_labels": 20
+      },
+      "sha256": "0d15db3deb67032b945120a8ce533777e33fa31fd8a5d190ab46b0bca20cadc9",
+      "bytes": 422152,
+      "seconds": 62.24596101300267
+    },
+    {
+      "status": "complete",
+      "shard": 33,
+      "shards": 56,
+      "counts": {
+        "samples": 116,
+        "uniform_error": 30,
+        "robust_error": 26,
+        "ref_len": 887,
+        "selected_windows": 6662,
+        "dense_windows": 13312,
+        "blocks": 3283,
+        "side_choices": 4,
+        "positive_side_labels": 5,
+        "harmful_side_labels": 27
+      },
+      "sha256": "15d054fd0ee16f6a327b0cd978aa867d14c0772905a112809f0b7f7f5c417188",
+      "bytes": 406701,
+      "seconds": 61.81579250100185
+    },
+    {
+      "status": "complete",
+      "shard": 34,
+      "shards": 56,
+      "counts": {
+        "samples": 108,
+        "uniform_error": 47,
+        "robust_error": 33,
+        "ref_len": 847,
+        "selected_windows": 6061,
+        "dense_windows": 12120,
+        "blocks": 2989,
+        "side_choices": 13,
+        "positive_side_labels": 18,
+        "harmful_side_labels": 27
+      },
+      "sha256": "fd4f19aeb52d855f17299b3b2390bdd081777c76b075fcaabcca0c8c212e431a",
+      "bytes": 369883,
+      "seconds": 55.9034922389983
+    },
+    {
+      "status": "complete",
+      "shard": 35,
+      "shards": 56,
+      "counts": {
+        "samples": 95,
+        "uniform_error": 24,
+        "robust_error": 14,
+        "ref_len": 738,
+        "selected_windows": 5399,
+        "dense_windows": 10805,
+        "blocks": 2661,
+        "side_choices": 10,
+        "positive_side_labels": 13,
+        "harmful_side_labels": 23
+      },
+      "sha256": "c2f3ecee501e3a8a39189f736d7482b2ab477d30cc37483e7bf2ceeb75a45721",
+      "bytes": 330247,
+      "seconds": 46.006311131000984
+    },
+    {
+      "status": "complete",
+      "shard": 36,
+      "shards": 56,
+      "counts": {
+        "samples": 124,
+        "uniform_error": 43,
+        "robust_error": 27,
+        "ref_len": 970,
+        "selected_windows": 6957,
+        "dense_windows": 13927,
+        "blocks": 3433,
+        "side_choices": 16,
+        "positive_side_labels": 24,
+        "harmful_side_labels": 35
+      },
+      "sha256": "f0037f447f08aa8bf92487f57852a3674ccd16a4cc462036341099b95ca77b93",
+      "bytes": 422209,
+      "seconds": 63.598107237994554
+    },
+    {
+      "status": "complete",
+      "shard": 37,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 58,
+        "robust_error": 44,
+        "ref_len": 1061,
+        "selected_windows": 8081,
+        "dense_windows": 16167,
+        "blocks": 3995,
+        "side_choices": 14,
+        "positive_side_labels": 16,
+        "harmful_side_labels": 52
+      },
+      "sha256": "e45d6dfd4a303e5d2e5cf47229c6de667f9a3b9f7aeb57f99e212437d7acb8a8",
+      "bytes": 502638,
+      "seconds": 88.82408526400104
+    },
+    {
+      "status": "complete",
+      "shard": 38,
+      "shards": 56,
+      "counts": {
+        "samples": 117,
+        "uniform_error": 60,
+        "robust_error": 48,
+        "ref_len": 856,
+        "selected_windows": 6056,
+        "dense_windows": 12131,
+        "blocks": 2982,
+        "side_choices": 12,
+        "positive_side_labels": 13,
+        "harmful_side_labels": 44
+      },
+      "sha256": "06780806b5a5176f4a2f3ff10621a0ca9e6c35728eb5c87ca5d1d8208a3e0349",
+      "bytes": 356893,
+      "seconds": 51.894289175004815
+    },
+    {
+      "status": "complete",
+      "shard": 39,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 34,
+        "robust_error": 25,
+        "ref_len": 1006,
+        "selected_windows": 7624,
+        "dense_windows": 15235,
+        "blocks": 3765,
+        "side_choices": 9,
+        "positive_side_labels": 11,
+        "harmful_side_labels": 53
+      },
+      "sha256": "c22b08578dab8bcab1269ca7e28c6d77f07805dcbe049d44a10b4bede14ecb89",
+      "bytes": 472130,
+      "seconds": 68.2961900139926
+    },
+    {
+      "status": "complete",
+      "shard": 40,
+      "shards": 56,
+      "counts": {
+        "samples": 118,
+        "uniform_error": 32,
+        "robust_error": 25,
+        "ref_len": 939,
+        "selected_windows": 6430,
+        "dense_windows": 12842,
+        "blocks": 3173,
+        "side_choices": 7,
+        "positive_side_labels": 8,
+        "harmful_side_labels": 35
+      },
+      "sha256": "56d018144475888c4b2fdbb7971ead655ca28234290501a0373a1dca34baa002",
+      "bytes": 389736,
+      "seconds": 58.51042212199536
+    },
+    {
+      "status": "complete",
+      "shard": 41,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 48,
+        "robust_error": 37,
+        "ref_len": 833,
+        "selected_windows": 6696,
+        "dense_windows": 13393,
+        "blocks": 3300,
+        "side_choices": 11,
+        "positive_side_labels": 14,
+        "harmful_side_labels": 39
+      },
+      "sha256": "34bc12c3c28a00c181aa07f409e1498a9953d896a9ff9dffe0041958bdfdc975",
+      "bytes": 400426,
+      "seconds": 55.90266951499507
+    },
+    {
+      "status": "complete",
+      "shard": 42,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 37,
+        "robust_error": 24,
+        "ref_len": 1056,
+        "selected_windows": 7747,
+        "dense_windows": 15493,
+        "blocks": 3825,
+        "side_choices": 11,
+        "positive_side_labels": 16,
+        "harmful_side_labels": 41
+      },
+      "sha256": "9dc6cc264cf7dfdfef4a20fd6a803b21d9ffa4a842e0deb27501ec853c4e4f0e",
+      "bytes": 479158,
+      "seconds": 74.26180349400965
+    },
+    {
+      "status": "complete",
+      "shard": 43,
+      "shards": 56,
+      "counts": {
+        "samples": 73,
+        "uniform_error": 27,
+        "robust_error": 15,
+        "ref_len": 624,
+        "selected_windows": 4244,
+        "dense_windows": 8484,
+        "blocks": 2096,
+        "side_choices": 12,
+        "positive_side_labels": 16,
+        "harmful_side_labels": 38
+      },
+      "sha256": "48466c62a98aa26734d4ec905c638fbebfb890ddfe1c561e11007f5b459c2f31",
+      "bytes": 264617,
+      "seconds": 41.45598390699888
+    },
+    {
+      "status": "complete",
+      "shard": 44,
+      "shards": 56,
+      "counts": {
+        "samples": 123,
+        "uniform_error": 51,
+        "robust_error": 39,
+        "ref_len": 877,
+        "selected_windows": 6461,
+        "dense_windows": 12904,
+        "blocks": 3185,
+        "side_choices": 12,
+        "positive_side_labels": 13,
+        "harmful_side_labels": 43
+      },
+      "sha256": "2e2e90c131ba8f791fd2782afca25284c815cbd6c99aa05910730b56c57bf6d0",
+      "bytes": 386887,
+      "seconds": 52.738095836000866
+    },
+    {
+      "status": "complete",
+      "shard": 45,
+      "shards": 56,
+      "counts": {
+        "samples": 120,
+        "uniform_error": 34,
+        "robust_error": 19,
+        "ref_len": 894,
+        "selected_windows": 6753,
+        "dense_windows": 13514,
+        "blocks": 3330,
+        "side_choices": 14,
+        "positive_side_labels": 18,
+        "harmful_side_labels": 40
+      },
+      "sha256": "f80399bda87231f486e425bbb56f412fe20c30ce1291c009ef96ec2bff40b38f",
+      "bytes": 409141,
+      "seconds": 60.876935929001775
+    },
+    {
+      "status": "complete",
+      "shard": 46,
+      "shards": 56,
+      "counts": {
+        "samples": 114,
+        "uniform_error": 33,
+        "robust_error": 24,
+        "ref_len": 873,
+        "selected_windows": 6757,
+        "dense_windows": 13515,
+        "blocks": 3338,
+        "side_choices": 9,
+        "positive_side_labels": 10,
+        "harmful_side_labels": 26
+      },
+      "sha256": "b51fbdef617925e8f3f085c9b16b33915595a1a0a9343288680370ca7308445a",
+      "bytes": 416583,
+      "seconds": 60.73146520399314
+    },
+    {
+      "status": "complete",
+      "shard": 47,
+      "shards": 56,
+      "counts": {
+        "samples": 100,
+        "uniform_error": 44,
+        "robust_error": 27,
+        "ref_len": 766,
+        "selected_windows": 5877,
+        "dense_windows": 11751,
+        "blocks": 2902,
+        "side_choices": 16,
+        "positive_side_labels": 19,
+        "harmful_side_labels": 40
+      },
+      "sha256": "4d0abe4b8cfdfe9e4690659f2886c8dd7c85e0f59c1b740d251079b76679840e",
+      "bytes": 359883,
+      "seconds": 56.12580586700642
+    },
+    {
+      "status": "complete",
+      "shard": 48,
+      "shards": 56,
+      "counts": {
+        "samples": 115,
+        "uniform_error": 41,
+        "robust_error": 29,
+        "ref_len": 868,
+        "selected_windows": 6611,
+        "dense_windows": 13223,
+        "blocks": 3262,
+        "side_choices": 11,
+        "positive_side_labels": 13,
+        "harmful_side_labels": 30
+      },
+      "sha256": "1d2139514ea033b0649ec0de10b4fa7c29d61cbc306b74c6491d6f68989a59ef",
+      "bytes": 400138,
+      "seconds": 61.21182020100241
+    },
+    {
+      "status": "complete",
+      "shard": 49,
+      "shards": 56,
+      "counts": {
+        "samples": 118,
+        "uniform_error": 48,
+        "robust_error": 35,
+        "ref_len": 889,
+        "selected_windows": 6799,
+        "dense_windows": 13604,
+        "blocks": 3355,
+        "side_choices": 13,
+        "positive_side_labels": 18,
+        "harmful_side_labels": 28
+      },
+      "sha256": "e672bf363b0be92e9901b5b47d23e0c57c7ee38f2f4cf3b06481fccc047d7d21",
+      "bytes": 414121,
+      "seconds": 62.20811965499888
+    },
+    {
+      "status": "complete",
+      "shard": 50,
+      "shards": 56,
+      "counts": {
+        "samples": 93,
+        "uniform_error": 31,
+        "robust_error": 22,
+        "ref_len": 770,
+        "selected_windows": 5748,
+        "dense_windows": 11483,
+        "blocks": 2835,
+        "side_choices": 8,
+        "positive_side_labels": 10,
+        "harmful_side_labels": 35
+      },
+      "sha256": "ad03ad24ece4d3a99fe39debed0b21c3bc9ea56c8fc0303a8915c4f2dceef457",
+      "bytes": 353090,
+      "seconds": 60.230040153997834
+    },
+    {
+      "status": "complete",
+      "shard": 51,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 53,
+        "robust_error": 34,
+        "ref_len": 1004,
+        "selected_windows": 7277,
+        "dense_windows": 14560,
+        "blocks": 3588,
+        "side_choices": 19,
+        "positive_side_labels": 22,
+        "harmful_side_labels": 31
+      },
+      "sha256": "548efa429c6d79d9d56000ad20671c1b32e9ae021e9de0858cbe4cd55bb8fd58",
+      "bytes": 443713,
+      "seconds": 64.90391397201165
+    },
+    {
+      "status": "complete",
+      "shard": 52,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 44,
+        "robust_error": 36,
+        "ref_len": 1011,
+        "selected_windows": 7544,
+        "dense_windows": 15093,
+        "blocks": 3724,
+        "side_choices": 8,
+        "positive_side_labels": 10,
+        "harmful_side_labels": 31
+      },
+      "sha256": "37bce82b9c4a0a3d03b8277240306a6aa5633809eadafdb71fa0480d6833aff6",
+      "bytes": 461590,
+      "seconds": 69.67848716900335
+    },
+    {
+      "status": "complete",
+      "shard": 53,
+      "shards": 56,
+      "counts": {
+        "samples": 117,
+        "uniform_error": 36,
+        "robust_error": 26,
+        "ref_len": 867,
+        "selected_windows": 6743,
+        "dense_windows": 13484,
+        "blocks": 3326,
+        "side_choices": 9,
+        "positive_side_labels": 11,
+        "harmful_side_labels": 21
+      },
+      "sha256": "3823cff96532bbb012254783e684f3b48dde802091b81e834c4f10f078f5417c",
+      "bytes": 410653,
+      "seconds": 59.7208584399923
+    },
+    {
+      "status": "complete",
+      "shard": 54,
+      "shards": 56,
+      "counts": {
+        "samples": 128,
+        "uniform_error": 38,
+        "robust_error": 27,
+        "ref_len": 947,
+        "selected_windows": 7292,
+        "dense_windows": 14581,
+        "blocks": 3605,
+        "side_choices": 11,
+        "positive_side_labels": 15,
+        "harmful_side_labels": 44
+      },
+      "sha256": "50e4793338e909b02a386785dac02e12834d5e61a968974bacf1394b0911ae70",
+      "bytes": 445503,
+      "seconds": 63.113696582993725
+    },
+    {
+      "status": "complete",
+      "shard": 55,
+      "shards": 56,
+      "counts": {
+        "samples": 56,
+        "uniform_error": 21,
+        "robust_error": 14,
+        "ref_len": 403,
+        "selected_windows": 3266,
+        "dense_windows": 6540,
+        "blocks": 1613,
+        "side_choices": 7,
+        "positive_side_labels": 7,
+        "harmful_side_labels": 22
+      },
+      "sha256": "8e062dbfe40d20705d27610475c16f3341d20b85266718d82ee0e45ee11b55f3",
+      "bytes": 202483,
+      "seconds": 29.172119833005127
+    }
+  ]
+}

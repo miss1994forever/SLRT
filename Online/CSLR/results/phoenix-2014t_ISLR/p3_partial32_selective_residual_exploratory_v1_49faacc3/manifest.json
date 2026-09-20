@@ -1,0 +1,8 @@
+{
+  "status": "stopped_at_fit_oof_gate",
+  "created_utc": "2026-09-18T02:52:05.628940+00:00",
+  "reason": "no preregistered coverage met positive aggregate reward, nonnegative reward in every fold, and >=20 overrides",
+  "calibration_outcomes_read": false,
+  "evaluation_outcomes_read": false,
+  "oof_metrics_sha256": "a71e0441c160685e5a9eff5f8cf0f22c1d0656b4b682bf5fa9112a59561cde4b"
+}

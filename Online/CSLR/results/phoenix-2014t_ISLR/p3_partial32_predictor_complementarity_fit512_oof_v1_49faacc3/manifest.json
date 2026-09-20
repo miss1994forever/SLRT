@@ -1,0 +1,8 @@
+{
+  "status": "fit_oof_complete",
+  "created_utc": "2026-09-18T08:41:21.942848+00:00",
+  "gate_passed": false,
+  "calibration_outcomes_read": false,
+  "evaluation_outcomes_read": false,
+  "metrics_sha256": "e33349943fcc0e82d65c658c8cd0bc5a6b8c7e8eab096c8b16cc354e7ffb28b8"
+}

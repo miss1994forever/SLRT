@@ -1,0 +1,54 @@
+{
+  "scope": {
+    "samples": 6378,
+    "sources": 578,
+    "sample_ids_sha256": "ea9f022ef1160bc3be5786fc31ec745b7007222c400864bbe16cb5101a6ec28e"
+  },
+  "samples": 6378,
+  "sources": 578,
+  "counts": {
+    "blocks": 183401,
+    "center_informative_blocks": 2333,
+    "late_informative_blocks": 2477,
+    "center_positive_sides": 1219,
+    "late_positive_sides": 1308,
+    "best_agree_all": 182584,
+    "robust_positive_sides": 769,
+    "union_informative_blocks": 3142,
+    "best_agree_union_informative": 2325,
+    "union_nonzero_sides": 3767,
+    "sign_agree_union_nonzero": 1742,
+    "center_positive_denominator": 1219,
+    "center_positive_survives": 769,
+    "center_positive_reverses": 3
+  },
+  "rates": {
+    "best_agreement_all": 0.9955452805600842,
+    "best_agreement_union_informative": 0.7399745385105029,
+    "sign_agreement_union_nonzero": 0.4624369524820812,
+    "center_positive_survival": 0.6308449548810501,
+    "center_positive_reversal": 0.002461033634126333
+  },
+  "source_cluster_bootstrap_95pct": {
+    "best_agreement_union_informative": [
+      0.7256837650804653,
+      0.7546376430848497
+    ],
+    "center_positive_survival": [
+      0.6065302542069458,
+      0.6571674020975198
+    ]
+  },
+  "partial32_reference": {
+    "center_positive_survival": 0.5,
+    "ci95": [
+      0.36534090909090905,
+      0.6190886699507387
+    ]
+  },
+  "limitations": [
+    "fit-only descriptive audit",
+    "reference/future/EOS-aware labels",
+    "same decoder span15 only; decoder sensitivity is a different target"
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "split": "train",
+  "coordinator_writes_only": true,
+  "shard_count": 56,
+  "completed_before_switch": [0],
+  "interrupted_attempt": {
+    "shard": 1,
+    "preserved_at": "interrupted_attempts/shard-00001-before-multigpu-20260914T0824Z",
+    "inference_started": false
+  },
+  "concurrency_smoke": {
+    "status": "passed",
+    "validation": {
+      "shared_write_conflicts": 0,
+      "duplicate_shards": 0,
+      "completed_shards": [1, 15]
+    },
+    "workers": [
+      {
+        "gpu_uuid": "GPU-2c6a50cb-f770-c785-dc1d-7f8cc7b7b9aa",
+        "shards": [1, 2],
+        "range_semantics": "half_open",
+        "started_utc": "2026-09-14T08:24:51Z",
+        "wall_seconds": 486.7023133765906,
+        "windows": 15262,
+        "windows_per_second": 31.356
+      },
+      {
+        "gpu_uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+        "shards": [15, 16],
+        "range_semantics": "half_open",
+        "started_utc": "2026-09-14T08:25:54Z",
+        "wall_seconds": 524.219459651038,
+        "windows": 16037,
+        "windows_per_second": 30.592
+      }
+    ]
+  },
+  "planned_assignments_after_smoke": [
+    {
+      "gpu_uuid": "GPU-2c6a50cb-f770-c785-dc1d-7f8cc7b7b9aa",
+      "shards": [1, 15],
+      "range_semantics": "half_open",
+      "full_worker_started_utc": "2026-09-14T08:36:03Z"
+    },
+    {
+      "gpu_uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+      "shards": [15, 29],
+      "range_semantics": "half_open",
+      "full_worker_started_utc": "2026-09-14T08:36:49Z"
+    },
+    {
+      "gpu_uuid": "GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631",
+      "shards": [29, 43],
+      "range_semantics": "half_open",
+      "full_worker_started_utc": "2026-09-14T08:37:38Z"
+    },
+    {
+      "gpu_uuid": "GPU-4f5bee72-bad2-f8c9-2656-58e4d94c3c98",
+      "shards": [43, 56],
+      "range_semantics": "half_open",
+      "full_worker_started_utc": "2026-09-14T08:40:56Z"
+    }
+  ],
+  "launch_health": {
+    "checked_utc": "2026-09-14T08:41:12Z",
+    "maximum_temperature_c": 79,
+    "memory_mib_per_worker": [12807, 12807, 12807, 12805],
+    "status": "healthy"
+  },
+  "estimated_completion_hours_after_all_workers_entered": [1.8, 2.1],
+  "incident": {
+    "detected_utc": "2026-09-14T10:00:00Z",
+    "status": "paused_pending_host_gpu_recovery",
+    "last_trusted_complete_shard_count": 32,
+    "failed_worker": {
+      "gpu_uuid": "GPU-2c6a50cb-f770-c785-dc1d-7f8cc7b7b9aa",
+      "shard": 9,
+      "failure": "CUDA error: unspecified launch failure at sample 92/128",
+      "attempt_preserved_at": "interrupted_attempts/shard-00009-gpu2-launch-failure-20260914T0942Z",
+      "runner_stopped": true
+    },
+    "other_workers": [
+      {
+        "gpu_uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+        "current_shard": 23,
+        "state": "child process in uninterruptible D state; no complete.json"
+      },
+      {
+        "gpu_uuid": "GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631",
+        "current_shard": 37,
+        "state": "child process in uninterruptible D state; no complete.json"
+      },
+      {
+        "gpu_uuid": "GPU-4f5bee72-bad2-f8c9-2656-58e4d94c3c98",
+        "current_shard": 50,
+        "state": "child process in uninterruptible D state; no complete.json"
+      }
+    ],
+    "nvml_health_query": "blocked in uninterruptible D state",
+    "recovery_rule": "Do not launch replacement workers or promote incomplete shards until host GPU health is restored; then preserve incomplete attempts and resume only missing ranges."
+  },
+  "protocol_note": "Hyperparameters and calibration are restricted to the source-video-disjoint train fit/calibration split. Dev is evaluated only after freezing; test is forbidden."
+}

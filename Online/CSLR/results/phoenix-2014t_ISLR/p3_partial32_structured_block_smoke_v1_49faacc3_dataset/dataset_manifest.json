@@ -1,0 +1,63 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-17T13:04:53.975461+00:00",
+  "counts": {
+    "blocks": 18688,
+    "samples": 640
+  },
+  "config_sha256": "d5a94e3e2d3a3d26e05594c8bad81a54286cf5437fccd7a9632a5b256dc49365",
+  "workers": [
+    {
+      "status": "complete",
+      "worker": 0,
+      "workers": 4,
+      "samples": 160,
+      "counts": {
+        "blocks": 4513,
+        "samples": 160
+      },
+      "seconds": 250.01374646741897,
+      "sha256": "d249d8e06d7d66f3dd98680a7dec52c27a7d6ac959e50ae155bdedcd2f1159b5",
+      "bytes": 579602
+    },
+    {
+      "status": "complete",
+      "worker": 1,
+      "workers": 4,
+      "samples": 160,
+      "counts": {
+        "blocks": 4734,
+        "samples": 160
+      },
+      "seconds": 290.9421963384375,
+      "sha256": "31a9afa9214b6098ea6e6089a1a1c3c73996d52b6175179f94fba252ce05fa09",
+      "bytes": 613101
+    },
+    {
+      "status": "complete",
+      "worker": 2,
+      "workers": 4,
+      "samples": 160,
+      "counts": {
+        "blocks": 4767,
+        "samples": 160
+      },
+      "seconds": 293.6816653860733,
+      "sha256": "ac28427aa99bd1fbdd611f1730666d50f969300d22c9f077ddef5ca18263de33",
+      "bytes": 619093
+    },
+    {
+      "status": "complete",
+      "worker": 3,
+      "workers": 4,
+      "samples": 160,
+      "counts": {
+        "blocks": 4674,
+        "samples": 160
+      },
+      "seconds": 290.41083473619074,
+      "sha256": "c50ecf3ea1692bf22f78a582917a2da70ba606e7f031de98a8996920d9ed9220",
+      "bytes": 603755
+    }
+  ]
+}

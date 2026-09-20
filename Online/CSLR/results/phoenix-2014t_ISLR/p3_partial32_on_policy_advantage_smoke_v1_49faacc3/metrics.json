@@ -1,0 +1,166 @@
+{
+  "scope": "partial32 train-calibration on-policy advantage audit smoke",
+  "samples": 526,
+  "horizon": 16,
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "labels": {
+    "eager": "execute/skip then fixed eager continuation for 16 candidates",
+    "on_policy": "execute/skip then the same frozen predictor continuation for 16 candidates",
+    "future_reference_usage": "offline label only"
+  },
+  "policies": {
+    "B2_old": {
+      "rows": 19488,
+      "eager_advantage_counts": {
+        "-2": 4,
+        "-1": 65,
+        "0": 19308,
+        "1": 109,
+        "2": 2
+      },
+      "on_policy_advantage_counts": {
+        "-2": 6,
+        "-1": 149,
+        "0": 19113,
+        "1": 216,
+        "2": 4
+      },
+      "exact_advantage_agreement": 0.9852729885057471,
+      "sign_agreement_all_rows": 0.9852729885057471,
+      "sign_agreement_union_nonzero": 0.31666666666666665,
+      "opposite_nonzero_sign_fraction_union_nonzero": 0.004761904761904762,
+      "eager_positive_onpolicy_nonpositive": 32,
+      "eager_nonpositive_onpolicy_positive": 141,
+      "pearson_advantage": 0.5047569639421232,
+      "predictor_action": {
+        "execute_count": 11744,
+        "execute_rate": 0.6026272577996716,
+        "on_policy_positive_count": 220,
+        "positive_precision": 0.013623978201634877,
+        "positive_recall": 0.7272727272727273,
+        "harmful_execute_count": 66,
+        "zero_execute_count": 11518,
+        "selected_signed_advantage_sum": 95,
+        "positive_oracle_advantage_sum": 224,
+        "on_policy_action_regret": 129
+      }
+    },
+    "B2_DA1": {
+      "rows": 29166,
+      "eager_advantage_counts": {
+        "-2": 3,
+        "-1": 85,
+        "0": 28978,
+        "1": 96,
+        "2": 4
+      },
+      "on_policy_advantage_counts": {
+        "-2": 15,
+        "-1": 477,
+        "0": 28342,
+        "1": 325,
+        "2": 7
+      },
+      "exact_advantage_agreement": 0.9729136665980936,
+      "sign_agreement_all_rows": 0.9729822395940478,
+      "sign_agreement_union_nonzero": 0.1185682326621924,
+      "opposite_nonzero_sign_fraction_union_nonzero": 0.013422818791946308,
+      "eager_positive_onpolicy_nonpositive": 56,
+      "eager_nonpositive_onpolicy_positive": 288,
+      "pearson_advantage": 0.24376593640409894,
+      "predictor_action": {
+        "execute_count": 3307,
+        "execute_rate": 0.11338544881025853,
+        "on_policy_positive_count": 332,
+        "positive_precision": 0.019050498941638946,
+        "positive_recall": 0.1897590361445783,
+        "harmful_execute_count": 72,
+        "zero_execute_count": 3172,
+        "selected_signed_advantage_sum": -4,
+        "positive_oracle_advantage_sum": 339,
+        "on_policy_action_regret": 343
+      }
+    },
+    "B3_old": {
+      "rows": 21930,
+      "eager_advantage_counts": {
+        "-2": 2,
+        "-1": 72,
+        "0": 21748,
+        "1": 107,
+        "2": 1
+      },
+      "on_policy_advantage_counts": {
+        "-2": 6,
+        "-1": 196,
+        "0": 21446,
+        "1": 270,
+        "2": 12
+      },
+      "exact_advantage_agreement": 0.9808481532147743,
+      "sign_agreement_all_rows": 0.9811217510259918,
+      "sign_agreement_union_nonzero": 0.22905027932960895,
+      "opposite_nonzero_sign_fraction_union_nonzero": 0.0111731843575419,
+      "eager_positive_onpolicy_nonpositive": 35,
+      "eager_nonpositive_onpolicy_positive": 209,
+      "pearson_advantage": 0.4115596134547523,
+      "predictor_action": {
+        "execute_count": 9701,
+        "execute_rate": 0.4423620611035112,
+        "on_policy_positive_count": 282,
+        "positive_precision": 0.01309143387279662,
+        "positive_recall": 0.450354609929078,
+        "harmful_execute_count": 88,
+        "zero_execute_count": 9486,
+        "selected_signed_advantage_sum": 38,
+        "positive_oracle_advantage_sum": 294,
+        "on_policy_action_regret": 256
+      }
+    },
+    "B3_DA1": {
+      "rows": 29270,
+      "eager_advantage_counts": {
+        "-2": 1,
+        "-1": 87,
+        "0": 29073,
+        "1": 105,
+        "2": 4
+      },
+      "on_policy_advantage_counts": {
+        "-2": 5,
+        "-1": 333,
+        "0": 28693,
+        "1": 232,
+        "2": 7
+      },
+      "exact_advantage_agreement": 0.981141100102494,
+      "sign_agreement_all_rows": 0.9812094294499487,
+      "sign_agreement_union_nonzero": 0.1641337386018237,
+      "opposite_nonzero_sign_fraction_union_nonzero": 0.0121580547112462,
+      "eager_positive_onpolicy_nonpositive": 58,
+      "eager_nonpositive_onpolicy_positive": 188,
+      "pearson_advantage": 0.29990199865707184,
+      "predictor_action": {
+        "execute_count": 2919,
+        "execute_rate": 0.09972668261018107,
+        "on_policy_positive_count": 239,
+        "positive_precision": 0.017471736896197326,
+        "positive_recall": 0.21338912133891214,
+        "harmful_execute_count": 58,
+        "zero_execute_count": 2810,
+        "selected_signed_advantage_sum": -9,
+        "positive_oracle_advantage_sum": 246,
+        "on_policy_action_regret": 255
+      }
+    }
+  },
+  "runtime_seconds": 2804.453433250077,
+  "limitations": [
+    "32/56 non-random train shards",
+    "calibration repeatedly inspected by earlier smokes",
+    "future-aware reference labels are not deployable inputs",
+    "no training, dev/test, wall-time, or latency claim"
+  ]
+}

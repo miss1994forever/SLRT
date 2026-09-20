@@ -1,0 +1,93 @@
+{
+  "rows": 29726,
+  "sources": 261,
+  "reward_histogram": {
+    "-2": 1,
+    "-1": 142,
+    "0": 29522,
+    "1": 59,
+    "2": 2
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "train_rows": 24912,
+      "eval_rows": 4814,
+      "train_positive": 50,
+      "eval_positive": 11,
+      "eval_sources": 39
+    },
+    {
+      "fold": 1,
+      "train_rows": 23162,
+      "eval_rows": 6564,
+      "train_positive": 50,
+      "eval_positive": 11,
+      "eval_sources": 55
+    },
+    {
+      "fold": 2,
+      "train_rows": 24296,
+      "eval_rows": 5430,
+      "train_positive": 53,
+      "eval_positive": 8,
+      "eval_sources": 56
+    },
+    {
+      "fold": 3,
+      "train_rows": 22752,
+      "eval_rows": 6974,
+      "train_positive": 48,
+      "eval_positive": 13,
+      "eval_sources": 56
+    },
+    {
+      "fold": 4,
+      "train_rows": 23782,
+      "eval_rows": 5944,
+      "train_positive": 43,
+      "eval_positive": 18,
+      "eval_sources": 55
+    }
+  ],
+  "metrics": {
+    "B0_bookkeeping_prefix": {
+      "pr_auc": 0.005864322428944225,
+      "positive_prevalence": 0.002052075695246458,
+      "K": 61,
+      "positive_recall_at_K": 0.0,
+      "precision_at_K": 0.0,
+      "top_K_signed_robust_utility": -1,
+      "top_K_positive_utility_captured": 0,
+      "top_K_harmful_actions": 1,
+      "all_positive_utility": 63
+    },
+    "B1_plus_causal_visual": {
+      "pr_auc": 0.01262945133487552,
+      "positive_prevalence": 0.002052075695246458,
+      "K": 61,
+      "positive_recall_at_K": 0.016393441706895828,
+      "precision_at_K": 0.016393441706895828,
+      "top_K_signed_robust_utility": 0,
+      "top_K_positive_utility_captured": 1,
+      "top_K_harmful_actions": 1,
+      "all_positive_utility": 63
+    }
+  },
+  "gate": {
+    "passed": false,
+    "checks": {
+      "B1_pr_auc_gt_B0": true,
+      "B1_recall_at_K_gt_B0": true,
+      "B1_top_K_signed_utility_gt_0": false
+    },
+    "action": "stop_before_closed_loop"
+  },
+  "limitations": [
+    "fit-only OOF intermediate metric",
+    "partial32-derived replay",
+    "offset3 decision has bounded candidate lookahead",
+    "no final WER claim"
+  ],
+  "elapsed_seconds": 14.09321753680706
+}

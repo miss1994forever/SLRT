@@ -1,0 +1,516 @@
+{
+  "scope": "single preregistered partial32 train-only DA1 smoke; not a research result",
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "dataset_aggregation_rounds_run": 1,
+  "fit_calibration_source_disjoint": true,
+  "training": {
+    "B2_DA1": {
+      "teacher_rows": 204141,
+      "self_rows": 132068,
+      "teacher_positive_rate": 0.004810400772839785,
+      "self_positive_rate": 0.004830844700336456,
+      "positive_class_weight": 20.0,
+      "threshold": 0.01647096872329712,
+      "teacher_trigger_rate": 0.08515192930376553,
+      "self_trigger_rate": 0.11484235393887997,
+      "score_ks_teacher_self": 0.06817183520772269,
+      "mean_abs_standardized_bookkeeping_teacher_self": 0.6384327411651611,
+      "mean_abs_standardized_prefix_teacher_self": 0.023496877402067184,
+      "history": [
+        {
+          "epoch": 1,
+          "mean_batch_total": 0.09264960607066525,
+          "mean_batch_smooth_l1": 0.0039151028590559914,
+          "mean_batch_weighted_bce": 0.35493801289597543
+        },
+        {
+          "epoch": 2,
+          "mean_batch_total": 0.07558250613510609,
+          "mean_batch_smooth_l1": 0.0037062761911133015,
+          "mean_batch_weighted_bce": 0.28750492016414014
+        },
+        {
+          "epoch": 3,
+          "mean_batch_total": 0.07397852103172102,
+          "mean_batch_smooth_l1": 0.0036844730881516225,
+          "mean_batch_weighted_bce": 0.2811761906534705
+        },
+        {
+          "epoch": 4,
+          "mean_batch_total": 0.07299850896952,
+          "mean_batch_smooth_l1": 0.003683584485709735,
+          "mean_batch_weighted_bce": 0.27725969859622535
+        },
+        {
+          "epoch": 5,
+          "mean_batch_total": 0.07255531182812702,
+          "mean_batch_smooth_l1": 0.0036753798600733505,
+          "mean_batch_weighted_bce": 0.2755197278453224
+        }
+      ],
+      "self_manifest_counts": {
+        "skeleton": 105155,
+        "ineligible": 155180,
+        "autonomous": 132068,
+        "positive": 638,
+        "execute_autonomous": 79090,
+        "forced": 22909,
+        "executed": 207154,
+        "dense": 415312
+      }
+    },
+    "B3_DA1": {
+      "teacher_rows": 204141,
+      "self_rows": 148745,
+      "teacher_positive_rate": 0.004810400772839785,
+      "self_positive_rate": 0.004558136221021414,
+      "positive_class_weight": 20.0,
+      "threshold": 0.00782032310962677,
+      "teacher_trigger_rate": 0.07242053286698899,
+      "self_trigger_rate": 0.12757403610205384,
+      "score_ks_teacher_self": 0.0920754625853234,
+      "mean_abs_standardized_bookkeeping_teacher_self": 0.4706918001174927,
+      "mean_abs_standardized_prefix_teacher_self": 0.024664107710123062,
+      "history": [
+        {
+          "epoch": 1,
+          "mean_batch_total": 0.08649385415989419,
+          "mean_batch_smooth_l1": 0.004144030426750364,
+          "mean_batch_weighted_bce": 0.329399295086446
+        },
+        {
+          "epoch": 2,
+          "mean_batch_total": 0.07331739490230878,
+          "mean_batch_smooth_l1": 0.003685788296001113,
+          "mean_batch_weighted_bce": 0.2785264270677083
+        },
+        {
+          "epoch": 3,
+          "mean_batch_total": 0.0709154946702546,
+          "mean_batch_smooth_l1": 0.0036682344406828,
+          "mean_batch_weighted_bce": 0.2689890406701876
+        },
+        {
+          "epoch": 4,
+          "mean_batch_total": 0.06864245599810628,
+          "mean_batch_smooth_l1": 0.0036558725099261526,
+          "mean_batch_weighted_bce": 0.2599463341028794
+        },
+        {
+          "epoch": 5,
+          "mean_batch_total": 0.06571136799411498,
+          "mean_batch_smooth_l1": 0.0036428905108207973,
+          "mean_batch_weighted_bce": 0.2482739101069561
+        }
+      ],
+      "self_manifest_counts": {
+        "skeleton": 105155,
+        "ineligible": 125603,
+        "autonomous": 148745,
+        "positive": 678,
+        "execute_autonomous": 65493,
+        "forced": 35809,
+        "executed": 206457,
+        "dense": 415312
+      }
+    }
+  },
+  "held_out_calibration": {
+    "B2_bookkeeping_prefix_DA1": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.10194510353358559,
+      "pr_auc_auxiliary_positive_score": 0.10693445254904366,
+      "positive_recall_at_top_10pct": 0.3475177304964539,
+      "ndcg_at_top_10pct": 0.29521953277910645,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 97.0,
+        "per_selected_action": 0.03212984431931103,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.014773191860893178,
+      "signed_advantage_smooth_l1": 0.0031038294882486657,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0013249419862404466,
+        0.0026507622096687555,
+        0.0029821074567735195,
+        0.0026507622096687555,
+        0.0013253811048343778,
+        0.0033134527038782835,
+        0.000994035741314292,
+        0.0016567263519391418,
+        0.001988071482628584,
+        0.01590457186102867
+      ],
+      "score_decile_spearman": 0.18845071854082002,
+      "highest_minus_lowest_decile_mean_advantage": 0.014579629874788225
+    },
+    "B2_old": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.1429950954913322,
+      "pr_auc_auxiliary_positive_score": 0.15254587603023675,
+      "positive_recall_at_top_10pct": 0.4326241134751773,
+      "ndcg_at_top_10pct": 0.3862208679195926,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 86.0,
+        "per_selected_action": 0.02848625372639947,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.012303960133841487,
+      "signed_advantage_smooth_l1": 0.0029480412535831673,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0013249419862404466,
+        0.001988071482628584,
+        0.002319416729733348,
+        0.0013253811048343778,
+        0.0016567263519391418,
+        0.000994035741314292,
+        0.0029821074567735195,
+        0.002319416729733348,
+        0.00033134527620859444,
+        0.01954936981201172
+      ],
+      "score_decile_spearman": 0.24316221747202585,
+      "highest_minus_lowest_decile_mean_advantage": 0.018224427825771272
+    },
+    "B3_bookkeeping_visual_tcn_prefix_DA1": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.044926409013663834,
+      "pr_auc_auxiliary_positive_score": 0.061707491227853024,
+      "positive_recall_at_top_10pct": 0.375886524822695,
+      "ndcg_at_top_10pct": 0.2568751178010777,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 95.0,
+        "per_selected_action": 0.03146737330241802,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.013273243128385416,
+      "signed_advantage_smooth_l1": 0.003146330884079054,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0023186486214399338,
+        0.000994035741314292,
+        0.0016567263519391418,
+        -0.00033134527620859444,
+        0.002319416729733348,
+        0.0016567263519391418,
+        0.0029821074567735195,
+        0.0029821074567735195,
+        0.0036447979509830475,
+        0.01656726375222206
+      ],
+      "score_decile_spearman": 0.7987953376480265,
+      "highest_minus_lowest_decile_mean_advantage": 0.014248615130782127
+    },
+    "B3_old": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.13344705491682218,
+      "pr_auc_auxiliary_positive_score": 0.14114923907438742,
+      "positive_recall_at_top_10pct": 0.3829787234042553,
+      "ndcg_at_top_10pct": 0.3555469557712136,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 92.0,
+        "per_selected_action": 0.030473666777078502,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.014263832367632507,
+      "signed_advantage_smooth_l1": 0.002976399430223024,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0013249419862404466,
+        -0.00033134527620859444,
+        0.0029821074567735195,
+        0.0026507622096687555,
+        0.0013253811048343778,
+        -0.0006626905524171889,
+        0.0016567263519391418,
+        0.0029821074567735195,
+        0.005301524419337511,
+        0.017561299726366997
+      ],
+      "score_decile_spearman": 0.6443798763008685,
+      "highest_minus_lowest_decile_mean_advantage": 0.01623635774012655
+    }
+  },
+  "closed_loop": {
+    "samples": 526,
+    "policies": {
+      "online_uniform": {
+        "metrics": {
+          "wer": 4.7736220472440944,
+          "error": 194,
+          "del": 94,
+          "ins": 76,
+          "sub": 24,
+          "ref_len": 4064
+        },
+        "actual_window_rate": 0.49991854024112087
+      },
+      "B2_DA1": {
+        "metrics": {
+          "wer": 4.798228346456693,
+          "error": 195,
+          "del": 96,
+          "ins": 75,
+          "sub": 24,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.02460629921259816,
+        "error_delta_vs_online_uniform": 1,
+        "actual_window_rate": 0.4921961550993809,
+        "executed_windows": 30211,
+        "dense_windows": 61380,
+        "max_gap": 4,
+        "unspent_tokens_total": 607.6666666666652,
+        "forced_actions": 11366,
+        "autonomous_execute_rate": 0.11338544881025853,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.24010325283959738,
+            0.29349910717807914
+          ],
+          "mean": 0.028988774316261304
+        },
+        "teacher_to_self_drift": {
+          "teacher_expected_trigger_rate": 0.08508664391504589,
+          "absolute_execute_rate_shift": 0.028298804895212637,
+          "score_ks": 0.033103848386921264,
+          "score_mean_teacher": 0.008356756651572546,
+          "score_mean_self": 0.009737643629807075,
+          "mean_abs_standardized_bookkeeping_shift": 0.0946052297949791,
+          "mean_abs_standardized_prefix_shift": 0.007889863103628159
+        },
+        "fraction_of_rollout_oracle_wer_gap_recovered": -0.027777777777777485,
+        "delta_wer_pp_vs_corresponding_old": 0.07381889763779537,
+        "paired_bootstrap_vs_corresponding_old": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.21882770690487635,
+            0.36585812234403453
+          ],
+          "mean": 0.07927034970638062
+        }
+      },
+      "B2_old": {
+        "metrics": {
+          "wer": 4.724409448818897,
+          "error": 192,
+          "del": 93,
+          "ins": 76,
+          "sub": 23,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": -0.04921259842519721,
+        "error_delta_vs_online_uniform": -2,
+        "actual_window_rate": 0.4986640599543825,
+        "executed_windows": 30608,
+        "dense_windows": 61380,
+        "max_gap": 4,
+        "unspent_tokens_total": 210.66666666666617,
+        "forced_actions": 3326,
+        "autonomous_execute_rate": 0.6026272577996716,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.2255653234364427,
+            0.12379378449910303
+          ],
+          "mean": -0.05028157539011933
+        },
+        "teacher_to_self_drift": {
+          "teacher_expected_trigger_rate": 0.10012922037043173,
+          "absolute_execute_rate_shift": 0.5024980374292399,
+          "score_ks": 0.5262919347332398,
+          "score_mean_teacher": 0.0030909187706401335,
+          "score_mean_self": 0.05630907478202471,
+          "mean_abs_standardized_bookkeeping_shift": 1.0690879821777344,
+          "mean_abs_standardized_prefix_shift": 0.02534230425953865
+        },
+        "fraction_of_rollout_oracle_wer_gap_recovered": 0.055555555555555976
+      },
+      "B3_DA1": {
+        "metrics": {
+          "wer": 4.896653543307087,
+          "error": 199,
+          "del": 104,
+          "ins": 74,
+          "sub": 21,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.12303149606299257,
+        "error_delta_vs_online_uniform": 5,
+        "actual_window_rate": 0.49200065167807105,
+        "executed_windows": 30199,
+        "dense_windows": 61380,
+        "max_gap": 4,
+        "unspent_tokens_total": 619.6666666666652,
+        "forced_actions": 11742,
+        "autonomous_execute_rate": 0.09972668261018107,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.1708275732082338,
+            0.4269238261450579
+          ],
+          "mean": 0.12920005652570865
+        },
+        "teacher_to_self_drift": {
+          "teacher_expected_trigger_rate": 0.07203207315860972,
+          "absolute_execute_rate_shift": 0.027694609451571345,
+          "score_ks": 0.03033404755662361,
+          "score_mean_teacher": -0.003351144641361315,
+          "score_mean_self": -0.002234060146222556,
+          "mean_abs_standardized_bookkeeping_shift": 0.09050583839416504,
+          "mean_abs_standardized_prefix_shift": 0.007796731777489185
+        },
+        "fraction_of_rollout_oracle_wer_gap_recovered": -0.13888888888888942,
+        "delta_wer_pp_vs_corresponding_old": -0.07381889763779448,
+        "paired_bootstrap_vs_corresponding_old": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.36501709594091986,
+            0.25386069538558104
+          ],
+          "mean": -0.06806288717720282
+        }
+      },
+      "B3_old": {
+        "metrics": {
+          "wer": 4.9704724409448815,
+          "error": 202,
+          "del": 97,
+          "ins": 80,
+          "sub": 25,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.19685039370078705,
+        "error_delta_vs_online_uniform": 8,
+        "actual_window_rate": 0.49696969696969695,
+        "executed_windows": 30504,
+        "dense_windows": 61380,
+        "max_gap": 4,
+        "unspent_tokens_total": 314.6666666666659,
+        "forced_actions": 5265,
+        "autonomous_execute_rate": 0.4423620611035112,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.07427581084426839,
+            0.4603884250794839
+          ],
+          "mean": 0.19726294370291145
+        },
+        "teacher_to_self_drift": {
+          "teacher_expected_trigger_rate": 0.10055995493853749,
+          "absolute_execute_rate_shift": 0.3418021061649737,
+          "score_ks": 0.35956573935825065,
+          "score_mean_teacher": 0.001443831755709235,
+          "score_mean_self": 0.04267690031480501,
+          "mean_abs_standardized_bookkeeping_shift": 0.765662431716919,
+          "mean_abs_standardized_prefix_shift": 0.028252368792891502
+        },
+        "fraction_of_rollout_oracle_wer_gap_recovered": -0.22222222222222188
+      },
+      "myopic_oracle": {
+        "metrics": {
+          "wer": 4.478346456692913,
+          "error": 182,
+          "del": 81,
+          "ins": 78,
+          "sub": 23,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": -0.29527559055118147,
+        "error_delta_vs_online_uniform": -12,
+        "actual_window_rate": 0.4913489736070381,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.5339938381215182,
+            -0.07506945568322818
+          ],
+          "mean": -0.2940709331441487
+        }
+      },
+      "rollout16_oracle": {
+        "metrics": {
+          "wer": 3.8877952755905514,
+          "error": 158,
+          "del": 68,
+          "ins": 67,
+          "sub": 23,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": -0.8858267716535431,
+        "error_delta_vs_online_uniform": -36,
+        "actual_window_rate": 0.49138155751058976,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -1.2093952450107466,
+            -0.5921066284907468
+          ],
+          "mean": -0.8871508357783489
+        }
+      }
+    }
+  },
+  "decision": {
+    "B2": {
+      "drift_improved": true,
+      "closed_loop_wer_improved": false,
+      "supports_covariate_shift_explanation": false,
+      "strong_go_vs_uniform": false
+    },
+    "B3": {
+      "drift_improved": true,
+      "closed_loop_wer_improved": true,
+      "supports_covariate_shift_explanation": true,
+      "strong_go_vs_uniform": false
+    }
+  },
+  "visual_increment": {
+    "DA1_B3_minus_B2_PR_AUC": -0.05701869451992175,
+    "DA1_B3_minus_B2_WER_pp": 0.09842519685039441
+  },
+  "limitations": [
+    "32/56 non-random train shards",
+    "calibration repeatedly inspected by prior smokes",
+    "future-aware rollout teacher",
+    "no formal dev/test result",
+    "no real wall-time or submission-latency conclusion"
+  ],
+  "runtime_seconds": 552.342771358788
+}

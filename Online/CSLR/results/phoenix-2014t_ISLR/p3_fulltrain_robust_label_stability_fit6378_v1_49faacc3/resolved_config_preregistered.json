@@ -1,0 +1,30 @@
+{
+  "experiment": "complete-fit future-continuation label-stability audit",
+  "created_before_summary_computation": true,
+  "scope": {
+    "samples": 6378,
+    "sources": 578,
+    "sample_ids_sha256": "ea9f022ef1160bc3be5786fc31ec745b7007222c400864bbe16cb5101a6ec28e"
+  },
+  "blocks": 183401,
+  "expected_robust_positive_sides": 769,
+  "dataset_manifest_sha256": "a5d3cf37fe256c9527029b789071ba3e6f23c30453c675c2fedd04383164db6a",
+  "comparison": "same closed-loop robust past and span15 decoder; fixed-center versus fixed-late future",
+  "statistics": [
+    "informative blocks",
+    "strictly beneficial side actions",
+    "sign agreement",
+    "best-action agreement",
+    "center-future positive survival",
+    "strict reversals",
+    "source-cluster bootstrap intervals"
+  ],
+  "interpretation": "descriptive target stability; reference/future/EOS-aware and nondeployable",
+  "forbidden": [
+    "calibration outcomes",
+    "dev",
+    "test",
+    "predictor tuning",
+    "git commit"
+  ]
+}

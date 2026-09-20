@@ -1,0 +1,1280 @@
+{
+  "status": "complete",
+  "dataset_aggregation_round": 1,
+  "cpu_only": true,
+  "trajectory_models": [
+    "B2_bookkeeping_prefix",
+    "B3_bookkeeping_visual_tcn_prefix"
+  ],
+  "teacher_self_source_weight": [
+    0.5,
+    0.5
+  ],
+  "protocol": {
+    "skeleton_period": 4,
+    "bonus_accrual": 0.3333333333333333,
+    "initial": 0,
+    "capacity": 2,
+    "eligible": 1,
+    "forced": 2,
+    "eos_topup": false,
+    "rollout_horizon": 16,
+    "lookahead_frames": 8
+  },
+  "inputs_exclude": [
+    "T",
+    "EOS",
+    "reference",
+    "future_logits",
+    "current_candidate_logits"
+  ],
+  "completed_utc": "2026-09-15T07:05:29.364656+00:00",
+  "kinds": {
+    "B2_bookkeeping_prefix": {
+      "counts": {
+        "skeleton": 105155,
+        "ineligible": 155180,
+        "autonomous": 132068,
+        "positive": 638,
+        "execute_autonomous": 79090,
+        "forced": 22909,
+        "executed": 207154,
+        "dense": 415312
+      },
+      "shards": [
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 0,
+          "samples": 94,
+          "counts": {
+            "skeleton": 2920,
+            "ineligible": 4461,
+            "autonomous": 3604,
+            "positive": 21,
+            "execute_autonomous": 2282,
+            "forced": 558,
+            "executed": 5760,
+            "dense": 11543
+          },
+          "sha256": "38b9ebac530a4a47085a67d983df9b68dbef3b624ba940cf85463076af32d5ee",
+          "bytes": 411833,
+          "elapsed_seconds": 117.70718069560826,
+          "created_utc": "2026-09-15T06:12:14.450225+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 1,
+          "samples": 112,
+          "counts": {
+            "skeleton": 3342,
+            "ineligible": 5003,
+            "autonomous": 4180,
+            "positive": 22,
+            "execute_autonomous": 2560,
+            "forced": 687,
+            "executed": 6589,
+            "dense": 13212
+          },
+          "sha256": "fed99185721cc56ea819f1f1d1b5dfbcfb74d954ed6fe2204ab7956b6f13baa9",
+          "bytes": 473747,
+          "elapsed_seconds": 153.39691905397922,
+          "created_utc": "2026-09-15T06:12:50.104649+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 2,
+          "samples": 108,
+          "counts": {
+            "skeleton": 3155,
+            "ineligible": 4671,
+            "autonomous": 3945,
+            "positive": 16,
+            "execute_autonomous": 2367,
+            "executed": 6211,
+            "dense": 12460,
+            "forced": 689
+          },
+          "sha256": "4cf04882fe94f14e99afae8e2df0c4d123f7e22430ed9fabc2c09696d08a903b",
+          "bytes": 443788,
+          "elapsed_seconds": 73.78830909356475,
+          "created_utc": "2026-09-15T06:11:30.486642+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 3,
+          "samples": 128,
+          "counts": {
+            "skeleton": 3711,
+            "ineligible": 5344,
+            "autonomous": 4718,
+            "positive": 21,
+            "execute_autonomous": 2722,
+            "forced": 887,
+            "executed": 7320,
+            "dense": 14660
+          },
+          "sha256": "24103ad184636f88bc76384d4c55aa3099d14682e33e09ae46e0816094108fba",
+          "bytes": 525091,
+          "elapsed_seconds": 111.16380769666284,
+          "created_utc": "2026-09-15T06:12:08.078886+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 4,
+          "samples": 119,
+          "counts": {
+            "skeleton": 3654,
+            "ineligible": 5403,
+            "autonomous": 4597,
+            "positive": 20,
+            "execute_autonomous": 2750,
+            "forced": 804,
+            "executed": 7208,
+            "dense": 14458
+          },
+          "sha256": "1817577a91eb173d71e18321a3e484b76ad1cb8b135126dc4f72ba48bf7d8d73",
+          "bytes": 521952,
+          "elapsed_seconds": 96.43345340527594,
+          "created_utc": "2026-09-15T06:15:39.091748+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 5,
+          "samples": 117,
+          "counts": {
+            "skeleton": 3198,
+            "ineligible": 4646,
+            "autonomous": 4057,
+            "positive": 23,
+            "execute_autonomous": 2389,
+            "executed": 6307,
+            "dense": 12621,
+            "forced": 720
+          },
+          "sha256": "7878f1e53346e8f08cae64dab4b9c3b373ab9960963bf0e96d251a2baed5d0b1",
+          "bytes": 455524,
+          "elapsed_seconds": 84.6465424457565,
+          "created_utc": "2026-09-15T06:16:39.516061+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 6,
+          "samples": 115,
+          "counts": {
+            "skeleton": 3401,
+            "ineligible": 5027,
+            "autonomous": 4280,
+            "positive": 12,
+            "execute_autonomous": 2563,
+            "executed": 6700,
+            "dense": 13444,
+            "forced": 736
+          },
+          "sha256": "9c744f28da6e99b64c5d1862909b295698e32bab19cfa6bbc7c8f36dbc85b424",
+          "bytes": 483045,
+          "elapsed_seconds": 37.76419430691749,
+          "created_utc": "2026-09-15T06:12:41.619952+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 7,
+          "samples": 109,
+          "counts": {
+            "skeleton": 3430,
+            "ineligible": 5066,
+            "autonomous": 4307,
+            "positive": 26,
+            "execute_autonomous": 2588,
+            "forced": 741,
+            "executed": 6759,
+            "dense": 13544
+          },
+          "sha256": "36608655284ef42d6d2bf43ba06840f6cce9680d45040d569a9cb516dd718d01",
+          "bytes": 485804,
+          "elapsed_seconds": 71.77210680395365,
+          "created_utc": "2026-09-15T06:15:16.491955+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 8,
+          "samples": 103,
+          "counts": {
+            "skeleton": 3195,
+            "ineligible": 4762,
+            "autonomous": 3997,
+            "positive": 13,
+            "execute_autonomous": 2423,
+            "forced": 676,
+            "executed": 6294,
+            "dense": 12630
+          },
+          "sha256": "ce9b3a2ad72a28006ace485c44e57ea39422f5f2a47415a12ec5e48e1ff9e1a9",
+          "bytes": 453530,
+          "elapsed_seconds": 77.56198740657419,
+          "created_utc": "2026-09-15T06:18:47.691224+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 15,
+          "samples": 105,
+          "counts": {
+            "skeleton": 3396,
+            "ineligible": 4760,
+            "autonomous": 4388,
+            "positive": 15,
+            "execute_autonomous": 2427,
+            "forced": 868,
+            "executed": 6691,
+            "dense": 13412
+          },
+          "sha256": "711a120614bdc26795ad2b3cd594631ccaccc1fb09243e5a3ee2a6d7bea4de32",
+          "bytes": 485855,
+          "elapsed_seconds": 86.07737823948264,
+          "created_utc": "2026-09-15T06:19:26.962720+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 16,
+          "samples": 107,
+          "counts": {
+            "skeleton": 3292,
+            "ineligible": 4754,
+            "autonomous": 4208,
+            "positive": 17,
+            "execute_autonomous": 2428,
+            "forced": 764,
+            "executed": 6484,
+            "dense": 13018
+          },
+          "sha256": "548d97429dfcd42433d8660c4fd4bae0c8ebd6b3cc131b9bb192f8c818996b0d",
+          "bytes": 472903,
+          "elapsed_seconds": 52.62401364091784,
+          "created_utc": "2026-09-15T06:15:01.712081+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 17,
+          "samples": 119,
+          "counts": {
+            "skeleton": 3825,
+            "ineligible": 5429,
+            "autonomous": 4933,
+            "positive": 24,
+            "execute_autonomous": 2776,
+            "forced": 948,
+            "executed": 7549,
+            "dense": 15135
+          },
+          "sha256": "5a8d13cb2767113144b1486a0502b6b34d66caa387713224047f83caa0b6615a",
+          "bytes": 548366,
+          "elapsed_seconds": 82.97114760708064,
+          "created_utc": "2026-09-15T06:18:37.289541+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 18,
+          "samples": 128,
+          "counts": {
+            "skeleton": 3801,
+            "ineligible": 5635,
+            "autonomous": 4763,
+            "positive": 19,
+            "execute_autonomous": 2883,
+            "forced": 807,
+            "executed": 7491,
+            "dense": 15006
+          },
+          "sha256": "99b9b3036898131c56ed5b0936e112ea63d4206d30a993f2fcca5fa10839f463",
+          "bytes": 538691,
+          "elapsed_seconds": 92.34397362731397,
+          "created_utc": "2026-09-15T06:21:58.879847+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 19,
+          "samples": 118,
+          "counts": {
+            "skeleton": 3715,
+            "ineligible": 5942,
+            "autonomous": 4441,
+            "positive": 30,
+            "execute_autonomous": 3015,
+            "executed": 7327,
+            "dense": 14695,
+            "forced": 597
+          },
+          "sha256": "bb4915505f4fdf399150387a5d1e20464be2dfd19519052a56b586acf1ad066d",
+          "bytes": 516552,
+          "elapsed_seconds": 95.37883761804551,
+          "created_utc": "2026-09-15T06:22:24.546620+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 20,
+          "samples": 87,
+          "counts": {
+            "skeleton": 2256,
+            "ineligible": 3230,
+            "autonomous": 2867,
+            "positive": 19,
+            "execute_autonomous": 1655,
+            "executed": 4432,
+            "dense": 8874,
+            "forced": 521
+          },
+          "sha256": "79a89db4db5957b50fe5cdfef39c0694ebcde6da84aec739a246333560855674",
+          "bytes": 320426,
+          "elapsed_seconds": 45.50797433312982,
+          "created_utc": "2026-09-15T06:17:25.134821+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 21,
+          "samples": 104,
+          "counts": {
+            "skeleton": 2978,
+            "ineligible": 4361,
+            "autonomous": 3746,
+            "positive": 18,
+            "execute_autonomous": 2220,
+            "forced": 672,
+            "executed": 5870,
+            "dense": 11757
+          },
+          "sha256": "0fa69d346af66c95e24a310f10d1ca86f7bec4e827956d5224b58b5843c3b042",
+          "bytes": 418397,
+          "elapsed_seconds": 62.57982721552253,
+          "created_utc": "2026-09-15T06:21:23.773533+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 22,
+          "samples": 105,
+          "counts": {
+            "skeleton": 2991,
+            "ineligible": 4579,
+            "autonomous": 3675,
+            "positive": 25,
+            "execute_autonomous": 2327,
+            "forced": 577,
+            "executed": 5895,
+            "dense": 11822
+          },
+          "sha256": "f1bd9d251c9e24bc9b4a8f9543c33646918594f5f60537e4c66b0830e6d194dd",
+          "bytes": 418391,
+          "elapsed_seconds": 62.47903277166188,
+          "created_utc": "2026-09-15T06:24:46.880638+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 29,
+          "samples": 122,
+          "counts": {
+            "skeleton": 3702,
+            "ineligible": 5579,
+            "autonomous": 4590,
+            "positive": 20,
+            "execute_autonomous": 2832,
+            "forced": 763,
+            "executed": 7297,
+            "dense": 14634
+          },
+          "sha256": "055d0e8330c67660b0ec5d567b3014fbc865efce5ef36da2d58af2023b5b13e1",
+          "bytes": 522055,
+          "elapsed_seconds": 79.98400424513966,
+          "created_utc": "2026-09-15T06:25:44.875831+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 30,
+          "samples": 116,
+          "counts": {
+            "skeleton": 3275,
+            "ineligible": 4706,
+            "autonomous": 4166,
+            "positive": 25,
+            "execute_autonomous": 2385,
+            "forced": 786,
+            "executed": 6446,
+            "dense": 12933
+          },
+          "sha256": "c2859b5d349439748f6bbacdd575d9f701ec19414be102d992180f008d07ba0b",
+          "bytes": 463328,
+          "elapsed_seconds": 80.24504504259676,
+          "created_utc": "2026-09-15T06:19:08.579999+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 31,
+          "samples": 128,
+          "counts": {
+            "skeleton": 3684,
+            "ineligible": 5362,
+            "autonomous": 4662,
+            "positive": 19,
+            "execute_autonomous": 2741,
+            "forced": 832,
+            "executed": 7257,
+            "dense": 14540
+          },
+          "sha256": "716bb9e25bce828d84017f7921169a15f95c66ad3c54f03a38f98bad3e5222b7",
+          "bytes": 526187,
+          "elapsed_seconds": 77.78933779988438,
+          "created_utc": "2026-09-15T06:24:06.484894+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 32,
+          "samples": 119,
+          "counts": {
+            "skeleton": 3487,
+            "ineligible": 5260,
+            "autonomous": 4318,
+            "positive": 18,
+            "execute_autonomous": 2684,
+            "forced": 690,
+            "executed": 6861,
+            "dense": 13755
+          },
+          "sha256": "2dfe1448758fe54672b5d21ffe5bfe0065cd538e5ce507f2e2b3ba6bb22e145e",
+          "bytes": 493540,
+          "elapsed_seconds": 71.96820589341223,
+          "created_utc": "2026-09-15T06:27:17.200536+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 33,
+          "samples": 116,
+          "counts": {
+            "skeleton": 3379,
+            "ineligible": 4781,
+            "autonomous": 4318,
+            "positive": 14,
+            "execute_autonomous": 2427,
+            "forced": 834,
+            "executed": 6640,
+            "dense": 13312
+          },
+          "sha256": "c29344f18d7ee115597706b19dc9d7488afcc8eae908f451a3260dbde7b8b484",
+          "bytes": 480753,
+          "elapsed_seconds": 67.52814781945199,
+          "created_utc": "2026-09-15T06:28:50.124444+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 34,
+          "samples": 108,
+          "counts": {
+            "skeleton": 3072,
+            "ineligible": 4439,
+            "autonomous": 3901,
+            "positive": 13,
+            "execute_autonomous": 2259,
+            "forced": 708,
+            "executed": 6039,
+            "dense": 12120
+          },
+          "sha256": "9c3915ce8cc6c6c69000ab0590ca506a342374d293d1174aab542d231f439e80",
+          "bytes": 438073,
+          "elapsed_seconds": 70.62067809794098,
+          "created_utc": "2026-09-15T06:21:47.473360+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 35,
+          "samples": 95,
+          "counts": {
+            "skeleton": 2738,
+            "ineligible": 4138,
+            "autonomous": 3373,
+            "positive": 15,
+            "execute_autonomous": 2091,
+            "forced": 556,
+            "executed": 5385,
+            "dense": 10805
+          },
+          "sha256": "3a7e3f9412a0585bec550b08bf70902647fad849359a9f1c9c183e69a0bf4827",
+          "bytes": 385368,
+          "elapsed_seconds": 62.19571250770241,
+          "created_utc": "2026-09-15T06:26:44.823280+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 36,
+          "samples": 124,
+          "counts": {
+            "skeleton": 3524,
+            "ineligible": 5239,
+            "autonomous": 4407,
+            "positive": 28,
+            "execute_autonomous": 2658,
+            "forced": 757,
+            "executed": 6939,
+            "dense": 13927
+          },
+          "sha256": "2336ea55e2f5946db21183d5c9e20c7c2519c8380461bc71eeba8db8c66026e2",
+          "bytes": 498228,
+          "elapsed_seconds": 69.49145645089447,
+          "created_utc": "2026-09-15T06:30:04.077555+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 43,
+          "samples": 73,
+          "counts": {
+            "skeleton": 2148,
+            "ineligible": 3344,
+            "autonomous": 2610,
+            "positive": 13,
+            "execute_autonomous": 1708,
+            "executed": 4238,
+            "dense": 8484,
+            "forced": 382
+          },
+          "sha256": "6c88e191bbedc754b02ebea1e0565df8efcf093a1c67c1fa4c828b0543287369",
+          "bytes": 302232,
+          "elapsed_seconds": 26.623882298357785,
+          "created_utc": "2026-09-15T06:30:18.476727+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 44,
+          "samples": 123,
+          "counts": {
+            "skeleton": 3276,
+            "ineligible": 4521,
+            "autonomous": 4250,
+            "positive": 26,
+            "execute_autonomous": 2303,
+            "forced": 857,
+            "executed": 6436,
+            "dense": 12904
+          },
+          "sha256": "b1e057584141dda076390593a030b4ad611538f1770b3a3927a271563bba39f4",
+          "bytes": 467434,
+          "elapsed_seconds": 76.2935015661642,
+          "created_utc": "2026-09-15T06:24:27.524536+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 45,
+          "samples": 120,
+          "counts": {
+            "skeleton": 3423,
+            "ineligible": 4910,
+            "autonomous": 4375,
+            "positive": 21,
+            "execute_autonomous": 2510,
+            "forced": 806,
+            "executed": 6739,
+            "dense": 13514
+          },
+          "sha256": "d34c84c78ae7c9f2b2749249d03130ae723c622b9c42ab79eb54b743fb357d4e",
+          "bytes": 489764,
+          "elapsed_seconds": 70.47387148812413,
+          "created_utc": "2026-09-15T06:29:17.617028+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 46,
+          "samples": 114,
+          "counts": {
+            "skeleton": 3419,
+            "ineligible": 4886,
+            "autonomous": 4382,
+            "positive": 21,
+            "execute_autonomous": 2496,
+            "forced": 828,
+            "executed": 6743,
+            "dense": 13515
+          },
+          "sha256": "2264379326fdbe1bf723a92a270bbb37832c662247acc0659d7b25a6ad5f8973",
+          "bytes": 489037,
+          "elapsed_seconds": 50.18381993379444,
+          "created_utc": "2026-09-15T06:32:15.514259+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 47,
+          "samples": 100,
+          "counts": {
+            "skeleton": 2975,
+            "ineligible": 4450,
+            "autonomous": 3714,
+            "positive": 15,
+            "execute_autonomous": 2274,
+            "forced": 612,
+            "executed": 5861,
+            "dense": 11751
+          },
+          "sha256": "e050cd4d2dc06e478b4dfcd287ab60ead88a4a8e6b13e27bf2593565ee49b567",
+          "bytes": 421822,
+          "elapsed_seconds": 42.0052114892751,
+          "created_utc": "2026-09-15T06:31:43.573027+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 48,
+          "samples": 115,
+          "counts": {
+            "skeleton": 3349,
+            "ineligible": 5215,
+            "autonomous": 4067,
+            "positive": 27,
+            "execute_autonomous": 2656,
+            "forced": 592,
+            "executed": 6597,
+            "dense": 13223
+          },
+          "sha256": "7bbcd5e1bd2fc39f5123351df3f158d0053118645b964837ca9f5e09b50e0e6b",
+          "bytes": 465853,
+          "elapsed_seconds": 57.751921862363815,
+          "created_utc": "2026-09-15T06:26:57.841624+00:00"
+        },
+        {
+          "kind": "B2_bookkeeping_prefix",
+          "shard": 49,
+          "samples": 118,
+          "counts": {
+            "skeleton": 3444,
+            "ineligible": 5277,
+            "autonomous": 4229,
+            "positive": 22,
+            "execute_autonomous": 2691,
+            "forced": 654,
+            "executed": 6789,
+            "dense": 13604
+          },
+          "sha256": "f45606727bd10f04fb9333d1e8eea85a93fe230520b71266961450334567200c",
+          "bytes": 481586,
+          "elapsed_seconds": 40.50764983147383,
+          "created_utc": "2026-09-15T06:31:12.176515+00:00"
+        }
+      ],
+      "positive_prevalence": 0.00483084471635824
+    },
+    "B3_bookkeeping_visual_tcn_prefix": {
+      "counts": {
+        "skeleton": 105155,
+        "ineligible": 125603,
+        "autonomous": 148745,
+        "positive": 678,
+        "execute_autonomous": 65493,
+        "forced": 35809,
+        "executed": 206457,
+        "dense": 415312
+      },
+      "shards": [
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 0,
+          "samples": 94,
+          "counts": {
+            "skeleton": 2920,
+            "ineligible": 3449,
+            "autonomous": 4144,
+            "positive": 17,
+            "execute_autonomous": 1787,
+            "forced": 1030,
+            "executed": 5737,
+            "dense": 11543
+          },
+          "sha256": "e4a890a34fccdb983f346c16126b15f66690554d44533ff398f88a82a8da8570",
+          "bytes": 443289,
+          "elapsed_seconds": 108.10347069427371,
+          "created_utc": "2026-09-15T06:14:02.555527+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 1,
+          "samples": 112,
+          "counts": {
+            "skeleton": 3342,
+            "ineligible": 3864,
+            "autonomous": 4787,
+            "positive": 18,
+            "execute_autonomous": 2012,
+            "forced": 1219,
+            "executed": 6573,
+            "dense": 13212
+          },
+          "sha256": "3a01d66d90831cc59f84a6ba7bf8c081a71a2a29f823d5063c520056e82b51fa",
+          "bytes": 508173,
+          "elapsed_seconds": 144.61622688360512,
+          "created_utc": "2026-09-15T06:15:14.723487+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 2,
+          "samples": 108,
+          "counts": {
+            "skeleton": 3155,
+            "ineligible": 3921,
+            "autonomous": 4387,
+            "positive": 19,
+            "execute_autonomous": 2035,
+            "forced": 997,
+            "executed": 6187,
+            "dense": 12460
+          },
+          "sha256": "91b3f095e5b4a6531c99dce4d923f3fd204a803aa983701565b202e3277a56a6",
+          "bytes": 474586,
+          "elapsed_seconds": 33.294596628285944,
+          "created_utc": "2026-09-15T06:12:03.783339+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 3,
+          "samples": 128,
+          "counts": {
+            "skeleton": 3711,
+            "ineligible": 4164,
+            "autonomous": 5378,
+            "positive": 23,
+            "execute_autonomous": 2163,
+            "forced": 1407,
+            "executed": 7281,
+            "dense": 14660
+          },
+          "sha256": "1a6a4318ab21aa46cb1ac7e56cb9e514b9dee87033af07082dbdf77e4ac3e6cf",
+          "bytes": 566031,
+          "elapsed_seconds": 116.57841569371521,
+          "created_utc": "2026-09-15T06:14:04.659133+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 4,
+          "samples": 119,
+          "counts": {
+            "skeleton": 3654,
+            "ineligible": 4416,
+            "autonomous": 5162,
+            "positive": 22,
+            "execute_autonomous": 2299,
+            "forced": 1226,
+            "executed": 7179,
+            "dense": 14458
+          },
+          "sha256": "4e45c762fd51d9ccc4a710e16800869d085c5323a9765f8d2486ab53e07665a7",
+          "bytes": 556820,
+          "elapsed_seconds": 110.962775753811,
+          "created_utc": "2026-09-15T06:17:30.056656+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 5,
+          "samples": 117,
+          "counts": {
+            "skeleton": 3198,
+            "ineligible": 3882,
+            "autonomous": 4490,
+            "positive": 23,
+            "execute_autonomous": 2031,
+            "forced": 1051,
+            "executed": 6280,
+            "dense": 12621
+          },
+          "sha256": "99a89492fe4160c92d6f07eeab45943cd7fd34a86a9760e098dd87c7fb7f2e23",
+          "bytes": 481826,
+          "elapsed_seconds": 81.2691880762577,
+          "created_utc": "2026-09-15T06:18:00.787158+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 6,
+          "samples": 115,
+          "counts": {
+            "skeleton": 3401,
+            "ineligible": 4314,
+            "autonomous": 4683,
+            "positive": 11,
+            "execute_autonomous": 2236,
+            "forced": 1046,
+            "executed": 6683,
+            "dense": 13444
+          },
+          "sha256": "016ee1bc890b88a88a84ef75a6e80f57d74b85a206ff57b04439588b9fc758a0",
+          "bytes": 509408,
+          "elapsed_seconds": 87.37738684006035,
+          "created_utc": "2026-09-15T06:14:08.999052+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 7,
+          "samples": 109,
+          "counts": {
+            "skeleton": 3430,
+            "ineligible": 3977,
+            "autonomous": 4908,
+            "positive": 24,
+            "execute_autonomous": 2077,
+            "forced": 1229,
+            "executed": 6736,
+            "dense": 13544
+          },
+          "sha256": "f294650f326387464eb312d02175a8ceb16e726852001b78e93da27a089b10dc",
+          "bytes": 520760,
+          "elapsed_seconds": 117.73081791866571,
+          "created_utc": "2026-09-15T06:17:14.224821+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 8,
+          "samples": 103,
+          "counts": {
+            "skeleton": 3195,
+            "ineligible": 3983,
+            "autonomous": 4463,
+            "positive": 20,
+            "execute_autonomous": 2105,
+            "executed": 6289,
+            "dense": 12630,
+            "forced": 989
+          },
+          "sha256": "097c3b58b90a9349c0b6c5c631d3104eaf248295803086872f7fef0fd70d8714",
+          "bytes": 487191,
+          "elapsed_seconds": 98.77341111004353,
+          "created_utc": "2026-09-15T06:20:26.466385+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 15,
+          "samples": 105,
+          "counts": {
+            "skeleton": 3396,
+            "ineligible": 4019,
+            "autonomous": 4819,
+            "positive": 22,
+            "execute_autonomous": 2091,
+            "forced": 1178,
+            "executed": 6665,
+            "dense": 13412
+          },
+          "sha256": "aeb1f916c828b55219e7e52c4852aa91414f406f0aba52af1d7a2b23957e8cf3",
+          "bytes": 515813,
+          "elapsed_seconds": 82.14404402673244,
+          "created_utc": "2026-09-15T06:20:49.108395+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 16,
+          "samples": 107,
+          "counts": {
+            "skeleton": 3292,
+            "ineligible": 3649,
+            "autonomous": 4826,
+            "positive": 20,
+            "execute_autonomous": 1923,
+            "forced": 1251,
+            "executed": 6466,
+            "dense": 13018
+          },
+          "sha256": "4fe0bfc563c3b1fb73b253e2f2bd09b6e9046d68bc7c40d87e307d81cd79697f",
+          "bytes": 510345,
+          "elapsed_seconds": 97.8276357576251,
+          "created_utc": "2026-09-15T06:16:39.541293+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 17,
+          "samples": 119,
+          "counts": {
+            "skeleton": 3825,
+            "ineligible": 4615,
+            "autonomous": 5402,
+            "positive": 29,
+            "execute_autonomous": 2416,
+            "forced": 1293,
+            "executed": 7534,
+            "dense": 15135
+          },
+          "sha256": "c6993c04ab03d893a00345306b5e88085051513dd6a1ba2a66f655f329db5b9b",
+          "bytes": 582460,
+          "elapsed_seconds": 103.81437568087131,
+          "created_utc": "2026-09-15T06:20:21.105658+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 18,
+          "samples": 128,
+          "counts": {
+            "skeleton": 3801,
+            "ineligible": 4607,
+            "autonomous": 5334,
+            "positive": 20,
+            "execute_autonomous": 2404,
+            "forced": 1264,
+            "executed": 7469,
+            "dense": 15006
+          },
+          "sha256": "8b75fcbd16558c4e8a2f61acef9f76bf4c487840865b88f5cf0598658966b9c8",
+          "bytes": 573979,
+          "elapsed_seconds": 105.42779846582562,
+          "created_utc": "2026-09-15T06:23:44.310917+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 19,
+          "samples": 118,
+          "counts": {
+            "skeleton": 3715,
+            "ineligible": 4366,
+            "autonomous": 5298,
+            "positive": 31,
+            "execute_autonomous": 2270,
+            "forced": 1316,
+            "executed": 7301,
+            "dense": 14695
+          },
+          "sha256": "eab2cdd3500149d6cd4cda1e4252d2de91b891f61787237c7889ebffcd3602bc",
+          "bytes": 567132,
+          "elapsed_seconds": 120.24939768482,
+          "created_utc": "2026-09-15T06:24:24.797904+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 20,
+          "samples": 87,
+          "counts": {
+            "skeleton": 2256,
+            "ineligible": 2460,
+            "autonomous": 3286,
+            "positive": 20,
+            "execute_autonomous": 1282,
+            "forced": 872,
+            "executed": 4410,
+            "dense": 8874
+          },
+          "sha256": "058d753fc3b166c7a4ea7d3ac250ea1d4459eab389f01d9c1d86fd0df3d8661d",
+          "bytes": 344495,
+          "elapsed_seconds": 23.10997375380248,
+          "created_utc": "2026-09-15T06:17:48.246421+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 21,
+          "samples": 104,
+          "counts": {
+            "skeleton": 2978,
+            "ineligible": 3523,
+            "autonomous": 4217,
+            "positive": 17,
+            "execute_autonomous": 1823,
+            "executed": 5840,
+            "dense": 11757,
+            "forced": 1039
+          },
+          "sha256": "ceea8a9757ba0f50e582b06326bd39676e353c300d93ce9844338fd8a9916e17",
+          "bytes": 448469,
+          "elapsed_seconds": 84.84071014449,
+          "created_utc": "2026-09-15T06:22:48.616122+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 22,
+          "samples": 105,
+          "counts": {
+            "skeleton": 2991,
+            "ineligible": 3708,
+            "autonomous": 4194,
+            "positive": 28,
+            "execute_autonomous": 1954,
+            "forced": 929,
+            "executed": 5874,
+            "dense": 11822
+          },
+          "sha256": "fe5dfce1ee6c744a2dd7cdb3ff917b164212979c50643e9c8dde2e96931752e4",
+          "bytes": 456603,
+          "elapsed_seconds": 78.28104750905186,
+          "created_utc": "2026-09-15T06:26:05.163427+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 29,
+          "samples": 122,
+          "counts": {
+            "skeleton": 3702,
+            "ineligible": 4509,
+            "autonomous": 5207,
+            "positive": 24,
+            "execute_autonomous": 2357,
+            "forced": 1216,
+            "executed": 7275,
+            "dense": 14634
+          },
+          "sha256": "8d4274d9aa4c7acfbdcef223388fdd69e20e250dee2a3ce88cbc9ad4eed129d9",
+          "bytes": 563402,
+          "elapsed_seconds": 117.63546316511929,
+          "created_utc": "2026-09-15T06:27:42.513021+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 30,
+          "samples": 116,
+          "counts": {
+            "skeleton": 3275,
+            "ineligible": 3662,
+            "autonomous": 4748,
+            "positive": 29,
+            "execute_autonomous": 1907,
+            "forced": 1248,
+            "executed": 6430,
+            "dense": 12933
+          },
+          "sha256": "d7422f36fa03c08f2bc85a595842e11efc3bea8712ffe183fa3bb535f93afca5",
+          "bytes": 498035,
+          "elapsed_seconds": 88.19600823055953,
+          "created_utc": "2026-09-15T06:20:36.777881+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 31,
+          "samples": 128,
+          "counts": {
+            "skeleton": 3684,
+            "ineligible": 4497,
+            "autonomous": 5146,
+            "positive": 16,
+            "execute_autonomous": 2327,
+            "forced": 1213,
+            "executed": 7224,
+            "dense": 14540
+          },
+          "sha256": "9beb5d239ad55a4439b7e4553f78febddb978b8937900bcc3658d8cda26125d9",
+          "bytes": 555314,
+          "elapsed_seconds": 96.05157206300646,
+          "created_utc": "2026-09-15T06:25:42.538372+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 32,
+          "samples": 119,
+          "counts": {
+            "skeleton": 3487,
+            "ineligible": 4289,
+            "autonomous": 4854,
+            "positive": 19,
+            "execute_autonomous": 2231,
+            "forced": 1125,
+            "executed": 6843,
+            "dense": 13755
+          },
+          "sha256": "3df03492cb6b75a73e04a3ce7a0a0f9ad5da8c254db9a3d128cad88da8cc5415",
+          "bytes": 526160,
+          "elapsed_seconds": 97.29697246197611,
+          "created_utc": "2026-09-15T06:28:54.499147+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 33,
+          "samples": 116,
+          "counts": {
+            "skeleton": 3379,
+            "ineligible": 4219,
+            "autonomous": 4668,
+            "positive": 21,
+            "execute_autonomous": 2197,
+            "forced": 1046,
+            "executed": 6622,
+            "dense": 13312
+          },
+          "sha256": "e9b32787ee89027bedb9c1fead992670977a9534ddb73048de3220daff449fcc",
+          "bytes": 508020,
+          "elapsed_seconds": 61.653488342650235,
+          "created_utc": "2026-09-15T06:29:51.779530+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 34,
+          "samples": 108,
+          "counts": {
+            "skeleton": 3072,
+            "ineligible": 3596,
+            "autonomous": 4397,
+            "positive": 18,
+            "execute_autonomous": 1902,
+            "forced": 1055,
+            "executed": 6029,
+            "dense": 12120
+          },
+          "sha256": "c25c0ab7f1bd516824433184fb6feb5802f0587d6ab183bd86d46a3f0b7c620f",
+          "bytes": 471164,
+          "elapsed_seconds": 83.67085912264884,
+          "created_utc": "2026-09-15T06:23:11.145843+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 35,
+          "samples": 95,
+          "counts": {
+            "skeleton": 2738,
+            "ineligible": 3275,
+            "autonomous": 3880,
+            "positive": 16,
+            "execute_autonomous": 1715,
+            "executed": 5365,
+            "dense": 10805,
+            "forced": 912
+          },
+          "sha256": "b16c93e773a5d551ec04914cf52a7e2d3eb8eecdb3dbd5831323ac4d9babe5cd",
+          "bytes": 419850,
+          "elapsed_seconds": 82.2503465404734,
+          "created_utc": "2026-09-15T06:28:07.075502+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 36,
+          "samples": 124,
+          "counts": {
+            "skeleton": 3524,
+            "ineligible": 4327,
+            "autonomous": 4944,
+            "positive": 22,
+            "execute_autonomous": 2254,
+            "forced": 1132,
+            "executed": 6910,
+            "dense": 13927
+          },
+          "sha256": "508597d940bfc53076315c4a582e341cd6948ce65246403e5747c0786432e269",
+          "bytes": 534882,
+          "elapsed_seconds": 81.14464368671179,
+          "created_utc": "2026-09-15T06:31:25.224367+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 43,
+          "samples": 73,
+          "counts": {
+            "skeleton": 2148,
+            "ineligible": 2579,
+            "autonomous": 3029,
+            "positive": 18,
+            "execute_autonomous": 1343,
+            "forced": 728,
+            "executed": 4219,
+            "dense": 8484
+          },
+          "sha256": "f3681eb1e5f4756a85812df30bebe9609c6a222869cd52ebc70c01c701718ac1",
+          "bytes": 325301,
+          "elapsed_seconds": 43.00642559211701,
+          "created_utc": "2026-09-15T06:31:01.484789+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 44,
+          "samples": 123,
+          "counts": {
+            "skeleton": 3276,
+            "ineligible": 3842,
+            "autonomous": 4642,
+            "positive": 31,
+            "execute_autonomous": 1996,
+            "forced": 1144,
+            "executed": 6416,
+            "dense": 12904
+          },
+          "sha256": "b2b713f34937506ba22c60eb5659dda445d899149fa64220b8fc0101ee3afbc2",
+          "bytes": 494340,
+          "elapsed_seconds": 92.51316809095442,
+          "created_utc": "2026-09-15T06:26:00.039225+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 45,
+          "samples": 120,
+          "counts": {
+            "skeleton": 3423,
+            "ineligible": 4021,
+            "autonomous": 4860,
+            "positive": 22,
+            "execute_autonomous": 2085,
+            "forced": 1210,
+            "executed": 6718,
+            "dense": 13514
+          },
+          "sha256": "a8fddb69366789a7779efa20cb57d769b1f07c1a53609405afdd7dc4c6f0eddf",
+          "bytes": 517308,
+          "elapsed_seconds": 73.96529313921928,
+          "created_utc": "2026-09-15T06:30:31.584411+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 46,
+          "samples": 114,
+          "counts": {
+            "skeleton": 3419,
+            "ineligible": 4210,
+            "autonomous": 4789,
+            "positive": 17,
+            "execute_autonomous": 2206,
+            "forced": 1097,
+            "executed": 6722,
+            "dense": 13515
+          },
+          "sha256": "9f6d5c761f5d417ba2700b23e704e633b9fd4662bb43adf7dcf7c3e9c9ee2249",
+          "bytes": 517874,
+          "elapsed_seconds": 30.28828129544854,
+          "created_utc": "2026-09-15T06:32:45.804509+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 47,
+          "samples": 100,
+          "counts": {
+            "skeleton": 2975,
+            "ineligible": 3456,
+            "autonomous": 4252,
+            "positive": 18,
+            "execute_autonomous": 1797,
+            "forced": 1068,
+            "executed": 5840,
+            "dense": 11751
+          },
+          "sha256": "85c88079267fbcc5e74bf691bba518d2a8c7cfdd5359b1b586d2926ea9bbd7ea",
+          "bytes": 452031,
+          "elapsed_seconds": 42.66276536229998,
+          "created_utc": "2026-09-15T06:32:26.237470+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 48,
+          "samples": 115,
+          "counts": {
+            "skeleton": 3349,
+            "ineligible": 3990,
+            "autonomous": 4731,
+            "positive": 23,
+            "execute_autonomous": 2073,
+            "forced": 1153,
+            "executed": 6575,
+            "dense": 13223
+          },
+          "sha256": "19d2e86b42943a1a1df95ef3182f4c5a09ea1d306628bcdba67c8ac42f055ef8",
+          "bytes": 504253,
+          "elapsed_seconds": 101.20042610540986,
+          "created_utc": "2026-09-15T06:28:39.043489+00:00"
+        },
+        {
+          "kind": "B3_bookkeeping_visual_tcn_prefix",
+          "shard": 49,
+          "samples": 118,
+          "counts": {
+            "skeleton": 3444,
+            "ineligible": 4214,
+            "autonomous": 4820,
+            "positive": 20,
+            "execute_autonomous": 2195,
+            "forced": 1126,
+            "executed": 6765,
+            "dense": 13604
+          },
+          "sha256": "a5ae8a4049c8bdd4da409be5bc88b880db2bf48e2df2349ecf11f19c75624aff",
+          "bytes": 519104,
+          "elapsed_seconds": 61.72202500421554,
+          "created_utc": "2026-09-15T06:32:13.900365+00:00"
+        }
+      ],
+      "positive_prevalence": 0.004558136407946486
+    }
+  }
+}

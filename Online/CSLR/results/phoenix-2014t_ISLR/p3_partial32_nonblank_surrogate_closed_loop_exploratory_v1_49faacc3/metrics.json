@@ -1,0 +1,144 @@
+{
+  "scope": "post-selection exploratory partial32 closed loop",
+  "confirmatory": false,
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "fixed_center_uniform": {
+    "metrics": {
+      "wer": 6.763285024154589,
+      "error": 70,
+      "del": 36,
+      "ins": 30,
+      "sub": 4,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_structured_uniform": 0.0,
+    "error_delta_vs_structured_uniform": 0,
+    "executed_windows": 7745,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.4999677231941127,
+    "max_gap": 3,
+    "paired_bootstrap_vs_structured_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "mean": 0.0
+    }
+  },
+  "predicted_nonblank_policy": {
+    "metrics": {
+      "wer": 7.246376811594203,
+      "error": 75,
+      "del": 43,
+      "ins": 28,
+      "sub": 4,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_structured_uniform": 0.4830917874396139,
+    "error_delta_vs_structured_uniform": 5,
+    "executed_windows": 7745,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.4999677231941127,
+    "max_gap": 3,
+    "paired_bootstrap_vs_structured_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        -0.2976561387266771,
+        1.3527224770963981
+      ],
+      "mean": 0.48718633854580934
+    }
+  },
+  "full_nonblank_target_oracle": {
+    "metrics": {
+      "wer": 5.990338164251208,
+      "error": 62,
+      "del": 29,
+      "ins": 29,
+      "sub": 4,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_structured_uniform": -0.7729468599033815,
+    "error_delta_vs_structured_uniform": -8,
+    "executed_windows": 7745,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.4999677231941127,
+    "max_gap": 3,
+    "paired_bootstrap_vs_structured_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        -1.5579736965479805,
+        0.0
+      ],
+      "mean": -0.7611111814702096
+    }
+  },
+  "terminal_block_oracle": {
+    "metrics": {
+      "wer": 5.024154589371981,
+      "error": 52,
+      "del": 26,
+      "ins": 22,
+      "sub": 4,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_structured_uniform": -1.7391304347826084,
+    "error_delta_vs_structured_uniform": -18,
+    "executed_windows": 7745,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.4999677231941127,
+    "max_gap": 3,
+    "paired_bootstrap_vs_structured_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        -2.61206235179244,
+        -0.9801777853998753
+      ],
+      "mean": -1.7581793122294476
+    }
+  },
+  "choice_and_delay": {
+    "choice_offset_counts": {
+      "1": 1714,
+      "2": 927,
+      "3": 1184
+    },
+    "blocks": 3825,
+    "extra_wait_frames_definition": "decision at offset3 availability minus chosen candidate availability",
+    "mean_extra_wait_frames": 1.138562091503268,
+    "max_extra_wait_frames": 2,
+    "lookahead_class": "bounded-lookahead-2"
+  },
+  "training_loss": [
+    0.4535220901069773,
+    0.4298971866466002,
+    0.42024407704740735,
+    0.4148630584336174,
+    0.4111793084553533
+  ],
+  "decision": {
+    "directionally_better_than_uniform": false,
+    "stop_surrogate_route": true,
+    "next_if_better": "fresh source-video-disjoint split confirmation; no more tuning on fixed128"
+  },
+  "walltime_statement": "no end-to-end wall-time claim: cached preview excludes real pose/hand detector and feature extraction",
+  "limitations": [
+    "target selected on same fixed128 (post-selection bias)",
+    "32/56 non-random train shards",
+    "calibration repeatedly inspected",
+    "bounded-lookahead-2",
+    "cached detector cost excluded",
+    "no dev/test or confirmatory claim"
+  ]
+}

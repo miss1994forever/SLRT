@@ -1,0 +1,44 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-16T07:48:10.816290+00:00",
+  "config_sha256": "2c87506e8af0693b90c74207ba70109f2cd237bc54baf0d2f656f95880989d5c",
+  "metrics_sha256": "22807d25669f503c86a9d7e11028e6a6ed4f4b9266cecb2bda6a5bd1a2b06855",
+  "worker_outputs": [
+    {
+      "status": "complete",
+      "worker": 0,
+      "workers": 4,
+      "samples": 32,
+      "seconds": 1485.5531443208456,
+      "sha256": "2a3dc68cd5cb03ba02aa66cad25823d1279f297013bf0610760d2224451ffebb",
+      "bytes": 76120
+    },
+    {
+      "status": "complete",
+      "worker": 1,
+      "workers": 4,
+      "samples": 32,
+      "seconds": 1335.1438239067793,
+      "sha256": "004cc3ec192d2fa85ff58426ecc0cbe13037a76f72579a9763237f78c74fc43a",
+      "bytes": 78013
+    },
+    {
+      "status": "complete",
+      "worker": 2,
+      "workers": 4,
+      "samples": 32,
+      "seconds": 1620.2201247289777,
+      "sha256": "2366e0e137dc0e7bdd09304ba0d03a2352791a15488ce5a20dc3441150a91246",
+      "bytes": 74407
+    },
+    {
+      "status": "complete",
+      "worker": 3,
+      "workers": 4,
+      "samples": 32,
+      "seconds": 1274.879750690423,
+      "sha256": "d25e69bbd5f452ee0a57c054a342ad84146bf54c46deb917c5f0b25b26476790",
+      "bytes": 74335
+    }
+  ]
+}

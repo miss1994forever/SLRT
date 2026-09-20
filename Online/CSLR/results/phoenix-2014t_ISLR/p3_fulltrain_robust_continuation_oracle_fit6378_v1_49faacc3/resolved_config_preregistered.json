@@ -1,0 +1,45 @@
+{
+  "experiment": "complete-train fit robust-continuation structured oracle",
+  "created_before_oracle_outcomes": true,
+  "scope": {
+    "samples": 6378,
+    "sources": 578,
+    "sample_ids_sha256": "ea9f022ef1160bc3be5786fc31ec745b7007222c400864bbe16cb5101a6ec28e"
+  },
+  "dense_protocol_sha256": "30331c1701c95b5c720b92a17ae905522d911164caf66b795ed93c5a6c8d1d85",
+  "fit_calibration_split_sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784",
+  "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+  "protocol": {
+    "hard_skeleton_offset": 0,
+    "one_bonus_offsets": [
+      1,
+      2,
+      3
+    ],
+    "uniform_bonus_offset": 2,
+    "fallback": "offset2 center",
+    "target_rate": "approximately 50%",
+    "max_gap_including_endpoints": 4,
+    "decoder_span": 15,
+    "unknown_EOS": true
+  },
+  "oracle": {
+    "future_continuations": [
+      "fixed offset2 center",
+      "fixed offset3 late"
+    ],
+    "eligible_side": "strict terminal edit-error improvement over center under both continuations",
+    "selection": "maximize minimum improvement; ties left then right; otherwise center",
+    "future_reference_EOS": "oracle label only, never deployment input"
+  },
+  "go": "delta WER versus fixed-center <= -0.5 pp and source-cluster bootstrap upper < 0",
+  "forbidden": [
+    "GPU",
+    "calibration outcomes",
+    "dev",
+    "test",
+    "predictor training",
+    "git commit"
+  ],
+  "classification": "confirmatory full-fit target-headroom audit after frozen partial32 protocol"
+}

@@ -1,0 +1,70 @@
+{
+  "experiment": "complete-fit source-disjoint robust predictor OOF",
+  "created_before_predictor_outcomes": true,
+  "scope": {
+    "samples": 6378,
+    "sources": 578,
+    "sample_ids_sha256": "ea9f022ef1160bc3be5786fc31ec745b7007222c400864bbe16cb5101a6ec28e"
+  },
+  "rows": 366802,
+  "class_counts": {
+    "beneficial": 769,
+    "harmful": 2015,
+    "neutral": 364018
+  },
+  "inputs": {
+    "counterfactual_dataset_manifest_sha256": "a5d3cf37fe256c9527029b789071ba3e6f23c30453c675c2fedd04383164db6a",
+    "causal_feature_manifest_sha256": "faecec22dffa47b13ff24ada5a8e9d16b1f91266b35d72c12a2262e42f7c9a48",
+    "causal_feature_archive_sha256": "ab659a6e5f1f9f545fe705318ff9be5d7bc2d843acad8930d446b4f83e4dbcb3"
+  },
+  "folds": "5 deterministic source-disjoint folds using frozen robust-oof-v1 SHA256 mapping",
+  "feature_sets": {
+    "B0": "candidate bookkeeping plus past-paid-window decoder prefix",
+    "K": "B0 plus frozen 31-step history of the same 17 P2 temporal features, summarized by last/mean/std/delta"
+  },
+  "objectives": {
+    "binary_compatibility": "beneficial versus rest; weighted BCE; diagnostic only",
+    "signed_primary": "harmful/neutral/beneficial; inverse-frequency weighted cross entropy",
+    "network": "MLP 32-16; 20 fixed epochs; AdamW lr 0.002; three-seed ensemble",
+    "binary_seeds": [
+      261026,
+      261027,
+      261028
+    ],
+    "signed_seeds": [
+      261029,
+      261030,
+      261031
+    ]
+  },
+  "primary_metrics": [
+    "OOF PR-AUC",
+    "recall@K",
+    "precision@K",
+    "top-K signed robust utility",
+    "top-K harmful actions"
+  ],
+  "K": 769,
+  "strong_headroom_errors": 249,
+  "candidate_order": [
+    "K",
+    "B0"
+  ],
+  "closed_loop_gate": "first candidate in frozen order whose signed top-K utility is at least ceil(0.5pp * 49613)=249 errors",
+  "causality": {
+    "decision": "after offset3 arrives; same bounded candidate lookahead as partial32",
+    "candidate_expensive_logits": false,
+    "reference_future_total_length_or_EOS": false,
+    "labels_only_use_reference_future_and_EOS": true
+  },
+  "accelerator": "one stable GPU allowed; device changes runtime only, not protocol",
+  "forbidden": [
+    "calibration outcomes",
+    "dev",
+    "test",
+    "threshold tuning",
+    "feature expansion",
+    "architecture tuning",
+    "git commit"
+  ]
+}

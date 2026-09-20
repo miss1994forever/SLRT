@@ -1,0 +1,305 @@
+{
+  "scope": "exploratory deterministic coverage family on previously opened fresh evaluation",
+  "confirmatory": false,
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "winner": "fixed_3",
+  "calibration_all_family": {
+    "fixed_1": {
+      "metrics": {
+        "wer": 4.6795235394214405,
+        "error": 165,
+        "del": 80,
+        "ins": 70,
+        "sub": 15,
+        "ref_len": 3526
+      },
+      "delta_wer_pp_vs_structured_uniform": -0.39705048213272853,
+      "error_delta_vs_structured_uniform": -14,
+      "executed_windows": 26299,
+      "dense_windows": 52603,
+      "actual_window_rate": 0.49995247419348704,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          -0.8503494701942247,
+          0.059269350022476505
+        ],
+        "mean": -0.3935841699189617
+      }
+    },
+    "fixed_2": {
+      "metrics": {
+        "wer": 5.076574021554169,
+        "error": 179,
+        "del": 88,
+        "ins": 78,
+        "sub": 13,
+        "ref_len": 3526
+      },
+      "delta_wer_pp_vs_structured_uniform": 0.0,
+      "error_delta_vs_structured_uniform": 0,
+      "executed_windows": 26299,
+      "dense_windows": 52603,
+      "actual_window_rate": 0.49995247419348704,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "mean": 0.0
+      }
+    },
+    "fixed_3": {
+      "metrics": {
+        "wer": 4.254112308564946,
+        "error": 150,
+        "del": 70,
+        "ins": 65,
+        "sub": 15,
+        "ref_len": 3526
+      },
+      "delta_wer_pp_vs_structured_uniform": -0.8224617129892229,
+      "error_delta_vs_structured_uniform": -29,
+      "executed_windows": 26299,
+      "dense_windows": 52603,
+      "actual_window_rate": 0.49995247419348704,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          -1.2436492650655997,
+          -0.3959977687909638
+        ],
+        "mean": -0.8199002125725301
+      }
+    },
+    "cycle_123": {
+      "metrics": {
+        "wer": 5.076574021554169,
+        "error": 179,
+        "del": 91,
+        "ins": 69,
+        "sub": 19,
+        "ref_len": 3526
+      },
+      "delta_wer_pp_vs_structured_uniform": 0.0,
+      "error_delta_vs_structured_uniform": 0,
+      "executed_windows": 26299,
+      "dense_windows": 52603,
+      "actual_window_rate": 0.49995247419348704,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          -0.47885408660369266,
+          0.48848053287738563
+        ],
+        "mean": -0.005302736238188485
+      }
+    },
+    "cycle_321": {
+      "metrics": {
+        "wer": 4.963131026659104,
+        "error": 175,
+        "del": 96,
+        "ins": 62,
+        "sub": 17,
+        "ref_len": 3526
+      },
+      "delta_wer_pp_vs_structured_uniform": -0.11344299489506504,
+      "error_delta_vs_structured_uniform": -4,
+      "executed_windows": 26299,
+      "dense_windows": 52603,
+      "actual_window_rate": 0.49995247419348704,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          -0.5901872226718416,
+          0.36688755711535864
+        ],
+        "mean": -0.10984581390052306
+      }
+    },
+    "alternate_13": {
+      "metrics": {
+        "wer": 5.246738513896767,
+        "error": 185,
+        "del": 100,
+        "ins": 68,
+        "sub": 17,
+        "ref_len": 3526
+      },
+      "delta_wer_pp_vs_structured_uniform": 0.17016449234259756,
+      "error_delta_vs_structured_uniform": 6,
+      "executed_windows": 26299,
+      "dense_windows": 52603,
+      "actual_window_rate": 0.49995247419348704,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          -0.40457206076197033,
+          0.7861083970343121
+        ],
+        "mean": 0.1762027027992803
+      }
+    },
+    "alternate_12": {
+      "metrics": {
+        "wer": 4.934770277935337,
+        "error": 174,
+        "del": 88,
+        "ins": 69,
+        "sub": 17,
+        "ref_len": 3526
+      },
+      "delta_wer_pp_vs_structured_uniform": -0.14180374361883175,
+      "error_delta_vs_structured_uniform": -5,
+      "executed_windows": 26299,
+      "dense_windows": 52603,
+      "actual_window_rate": 0.49995247419348704,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          -0.5948683481115978,
+          0.2895569795461527
+        ],
+        "mean": -0.13835725620707978
+      }
+    },
+    "alternate_23": {
+      "metrics": {
+        "wer": 4.6795235394214405,
+        "error": 165,
+        "del": 80,
+        "ins": 70,
+        "sub": 15,
+        "ref_len": 3526
+      },
+      "delta_wer_pp_vs_structured_uniform": -0.39705048213272853,
+      "error_delta_vs_structured_uniform": -14,
+      "executed_windows": 26299,
+      "dense_windows": 52603,
+      "actual_window_rate": 0.49995247419348704,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          -0.7959180835630959,
+          0.0
+        ],
+        "mean": -0.3944422652136207
+      }
+    }
+  },
+  "evaluation": {
+    "fixed_2": {
+      "metrics": {
+        "wer": 4.621588089330025,
+        "error": 149,
+        "del": 63,
+        "ins": 62,
+        "sub": 24,
+        "ref_len": 3224
+      },
+      "delta_wer_pp_vs_structured_uniform": 0.0,
+      "error_delta_vs_structured_uniform": 0,
+      "executed_windows": 24373,
+      "dense_windows": 48736,
+      "actual_window_rate": 0.5001025935653316,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          0.0,
+          0.0
+        ],
+        "mean": 0.0
+      },
+      "selected_offset_counts": {
+        "0": 12350,
+        "1": 0,
+        "2": 12023,
+        "3": 0
+      }
+    },
+    "fixed_3": {
+      "metrics": {
+        "wer": 4.55955334987593,
+        "error": 147,
+        "del": 73,
+        "ins": 58,
+        "sub": 16,
+        "ref_len": 3224
+      },
+      "delta_wer_pp_vs_structured_uniform": -0.06203473945409499,
+      "error_delta_vs_structured_uniform": -2,
+      "executed_windows": 24373,
+      "dense_windows": 48736,
+      "actual_window_rate": 0.5001025935653316,
+      "max_gap": 3,
+      "paired_bootstrap_vs_structured_uniform": {
+        "unit": "WER percentage points (candidate - baseline)",
+        "seed": 260923,
+        "repetitions": 2000,
+        "ci95": [
+          -0.4901024855695606,
+          0.36891299106620545
+        ],
+        "mean": -0.058790322616853546
+      },
+      "selected_offset_counts": {
+        "0": 12350,
+        "1": 0,
+        "2": 0,
+        "3": 12023
+      }
+    }
+  },
+  "decision": {
+    "delta_wer_pp": -0.06203473945409499,
+    "ci95": [
+      -0.4901024855695606,
+      0.36891299106620545
+    ],
+    "strong_go": false,
+    "claim": "uniform phase choice only; no success claim"
+  },
+  "causality_and_cost": {
+    "algorithm_lookahead_frames": 0,
+    "controller": "precommitted pattern lookup from block index; near-zero, not formally benchmarked",
+    "unknown_EOS": true,
+    "tail_topup": false
+  },
+  "limitations": [
+    "evaluation already opened by previous experiment",
+    "partial32 non-random shards",
+    "exploratory family selection",
+    "no real wall-time measurement"
+  ]
+}

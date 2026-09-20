@@ -1,0 +1,257 @@
+{
+  "scope": "fit/cal only terminal listwise scale diagnostic",
+  "dataset": {
+    "status": "complete",
+    "created_utc": "2026-09-17T16:11:16.832857+00:00",
+    "counts": {
+      "blocks": 86430,
+      "fit_samples": 2541,
+      "informative": 1149,
+      "calibration_samples": 459
+    },
+    "workers": [
+      {
+        "status": "complete",
+        "worker": 0,
+        "workers": 4,
+        "counts": {
+          "blocks": 21227,
+          "fit_samples": 636,
+          "informative": 300,
+          "calibration_samples": 114
+        },
+        "seconds": 968.5108948079869,
+        "sha256": "94ea7dd22594c5b27bf1e7316830a1b6961206120ec41249805028058d170430",
+        "bytes": 2505094
+      },
+      {
+        "status": "complete",
+        "worker": 1,
+        "workers": 4,
+        "counts": {
+          "blocks": 21862,
+          "informative": 297,
+          "fit_samples": 635,
+          "calibration_samples": 115
+        },
+        "seconds": 1033.1405968498439,
+        "sha256": "e474307123e59c88276fe4163dafe56f715d1e89ab75e6714567e2b34c2f9205",
+        "bytes": 2601489
+      },
+      {
+        "status": "complete",
+        "worker": 2,
+        "workers": 4,
+        "counts": {
+          "blocks": 21707,
+          "fit_samples": 635,
+          "informative": 298,
+          "calibration_samples": 115
+        },
+        "seconds": 984.0814355639741,
+        "sha256": "a70c2a7433459d15ffc1c2e09649c25d5c871821af1ffdc564038dd6f6550fae",
+        "bytes": 2582162
+      },
+      {
+        "status": "complete",
+        "worker": 3,
+        "workers": 4,
+        "counts": {
+          "blocks": 21634,
+          "fit_samples": 635,
+          "calibration_samples": 115,
+          "informative": 254
+        },
+        "seconds": 976.4333293652162,
+        "sha256": "a15c46a2bfde8c9dec337d5bfe9a4646ed2d75eb672277a322c5782bcaeea4a2",
+        "bytes": 2575901
+      }
+    ],
+    "config_sha256": "04b098cb4a88a601ce797ef212ed712bf6670063160e3d22e703a34b09229c96"
+  },
+  "partition_informative_blocks": {
+    "fit": 971,
+    "calibration": 178,
+    "evaluation_prior_opened_audit": 139
+  },
+  "offline_calibration": {
+    "T0_full2541": {
+      "all": {
+        "blocks": 12984,
+        "optimal_set_accuracy": 0.9956099815157117,
+        "mean_terminal_error_regret": 0.004467036575078964,
+        "total_terminal_error_regret": 58,
+        "cumulative_terminal_reward_vs_center": 0,
+        "mean_true_reward_vs_center": 0.0,
+        "choice_counts": {
+          "1": 12984
+        }
+      },
+      "informative": {
+        "blocks": 178,
+        "optimal_set_accuracy": 0.6797752808988764,
+        "mean_terminal_error_regret": 0.3258427083492279,
+        "total_terminal_error_regret": 58,
+        "cumulative_terminal_reward_vs_center": 0,
+        "mean_true_reward_vs_center": 0.0,
+        "choice_counts": {
+          "1": 178
+        }
+      },
+      "cached_controller_seconds": 0.008652620017528534
+    },
+    "Tpreview_hash512": {
+      "all": {
+        "blocks": 12984,
+        "optimal_set_accuracy": 0.9943006777572396,
+        "mean_terminal_error_regret": 0.00569932209327817,
+        "total_terminal_error_regret": 74,
+        "cumulative_terminal_reward_vs_center": -16,
+        "mean_true_reward_vs_center": -0.0012322858674451709,
+        "choice_counts": {
+          "0": 860,
+          "1": 6242,
+          "2": 5882
+        }
+      },
+      "informative": {
+        "blocks": 178,
+        "optimal_set_accuracy": 0.5842696629213483,
+        "mean_terminal_error_regret": 0.4157303273677826,
+        "total_terminal_error_regret": 74,
+        "cumulative_terminal_reward_vs_center": -16,
+        "mean_true_reward_vs_center": -0.08988764137029648,
+        "choice_counts": {
+          "0": 6,
+          "1": 105,
+          "2": 67
+        }
+      },
+      "cached_controller_seconds": 0.23127112817019224
+    },
+    "Tpreview_full2541": {
+      "all": {
+        "blocks": 12984,
+        "optimal_set_accuracy": 0.9950708564386938,
+        "mean_terminal_error_regret": 0.005006161518394947,
+        "total_terminal_error_regret": 65,
+        "cumulative_terminal_reward_vs_center": -7,
+        "mean_true_reward_vs_center": -0.0005391250597313046,
+        "choice_counts": {
+          "0": 1629,
+          "1": 6350,
+          "2": 5005
+        }
+      },
+      "informative": {
+        "blocks": 178,
+        "optimal_set_accuracy": 0.6404494382022472,
+        "mean_terminal_error_regret": 0.3651685416698456,
+        "total_terminal_error_regret": 65,
+        "cumulative_terminal_reward_vs_center": -7,
+        "mean_true_reward_vs_center": -0.03932584449648857,
+        "choice_counts": {
+          "0": 18,
+          "1": 96,
+          "2": 64
+        }
+      },
+      "cached_controller_seconds": 0.23376422189176083
+    }
+  },
+  "training_history": {
+    "T0_full2541": [
+      1.206340843936319,
+      1.1953526278602844,
+      1.1921689026633202,
+      1.1915262910536462,
+      1.1909622812123795,
+      1.1906219890262513,
+      1.1904331665451569,
+      1.190522025468789,
+      1.1902394788272594,
+      1.1902932240469448,
+      1.1903707008774322,
+      1.1904013661473958,
+      1.190239779735569,
+      1.1901741164106296,
+      1.1903286218397648,
+      1.1902636500760284,
+      1.1903302108468037,
+      1.1901692224457385,
+      1.190206137302607,
+      1.1905283300564782
+    ],
+    "Tpreview_hash512": [
+      1.2024146164997969,
+      1.1994563423761047,
+      1.1971908146792118,
+      1.1950227812965317,
+      1.1926137161727,
+      1.189772096010718,
+      1.1865674339898742,
+      1.1831780683876265,
+      1.179138720625698,
+      1.1750133828361435,
+      1.1698616530635568,
+      1.163899047539966,
+      1.1578065298571445,
+      1.1512239911768696,
+      1.144025224270207,
+      1.1368807318186995,
+      1.1295196337274986,
+      1.1217346852368648,
+      1.1143898373783225,
+      1.1057867838604616
+    ],
+    "Tpreview_full2541": [
+      1.204232821135516,
+      1.197712761489051,
+      1.1915316597686123,
+      1.1852847553797288,
+      1.1790898553374867,
+      1.1733837923232608,
+      1.1667223888862759,
+      1.1601190073482777,
+      1.152646379907885,
+      1.1433965232910015,
+      1.1347837302024284,
+      1.1239076525003608,
+      1.112614937471926,
+      1.1024226532169032,
+      1.0898894584755943,
+      1.0748586717275586,
+      1.0619956881084107,
+      1.0452023001827,
+      1.0309822101426052,
+      1.0167014463799866
+    ]
+  },
+  "sample_scaling": {
+    "T0_full2541": {
+      "samples": 2541,
+      "informative_blocks": 971,
+      "all_blocks": 73446
+    },
+    "Tpreview_hash512": {
+      "samples": 512,
+      "informative_blocks": 202,
+      "all_blocks": 14584
+    },
+    "Tpreview_full2541": {
+      "samples": 2541,
+      "informative_blocks": 971,
+      "all_blocks": 73446
+    }
+  },
+  "gate": {
+    "passed": false,
+    "checks": {
+      "cumulative_reward_gt_0": false,
+      "accuracy_gt_T0": false,
+      "regret_lt_T0": false
+    }
+  },
+  "evaluation": null,
+  "decision": "calibration gate failed; new-policy evaluation not read; stop current feature set"
+}

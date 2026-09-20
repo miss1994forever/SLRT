@@ -1,0 +1,169 @@
+{
+  "device": {
+    "requested": "cuda:0",
+    "torch_cuda_name": "NVIDIA GeForce RTX 3090"
+  },
+  "rows": 366802,
+  "sources": 578,
+  "class_counts": {
+    "-2": 39,
+    "-1": 1976,
+    "0": 364018,
+    "1": 755,
+    "2": 14
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "train_rows": 304014,
+      "eval_rows": 62788,
+      "train_beneficial": 628,
+      "eval_beneficial": 141
+    },
+    {
+      "fold": 1,
+      "train_rows": 294930,
+      "eval_rows": 71872,
+      "train_beneficial": 626,
+      "eval_beneficial": 143
+    },
+    {
+      "fold": 2,
+      "train_rows": 288960,
+      "eval_rows": 77842,
+      "train_beneficial": 613,
+      "eval_beneficial": 156
+    },
+    {
+      "fold": 3,
+      "train_rows": 289654,
+      "eval_rows": 77148,
+      "train_beneficial": 613,
+      "eval_beneficial": 156
+    },
+    {
+      "fold": 4,
+      "train_rows": 289650,
+      "eval_rows": 77152,
+      "train_beneficial": 596,
+      "eval_beneficial": 173
+    }
+  ],
+  "metrics": {
+    "binary": {
+      "B0": {
+        "pr_auc": 0.006320664360909513,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.015604681335389614,
+        "precision_at_K": 0.015604681335389614,
+        "top_K_signed_robust_utility": -22,
+        "top_K_positive_utility_captured": 12,
+        "top_K_harmful_actions": 34,
+        "all_positive_utility": 783
+      },
+      "K": {
+        "pr_auc": 0.0051749363817881555,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.01690507121384144,
+        "precision_at_K": 0.01690507121384144,
+        "top_K_signed_robust_utility": -4,
+        "top_K_positive_utility_captured": 13,
+        "top_K_harmful_actions": 17,
+        "all_positive_utility": 783
+      }
+    },
+    "signed": {
+      "B0": {
+        "pr_auc": 0.0030240744215937142,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.0013003901112824678,
+        "precision_at_K": 0.0013003901112824678,
+        "top_K_signed_robust_utility": -9,
+        "top_K_positive_utility_captured": 1,
+        "top_K_harmful_actions": 10,
+        "all_positive_utility": 783
+      },
+      "K": {
+        "pr_auc": 0.0025492400230537346,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.010403120890259743,
+        "precision_at_K": 0.010403120890259743,
+        "top_K_signed_robust_utility": -2,
+        "top_K_positive_utility_captured": 8,
+        "top_K_harmful_actions": 10,
+        "all_positive_utility": 783
+      }
+    }
+  },
+  "fold_percentile_sensitivity_not_primary": {
+    "binary": {
+      "B0": {
+        "pr_auc": 0.006396346408257731,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.015604681335389614,
+        "precision_at_K": 0.015604681335389614,
+        "top_K_signed_robust_utility": -22,
+        "top_K_positive_utility_captured": 12,
+        "top_K_harmful_actions": 34,
+        "all_positive_utility": 783
+      },
+      "K": {
+        "pr_auc": 0.005713373416129647,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.01690507121384144,
+        "precision_at_K": 0.01690507121384144,
+        "top_K_signed_robust_utility": -8,
+        "top_K_positive_utility_captured": 13,
+        "top_K_harmful_actions": 21,
+        "all_positive_utility": 783
+      }
+    },
+    "signed": {
+      "B0": {
+        "pr_auc": 0.0030631606610129225,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.005201560445129871,
+        "precision_at_K": 0.005201560445129871,
+        "top_K_signed_robust_utility": -4,
+        "top_K_positive_utility_captured": 4,
+        "top_K_harmful_actions": 8,
+        "all_positive_utility": 783
+      },
+      "K": {
+        "pr_auc": 0.002553005651954411,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.010403120890259743,
+        "precision_at_K": 0.010403120890259743,
+        "top_K_signed_robust_utility": -3,
+        "top_K_positive_utility_captured": 8,
+        "top_K_harmful_actions": 11,
+        "all_positive_utility": 783
+      }
+    }
+  },
+  "signed_K_minus_B0_top_K_utility_source_bootstrap_95pct": [
+    -5.0,
+    19.0
+  ],
+  "gate": {
+    "strong_headroom_errors": 249,
+    "selected_closed_loop_candidate": null,
+    "passed": false,
+    "action": "stop_robust_predictor_branch"
+  },
+  "limitations": [
+    "fit-only OOF intermediate ranking",
+    "top-K is not unknown-EOS deployment control",
+    "offset3 decision has bounded candidate lookahead",
+    "no final WER claim"
+  ],
+  "elapsed_seconds": 91.31561561199487
+}

@@ -1,0 +1,48 @@
+{
+  "manifest_version": 1,
+  "created_utc": "2026-09-14T08:12:44.806755+00:00",
+  "split": "train",
+  "git_commit": "d513bd21e8135e03b9eee201a05bf88654d4f098",
+  "gpu_uuid": "GPU-2c6a50cb-f770-c785-dc1d-7f8cc7b7b9aa",
+  "shard_samples": 128,
+  "samples": 7096,
+  "windows": 827354,
+  "inputs": {
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/tools/run_phoenix_train_dense_shards.py": {
+      "bytes": 13084,
+      "sha256": "90eafa334edfa89cd8972198c31503e7a35b8aa488bb6db668391f6286469c70"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/configs/slide_phoenix-2014t.yaml": {
+      "bytes": 3542,
+      "sha256": "7b57ccf3bf8e58106f92a0081af55b2e8d9e133c4f02b1547926ea0d8a376822"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix14t.train": {
+      "bytes": 1720110,
+      "sha256": "bc1708a98a84ed9d2983afed4fc561350e94f3f3a00c9e76252935e8b18b73ea"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.train.pkl": {
+      "bytes": 660804988,
+      "sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/ckpts/best.ckpt": {
+      "bytes": 456022647,
+      "sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_with_blank.vocab": {
+      "bytes": 12551,
+      "sha256": "d79c8ef31d8ec4345b511d641a832a67f1d8045020bee35521edee3b773fcc34"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/PHOENIX2014T_videos.zip": {
+      "bytes": 41723658945,
+      "sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.split_manifest.json": {
+      "bytes": 2160,
+      "sha256": "44376a9795f3ced9450cbb4386d9128e4fcca08e78a712c7a6bd74e31b14f1c7"
+    }
+  },
+  "fit_calibration_split": {
+    "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3/fit_calibration_split.json",
+    "sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784"
+  }
+}

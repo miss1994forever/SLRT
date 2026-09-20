@@ -1,0 +1,206 @@
+{
+  "scope": "partial32 structured block scheduling smoke",
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "dataset": {
+    "status": "complete",
+    "created_utc": "2026-09-17T13:04:53.975461+00:00",
+    "counts": {
+      "blocks": 18688,
+      "samples": 640
+    },
+    "config_sha256": "d5a94e3e2d3a3d26e05594c8bad81a54286cf5437fccd7a9632a5b256dc49365",
+    "workers": [
+      {
+        "status": "complete",
+        "worker": 0,
+        "workers": 4,
+        "samples": 160,
+        "counts": {
+          "blocks": 4513,
+          "samples": 160
+        },
+        "seconds": 250.01374646741897,
+        "sha256": "d249d8e06d7d66f3dd98680a7dec52c27a7d6ac959e50ae155bdedcd2f1159b5",
+        "bytes": 579602
+      },
+      {
+        "status": "complete",
+        "worker": 1,
+        "workers": 4,
+        "samples": 160,
+        "counts": {
+          "blocks": 4734,
+          "samples": 160
+        },
+        "seconds": 290.9421963384375,
+        "sha256": "31a9afa9214b6098ea6e6089a1a1c3c73996d52b6175179f94fba252ce05fa09",
+        "bytes": 613101
+      },
+      {
+        "status": "complete",
+        "worker": 2,
+        "workers": 4,
+        "samples": 160,
+        "counts": {
+          "blocks": 4767,
+          "samples": 160
+        },
+        "seconds": 293.6816653860733,
+        "sha256": "ac28427aa99bd1fbdd611f1730666d50f969300d22c9f077ddef5ca18263de33",
+        "bytes": 619093
+      },
+      {
+        "status": "complete",
+        "worker": 3,
+        "workers": 4,
+        "samples": 160,
+        "counts": {
+          "blocks": 4674,
+          "samples": 160
+        },
+        "seconds": 290.41083473619074,
+        "sha256": "c50ecf3ea1692bf22f78a582917a2da70ba606e7f031de98a8996920d9ed9220",
+        "bytes": 603755
+      }
+    ]
+  },
+  "structured_uniform": {
+    "metrics": {
+      "wer": 6.763285024154589,
+      "error": 70,
+      "del": 36,
+      "ins": 30,
+      "sub": 4,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_structured_uniform": 0.0,
+    "error_delta_vs_structured_uniform": 0,
+    "executed_windows": 7745,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.4999677231941127,
+    "max_gap": 3,
+    "paired_bootstrap_vs_structured_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "mean": 0.0
+    }
+  },
+  "structured_block_oracle": {
+    "metrics": {
+      "wer": 5.024154589371981,
+      "error": 52,
+      "del": 26,
+      "ins": 22,
+      "sub": 4,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_structured_uniform": -1.7391304347826084,
+    "error_delta_vs_structured_uniform": -18,
+    "executed_windows": 7745,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.4999677231941127,
+    "max_gap": 3,
+    "paired_bootstrap_vs_structured_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        -2.61206235179244,
+        -0.9801777853998753
+      ],
+      "mean": -1.7581793122294476
+    }
+  },
+  "offline_predictors": {
+    "T0": {
+      "blocks": 3825,
+      "optimal_set_accuracy": 0.993202614379085,
+      "mean_terminal_error_regret": 0.0067973856209150325,
+      "total_terminal_error_regret": 26,
+      "mean_true_reward_vs_center": -0.0020915032679738564,
+      "choice_counts": {
+        "1": 2690,
+        "2": 1135
+      }
+    },
+    "T1": {
+      "blocks": 3825,
+      "optimal_set_accuracy": 0.9937254901960785,
+      "mean_terminal_error_regret": 0.006535947712418301,
+      "total_terminal_error_regret": 25,
+      "mean_true_reward_vs_center": -0.0018300653594771241,
+      "choice_counts": {
+        "0": 801,
+        "1": 866,
+        "2": 2158
+      }
+    }
+  },
+  "training": {
+    "T0": [
+      1.0986623130816435,
+      1.098621120934434,
+      1.098621334970571,
+      1.098616107374937,
+      1.0986190309741413
+    ],
+    "T1": [
+      1.0986480193239823,
+      1.0986093240992776,
+      1.0986037676053502,
+      1.0985959612536396,
+      1.0985959006183554
+    ]
+  },
+  "gate": {
+    "passed": false,
+    "checks": {
+      "oracle_error_lt_uniform": true,
+      "T1_accuracy_gt_T0": true,
+      "T1_regret_lt_T0": true,
+      "T1_reward_vs_center_gt_0": false
+    }
+  },
+  "closed_loop": null,
+  "B2_old_frozen128_reference": {
+    "metrics": {
+      "wer": 6.859903381642512,
+      "error": 71,
+      "del": 40,
+      "ins": 28,
+      "sub": 3,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_online_uniform": 0.09661835748792313,
+    "error_delta_vs_online_uniform": 1,
+    "executed_windows": 7720,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.49835388289974825,
+    "max_gap": 4,
+    "paired_bootstrap_vs_online_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        -0.20182655017503334,
+        0.41030927835051517
+      ],
+      "mean": 0.0971131375899337
+    }
+  },
+  "limitations": [
+    "32/56 non-random train shards",
+    "train calibration repeatedly inspected",
+    "fixed hard 128 subset",
+    "oracle labels use future/reference/EOS",
+    "block choice has up to two candidate-arrival bounded lookahead",
+    "no dev/test/wall-time/latency claim"
+  ]
+}

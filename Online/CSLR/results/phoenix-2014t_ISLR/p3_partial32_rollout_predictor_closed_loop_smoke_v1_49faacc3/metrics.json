@@ -1,0 +1,519 @@
+{
+  "scope": "partial32 train-only chronological rollout predictor smoke; not a research result",
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "data": {
+    "fit_rows": 204141,
+    "calibration_rows": 30181,
+    "eos_flush_rows_retained_but_flag_hidden_from_predictor": true,
+    "missing_sequence_rows_by_sample": {
+      "train/25August_2009_Tuesday_heute-3301": 7
+    }
+  },
+  "objective": {
+    "primary": "signed rollout-16 advantage SmoothL1",
+    "auxiliary": "0.25 * capped-positive-weight BCE(advantage>0)"
+  },
+  "models": {
+    "B0_bookkeeping": {
+      "history": [
+        {
+          "epoch": 1,
+          "total": 0.09817159730882498,
+          "smooth_l1": 0.0032829733263729415,
+          "weighted_bce": 0.3795544939842185
+        },
+        {
+          "epoch": 2,
+          "total": 0.0690961263524164,
+          "smooth_l1": 0.0028964044173115534,
+          "weighted_bce": 0.2647988880837625
+        },
+        {
+          "epoch": 3,
+          "total": 0.06885743961161185,
+          "smooth_l1": 0.002897545463472198,
+          "weighted_bce": 0.2638395756007008
+        },
+        {
+          "epoch": 4,
+          "total": 0.06869877147870244,
+          "smooth_l1": 0.002889451322217144,
+          "weighted_bce": 0.26323728002386465
+        },
+        {
+          "epoch": 5,
+          "total": 0.06882225230902116,
+          "smooth_l1": 0.0028911175621423066,
+          "weighted_bce": 0.26372453846883503
+        }
+      ],
+      "positive_class_weight": 20.0,
+      "parameters": 2114
+    },
+    "B1_bookkeeping_visual_tcn": {
+      "history": [
+        {
+          "epoch": 1,
+          "total": 0.08567507351441563,
+          "smooth_l1": 0.0034273094894790735,
+          "weighted_bce": 0.32899105494937636
+        },
+        {
+          "epoch": 2,
+          "total": 0.06886851669557002,
+          "smooth_l1": 0.0029716924852562047,
+          "weighted_bce": 0.26358729673813236
+        },
+        {
+          "epoch": 3,
+          "total": 0.06785178223371525,
+          "smooth_l1": 0.0029351428875253925,
+          "weighted_bce": 0.25966655769005875
+        },
+        {
+          "epoch": 4,
+          "total": 0.06710332065292068,
+          "smooth_l1": 0.0029232386417999026,
+          "weighted_bce": 0.2567203269544934
+        },
+        {
+          "epoch": 5,
+          "total": 0.06646609271717828,
+          "smooth_l1": 0.002921806322146554,
+          "weighted_bce": 0.25417714694072074
+        }
+      ],
+      "positive_class_weight": 20.0,
+      "parameters": 8954
+    },
+    "B2_bookkeeping_prefix": {
+      "history": [
+        {
+          "epoch": 1,
+          "total": 0.09674422395461185,
+          "smooth_l1": 0.0034562430061248765,
+          "weighted_bce": 0.3731519240335431
+        },
+        {
+          "epoch": 2,
+          "total": 0.06513458518978231,
+          "smooth_l1": 0.0030342271579485484,
+          "weighted_bce": 0.24840143230781841
+        },
+        {
+          "epoch": 3,
+          "total": 0.06388713619807189,
+          "smooth_l1": 0.002964201662400663,
+          "weighted_bce": 0.24369173864769708
+        },
+        {
+          "epoch": 4,
+          "total": 0.06305678258547014,
+          "smooth_l1": 0.0029295908992832327,
+          "weighted_bce": 0.2405087666717532
+        },
+        {
+          "epoch": 5,
+          "total": 0.06263949780224552,
+          "smooth_l1": 0.0029107094279287745,
+          "weighted_bce": 0.23891515328146343
+        }
+      ],
+      "positive_class_weight": 20.0,
+      "parameters": 4034
+    },
+    "B3_bookkeeping_visual_tcn_prefix": {
+      "history": [
+        {
+          "epoch": 1,
+          "total": 0.08756523224288473,
+          "smooth_l1": 0.0038519448033563046,
+          "weighted_bce": 0.33485314998163646
+        },
+        {
+          "epoch": 2,
+          "total": 0.06454954836487553,
+          "smooth_l1": 0.0030379435893227893,
+          "weighted_bce": 0.24604641941471392
+        },
+        {
+          "epoch": 3,
+          "total": 0.06284951517023807,
+          "smooth_l1": 0.002967554703374909,
+          "weighted_bce": 0.2395278419270161
+        },
+        {
+          "epoch": 4,
+          "total": 0.061398349197200115,
+          "smooth_l1": 0.002933870712193484,
+          "weighted_bce": 0.23385791434270042
+        },
+        {
+          "epoch": 5,
+          "total": 0.05978400009141957,
+          "smooth_l1": 0.0029145188628222083,
+          "weighted_bce": 0.2274779247058078
+        }
+      ],
+      "positive_class_weight": 20.0,
+      "parameters": 10874
+    }
+  },
+  "held_out_calibration": {
+    "B0_bookkeeping": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.1298715838504475,
+      "pr_auc_auxiliary_positive_score": 0.16473073716526462,
+      "positive_recall_at_top_10pct": 0.3049645390070922,
+      "ndcg_at_top_10pct": 0.3056494834184392,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 106.0,
+        "per_selected_action": 0.035110963895329576,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.009274197479989,
+      "signed_advantage_smooth_l1": 0.002918847623717583,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0016561775701120496,
+        0.0006626905524171889,
+        0.0033134527038782835,
+        0.0026507622096687555,
+        0.005632869433611631,
+        0.0043074884451925755,
+        -0.0006626905524171889,
+        0.001988071482628584,
+        0.0016567263519391418,
+        0.013585155829787254
+      ],
+      "score_decile_spearman": 0.309090909090909,
+      "highest_minus_lowest_decile_mean_advantage": 0.011928978259675205
+    },
+    "B1_bookkeeping_visual_tcn": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.12225596899777519,
+      "pr_auc_auxiliary_positive_score": 0.12512671520568383,
+      "positive_recall_at_top_10pct": 0.3404255319148936,
+      "ndcg_at_top_10pct": 0.32517967835999106,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 102.0,
+        "per_selected_action": 0.03378602186154356,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.011584304282632745,
+      "signed_advantage_smooth_l1": 0.0029552166765790954,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0013249419862404466,
+        0.001988071482628584,
+        0.0016567263519391418,
+        0.001988071482628584,
+        0.003976142965257168,
+        0.0026507622096687555,
+        0.0036447979509830475,
+        0.0029821074567735195,
+        0.00033134527620859444,
+        0.014247845858335495
+      ],
+      "score_decile_spearman": 0.4559291577600484,
+      "highest_minus_lowest_decile_mean_advantage": 0.012922903872095048
+    },
+    "B2_bookkeeping_prefix": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.1429950954913322,
+      "pr_auc_auxiliary_positive_score": 0.15254587603023675,
+      "positive_recall_at_top_10pct": 0.4326241134751773,
+      "ndcg_at_top_10pct": 0.3862208679195926,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 86.0,
+        "per_selected_action": 0.02848625372639947,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.012303960133841487,
+      "signed_advantage_smooth_l1": 0.0029480412535831673,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0013249419862404466,
+        0.001988071482628584,
+        0.002319416729733348,
+        0.0013253811048343778,
+        0.0016567263519391418,
+        0.000994035741314292,
+        0.0029821074567735195,
+        0.002319416729733348,
+        0.00033134527620859444,
+        0.01954936981201172
+      ],
+      "score_decile_spearman": 0.24316221747202585,
+      "highest_minus_lowest_decile_mean_advantage": 0.018224427825771272
+    },
+    "B3_bookkeeping_visual_tcn_prefix": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.13344705491682218,
+      "pr_auc_auxiliary_positive_score": 0.14114923907438742,
+      "positive_recall_at_top_10pct": 0.3829787234042553,
+      "ndcg_at_top_10pct": 0.3555469557712136,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 92.0,
+        "per_selected_action": 0.030473666777078502,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.014263832367632507,
+      "signed_advantage_smooth_l1": 0.002976399430223024,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0013249419862404466,
+        -0.00033134527620859444,
+        0.0029821074567735195,
+        0.0026507622096687555,
+        0.0013253811048343778,
+        -0.0006626905524171889,
+        0.0016567263519391418,
+        0.0029821074567735195,
+        0.005301524419337511,
+        0.017561299726366997
+      ],
+      "score_decile_spearman": 0.6443798763008685,
+      "highest_minus_lowest_decile_mean_advantage": 0.01623635774012655
+    }
+  },
+  "preregistered_gate": {
+    "passed": true,
+    "checks": {
+      "B3_PR_AUC_gt_B0": true,
+      "B3_recall_at_10pct_gt_B0": true,
+      "B3_NDCG_at_10pct_gt_B0": true,
+      "B3_decile_spearman_gt_0": true,
+      "B3_highest_decile_gt_lowest": true
+    },
+    "action": "eligible_for_closed_loop"
+  },
+  "fit_only_thresholds": {
+    "B0_bookkeeping": 0.00566728413105011,
+    "B1_bookkeeping_visual_tcn": 0.0072951652109622955,
+    "B2_bookkeeping_prefix": 0.010306626558303833,
+    "B3_bookkeeping_visual_tcn_prefix": 0.012349545955657959
+  },
+  "closed_loop": {
+    "samples": 526,
+    "policies": {
+      "online_uniform": {
+        "metrics": {
+          "wer": 4.7736220472440944,
+          "error": 194,
+          "del": 94,
+          "ins": 76,
+          "sub": 24,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.0,
+        "error_delta_vs_online_uniform": 0,
+        "executed_windows": 30685,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.49991854024112087,
+        "max_gap": 3,
+        "unspent_tokens_total": 133.66666666666666,
+        "forced_actions": 0,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "B0_bookkeeping": {
+        "metrics": {
+          "wer": 4.798228346456693,
+          "error": 195,
+          "del": 94,
+          "ins": 76,
+          "sub": 25,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.02460629921259816,
+        "error_delta_vs_online_uniform": 1,
+        "executed_windows": 30685,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.49991854024112087,
+        "max_gap": 4,
+        "unspent_tokens_total": 133.66666666666663,
+        "forced_actions": 526,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.1471327513872037,
+            0.2170911372159234
+          ],
+          "mean": 0.02749665697003598
+        },
+        "fit_only_90th_percentile_threshold": 0.00566728413105011,
+        "matched_actual_count_uniform": {
+          "known_eos_diagnostic_only": true,
+          "metrics": {
+            "wer": 5.118110236220472,
+            "error": 208,
+            "del": 97,
+            "ins": 87,
+            "sub": 24,
+            "ref_len": 4064
+          },
+          "delta_wer_pp": -0.3198818897637796,
+          "error_delta": -13,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "seed": 260923,
+            "repetitions": 2000,
+            "ci95": [
+              -0.7367964208665428,
+              0.11876696287772837
+            ],
+            "mean": -0.3163618002691038
+          }
+        },
+        "fraction_of_rollout_oracle_wer_gap_recovered": -0.027777777777777485
+      },
+      "B3_bookkeeping_visual_tcn_prefix": {
+        "metrics": {
+          "wer": 4.9704724409448815,
+          "error": 202,
+          "del": 97,
+          "ins": 80,
+          "sub": 25,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.19685039370078705,
+        "error_delta_vs_online_uniform": 8,
+        "executed_windows": 30504,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.49696969696969695,
+        "max_gap": 4,
+        "unspent_tokens_total": 314.6666666666659,
+        "forced_actions": 5265,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.07427581084426839,
+            0.4603884250794839
+          ],
+          "mean": 0.19726294370291145
+        },
+        "fit_only_90th_percentile_threshold": 0.012349545955657959,
+        "matched_actual_count_uniform": {
+          "known_eos_diagnostic_only": true,
+          "metrics": {
+            "wer": 4.945866141732283,
+            "error": 201,
+            "del": 94,
+            "ins": 84,
+            "sub": 23,
+            "ref_len": 4064
+          },
+          "delta_wer_pp": 0.02460629921259816,
+          "error_delta": 1,
+          "paired_bootstrap": {
+            "unit": "WER percentage points (candidate - baseline)",
+            "seed": 260923,
+            "repetitions": 2000,
+            "ci95": [
+              -0.3235723335897552,
+              0.3954547426474407
+            ],
+            "mean": 0.02781493285458047
+          }
+        },
+        "fraction_of_rollout_oracle_wer_gap_recovered": -0.22222222222222188
+      },
+      "myopic_oracle": {
+        "metrics": {
+          "wer": 4.478346456692913,
+          "error": 182,
+          "del": 81,
+          "ins": 78,
+          "sub": 23,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": -0.29527559055118147,
+        "error_delta_vs_online_uniform": -12,
+        "executed_windows": 30159,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.4913489736070381,
+        "max_gap": 4,
+        "unspent_tokens_total": 659.666666666665,
+        "forced_actions": 13254,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.5339938381215182,
+            -0.07506945568322818
+          ],
+          "mean": -0.2940709331441487
+        }
+      },
+      "rollout16_oracle": {
+        "metrics": {
+          "wer": 3.8877952755905514,
+          "error": 158,
+          "del": 68,
+          "ins": 67,
+          "sub": 23,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": -0.8858267716535431,
+        "error_delta_vs_online_uniform": -36,
+        "executed_windows": 30161,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.49138155751058976,
+        "max_gap": 4,
+        "unspent_tokens_total": 657.6666666666649,
+        "forced_actions": 14482,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -1.2093952450107466,
+            -0.5921066284907468
+          ],
+          "mean": -0.8871508357783489
+        }
+      }
+    },
+    "audit": {
+      "unknown_eos_no_tail_topup": true,
+      "predictor_prefix_recomputed_from_own_past_selected_trajectory": true,
+      "threshold_selected_from_fit_scores_only": true,
+      "covariate_shift_note": "teacher trajectories generate fit states; predictor closed loop visits self-induced states"
+    }
+  },
+  "limitations": [
+    "32/56 non-random train shards",
+    "smoke hyperparameters",
+    "rollout teacher uses future dense replay and reference labels",
+    "tail windows enter only after observed EOS; no EOS flag is a predictor input"
+  ],
+  "runtime_seconds": 573.1502211624756
+}

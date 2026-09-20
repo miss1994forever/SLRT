@@ -1,0 +1,563 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-16T04:49:05.553246+00:00",
+  "config_sha256": "beea387b356d5fc36539de3c2b680cd0a61a65537fbb1c59089581af7b6050f1",
+  "counts": {
+    "skeleton": 105155,
+    "ineligible": 155180,
+    "autonomous": 132068,
+    "positive": 1394,
+    "negative": 1026,
+    "forced": 22909,
+    "samples": 3569,
+    "dense": 415312,
+    "executed": 207154
+  },
+  "positive_prevalence": 0.010555168549535088,
+  "shards": [
+    {
+      "shard": 0,
+      "counts": {
+        "skeleton": 2920,
+        "ineligible": 4461,
+        "autonomous": 3604,
+        "positive": 45,
+        "negative": 20,
+        "forced": 558,
+        "samples": 94,
+        "dense": 11543,
+        "executed": 5760
+      },
+      "sha256": "56653accf2c46c872cd79b6968a51703e25cf24997d169759d37a83db33a6932",
+      "bytes": 395909,
+      "seconds": 349.3572392333299
+    },
+    {
+      "shard": 1,
+      "counts": {
+        "skeleton": 3342,
+        "ineligible": 5003,
+        "autonomous": 4180,
+        "positive": 46,
+        "negative": 40,
+        "forced": 687,
+        "samples": 112,
+        "dense": 13212,
+        "executed": 6589
+      },
+      "sha256": "33192434bc72b6f3a934d1fea6f4d5933ea2e30cbb6ac5202a40126403e2a3c0",
+      "bytes": 456345,
+      "seconds": 331.40802453737706
+    },
+    {
+      "shard": 2,
+      "counts": {
+        "skeleton": 3155,
+        "ineligible": 4671,
+        "autonomous": 3945,
+        "positive": 41,
+        "negative": 37,
+        "samples": 108,
+        "dense": 12460,
+        "executed": 6211,
+        "forced": 689
+      },
+      "sha256": "9d963930f3e6cc9314de792585dfc50bf3131ec88a13c93d3b622f135c434c0b",
+      "bytes": 427269,
+      "seconds": 413.0812386246398
+    },
+    {
+      "shard": 3,
+      "counts": {
+        "skeleton": 3711,
+        "ineligible": 5344,
+        "autonomous": 4718,
+        "positive": 38,
+        "negative": 41,
+        "forced": 887,
+        "samples": 128,
+        "dense": 14660,
+        "executed": 7320
+      },
+      "sha256": "8232a621087f4859ec9375287e8d35c1880a6bae616470f1ccb403bc08d1c3df",
+      "bytes": 505413,
+      "seconds": 467.7054433245212
+    },
+    {
+      "shard": 4,
+      "counts": {
+        "skeleton": 3654,
+        "ineligible": 5403,
+        "autonomous": 4597,
+        "positive": 49,
+        "negative": 47,
+        "forced": 804,
+        "samples": 119,
+        "dense": 14458,
+        "executed": 7208
+      },
+      "sha256": "8cdd2b0870a2e5b2eb7e302d5281030142c120b6e7b3a9bf6ddad68f00ce7d99",
+      "bytes": 501831,
+      "seconds": 353.9253547228873
+    },
+    {
+      "shard": 5,
+      "counts": {
+        "skeleton": 3198,
+        "ineligible": 4646,
+        "autonomous": 4057,
+        "positive": 46,
+        "negative": 39,
+        "samples": 117,
+        "dense": 12621,
+        "executed": 6307,
+        "forced": 720
+      },
+      "sha256": "71b259f3f20190f08eac5c4402d516765998b4a3bdfab8fae8fc5d71a01a0c6e",
+      "bytes": 438449,
+      "seconds": 203.1139278775081
+    },
+    {
+      "shard": 6,
+      "counts": {
+        "skeleton": 3401,
+        "ineligible": 5027,
+        "autonomous": 4280,
+        "positive": 40,
+        "negative": 43,
+        "samples": 115,
+        "dense": 13444,
+        "executed": 6700,
+        "forced": 736
+      },
+      "sha256": "56daff814ae750fa110c6c5469bd660a5a06c54898d2d90364e1a856418fd760",
+      "bytes": 465546,
+      "seconds": 312.82257460802794
+    },
+    {
+      "shard": 7,
+      "counts": {
+        "skeleton": 3430,
+        "ineligible": 5066,
+        "autonomous": 4307,
+        "positive": 43,
+        "negative": 27,
+        "forced": 741,
+        "samples": 109,
+        "dense": 13544,
+        "executed": 6759
+      },
+      "sha256": "318b87b5cde1eaad51932dd4b3ca2ee5bd05a555f448a3725eba7793d9f26d6a",
+      "bytes": 466629,
+      "seconds": 391.43696949165314
+    },
+    {
+      "shard": 8,
+      "counts": {
+        "skeleton": 3195,
+        "ineligible": 4762,
+        "autonomous": 3997,
+        "positive": 28,
+        "negative": 19,
+        "forced": 676,
+        "samples": 103,
+        "dense": 12630,
+        "executed": 6294
+      },
+      "sha256": "eff095d0d7ab655fd5d76d78e216d7147dffce4adca2ad0a222733a2d15bf433",
+      "bytes": 435712,
+      "seconds": 291.5573923122138
+    },
+    {
+      "shard": 15,
+      "counts": {
+        "skeleton": 3396,
+        "ineligible": 4760,
+        "autonomous": 4388,
+        "positive": 39,
+        "negative": 24,
+        "forced": 868,
+        "samples": 105,
+        "dense": 13412,
+        "executed": 6691
+      },
+      "sha256": "b33e96e2fa1e2f8f5c6b31c49f3ac5cfb2d36dcaf8d071a8d2a7114f2e9b2833",
+      "bytes": 467450,
+      "seconds": 203.85373984836042
+    },
+    {
+      "shard": 16,
+      "counts": {
+        "skeleton": 3292,
+        "ineligible": 4754,
+        "autonomous": 4208,
+        "positive": 47,
+        "negative": 32,
+        "forced": 764,
+        "samples": 107,
+        "dense": 13018,
+        "executed": 6484
+      },
+      "sha256": "b434cbda3da24885a1eb4b78caf907c099e217dc3dec8a6d923ac5c8f84008cf",
+      "bytes": 455630,
+      "seconds": 259.0409712744877
+    },
+    {
+      "shard": 17,
+      "counts": {
+        "skeleton": 3825,
+        "ineligible": 5429,
+        "autonomous": 4933,
+        "positive": 57,
+        "negative": 58,
+        "forced": 948,
+        "samples": 119,
+        "dense": 15135,
+        "executed": 7549
+      },
+      "sha256": "5bf59a6aab57b2ce3dd504809573bdc222eeecdf9923ba12123517174674548f",
+      "bytes": 527356,
+      "seconds": 388.80824595782906
+    },
+    {
+      "shard": 18,
+      "counts": {
+        "skeleton": 3801,
+        "ineligible": 5635,
+        "autonomous": 4763,
+        "positive": 48,
+        "negative": 43,
+        "forced": 807,
+        "samples": 128,
+        "dense": 15006,
+        "executed": 7491
+      },
+      "sha256": "4f83e3a8144334056aa0f5109b186eb3429c3939e3e9d9dd01117fa414dbe85c",
+      "bytes": 518147,
+      "seconds": 265.0597194293514
+    },
+    {
+      "shard": 19,
+      "counts": {
+        "skeleton": 3715,
+        "ineligible": 5942,
+        "autonomous": 4441,
+        "positive": 52,
+        "negative": 45,
+        "samples": 118,
+        "dense": 14695,
+        "executed": 7327,
+        "forced": 597
+      },
+      "sha256": "29fdd4b64126a12f77f8fab11825386f5b9ae5ca2cf86588c181814027dc6e85",
+      "bytes": 498135,
+      "seconds": 238.77704878523946
+    },
+    {
+      "shard": 20,
+      "counts": {
+        "skeleton": 2256,
+        "ineligible": 3230,
+        "autonomous": 2867,
+        "positive": 32,
+        "negative": 23,
+        "samples": 87,
+        "dense": 8874,
+        "executed": 4432,
+        "forced": 521
+      },
+      "sha256": "23a905780139a4759d4ac67e9e631c1eab96fecfb5346cdef563d1d51eee9baf",
+      "bytes": 308134,
+      "seconds": 135.95991661679
+    },
+    {
+      "shard": 21,
+      "counts": {
+        "skeleton": 2978,
+        "ineligible": 4361,
+        "autonomous": 3746,
+        "positive": 50,
+        "negative": 17,
+        "forced": 672,
+        "samples": 104,
+        "dense": 11757,
+        "executed": 5870
+      },
+      "sha256": "6d7c5ff90e7baa27ebd54fd04bc80f25eebacb824552b877ec56e263f0f56f4b",
+      "bytes": 403050,
+      "seconds": 277.5944108450785
+    },
+    {
+      "shard": 22,
+      "counts": {
+        "skeleton": 2991,
+        "ineligible": 4579,
+        "autonomous": 3675,
+        "positive": 48,
+        "negative": 29,
+        "forced": 577,
+        "samples": 105,
+        "dense": 11822,
+        "executed": 5895
+      },
+      "sha256": "bb871b97ed4245ba18e0a8c4a83c2b442b32e7d7256dd4c6bee95fd6cfd1eeaf",
+      "bytes": 403612,
+      "seconds": 187.20589625649154
+    },
+    {
+      "shard": 29,
+      "counts": {
+        "skeleton": 3702,
+        "ineligible": 5579,
+        "autonomous": 4590,
+        "positive": 46,
+        "negative": 29,
+        "forced": 763,
+        "samples": 122,
+        "dense": 14634,
+        "executed": 7297
+      },
+      "sha256": "a94997549b01b46f501c4bc8570f2e86328a1950bafc802f0a922f98aead39c0",
+      "bytes": 501893,
+      "seconds": 200.3925701836124
+    },
+    {
+      "shard": 30,
+      "counts": {
+        "skeleton": 3275,
+        "ineligible": 4706,
+        "autonomous": 4166,
+        "positive": 60,
+        "negative": 34,
+        "forced": 786,
+        "samples": 116,
+        "dense": 12933,
+        "executed": 6446
+      },
+      "sha256": "6abeea212b0d06f091c7d8d7d6a579b60d0cd3930b97c63541e1d170b0dfc2df",
+      "bytes": 445522,
+      "seconds": 219.31471718288958
+    },
+    {
+      "shard": 31,
+      "counts": {
+        "skeleton": 3684,
+        "ineligible": 5362,
+        "autonomous": 4662,
+        "positive": 53,
+        "negative": 26,
+        "forced": 832,
+        "samples": 128,
+        "dense": 14540,
+        "executed": 7257
+      },
+      "sha256": "ab189067e030e003b80eecdeef2e86cdf67acca07724ed4d38b986c81afb1935",
+      "bytes": 505510,
+      "seconds": 309.1877572359517
+    },
+    {
+      "shard": 32,
+      "counts": {
+        "skeleton": 3487,
+        "ineligible": 5260,
+        "autonomous": 4318,
+        "positive": 45,
+        "negative": 22,
+        "forced": 690,
+        "samples": 119,
+        "dense": 13755,
+        "executed": 6861
+      },
+      "sha256": "c206b6d7c48141c965c494dc72ac9927586ac18a078e0a8ed2d41f230ece45d3",
+      "bytes": 475872,
+      "seconds": 196.01881333254278
+    },
+    {
+      "shard": 33,
+      "counts": {
+        "skeleton": 3379,
+        "ineligible": 4781,
+        "autonomous": 4318,
+        "positive": 33,
+        "negative": 31,
+        "forced": 834,
+        "samples": 116,
+        "dense": 13312,
+        "executed": 6640
+      },
+      "sha256": "3db53a9d363d26f50ac966ad5908d20b8319e0348373dffd92a97bd9dab1be38",
+      "bytes": 462741,
+      "seconds": 200.5091737518087
+    },
+    {
+      "shard": 34,
+      "counts": {
+        "skeleton": 3072,
+        "ineligible": 4439,
+        "autonomous": 3901,
+        "positive": 45,
+        "negative": 32,
+        "forced": 708,
+        "samples": 108,
+        "dense": 12120,
+        "executed": 6039
+      },
+      "sha256": "4bbe4ce883cdf3741aa83ee2a669fb8ae5d9a664d7e941c4863aa5d2e32088d7",
+      "bytes": 421933,
+      "seconds": 199.52401749510318
+    },
+    {
+      "shard": 35,
+      "counts": {
+        "skeleton": 2738,
+        "ineligible": 4138,
+        "autonomous": 3373,
+        "positive": 28,
+        "negative": 22,
+        "forced": 556,
+        "samples": 95,
+        "dense": 10805,
+        "executed": 5385
+      },
+      "sha256": "85e753207787c3dee248e599e34772fba4ff899f97722ce0f57e27cf7f0faf00",
+      "bytes": 370714,
+      "seconds": 89.51106966007501
+    },
+    {
+      "shard": 36,
+      "counts": {
+        "skeleton": 3524,
+        "ineligible": 5239,
+        "autonomous": 4407,
+        "positive": 47,
+        "negative": 24,
+        "forced": 757,
+        "samples": 124,
+        "dense": 13927,
+        "executed": 6939
+      },
+      "sha256": "6ec4dbd67f94d2074f00f01dd54b0d2c0e8712e3eea761eb89cbb2a72a3644d5",
+      "bytes": 480652,
+      "seconds": 182.75282285083085
+    },
+    {
+      "shard": 43,
+      "counts": {
+        "skeleton": 2148,
+        "ineligible": 3344,
+        "autonomous": 2610,
+        "positive": 35,
+        "negative": 19,
+        "samples": 73,
+        "dense": 8484,
+        "executed": 4238,
+        "forced": 382
+      },
+      "sha256": "c3a5511ae72f2e5163ea14899df9c55bc49c886454f49094f76d411fcb827688",
+      "bytes": 291229,
+      "seconds": 139.7185521228239
+    },
+    {
+      "shard": 44,
+      "counts": {
+        "skeleton": 3276,
+        "ineligible": 4521,
+        "autonomous": 4250,
+        "positive": 41,
+        "negative": 55,
+        "forced": 857,
+        "samples": 123,
+        "dense": 12904,
+        "executed": 6436
+      },
+      "sha256": "eb68b6222f8b3ad6379f4ff9011a51472dd05bcfff12aa2d70a21f33a675dcfd",
+      "bytes": 449619,
+      "seconds": 191.069109887816
+    },
+    {
+      "shard": 45,
+      "counts": {
+        "skeleton": 3423,
+        "ineligible": 4910,
+        "autonomous": 4375,
+        "positive": 30,
+        "negative": 38,
+        "forced": 806,
+        "samples": 120,
+        "dense": 13514,
+        "executed": 6739
+      },
+      "sha256": "195359f3b7a22fd18519320f385cc53aa620d5216919f56ef819fce98ff225ab",
+      "bytes": 470916,
+      "seconds": 54.49831021390855
+    },
+    {
+      "shard": 46,
+      "counts": {
+        "skeleton": 3419,
+        "ineligible": 4886,
+        "autonomous": 4382,
+        "positive": 50,
+        "negative": 21,
+        "forced": 828,
+        "samples": 114,
+        "dense": 13515,
+        "executed": 6743
+      },
+      "sha256": "5d67c78bf7c2a6535504f7d1b43902ebfe16815b6995884f61f872f9f9e9a2ab",
+      "bytes": 469241,
+      "seconds": 93.1939278114587
+    },
+    {
+      "shard": 47,
+      "counts": {
+        "skeleton": 2975,
+        "ineligible": 4450,
+        "autonomous": 3714,
+        "positive": 38,
+        "negative": 32,
+        "forced": 612,
+        "samples": 100,
+        "dense": 11751,
+        "executed": 5861
+      },
+      "sha256": "9890a96c454c393e906a3904771f7eef243c238b04b92a8b71079e8cf114b1a1",
+      "bytes": 405817,
+      "seconds": 155.49379235878587
+    },
+    {
+      "shard": 48,
+      "counts": {
+        "skeleton": 3349,
+        "ineligible": 5215,
+        "autonomous": 4067,
+        "positive": 47,
+        "negative": 32,
+        "forced": 592,
+        "samples": 115,
+        "dense": 13223,
+        "executed": 6597
+      },
+      "sha256": "63395553719f5876f05cd59c68668521ef706157e5c08c3c241d4b2265e2275f",
+      "bytes": 449034,
+      "seconds": 102.50030659884214
+    },
+    {
+      "shard": 49,
+      "counts": {
+        "skeleton": 3444,
+        "ineligible": 5277,
+        "autonomous": 4229,
+        "positive": 47,
+        "negative": 25,
+        "forced": 654,
+        "samples": 118,
+        "dense": 13604,
+        "executed": 6789
+      },
+      "sha256": "ae5176ac2fe0f61b53acf7914c2750cce05ed476aaceeb13447021e40cb5cf68",
+      "bytes": 464242,
+      "seconds": 54.69218751601875
+    }
+  ]
+}

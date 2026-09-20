@@ -1,0 +1,199 @@
+{
+  "scope": "partial32 causal candidate preview structured block smoke",
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "preview_audit": {
+    "archive": "/tmp/phoenix_p2_train_center_sequences_v1.npz",
+    "archive_sha256": "abdccf8e1f0af1b71aaab2834fce2182bff375917879d8acc5ece644e8d4ebd5",
+    "source": "train-only cached per-frame pose/handshape geometry and motion",
+    "features": [
+      "left_valid_fraction",
+      "right_valid_fraction",
+      "left_mean_confidence",
+      "right_mean_confidence",
+      "left_centroid_relative_shoulder_x",
+      "left_centroid_relative_shoulder_y",
+      "right_centroid_relative_shoulder_x",
+      "right_centroid_relative_shoulder_y",
+      "interhand_distance",
+      "pose_motion",
+      "left_global_motion",
+      "right_global_motion",
+      "left_shape_change",
+      "right_shape_change",
+      "interhand_distance_change",
+      "left_confidence_change",
+      "right_confidence_change"
+    ],
+    "history_frames": 31,
+    "candidate_start_s_visible_through": "s+8",
+    "decision_at": "block offset3 availability",
+    "maximum_additional_wait_video_frames": 2,
+    "lookahead_class": "bounded-lookahead-2",
+    "real_cost": "per-frame pose/hand detector + feature extraction + TCN/controller; not free",
+    "smoke_cost_exclusion": "pose/hand detector already cached; measured controller time excludes detector"
+  },
+  "offline": {
+    "T0": {
+      "all": {
+        "blocks": 3825,
+        "optimal_set_accuracy": 0.9947712418300654,
+        "mean_terminal_error_regret": 0.0052287583239376545,
+        "total_terminal_error_regret": 20,
+        "mean_true_reward_vs_center": -0.0005228758091107011,
+        "cumulative_terminal_reward_vs_center": -2,
+        "choice_counts": {
+          "0": 617,
+          "1": 1284,
+          "2": 1924
+        }
+      },
+      "informative": {
+        "blocks": 68,
+        "optimal_set_accuracy": 0.7058823529411765,
+        "mean_terminal_error_regret": 0.29411765933036804,
+        "total_terminal_error_regret": 20,
+        "mean_true_reward_vs_center": -0.029411764815449715,
+        "cumulative_terminal_reward_vs_center": -2,
+        "choice_counts": {
+          "0": 7,
+          "1": 40,
+          "2": 21
+        }
+      },
+      "all_tie_blocks": 3757,
+      "informative_blocks": 68,
+      "cached_controller_seconds": 0.0035614892840385437,
+      "cached_controller_ms_per_block": 0.0009311083095525605
+    },
+    "Tpreview": {
+      "all": {
+        "blocks": 3825,
+        "optimal_set_accuracy": 0.9937254901960785,
+        "mean_terminal_error_regret": 0.006535947788506746,
+        "total_terminal_error_regret": 25,
+        "mean_true_reward_vs_center": -0.0018300653900951147,
+        "cumulative_terminal_reward_vs_center": -7,
+        "choice_counts": {
+          "0": 828,
+          "1": 1276,
+          "2": 1721
+        }
+      },
+      "informative": {
+        "blocks": 68,
+        "optimal_set_accuracy": 0.6470588235294118,
+        "mean_terminal_error_regret": 0.36764705181121826,
+        "total_terminal_error_regret": 25,
+        "mean_true_reward_vs_center": -0.10294117778539658,
+        "cumulative_terminal_reward_vs_center": -7,
+        "choice_counts": {
+          "0": 12,
+          "1": 36,
+          "2": 20
+        }
+      },
+      "all_tie_blocks": 3757,
+      "informative_blocks": 68,
+      "cached_controller_seconds": 0.04567467048764229,
+      "cached_controller_ms_per_block": 0.01194109032356661
+    }
+  },
+  "training": {
+    "T0": [
+      1.0979636596540965,
+      1.095755097250562,
+      1.0947471083008584,
+      1.0935380204340046,
+      1.0909730318954027,
+      1.089589666038569,
+      1.088015291088163,
+      1.0853491041049625,
+      1.0843971154735186,
+      1.0820614371479083
+    ],
+    "Tpreview": [
+      1.098007160257156,
+      1.0953324794015356,
+      1.0927138907394636,
+      1.0890922071731148,
+      1.0826484251493946,
+      1.0746883298686156,
+      1.0669936208619746,
+      1.0564877420497407,
+      1.0474905852377034,
+      1.0372703692589507
+    ]
+  },
+  "gate": {
+    "passed": false,
+    "checks": {
+      "Tpreview_cumulative_reward_vs_center_gt_0": false,
+      "Tpreview_accuracy_gt_T0": false,
+      "Tpreview_regret_lt_T0": false
+    }
+  },
+  "closed_loop": null,
+  "structured_uniform_reference": {
+    "metrics": {
+      "wer": 6.763285024154589,
+      "error": 70,
+      "del": 36,
+      "ins": 30,
+      "sub": 4,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_structured_uniform": 0.0,
+    "error_delta_vs_structured_uniform": 0,
+    "executed_windows": 7745,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.4999677231941127,
+    "max_gap": 3,
+    "paired_bootstrap_vs_structured_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "mean": 0.0
+    }
+  },
+  "structured_block_oracle_reference": {
+    "metrics": {
+      "wer": 5.024154589371981,
+      "error": 52,
+      "del": 26,
+      "ins": 22,
+      "sub": 4,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_structured_uniform": -1.7391304347826084,
+    "error_delta_vs_structured_uniform": -18,
+    "executed_windows": 7745,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.4999677231941127,
+    "max_gap": 3,
+    "paired_bootstrap_vs_structured_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        -2.61206235179244,
+        -0.9801777853998753
+      ],
+      "mean": -1.7581793122294476
+    }
+  },
+  "limitations": [
+    "32/56 non-random train shards",
+    "train calibration repeatedly inspected",
+    "fixed hard 128 subset",
+    "future/reference/EOS labels",
+    "bounded-lookahead-2, not zero-lookahead",
+    "cached preview excludes pose/hand detector runtime",
+    "no formal wall-time/latency claim"
+  ]
+}

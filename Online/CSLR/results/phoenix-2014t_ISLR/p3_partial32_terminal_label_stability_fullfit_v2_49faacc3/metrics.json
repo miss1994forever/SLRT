@@ -1,0 +1,72 @@
+{
+  "scope": "fit-only, all 512 samples from 211 source videos",
+  "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+  "samples": 261,
+  "counts": {
+    "blocks": 14863,
+    "baseline_informative": 170,
+    "baseline_positive_sides": 58,
+    "late_future_informative": 179,
+    "late_future_positive_sides": 76,
+    "late_future_best_agree_all": 14799,
+    "span7_informative": 236,
+    "span7_positive_sides": 160,
+    "span7_best_agree_all": 14705,
+    "late_future_best_agree_union_informative": 164,
+    "late_future_union_informative": 228,
+    "late_future_union_nonzero_sides": 261,
+    "late_future_sign_agree_union_nonzero": 123,
+    "span7_best_agree_union_informative": 225,
+    "span7_union_informative": 383,
+    "span7_union_nonzero_sides": 450,
+    "span7_sign_agree_union_nonzero": 20,
+    "late_future_base_positive_sides": 58,
+    "late_future_base_positive_survives": 29,
+    "late_future_base_positive_reverses": 0,
+    "span7_base_positive_sides": 58,
+    "span7_base_positive_survives": 11,
+    "span7_base_positive_reverses": 1
+  },
+  "rates": {
+    "late_future": {
+      "best_agreement_all": 0.9956940052479311,
+      "best_agreement_union_informative": 0.7192982456140351,
+      "sign_agreement_union_nonzero": 0.47126436781609193,
+      "baseline_positive_survival": 0.5
+    },
+    "span7": {
+      "best_agreement_all": 0.9893695754558299,
+      "best_agreement_union_informative": 0.587467362924282,
+      "sign_agreement_union_nonzero": 0.044444444444444446,
+      "baseline_positive_survival": 0.1896551724137931
+    }
+  },
+  "source_cluster_bootstrap_95pct": {
+    "late_future": {
+      "best_agreement_union_informative": [
+        0.6745075239398085,
+        0.7613055591136157
+      ],
+      "baseline_positive_survival": [
+        0.36534090909090905,
+        0.6190886699507387
+      ]
+    },
+    "span7": {
+      "best_agreement_union_informative": [
+        0.5313206931554524,
+        0.6412458958203923
+      ],
+      "baseline_positive_survival": [
+        0.07269480519480519,
+        0.3200188679245282
+      ]
+    }
+  },
+  "elapsed_seconds": 394.44183340575546,
+  "limitations": [
+    "partial32 fit-only selected sources",
+    "labels are reference-aware and non-deployable",
+    "changing the decoder changes the target task itself"
+  ]
+}

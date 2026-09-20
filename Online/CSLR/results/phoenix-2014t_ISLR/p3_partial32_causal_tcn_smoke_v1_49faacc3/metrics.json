@@ -1,0 +1,334 @@
+{
+  "scope": "partial-train ordered-history TCN smoke only; not a research result",
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "limitations": [
+    "only 32/56 non-random available train dense shards",
+    "oracle utility states are non-chronological",
+    "known-EOS replay chooses a complete schedule offline",
+    "no formal paired CI, real system wall-time, controller-cost, or submission-latency claim",
+    "one P2-excluded calibration sample omitted consistently; common set is 526 samples"
+  ],
+  "causality_contract": {
+    "candidate_coordinate": "padded 16-frame ISLR window start",
+    "latest_original_frame_visible": "min(T-1, candidate_start+8)",
+    "history": "31 ordered cheap-feature frames, oldest to newest, ending at latest visible",
+    "left_edge": "replicate original frame zero; never use a later frame",
+    "forbidden": [
+      "future frames",
+      "reference",
+      "candidate expensive logits",
+      "exact EOS",
+      "exact total or remaining budget"
+    ]
+  },
+  "decoder_prefix_audit": {
+    "included": false,
+    "reason": "initial_skeleton is a complete known-EOS set and contains windows after a candidate decision time; selected_bonus_before follows offline oracle utility order rather than chronological arrival. Decoding their union would leak future.",
+    "required_reconstruction": "rebuild states in frame-arrival order under an unknown-EOS token bucket; at each decision persist only logits of expensive windows already executed by that time, then derive prefix tokens/entropy/stability from that causal history",
+    "utility_root": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_train_counterfactual_utility_partial32_smoke_v1_49faacc3"
+  },
+  "shared_data": {
+    "fit_states": 103377,
+    "sampled_candidates": 293901,
+    "sampled_positive_candidates": 2645,
+    "sampled_utility_counts": {
+      "-3": 154,
+      "-2": 3492,
+      "-1": 112225,
+      "0": 175385,
+      "1": 2612,
+      "2": 33
+    },
+    "excluded_samples": [
+      "train/25August_2009_Tuesday_heute-3301"
+    ]
+  },
+  "models": {
+    "causal_ordered_tcn": {
+      "model": "three-layer valid-convolution tiny causal TCN",
+      "channels": 12,
+      "epochs": 4,
+      "batch_size": 1024,
+      "temporal_features": [
+        "left_valid_fraction",
+        "right_valid_fraction",
+        "left_mean_confidence",
+        "right_mean_confidence",
+        "left_centroid_relative_shoulder_x",
+        "left_centroid_relative_shoulder_y",
+        "right_centroid_relative_shoulder_x",
+        "right_centroid_relative_shoulder_y",
+        "interhand_distance",
+        "pose_motion",
+        "left_global_motion",
+        "right_global_motion",
+        "left_shape_change",
+        "right_shape_change",
+        "interhand_distance_change",
+        "left_confidence_change",
+        "right_confidence_change"
+      ],
+      "time_permutation": null,
+      "training_history": [
+        {
+          "epoch": 1,
+          "weighted_bce": 1.1728049286596396
+        },
+        {
+          "epoch": 2,
+          "weighted_bce": 0.8477002102504643
+        },
+        {
+          "epoch": 3,
+          "weighted_bce": 0.6981365776227988
+        },
+        {
+          "epoch": 4,
+          "weighted_bce": 0.6427622429214829
+        }
+      ],
+      "training_seconds": 16.364090480841696
+    },
+    "fixed_time_shuffled_tcn": {
+      "model": "three-layer valid-convolution tiny causal TCN",
+      "channels": 12,
+      "epochs": 4,
+      "batch_size": 1024,
+      "temporal_features": [
+        "left_valid_fraction",
+        "right_valid_fraction",
+        "left_mean_confidence",
+        "right_mean_confidence",
+        "left_centroid_relative_shoulder_x",
+        "left_centroid_relative_shoulder_y",
+        "right_centroid_relative_shoulder_x",
+        "right_centroid_relative_shoulder_y",
+        "interhand_distance",
+        "pose_motion",
+        "left_global_motion",
+        "right_global_motion",
+        "left_shape_change",
+        "right_shape_change",
+        "interhand_distance_change",
+        "left_confidence_change",
+        "right_confidence_change"
+      ],
+      "time_permutation": [
+        22,
+        21,
+        29,
+        17,
+        12,
+        23,
+        3,
+        4,
+        26,
+        8,
+        19,
+        28,
+        14,
+        13,
+        25,
+        6,
+        7,
+        20,
+        16,
+        9,
+        2,
+        15,
+        0,
+        5,
+        30,
+        1,
+        11,
+        24,
+        10,
+        27,
+        18
+      ],
+      "training_history": [
+        {
+          "epoch": 1,
+          "weighted_bce": 1.1757306081745382
+        },
+        {
+          "epoch": 2,
+          "weighted_bce": 0.846380343735148
+        },
+        {
+          "epoch": 3,
+          "weighted_bce": 0.6931387299519912
+        },
+        {
+          "epoch": 4,
+          "weighted_bce": 0.6335017216460685
+        }
+      ],
+      "training_seconds": 17.88701726216823
+    }
+  },
+  "ranking": {
+    "causal_ordered_tcn": {
+      "calibration_states": 15284,
+      "positive_utility_states": 111,
+      "candidate_records": 1360067,
+      "positive_candidates": 454,
+      "pr_auc_average_precision": 0.006921157538528113,
+      "positive_recall_at_top_10pct": 0.12555066079295155,
+      "mean_ndcg_at_top_10pct_positive_states": 0.09962179204530858,
+      "top1_utility_regret": {
+        "mean": 0.028919131117508507,
+        "positive_fraction": 0.025974875686992933
+      },
+      "evaluation_seconds_shared_models": 144.2493440527469
+    },
+    "fixed_time_shuffled_tcn": {
+      "calibration_states": 15284,
+      "positive_utility_states": 111,
+      "candidate_records": 1360067,
+      "positive_candidates": 454,
+      "pr_auc_average_precision": 0.006902102673923332,
+      "positive_recall_at_top_10pct": 0.10352422907488987,
+      "mean_ndcg_at_top_10pct_positive_states": 0.07663749151241785,
+      "top1_utility_regret": {
+        "mean": 0.028068568437581785,
+        "positive_fraction": 0.027676001046846376
+      },
+      "evaluation_seconds_shared_models": 144.2493440527469
+    }
+  },
+  "schedule_replay": {
+    "samples": 526,
+    "equal_budget_uniform": {
+      "wer": 5.167322834645669,
+      "error": 210,
+      "del": 97,
+      "ins": 88,
+      "sub": 25,
+      "ref_len": 4064
+    },
+    "replay_seconds_all_models": 60.80560099706054,
+    "controller_schedule_seconds": {
+      "causal_ordered_tcn": 26.082188279367983,
+      "fixed_time_shuffled_tcn": 25.904725004918873
+    },
+    "decoder_replay_seconds": {
+      "uniform": 1.007504392415285,
+      "causal_ordered_tcn": 1.0559355737641454,
+      "fixed_time_shuffled_tcn": 1.0425319885835052
+    },
+    "causal_ordered_tcn": {
+      "wer": 6.3484251968503935,
+      "error": 258,
+      "del": 144,
+      "ins": 86,
+      "sub": 28,
+      "ref_len": 4064
+    },
+    "causal_ordered_tcn_minus_uniform": {
+      "wer_pp": 1.181102362204724,
+      "error_count": 48
+    },
+    "fixed_time_shuffled_tcn": {
+      "wer": 5.979330708661418,
+      "error": 243,
+      "del": 135,
+      "ins": 80,
+      "sub": 28,
+      "ref_len": 4064
+    },
+    "fixed_time_shuffled_tcn_minus_uniform": {
+      "wer_pp": 0.8120078740157481,
+      "error_count": 33
+    }
+  },
+  "previous_common_comparators": {
+    "bookkeeping_linear": {
+      "ranking": {
+        "calibration_states": 15284,
+        "positive_utility_states": 111,
+        "candidate_records": 1360067,
+        "positive_candidates": 454,
+        "pr_auc_average_precision": 0.006155288445084053,
+        "positive_recall_at_top_10pct": 0.10792951541850221,
+        "mean_ndcg_at_top_10pct_positive_states": 0.06782017824171918,
+        "top1_utility_regret": {
+          "mean": 0.03369536770478932,
+          "positive_fraction": 0.02983512169589113
+        },
+        "evaluation_seconds": 137.05918070860207
+      },
+      "schedule_replay": {
+        "wer": 5.536417322834645,
+        "error": 225,
+        "del": 112,
+        "ins": 86,
+        "sub": 27,
+        "ref_len": 4064
+      },
+      "minus_uniform": {
+        "wer_pp": 0.36909448818897594,
+        "error_count": 15
+      }
+    },
+    "bookkeeping_mlp": {
+      "ranking": {
+        "calibration_states": 15284,
+        "positive_utility_states": 111,
+        "candidate_records": 1360067,
+        "positive_candidates": 454,
+        "pr_auc_average_precision": 0.008022205629810802,
+        "positive_recall_at_top_10pct": 0.1145374449339207,
+        "mean_ndcg_at_top_10pct_positive_states": 0.07788804184888835,
+        "top1_utility_regret": {
+          "mean": 0.022703480764197852,
+          "positive_fraction": 0.01956294163831458
+        },
+        "evaluation_seconds": 139.90641535632312
+      },
+      "schedule_replay": {
+        "wer": 5.265748031496063,
+        "error": 214,
+        "del": 107,
+        "ins": 83,
+        "sub": 24,
+        "ref_len": 4064
+      },
+      "minus_uniform": {
+        "wer_pp": 0.09842519685039353,
+        "error_count": 4
+      }
+    },
+    "causal_pose_handshape_mlp": {
+      "ranking": {
+        "calibration_states": 15284,
+        "positive_utility_states": 111,
+        "candidate_records": 1360067,
+        "positive_candidates": 454,
+        "pr_auc_average_precision": 0.0014812832005582875,
+        "positive_recall_at_top_10pct": 0.11013215859030837,
+        "mean_ndcg_at_top_10pct_positive_states": 0.08120369968076024,
+        "top1_utility_regret": {
+          "mean": 0.03035854488353834,
+          "positive_fraction": 0.029180842711332113
+        },
+        "evaluation_seconds": 141.77866306807846
+      },
+      "schedule_replay": {
+        "wer": 5.78248031496063,
+        "error": 235,
+        "del": 127,
+        "ins": 81,
+        "sub": 27,
+        "ref_len": 4064
+      },
+      "minus_uniform": {
+        "wer_pp": 0.6151574803149602,
+        "error_count": 25
+      }
+    }
+  },
+  "runtime_seconds": 388.85472393222153
+}

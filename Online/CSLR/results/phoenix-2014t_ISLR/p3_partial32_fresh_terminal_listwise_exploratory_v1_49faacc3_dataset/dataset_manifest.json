@@ -1,0 +1,69 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-17T16:11:16.832857+00:00",
+  "counts": {
+    "blocks": 86430,
+    "fit_samples": 2541,
+    "informative": 1149,
+    "calibration_samples": 459
+  },
+  "workers": [
+    {
+      "status": "complete",
+      "worker": 0,
+      "workers": 4,
+      "counts": {
+        "blocks": 21227,
+        "fit_samples": 636,
+        "informative": 300,
+        "calibration_samples": 114
+      },
+      "seconds": 968.5108948079869,
+      "sha256": "94ea7dd22594c5b27bf1e7316830a1b6961206120ec41249805028058d170430",
+      "bytes": 2505094
+    },
+    {
+      "status": "complete",
+      "worker": 1,
+      "workers": 4,
+      "counts": {
+        "blocks": 21862,
+        "informative": 297,
+        "fit_samples": 635,
+        "calibration_samples": 115
+      },
+      "seconds": 1033.1405968498439,
+      "sha256": "e474307123e59c88276fe4163dafe56f715d1e89ab75e6714567e2b34c2f9205",
+      "bytes": 2601489
+    },
+    {
+      "status": "complete",
+      "worker": 2,
+      "workers": 4,
+      "counts": {
+        "blocks": 21707,
+        "fit_samples": 635,
+        "informative": 298,
+        "calibration_samples": 115
+      },
+      "seconds": 984.0814355639741,
+      "sha256": "a70c2a7433459d15ffc1c2e09649c25d5c871821af1ffdc564038dd6f6550fae",
+      "bytes": 2582162
+    },
+    {
+      "status": "complete",
+      "worker": 3,
+      "workers": 4,
+      "counts": {
+        "blocks": 21634,
+        "fit_samples": 635,
+        "calibration_samples": 115,
+        "informative": 254
+      },
+      "seconds": 976.4333293652162,
+      "sha256": "a15c46a2bfde8c9dec337d5bfe9a4646ed2d75eb672277a322c5782bcaeea4a2",
+      "bytes": 2575901
+    }
+  ],
+  "config_sha256": "04b098cb4a88a601ce797ef212ed712bf6670063160e3d22e703a34b09229c96"
+}

@@ -1,0 +1,10 @@
+{
+  "type": "metadata_count_correction",
+  "reason": "The preregistered scope string hard-coded an incorrect source-video count, and metrics.samples wrote the source-video count instead of the sample count.",
+  "original_files_preserved": true,
+  "actual_sample_count": 512,
+  "actual_source_video_count": 261,
+  "actual_block_count": 14863,
+  "evidence": "resolved_config_preregistered.json contains 512 sample_ids and source_video_count=261; the run completed its exact ID coverage assertion.",
+  "effect_on_candidate_error_statistics": "none"
+}

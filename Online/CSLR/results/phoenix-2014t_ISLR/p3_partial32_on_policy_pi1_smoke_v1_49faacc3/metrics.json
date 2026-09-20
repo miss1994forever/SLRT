@@ -1,0 +1,381 @@
+{
+  "scope": "one preregistered partial32 train-only B2 approximate policy-improvement smoke",
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "policy_iterations_run": 1,
+  "fit_dataset": {
+    "skeleton": 105155,
+    "ineligible": 155180,
+    "autonomous": 132068,
+    "positive": 1394,
+    "negative": 1026,
+    "forced": 22909,
+    "samples": 3569,
+    "dense": 415312,
+    "executed": 207154
+  },
+  "training": {
+    "history": [
+      {
+        "epoch": 1,
+        "total": 0.16592044988301563,
+        "smooth_l1": 0.009828740521724078,
+        "weighted_bce": 0.6243668331742327
+      },
+      {
+        "epoch": 2,
+        "total": 0.14211001310239255,
+        "smooth_l1": 0.009450676943946036,
+        "weighted_bce": 0.5306373446097534
+      },
+      {
+        "epoch": 3,
+        "total": 0.1408211405119038,
+        "smooth_l1": 0.009404146347102278,
+        "weighted_bce": 0.5256679769640714
+      },
+      {
+        "epoch": 4,
+        "total": 0.1398578416759777,
+        "smooth_l1": 0.00938440198873353,
+        "weighted_bce": 0.5218937580147954
+      },
+      {
+        "epoch": 5,
+        "total": 0.1392036132776467,
+        "smooth_l1": 0.009383444772418285,
+        "weighted_bce": 0.5192806758156918
+      }
+    ],
+    "positive_class_weight": 20.0,
+    "primary_threshold": 0.0,
+    "fit90_sensitivity_threshold": 0.019369520992040635
+  },
+  "held_out_A_pi0_offline": {
+    "rows": 19488,
+    "positive_rows": 220,
+    "positive_prevalence": 0.011288998357963875,
+    "pr_auc_regression_score": 0.017792004343742097,
+    "pr_auc_auxiliary_positive_score": 0.01941886038958822,
+    "positive_recall_at_top_10pct": 0.19090909090909092,
+    "ndcg_at_top_10pct": 0.1186711456290214,
+    "offline_calibration_matched_top10_action_regret": {
+      "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+      "K": 1949,
+      "total": 196.0,
+      "per_selected_action": 0.10056439199589533,
+      "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+    },
+    "signed_advantage_mae": 0.03025746597428248,
+    "signed_advantage_smooth_l1": 0.0101489190297723,
+    "score_decile_true_mean_advantage_low_to_high": [
+      -0.004104669205844402,
+      -0.0010261673014611006,
+      -0.005130836274474859,
+      -0.00359158543869853,
+      0.00718317087739706,
+      0.005130836274474859,
+      0.00359158543869853,
+      0.0025654181372374296,
+      0.013347022235393524,
+      0.0143737168982625
+    ],
+    "score_decile_spearman": 0.8181818181818182,
+    "highest_minus_lowest_decile_mean_advantage": 0.018478386104106903
+  },
+  "closed_loop": {
+    "samples": 526,
+    "policies": {
+      "online_uniform": {
+        "metrics": {
+          "wer": 4.7736220472440944,
+          "error": 194,
+          "del": 94,
+          "ins": 76,
+          "sub": 24,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.0,
+        "error_delta_vs_online_uniform": 0,
+        "executed_windows": 30685,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.49991854024112087,
+        "max_gap": 3,
+        "unspent_tokens_total": 133.66666666666666,
+        "forced_actions": 0,
+        "autonomous_decisions": 0,
+        "autonomous_trigger_rate": 0.0,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            0.0,
+            0.0
+          ],
+          "mean": 0.0
+        }
+      },
+      "myopic_oracle": {
+        "metrics": {
+          "wer": 4.478346456692913,
+          "error": 182,
+          "del": 81,
+          "ins": 78,
+          "sub": 23,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": -0.29527559055118147,
+        "error_delta_vs_online_uniform": -12,
+        "executed_windows": 30159,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.4913489736070381,
+        "max_gap": 4,
+        "unspent_tokens_total": 659.666666666665,
+        "forced_actions": 13254,
+        "autonomous_decisions": 0,
+        "autonomous_trigger_rate": 0.0,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.5339938381215182,
+            -0.07506945568322818
+          ],
+          "mean": -0.2940709331441487
+        }
+      },
+      "rollout16_eager_oracle": {
+        "metrics": {
+          "wer": 3.8877952755905514,
+          "error": 158,
+          "del": 68,
+          "ins": 67,
+          "sub": 23,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": -0.8858267716535431,
+        "error_delta_vs_online_uniform": -36,
+        "executed_windows": 30161,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.49138155751058976,
+        "max_gap": 4,
+        "unspent_tokens_total": 657.6666666666649,
+        "forced_actions": 14482,
+        "autonomous_decisions": 0,
+        "autonomous_trigger_rate": 0.0,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -1.2093952450107466,
+            -0.5921066284907468
+          ],
+          "mean": -0.8871508357783489
+        }
+      },
+      "B2_old": {
+        "metrics": {
+          "wer": 4.724409448818897,
+          "error": 192,
+          "del": 93,
+          "ins": 76,
+          "sub": 23,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": -0.04921259842519721,
+        "error_delta_vs_online_uniform": -2,
+        "executed_windows": 30608,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.4986640599543825,
+        "max_gap": 4,
+        "unspent_tokens_total": 210.66666666666617,
+        "forced_actions": 3326,
+        "autonomous_decisions": 19488,
+        "autonomous_trigger_rate": 0.6026272577996716,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.2255653234364427,
+            0.12379378449910303
+          ],
+          "mean": -0.05028157539011933
+        },
+        "fraction_of_eager_rollout_oracle_WER_gap_recovered": 0.055555555555555976
+      },
+      "B2_DA1": {
+        "metrics": {
+          "wer": 4.798228346456693,
+          "error": 195,
+          "del": 96,
+          "ins": 75,
+          "sub": 24,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.02460629921259816,
+        "error_delta_vs_online_uniform": 1,
+        "executed_windows": 30211,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.4921961550993809,
+        "max_gap": 4,
+        "unspent_tokens_total": 607.6666666666652,
+        "forced_actions": 11366,
+        "autonomous_decisions": 29166,
+        "autonomous_trigger_rate": 0.11338544881025853,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.24010325283959738,
+            0.29349910717807914
+          ],
+          "mean": 0.028988774316261304
+        },
+        "fraction_of_eager_rollout_oracle_WER_gap_recovered": -0.027777777777777485
+      },
+      "B2_PI1_primary": {
+        "metrics": {
+          "wer": 4.84744094488189,
+          "error": 197,
+          "del": 97,
+          "ins": 74,
+          "sub": 26,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.07381889763779537,
+        "error_delta_vs_online_uniform": 3,
+        "executed_windows": 30525,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.49731182795698925,
+        "max_gap": 4,
+        "unspent_tokens_total": 293.66666666666623,
+        "forced_actions": 3780,
+        "autonomous_decisions": 20547,
+        "autonomous_trigger_rate": 0.5454324232248017,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.100885270733918,
+            0.26974337754320676
+          ],
+          "mean": 0.07258152442564912
+        },
+        "delta_wer_pp_vs_B2_old": 0.12303149606299257,
+        "error_delta_vs_B2_old": 5,
+        "paired_bootstrap_vs_B2_old": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.10296278739037684,
+            0.36765607862379496
+          ],
+          "mean": 0.12286309981576847
+        },
+        "fraction_of_eager_rollout_oracle_WER_gap_recovered": -0.08333333333333345
+      },
+      "B2_PI1_fit90_sensitivity": {
+        "metrics": {
+          "wer": 4.7736220472440944,
+          "error": 194,
+          "del": 91,
+          "ins": 79,
+          "sub": 24,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.0,
+        "error_delta_vs_online_uniform": 0,
+        "executed_windows": 30166,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.4914630172694689,
+        "max_gap": 4,
+        "unspent_tokens_total": 652.6666666666649,
+        "forced_actions": 14267,
+        "autonomous_decisions": 30117,
+        "autonomous_trigger_rate": 0.011986585649301058,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.14624429017320137,
+            0.1451106939155419
+          ],
+          "mean": 0.0005109356656442599
+        },
+        "delta_wer_pp_vs_B2_old": 0.04921259842519721,
+        "error_delta_vs_B2_old": 2,
+        "paired_bootstrap_vs_B2_old": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.17423125654832972,
+            0.2801436694023075
+          ],
+          "mean": 0.050792511055763594
+        },
+        "fraction_of_eager_rollout_oracle_WER_gap_recovered": 0.0
+      }
+    }
+  },
+  "held_out_A_pi1_audit": {
+    "rows": 20547,
+    "positive_rows": 272,
+    "positive_prevalence": 0.013237942278678153,
+    "pr_auc_regression_score": 0.023229713678610507,
+    "pr_auc_auxiliary_positive_score": 0.023229713678610507,
+    "positive_recall_at_top_10pct": 0.23529411764705882,
+    "ndcg_at_top_10pct": 0.1521375537896395,
+    "offline_calibration_matched_top10_action_regret": {
+      "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+      "K": 2055,
+      "total": 242.0,
+      "per_selected_action": 0.11776155717761558,
+      "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+    },
+    "signed_advantage_mae": 0.0333399689669443,
+    "signed_advantage_smooth_l1": 0.011305476306231048,
+    "score_decile_true_mean_advantage_low_to_high": [
+      0.0009732360097323601,
+      0.00145985401459854,
+      -0.00145985401459854,
+      0.007785888077858881,
+      -0.00048661800486618007,
+      0.0,
+      0.008759124087591242,
+      0.008763388510223954,
+      0.008763388510223954,
+      0.01801363193768257
+    ],
+    "score_decile_spearman": 0.7294866524160775,
+    "highest_minus_lowest_decile_mean_advantage": 0.01704039592795021,
+    "action_positive_precision": 0.016329080039261177,
+    "action_positive_recall": 0.6727941176470589,
+    "harmful_execute_count": 87,
+    "selected_signed_advantage_sum": 96.0,
+    "action_regret": 183.0
+  },
+  "decision": {
+    "directional_success": false,
+    "strong_go": false,
+    "stop_without_PI2": true,
+    "rule": "PI1 primary must beat B2-old and online uniform; strong-go additionally <=-0.5pp and CI upper<0"
+  },
+  "limitations": [
+    "32/56 non-random train shards",
+    "train-calibration repeatedly inspected by prior smokes",
+    "future-aware reference labels are offline supervision only",
+    "no formal dev/test result",
+    "no real wall-time or submission-latency conclusion"
+  ],
+  "runtime_seconds": 1153.0758245401084
+}

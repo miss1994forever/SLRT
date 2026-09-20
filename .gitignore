@@ -74,6 +74,36 @@ Online/CSLR/results/phoenix-2014t_ISLR/p3_counterfactual_utility_dataset_v1_49fa
 !Online/CSLR/results/phoenix-2014t_ISLR/p3_counterfactual_utility_dataset_v1_49faacc3/schema.json
 !Online/CSLR/results/phoenix-2014t_ISLR/p3_counterfactual_utility_dataset_v1_49faacc3/dataset_summary.json
 !Online/CSLR/results/phoenix-2014t_ISLR/p3_counterfactual_utility_dataset_v1_49faacc3/dataset_manifest.json
+
+# Frozen repaired A0 aggregate referenced by the experiment ledger.
+!Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/
+Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/*
+!Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/aggregate/
+Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/aggregate/*
+!Online/CSLR/results/phoenix-2014t_ISLR/baseline_matrix_v1_repaired_49faacc3/aggregate/dev_summary.md
+
+# Frozen lightweight evidence for the post-P3 online scheduling research chain.
+# Keep only preregistration, metrics and integrity manifests; dense replay,
+# counterfactual shards, feature arrays, scores and model weights remain local.
+!Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3/
+Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3/*
+!Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3/protocol_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3/multi_gpu_run_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3/fit_calibration_split.json
+
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_partial32_*/
+Online/CSLR/results/phoenix-2014t_ISLR/p3_partial32_*/*
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_partial32_*/metrics.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_partial32_*/dataset_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_partial32_*/manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_partial32_*/erratum.json
+
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/
+Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/*
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/metrics.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/resolved_config_preregistered.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/dataset_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/manifest.json
 Online/CTC_fusion/results/
 Online/SLT/results/
 Online/CSLR/run_logs/

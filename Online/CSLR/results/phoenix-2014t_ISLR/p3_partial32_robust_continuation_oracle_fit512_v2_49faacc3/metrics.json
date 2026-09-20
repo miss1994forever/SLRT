@@ -1,0 +1,47 @@
+{
+  "scope": {
+    "samples": 512,
+    "sources": 261,
+    "sample_ids_sha256": "3b1edc49bd7f4de54f933f512bf2739f5d4ec1af3ad5f3addeda2fa2547234f6"
+  },
+  "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+  "uniform": {
+    "errors": 160,
+    "wer": 3.959415986142044
+  },
+  "robust_oracle": {
+    "errors": 112,
+    "wer": 2.771591190299431,
+    "delta_errors": -48,
+    "delta_wer_pp": -1.1878247958426131,
+    "source_cluster_bootstrap_95pct_delta_wer_pp": [
+      -1.5227190939479107,
+      -0.8688745448224122
+    ]
+  },
+  "schedule": {
+    "blocks": 14863,
+    "side_choices": 47,
+    "left_choices": 24,
+    "right_choices": 23,
+    "side_choice_rate": 0.0031622148960505953,
+    "selected_windows": 30119,
+    "dense_windows": 60230,
+    "window_rate": 0.5000664120869999,
+    "summed_worst_case_local_reward": 48
+  },
+  "gate": {
+    "passed": true,
+    "checks": {
+      "delta_wer_le_minus_0_5pp": true,
+      "bootstrap_upper_lt_0": true
+    }
+  },
+  "limitations": [
+    "fit-only exploratory audit",
+    "reference/future-aware non-deployable oracle",
+    "partial32-derived dense replay",
+    "robust labels are likely substantially sparser"
+  ],
+  "elapsed_seconds": 266.13104133773595
+}

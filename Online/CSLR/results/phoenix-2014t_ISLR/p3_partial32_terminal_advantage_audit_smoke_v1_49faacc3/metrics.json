@@ -1,0 +1,712 @@
+{
+  "scope": "preregistered partial32 train-calibration terminal-advantage audit smoke",
+  "samples": 128,
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "trained_model": false,
+  "subset": {
+    "rule": "lowest sha256(seed + NUL + sample_id)",
+    "seed": "terminal-advantage-audit-v1",
+    "size": 128,
+    "sample_ids": [
+      "train/28September_2009_Monday_tagesschau-4684",
+      "train/07December_2010_Tuesday_heute-5635",
+      "train/09February_2011_Wednesday_tagesschau-2506",
+      "train/05March_2011_Saturday_tagesschau-5444",
+      "train/25August_2009_Tuesday_heute-3314",
+      "train/15December_2009_Tuesday_tagesschau-6960",
+      "train/17February_2011_Thursday_heute-388",
+      "train/11August_2010_Wednesday_tagesschau-5",
+      "train/01June_2011_Wednesday_heute-954",
+      "train/25August_2009_Tuesday_heute-3305",
+      "train/06April_2010_Tuesday_tagesschau-312",
+      "train/22September_2010_Wednesday_heute-2620",
+      "train/22May_2010_Saturday_tagesschau-2739",
+      "train/26January_2010_Tuesday_heute-95",
+      "train/02September_2010_Thursday_heute-3455",
+      "train/02September_2010_Thursday_heute-3464",
+      "train/26May_2010_Wednesday_heute-7866",
+      "train/09December_2010_Thursday_heute-7558",
+      "train/21July_2010_Wednesday_tagesschau-7372",
+      "train/12January_2010_Tuesday_heute-2540",
+      "train/25August_2009_Tuesday_heute-3303",
+      "train/26May_2010_Wednesday_heute-7869",
+      "train/15December_2009_Tuesday_tagesschau-6970",
+      "train/15December_2009_Tuesday_tagesschau-6967",
+      "train/15December_2009_Tuesday_tagesschau-6964",
+      "train/24January_2011_Monday_heute-6972",
+      "train/23September_2010_Thursday_tagesschau-3441",
+      "train/12April_2010_Monday_heute-7684",
+      "train/12July_2011_Tuesday_heute-1286",
+      "train/13July_2010_Tuesday_heute-4811",
+      "train/06February_2011_Sunday_tagesschau-6912",
+      "train/17February_2011_Thursday_heute-390",
+      "train/09December_2010_Thursday_heute-7550",
+      "train/09December_2010_Thursday_heute-7559",
+      "train/11May_2011_Wednesday_tagesschau-7023",
+      "train/05March_2011_Saturday_tagesschau-5446",
+      "train/22May_2010_Saturday_tagesschau-2730",
+      "train/25August_2009_Tuesday_heute-3311",
+      "train/11May_2011_Wednesday_tagesschau-7018",
+      "train/15June_2010_Tuesday_tagesschau-89",
+      "train/09December_2010_Thursday_heute-7560",
+      "train/25August_2009_Tuesday_heute-3312",
+      "train/21July_2010_Wednesday_tagesschau-7382",
+      "train/09December_2010_Thursday_heute-7557",
+      "train/02October_2010_Saturday_tagesschau-1310",
+      "train/29September_2010_Wednesday_heute-5461",
+      "train/23September_2010_Thursday_tagesschau-3445",
+      "train/07December_2010_Tuesday_heute-5625",
+      "train/12December_2010_Sunday_tagesschau-5603",
+      "train/15December_2009_Tuesday_tagesschau-6962",
+      "train/02October_2010_Saturday_tagesschau-1304",
+      "train/21July_2010_Wednesday_tagesschau-7381",
+      "train/12April_2010_Monday_heute-7683",
+      "train/06February_2011_Sunday_tagesschau-6918",
+      "train/14October_2010_Thursday_tagesschau-300",
+      "train/15March_2011_Tuesday_tagesschau-3327",
+      "train/09August_2009_Sunday_tagesschau-1191",
+      "train/04July_2009_Saturday_tagesschau-3341",
+      "train/12January_2010_Tuesday_heute-2549",
+      "train/13August_2011_Saturday_tagesschau-1408",
+      "train/14March_2011_Monday_tagesschau-7605",
+      "train/05March_2011_Saturday_tagesschau-5440",
+      "train/01May_2010_Saturday_tagesschau-7196",
+      "train/14July_2009_Tuesday_tagesschau-2422",
+      "train/08November_2010_Monday_heute-6884",
+      "train/16November_2009_Monday_tagesschau-3093",
+      "train/14October_2010_Thursday_tagesschau-293",
+      "train/11May_2011_Wednesday_tagesschau-7014",
+      "train/24January_2011_Monday_heute-6975",
+      "train/06February_2011_Sunday_tagesschau-6916",
+      "train/21July_2010_Wednesday_tagesschau-7379",
+      "train/26March_2011_Saturday_tagesschau-5721",
+      "train/14March_2011_Monday_tagesschau-7596",
+      "train/05January_2011_Wednesday_heute-3538",
+      "train/22September_2010_Wednesday_heute-2614",
+      "train/26January_2010_Tuesday_heute-101",
+      "train/22September_2010_Wednesday_heute-2618",
+      "train/09August_2009_Sunday_tagesschau-1188",
+      "train/09February_2011_Wednesday_tagesschau-2511",
+      "train/13July_2010_Tuesday_heute-4812",
+      "train/22September_2010_Wednesday_heute-2621",
+      "train/15June_2010_Tuesday_tagesschau-78",
+      "train/17February_2011_Thursday_heute-385",
+      "train/15December_2009_Tuesday_tagesschau-6961",
+      "train/25August_2009_Tuesday_heute-3309",
+      "train/12July_2011_Tuesday_heute-1285",
+      "train/02October_2010_Saturday_tagesschau-1303",
+      "train/14March_2011_Monday_tagesschau-7602",
+      "train/16November_2009_Monday_tagesschau-3100",
+      "train/01June_2011_Wednesday_heute-946",
+      "train/15March_2011_Tuesday_tagesschau-3324",
+      "train/27July_2010_Tuesday_heute-5272",
+      "train/24January_2011_Monday_heute-6977",
+      "train/15June_2010_Tuesday_tagesschau-81",
+      "train/12April_2010_Monday_heute-7696",
+      "train/06February_2011_Sunday_tagesschau-6913",
+      "train/27July_2010_Tuesday_heute-5262",
+      "train/11May_2011_Wednesday_tagesschau-7015",
+      "train/01June_2011_Wednesday_heute-945",
+      "train/09December_2010_Thursday_heute-7551",
+      "train/29September_2010_Wednesday_heute-5454",
+      "train/24January_2011_Monday_heute-6974",
+      "train/14October_2010_Thursday_tagesschau-292",
+      "train/27July_2010_Tuesday_heute-5267",
+      "train/12April_2010_Monday_heute-7694",
+      "train/09August_2009_Sunday_tagesschau-1187",
+      "train/05January_2011_Wednesday_heute-3533",
+      "train/24January_2011_Monday_heute-6986",
+      "train/16November_2009_Monday_tagesschau-3102",
+      "train/14October_2010_Thursday_tagesschau-288",
+      "train/25August_2009_Tuesday_heute-3320",
+      "train/05October_2011_Wednesday_heute-1071",
+      "train/02September_2010_Thursday_heute-3459",
+      "train/01May_2010_Saturday_tagesschau-7190",
+      "train/12January_2010_Tuesday_heute-2553",
+      "train/19April_2010_Monday_heute-777",
+      "train/25August_2009_Tuesday_heute-3308",
+      "train/12January_2010_Tuesday_heute-2550",
+      "train/09February_2011_Wednesday_tagesschau-2505",
+      "train/07December_2010_Tuesday_heute-5638",
+      "train/28September_2009_Monday_tagesschau-4671",
+      "train/01May_2010_Saturday_tagesschau-7191",
+      "train/11May_2011_Wednesday_tagesschau-7013",
+      "train/14July_2009_Tuesday_tagesschau-2423",
+      "train/17February_2011_Thursday_heute-393",
+      "train/02September_2010_Thursday_heute-3465",
+      "train/12January_2010_Tuesday_heute-2547",
+      "train/06February_2011_Sunday_tagesschau-6920"
+    ],
+    "sample_ids_sha256": "085264735572dedb25bb043da0a1d5d74ffc97bc60d32a810eb893e13e418833"
+  },
+  "online_uniform_subset": {
+    "metrics": {
+      "wer": 6.763285024154589,
+      "error": 70,
+      "del": 39,
+      "ins": 28,
+      "sub": 3,
+      "ref_len": 1035
+    },
+    "delta_wer_pp_vs_online_uniform": 0.0,
+    "error_delta_vs_online_uniform": 0,
+    "executed_windows": 7745,
+    "dense_windows": 15491,
+    "actual_window_rate": 0.4999677231941127,
+    "max_gap": 3,
+    "paired_bootstrap_vs_online_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "mean": 0.0
+    }
+  },
+  "online_uniform_full526_reference": {
+    "metrics": {
+      "wer": 4.7736220472440944,
+      "error": 194,
+      "del": 94,
+      "ins": 76,
+      "sub": 24,
+      "ref_len": 4064
+    },
+    "delta_wer_pp_vs_online_uniform": 0.0,
+    "error_delta_vs_online_uniform": 0,
+    "executed_windows": 30685,
+    "dense_windows": 61380,
+    "actual_window_rate": 0.49991854024112087,
+    "max_gap": 3,
+    "unspent_tokens_total": 133.66666666666666,
+    "forced_actions": 0,
+    "autonomous_decisions": 0,
+    "autonomous_trigger_rate": 0.0,
+    "paired_bootstrap_vs_online_uniform": {
+      "unit": "WER percentage points (candidate - baseline)",
+      "seed": 260923,
+      "repetitions": 2000,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "mean": 0.0
+    }
+  },
+  "policies": {
+    "B2_old": {
+      "local16_vs_terminal_labels": {
+        "states": 4894,
+        "local16_counts": {
+          "-2": 2,
+          "-1": 49,
+          "0": 4783,
+          "1": 58,
+          "2": 2
+        },
+        "terminal_counts": {
+          "-2": 3,
+          "-1": 44,
+          "0": 4789,
+          "1": 56,
+          "2": 2
+        },
+        "exact_advantage_agreement": 0.9871270944013077,
+        "sign_agreement_all": 0.9873314262362076,
+        "union_nonzero_states": 139,
+        "sign_agreement_union_nonzero": 0.5539568345323741,
+        "direct_opposite_signs": 0,
+        "local_zero_terminal_nonzero": 28,
+        "local_nonzero_terminal_zero": 34,
+        "local_positive_terminal_nonpositive": 16,
+        "local_nonpositive_terminal_positive": 14,
+        "pearson_advantage": 0.7407587343112703
+      },
+      "by_remaining_windows_to_eos": {
+        "0-15": {
+          "states": 620,
+          "local16_counts": {
+            "-1": 2,
+            "0": 612,
+            "1": 6
+          },
+          "terminal_counts": {
+            "-1": 2,
+            "0": 612,
+            "1": 6
+          },
+          "exact_advantage_agreement": 1.0,
+          "sign_agreement_all": 1.0,
+          "union_nonzero_states": 8,
+          "sign_agreement_union_nonzero": 1.0,
+          "direct_opposite_signs": 0,
+          "local_zero_terminal_nonzero": 0,
+          "local_nonzero_terminal_zero": 0,
+          "local_positive_terminal_nonpositive": 0,
+          "local_nonpositive_terminal_positive": 0,
+          "pearson_advantage": 1.0
+        },
+        "16-31": {
+          "states": 606,
+          "local16_counts": {
+            "-1": 2,
+            "0": 595,
+            "1": 8,
+            "2": 1
+          },
+          "terminal_counts": {
+            "-1": 1,
+            "0": 598,
+            "1": 6,
+            "2": 1
+          },
+          "exact_advantage_agreement": 0.995049504950495,
+          "sign_agreement_all": 0.995049504950495,
+          "union_nonzero_states": 11,
+          "sign_agreement_union_nonzero": 0.7272727272727273,
+          "direct_opposite_signs": 0,
+          "local_zero_terminal_nonzero": 0,
+          "local_nonzero_terminal_zero": 3,
+          "local_positive_terminal_nonpositive": 2,
+          "local_nonpositive_terminal_positive": 0,
+          "pearson_advantage": 0.8855535867513263
+        },
+        "32-63": {
+          "states": 1162,
+          "local16_counts": {
+            "-1": 17,
+            "0": 1128,
+            "1": 17
+          },
+          "terminal_counts": {
+            "-1": 17,
+            "0": 1134,
+            "1": 11
+          },
+          "exact_advantage_agreement": 0.9862306368330465,
+          "sign_agreement_all": 0.9862306368330465,
+          "union_nonzero_states": 39,
+          "sign_agreement_union_nonzero": 0.5897435897435898,
+          "direct_opposite_signs": 0,
+          "local_zero_terminal_nonzero": 5,
+          "local_nonzero_terminal_zero": 11,
+          "local_positive_terminal_nonpositive": 6,
+          "local_nonpositive_terminal_positive": 0,
+          "pearson_advantage": 0.7458470237290157
+        },
+        "64+": {
+          "states": 2506,
+          "local16_counts": {
+            "-2": 2,
+            "-1": 28,
+            "0": 2448,
+            "1": 27,
+            "2": 1
+          },
+          "terminal_counts": {
+            "-2": 3,
+            "-1": 24,
+            "0": 2445,
+            "1": 33,
+            "2": 1
+          },
+          "exact_advantage_agreement": 0.9824421388667198,
+          "sign_agreement_all": 0.9828411811652035,
+          "union_nonzero_states": 81,
+          "sign_agreement_union_nonzero": 0.4691358024691358,
+          "direct_opposite_signs": 0,
+          "local_zero_terminal_nonzero": 23,
+          "local_nonzero_terminal_zero": 20,
+          "local_positive_terminal_nonpositive": 8,
+          "local_nonpositive_terminal_positive": 14,
+          "pearson_advantage": 0.6864957871360097
+        }
+      },
+      "base_subset": {
+        "metrics": {
+          "wer": 6.859903381642512,
+          "error": 71,
+          "del": 40,
+          "ins": 28,
+          "sub": 3,
+          "ref_len": 1035
+        },
+        "delta_wer_pp_vs_online_uniform": 0.09661835748792313,
+        "error_delta_vs_online_uniform": 1,
+        "executed_windows": 7720,
+        "dense_windows": 15491,
+        "actual_window_rate": 0.49835388289974825,
+        "max_gap": 4,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.20182655017503334,
+            0.41030927835051517
+          ],
+          "mean": 0.0971131375899337
+        }
+      },
+      "terminal_policy_improvement_oracle_subset": {
+        "metrics": {
+          "wer": 5.120772946859903,
+          "error": 53,
+          "del": 28,
+          "ins": 22,
+          "sub": 3,
+          "ref_len": 1035
+        },
+        "delta_wer_pp_vs_online_uniform": -1.6425120772946862,
+        "error_delta_vs_online_uniform": -17,
+        "executed_windows": 7617,
+        "dense_windows": 15491,
+        "actual_window_rate": 0.49170486088696663,
+        "max_gap": 4,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -2.581278564389617,
+            -0.890098191546532
+          ],
+          "mean": -1.6607965786697119
+        },
+        "delta_wer_pp_vs_base": -1.7391304347826093,
+        "error_delta_vs_base": -18,
+        "paired_bootstrap_vs_base": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -2.6759404366438195,
+            -0.9717937105494072
+          ],
+          "mean": -1.7579097162596453
+        }
+      },
+      "full526_reference": {
+        "metrics": {
+          "wer": 4.724409448818897,
+          "error": 192,
+          "del": 93,
+          "ins": 76,
+          "sub": 23,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": -0.04921259842519721,
+        "error_delta_vs_online_uniform": -2,
+        "executed_windows": 30608,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.4986640599543825,
+        "max_gap": 4,
+        "unspent_tokens_total": 210.66666666666617,
+        "forced_actions": 3326,
+        "autonomous_decisions": 19488,
+        "autonomous_trigger_rate": 0.6026272577996716,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.2255653234364427,
+            0.12379378449910303
+          ],
+          "mean": -0.05028157539011933
+        },
+        "fraction_of_eager_rollout_oracle_WER_gap_recovered": 0.055555555555555976
+      }
+    },
+    "B2_PI1_primary": {
+      "local16_vs_terminal_labels": {
+        "states": 5100,
+        "local16_counts": {
+          "-2": 3,
+          "-1": 48,
+          "0": 4970,
+          "1": 78,
+          "2": 1
+        },
+        "terminal_counts": {
+          "-2": 4,
+          "-1": 43,
+          "0": 4976,
+          "1": 75,
+          "2": 2
+        },
+        "exact_advantage_agreement": 0.981764705882353,
+        "sign_agreement_all": 0.9819607843137255,
+        "union_nonzero_states": 173,
+        "sign_agreement_union_nonzero": 0.4682080924855491,
+        "direct_opposite_signs": 0,
+        "local_zero_terminal_nonzero": 43,
+        "local_nonzero_terminal_zero": 49,
+        "local_positive_terminal_nonpositive": 28,
+        "local_nonpositive_terminal_positive": 26,
+        "pearson_advantage": 0.6404854400192971
+      },
+      "by_remaining_windows_to_eos": {
+        "0-15": {
+          "states": 673,
+          "local16_counts": {
+            "-1": 2,
+            "0": 669,
+            "1": 2
+          },
+          "terminal_counts": {
+            "-1": 2,
+            "0": 669,
+            "1": 2
+          },
+          "exact_advantage_agreement": 1.0,
+          "sign_agreement_all": 1.0,
+          "union_nonzero_states": 4,
+          "sign_agreement_union_nonzero": 1.0,
+          "direct_opposite_signs": 0,
+          "local_zero_terminal_nonzero": 0,
+          "local_nonzero_terminal_zero": 0,
+          "local_positive_terminal_nonpositive": 0,
+          "local_nonpositive_terminal_positive": 0,
+          "pearson_advantage": 1.0
+        },
+        "16-31": {
+          "states": 673,
+          "local16_counts": {
+            "-1": 3,
+            "0": 663,
+            "1": 6,
+            "2": 1
+          },
+          "terminal_counts": {
+            "-1": 1,
+            "0": 667,
+            "1": 4,
+            "2": 1
+          },
+          "exact_advantage_agreement": 0.9940564635958395,
+          "sign_agreement_all": 0.9940564635958395,
+          "union_nonzero_states": 10,
+          "sign_agreement_union_nonzero": 0.6,
+          "direct_opposite_signs": 0,
+          "local_zero_terminal_nonzero": 0,
+          "local_nonzero_terminal_zero": 4,
+          "local_positive_terminal_nonpositive": 2,
+          "local_nonpositive_terminal_positive": 0,
+          "pearson_advantage": 0.8315202651760472
+        },
+        "32-63": {
+          "states": 1232,
+          "local16_counts": {
+            "-1": 19,
+            "0": 1191,
+            "1": 22
+          },
+          "terminal_counts": {
+            "-1": 12,
+            "0": 1200,
+            "1": 20
+          },
+          "exact_advantage_agreement": 0.9878246753246753,
+          "sign_agreement_all": 0.9878246753246753,
+          "union_nonzero_states": 44,
+          "sign_agreement_union_nonzero": 0.6590909090909091,
+          "direct_opposite_signs": 0,
+          "local_zero_terminal_nonzero": 3,
+          "local_nonzero_terminal_zero": 12,
+          "local_positive_terminal_nonpositive": 5,
+          "local_nonpositive_terminal_positive": 3,
+          "pearson_advantage": 0.8008123099820836
+        },
+        "64+": {
+          "states": 2522,
+          "local16_counts": {
+            "-2": 3,
+            "-1": 24,
+            "0": 2447,
+            "1": 48
+          },
+          "terminal_counts": {
+            "-2": 4,
+            "-1": 28,
+            "0": 2440,
+            "1": 49,
+            "2": 1
+          },
+          "exact_advantage_agreement": 0.9706582077716098,
+          "sign_agreement_all": 0.9710547184773989,
+          "union_nonzero_states": 115,
+          "sign_agreement_union_nonzero": 0.3652173913043478,
+          "direct_opposite_signs": 0,
+          "local_zero_terminal_nonzero": 40,
+          "local_nonzero_terminal_zero": 33,
+          "local_positive_terminal_nonpositive": 21,
+          "local_nonpositive_terminal_positive": 23,
+          "pearson_advantage": 0.5423165166704973
+        }
+      },
+      "base_subset": {
+        "metrics": {
+          "wer": 6.859903381642512,
+          "error": 71,
+          "del": 40,
+          "ins": 27,
+          "sub": 4,
+          "ref_len": 1035
+        },
+        "delta_wer_pp_vs_online_uniform": 0.09661835748792313,
+        "error_delta_vs_online_uniform": 1,
+        "executed_windows": 7712,
+        "dense_windows": 15491,
+        "actual_window_rate": 0.4978374540055516,
+        "max_gap": 4,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.3099900679943812,
+            0.5036398079237584
+          ],
+          "mean": 0.09329021914795667
+        }
+      },
+      "terminal_policy_improvement_oracle_subset": {
+        "metrics": {
+          "wer": 4.927536231884058,
+          "error": 51,
+          "del": 26,
+          "ins": 22,
+          "sub": 3,
+          "ref_len": 1035
+        },
+        "delta_wer_pp_vs_online_uniform": -1.8357487922705316,
+        "error_delta_vs_online_uniform": -19,
+        "executed_windows": 7617,
+        "dense_windows": 15491,
+        "actual_window_rate": 0.49170486088696663,
+        "max_gap": 4,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -2.8292913023469857,
+            -1.0485429723038784
+          ],
+          "mean": -1.8566873361186627
+        },
+        "delta_wer_pp_vs_base": -1.9323671497584547,
+        "error_delta_vs_base": -20,
+        "paired_bootstrap_vs_base": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -2.8919600367726583,
+            -1.1352885525070955
+          ],
+          "mean": -1.9499775552666192
+        }
+      },
+      "full526_reference": {
+        "metrics": {
+          "wer": 4.84744094488189,
+          "error": 197,
+          "del": 97,
+          "ins": 74,
+          "sub": 26,
+          "ref_len": 4064
+        },
+        "delta_wer_pp_vs_online_uniform": 0.07381889763779537,
+        "error_delta_vs_online_uniform": 3,
+        "executed_windows": 30525,
+        "dense_windows": 61380,
+        "actual_window_rate": 0.49731182795698925,
+        "max_gap": 4,
+        "unspent_tokens_total": 293.66666666666623,
+        "forced_actions": 3780,
+        "autonomous_decisions": 20547,
+        "autonomous_trigger_rate": 0.5454324232248017,
+        "paired_bootstrap_vs_online_uniform": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.100885270733918,
+            0.26974337754320676
+          ],
+          "mean": 0.07258152442564912
+        },
+        "delta_wer_pp_vs_B2_old": 0.12303149606299257,
+        "error_delta_vs_B2_old": 5,
+        "paired_bootstrap_vs_B2_old": {
+          "unit": "WER percentage points (candidate - baseline)",
+          "seed": 260923,
+          "repetitions": 2000,
+          "ci95": [
+            -0.10296278739037684,
+            0.36765607862379496
+          ],
+          "mean": 0.12286309981576847
+        },
+        "fraction_of_eager_rollout_oracle_WER_gap_recovered": -0.08333333333333345
+      }
+    }
+  },
+  "interpretation_rule": {
+    "horizon_mismatch": "terminal oracle improves and local16/terminal union-nonzero sign agreement is low",
+    "stop_current_utility": "terminal oracle does not improve",
+    "other_bottleneck": "sign agreement is high but learned policy still fails"
+  },
+  "limitations": [
+    "32/56 non-random train shards",
+    "train calibration repeatedly inspected",
+    "deterministic 128-sample subset, not redrawn after outcomes",
+    "terminal labels/oracles use future, reference, and true endpoint and are not deployable",
+    "no dev/test claim",
+    "no formal wall-time or submission-latency conclusion"
+  ],
+  "workers": [
+    {
+      "status": "complete",
+      "worker": 0,
+      "workers": 4,
+      "samples": 32,
+      "seconds": 1485.5531443208456,
+      "sha256": "2a3dc68cd5cb03ba02aa66cad25823d1279f297013bf0610760d2224451ffebb",
+      "bytes": 76120
+    },
+    {
+      "status": "complete",
+      "worker": 1,
+      "workers": 4,
+      "samples": 32,
+      "seconds": 1335.1438239067793,
+      "sha256": "004cc3ec192d2fa85ff58426ecc0cbe13037a76f72579a9763237f78c74fc43a",
+      "bytes": 78013
+    },
+    {
+      "status": "complete",
+      "worker": 2,
+      "workers": 4,
+      "samples": 32,
+      "seconds": 1620.2201247289777,
+      "sha256": "2366e0e137dc0e7bdd09304ba0d03a2352791a15488ce5a20dc3441150a91246",
+      "bytes": 74407
+    },
+    {
+      "status": "complete",
+      "worker": 3,
+      "workers": 4,
+      "samples": 32,
+      "seconds": 1274.879750690423,
+      "sha256": "d25e69bbd5f452ee0a57c054a342ad84146bf54c46deb917c5f0b25b26476790",
+      "bytes": 74335
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-17T14:04:57.984679+00:00",
+  "workers": [
+    {
+      "status": "complete",
+      "worker": 0,
+      "workers": 4,
+      "samples": 750,
+      "blocks": 21227,
+      "seconds": 996.8326604114845,
+      "sha256": "a87663522e7b8a9943baf397b13f1e757d3adac0865786f0154c3725d2b31051",
+      "bytes": 3061460
+    },
+    {
+      "status": "complete",
+      "worker": 1,
+      "workers": 4,
+      "samples": 750,
+      "blocks": 21862,
+      "seconds": 965.7712079193443,
+      "sha256": "ef4a1265879d85fffc940d0350291000f7325a466beef1aba8259b423e38cd71",
+      "bytes": 3167531
+    },
+    {
+      "status": "complete",
+      "worker": 2,
+      "workers": 4,
+      "samples": 750,
+      "blocks": 21707,
+      "seconds": 952.0927816638723,
+      "sha256": "c7226dd5b62236df2247d8787894471587f7f574e33e9b3fdb102b23662a22e5",
+      "bytes": 3146807
+    },
+    {
+      "status": "complete",
+      "worker": 3,
+      "workers": 4,
+      "samples": 750,
+      "blocks": 21634,
+      "seconds": 980.1724383085966,
+      "sha256": "9a24d11f06f07184b2a8e0e687015732261b3ed03c0cf1910625cca9f250bf99",
+      "bytes": 3142780
+    }
+  ],
+  "config_sha256": "c6d5af91fefccfd9e7f24daa2c82844f80ef212b5787ffae6eabb1caa7fc45d4"
+}

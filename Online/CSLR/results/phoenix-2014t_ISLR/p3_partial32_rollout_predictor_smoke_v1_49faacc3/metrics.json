@@ -1,0 +1,313 @@
+{
+  "scope": "partial32 train-only chronological rollout predictor smoke; not a research result",
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "data": {
+    "fit_rows": 204141,
+    "calibration_rows": 30181,
+    "eos_flush_rows_retained_but_flag_hidden_from_predictor": true,
+    "missing_sequence_rows_by_sample": {
+      "train/25August_2009_Tuesday_heute-3301": 7
+    }
+  },
+  "objective": {
+    "primary": "signed rollout-16 advantage SmoothL1",
+    "auxiliary": "0.25 * capped-positive-weight BCE(advantage>0)"
+  },
+  "models": {
+    "B0_bookkeeping": {
+      "history": [
+        {
+          "epoch": 1,
+          "total": 0.09817159730882498,
+          "smooth_l1": 0.0032829733263729415,
+          "weighted_bce": 0.3795544939842185
+        },
+        {
+          "epoch": 2,
+          "total": 0.0690961263524164,
+          "smooth_l1": 0.0028964044173115534,
+          "weighted_bce": 0.2647988880837625
+        },
+        {
+          "epoch": 3,
+          "total": 0.06885743961161185,
+          "smooth_l1": 0.002897545463472198,
+          "weighted_bce": 0.2638395756007008
+        },
+        {
+          "epoch": 4,
+          "total": 0.06869877147870244,
+          "smooth_l1": 0.002889451322217144,
+          "weighted_bce": 0.26323728002386465
+        },
+        {
+          "epoch": 5,
+          "total": 0.06882225230902116,
+          "smooth_l1": 0.0028911175621423066,
+          "weighted_bce": 0.26372453846883503
+        }
+      ],
+      "positive_class_weight": 20.0,
+      "parameters": 2114
+    },
+    "B1_bookkeeping_visual_tcn": {
+      "history": [
+        {
+          "epoch": 1,
+          "total": 0.08567507351441563,
+          "smooth_l1": 0.0034273094894790735,
+          "weighted_bce": 0.32899105494937636
+        },
+        {
+          "epoch": 2,
+          "total": 0.06886851669557002,
+          "smooth_l1": 0.0029716924852562047,
+          "weighted_bce": 0.26358729673813236
+        },
+        {
+          "epoch": 3,
+          "total": 0.06785178223371525,
+          "smooth_l1": 0.0029351428875253925,
+          "weighted_bce": 0.25966655769005875
+        },
+        {
+          "epoch": 4,
+          "total": 0.06710332065292068,
+          "smooth_l1": 0.0029232386417999026,
+          "weighted_bce": 0.2567203269544934
+        },
+        {
+          "epoch": 5,
+          "total": 0.06646609271717828,
+          "smooth_l1": 0.002921806322146554,
+          "weighted_bce": 0.25417714694072074
+        }
+      ],
+      "positive_class_weight": 20.0,
+      "parameters": 8954
+    },
+    "B2_bookkeeping_prefix": {
+      "history": [
+        {
+          "epoch": 1,
+          "total": 0.09674422395461185,
+          "smooth_l1": 0.0034562430061248765,
+          "weighted_bce": 0.3731519240335431
+        },
+        {
+          "epoch": 2,
+          "total": 0.06513458518978231,
+          "smooth_l1": 0.0030342271579485484,
+          "weighted_bce": 0.24840143230781841
+        },
+        {
+          "epoch": 3,
+          "total": 0.06388713619807189,
+          "smooth_l1": 0.002964201662400663,
+          "weighted_bce": 0.24369173864769708
+        },
+        {
+          "epoch": 4,
+          "total": 0.06305678258547014,
+          "smooth_l1": 0.0029295908992832327,
+          "weighted_bce": 0.2405087666717532
+        },
+        {
+          "epoch": 5,
+          "total": 0.06263949780224552,
+          "smooth_l1": 0.0029107094279287745,
+          "weighted_bce": 0.23891515328146343
+        }
+      ],
+      "positive_class_weight": 20.0,
+      "parameters": 4034
+    },
+    "B3_bookkeeping_visual_tcn_prefix": {
+      "history": [
+        {
+          "epoch": 1,
+          "total": 0.08756523224288473,
+          "smooth_l1": 0.0038519448033563046,
+          "weighted_bce": 0.33485314998163646
+        },
+        {
+          "epoch": 2,
+          "total": 0.06454954836487553,
+          "smooth_l1": 0.0030379435893227893,
+          "weighted_bce": 0.24604641941471392
+        },
+        {
+          "epoch": 3,
+          "total": 0.06284951517023807,
+          "smooth_l1": 0.002967554703374909,
+          "weighted_bce": 0.2395278419270161
+        },
+        {
+          "epoch": 4,
+          "total": 0.061398349197200115,
+          "smooth_l1": 0.002933870712193484,
+          "weighted_bce": 0.23385791434270042
+        },
+        {
+          "epoch": 5,
+          "total": 0.05978400009141957,
+          "smooth_l1": 0.0029145188628222083,
+          "weighted_bce": 0.2274779247058078
+        }
+      ],
+      "positive_class_weight": 20.0,
+      "parameters": 10874
+    }
+  },
+  "held_out_calibration": {
+    "B0_bookkeeping": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.1298715838504475,
+      "pr_auc_auxiliary_positive_score": 0.16473073716526462,
+      "positive_recall_at_top_10pct": 0.3049645390070922,
+      "ndcg_at_top_10pct": 0.3056494834184392,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 106.0,
+        "per_selected_action": 0.035110963895329576,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.009274197479989,
+      "signed_advantage_smooth_l1": 0.002918847623717583,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0016561775701120496,
+        0.0006626905524171889,
+        0.0033134527038782835,
+        0.0026507622096687555,
+        0.005632869433611631,
+        0.0043074884451925755,
+        -0.0006626905524171889,
+        0.001988071482628584,
+        0.0016567263519391418,
+        0.013585155829787254
+      ],
+      "score_decile_spearman": 0.309090909090909,
+      "highest_minus_lowest_decile_mean_advantage": 0.011928978259675205
+    },
+    "B1_bookkeeping_visual_tcn": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.12225596899777519,
+      "pr_auc_auxiliary_positive_score": 0.12512671520568383,
+      "positive_recall_at_top_10pct": 0.3404255319148936,
+      "ndcg_at_top_10pct": 0.32517967835999106,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 102.0,
+        "per_selected_action": 0.03378602186154356,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.011584304282632745,
+      "signed_advantage_smooth_l1": 0.0029552166765790954,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0013249419862404466,
+        0.001988071482628584,
+        0.0016567263519391418,
+        0.001988071482628584,
+        0.003976142965257168,
+        0.0026507622096687555,
+        0.0036447979509830475,
+        0.0029821074567735195,
+        0.00033134527620859444,
+        0.014247845858335495
+      ],
+      "score_decile_spearman": 0.4559291577600484,
+      "highest_minus_lowest_decile_mean_advantage": 0.012922903872095048
+    },
+    "B2_bookkeeping_prefix": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.1429950954913322,
+      "pr_auc_auxiliary_positive_score": 0.15254587603023675,
+      "positive_recall_at_top_10pct": 0.4326241134751773,
+      "ndcg_at_top_10pct": 0.3862208679195926,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 86.0,
+        "per_selected_action": 0.02848625372639947,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.012303960133841487,
+      "signed_advantage_smooth_l1": 0.0029480412535831673,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0013249419862404466,
+        0.001988071482628584,
+        0.002319416729733348,
+        0.0013253811048343778,
+        0.0016567263519391418,
+        0.000994035741314292,
+        0.0029821074567735195,
+        0.002319416729733348,
+        0.00033134527620859444,
+        0.01954936981201172
+      ],
+      "score_decile_spearman": 0.24316221747202585,
+      "highest_minus_lowest_decile_mean_advantage": 0.018224427825771272
+    },
+    "B3_bookkeeping_visual_tcn_prefix": {
+      "rows": 30181,
+      "positive_rows": 141,
+      "positive_prevalence": 0.004671813392531725,
+      "pr_auc_regression_score": 0.13344705491682218,
+      "pr_auc_auxiliary_positive_score": 0.14114923907438742,
+      "positive_recall_at_top_10pct": 0.3829787234042553,
+      "ndcg_at_top_10pct": 0.3555469557712136,
+      "offline_calibration_matched_top10_action_regret": {
+        "definition": "sum(true advantage of oracle top-K) - sum(true advantage of score top-K)",
+        "K": 3019,
+        "total": 92.0,
+        "per_selected_action": 0.030473666777078502,
+        "warning": "offline calibration diagnostic only; no threshold was tuned for deployment"
+      },
+      "signed_advantage_mae": 0.014263832367632507,
+      "signed_advantage_smooth_l1": 0.002976399430223024,
+      "score_decile_true_mean_advantage_low_to_high": [
+        0.0013249419862404466,
+        -0.00033134527620859444,
+        0.0029821074567735195,
+        0.0026507622096687555,
+        0.0013253811048343778,
+        -0.0006626905524171889,
+        0.0016567263519391418,
+        0.0029821074567735195,
+        0.005301524419337511,
+        0.017561299726366997
+      ],
+      "score_decile_spearman": 0.6443798763008685,
+      "highest_minus_lowest_decile_mean_advantage": 0.01623635774012655
+    }
+  },
+  "preregistered_gate": {
+    "passed": true,
+    "checks": {
+      "B3_PR_AUC_gt_B0": true,
+      "B3_recall_at_10pct_gt_B0": true,
+      "B3_NDCG_at_10pct_gt_B0": true,
+      "B3_decile_spearman_gt_0": true,
+      "B3_highest_decile_gt_lowest": true
+    },
+    "action": "eligible_for_closed_loop"
+  },
+  "closed_loop": "not implemented in this analyzer; gate is predictability-only",
+  "limitations": [
+    "32/56 non-random train shards",
+    "smoke hyperparameters",
+    "rollout teacher uses future dense replay and reference labels",
+    "tail windows enter only after observed EOS; no EOS flag is a predictor input"
+  ],
+  "runtime_seconds": 56.87437735311687
+}

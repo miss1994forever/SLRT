@@ -1,0 +1,50 @@
+{
+  "scope": "fit-only, one deterministic sample from each of 96 source videos",
+  "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+  "samples": 96,
+  "counts": {
+    "blocks": 2712,
+    "baseline_informative": 33,
+    "baseline_positive_sides": 9,
+    "late_future_informative": 33,
+    "late_future_positive_sides": 14,
+    "late_future_best_agree_all": 2699,
+    "late_future_best_agree_union_informative": 31,
+    "late_future_union_informative": 44,
+    "late_future_union_nonzero_sides": 51,
+    "late_future_sign_agree_union_nonzero": 21,
+    "span7_informative": 46,
+    "span7_positive_sides": 29,
+    "span7_best_agree_all": 2683,
+    "span7_best_agree_union_informative": 45,
+    "span7_union_informative": 74,
+    "span7_union_nonzero_sides": 86,
+    "span7_sign_agree_union_nonzero": 4,
+    "late_future_base_positive_sides": 9,
+    "late_future_base_positive_survives": 4,
+    "late_future_base_positive_reverses": 0,
+    "span7_base_positive_sides": 9,
+    "span7_base_positive_survives": 1,
+    "span7_base_positive_reverses": 0
+  },
+  "rates": {
+    "late_future": {
+      "best_agreement_all": 0.9952064896755162,
+      "best_agreement_union_informative": 0.7045454545454546,
+      "sign_agreement_union_nonzero": 0.4117647058823529,
+      "baseline_positive_survival": 0.4444444444444444
+    },
+    "span7": {
+      "best_agreement_all": 0.9893067846607669,
+      "best_agreement_union_informative": 0.6081081081081081,
+      "sign_agreement_union_nonzero": 0.046511627906976744,
+      "baseline_positive_survival": 0.1111111111111111
+    }
+  },
+  "elapsed_seconds": 68.22638351470232,
+  "limitations": [
+    "partial32 fit-only selected sources",
+    "labels are reference-aware and non-deployable",
+    "changing the decoder changes the target task itself"
+  ]
+}

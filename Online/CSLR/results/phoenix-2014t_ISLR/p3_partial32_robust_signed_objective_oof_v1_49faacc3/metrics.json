@@ -1,0 +1,123 @@
+{
+  "rows": 29726,
+  "class_order": [
+    "harmful",
+    "neutral",
+    "beneficial"
+  ],
+  "class_counts": [
+    143,
+    29522,
+    61
+  ],
+  "folds": [
+    {
+      "fold": 0,
+      "train_class_counts": [
+        114,
+        24748,
+        50
+      ],
+      "eval_class_counts": [
+        29,
+        4774,
+        11
+      ]
+    },
+    {
+      "fold": 1,
+      "train_class_counts": [
+        103,
+        23009,
+        50
+      ],
+      "eval_class_counts": [
+        40,
+        6513,
+        11
+      ]
+    },
+    {
+      "fold": 2,
+      "train_class_counts": [
+        123,
+        24120,
+        53
+      ],
+      "eval_class_counts": [
+        20,
+        5402,
+        8
+      ]
+    },
+    {
+      "fold": 3,
+      "train_class_counts": [
+        121,
+        22583,
+        48
+      ],
+      "eval_class_counts": [
+        22,
+        6939,
+        13
+      ]
+    },
+    {
+      "fold": 4,
+      "train_class_counts": [
+        111,
+        23628,
+        43
+      ],
+      "eval_class_counts": [
+        32,
+        5894,
+        18
+      ]
+    }
+  ],
+  "binary_B1_frozen": {
+    "pr_auc": 0.01262945133487552,
+    "positive_prevalence": 0.002052075695246458,
+    "K": 61,
+    "positive_recall_at_K": 0.016393441706895828,
+    "precision_at_K": 0.016393441706895828,
+    "top_K_signed_robust_utility": 0,
+    "top_K_positive_utility_captured": 1,
+    "top_K_harmful_actions": 1,
+    "all_positive_utility": 63
+  },
+  "signed_three_class": {
+    "pr_auc": 0.014498310865626442,
+    "positive_prevalence": 0.002052075695246458,
+    "K": 61,
+    "positive_recall_at_K": 0.06557376682758331,
+    "precision_at_K": 0.06557376682758331,
+    "top_K_signed_robust_utility": 2,
+    "top_K_positive_utility_captured": 4,
+    "top_K_harmful_actions": 2,
+    "all_positive_utility": 63
+  },
+  "posthoc_threshold_diagnostic_not_a_gate": {
+    "signed_utility": 7,
+    "K": 875
+  },
+  "gate": {
+    "minimal_passed": true,
+    "strong_headroom_passed": false,
+    "checks": {
+      "signed_top_K_gt_binary": true,
+      "signed_top_K_gt_0": true,
+      "signed_top_K_ge_21": false
+    },
+    "action": "stop_before_closed_loop"
+  },
+  "limitations": [
+    "fit-only OOF",
+    "partial32 replay",
+    "bounded offset3 decision lookahead",
+    "top-K is an intermediate ranking diagnostic, not deployable unknown-EOS control"
+  ],
+  "elapsed_seconds": 8.718681712634861
+}

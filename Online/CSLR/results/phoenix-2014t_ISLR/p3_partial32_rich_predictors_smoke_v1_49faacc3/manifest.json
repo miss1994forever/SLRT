@@ -1,0 +1,60 @@
+{
+  "created_utc": "2026-09-14T13:08:08.704692+00:00",
+  "status": "rich_predictor_pipeline_smoke_not_frozen",
+  "inputs": {
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/tools/analyze_phoenix_partial_rich_predictors.py": {
+      "bytes": 22941,
+      "sha256": "8d7111037ec80d90025b4476d5fa449da7a392dfe7d6251a2c6df56783977161"
+    },
+    "/tmp/phoenix_p2_train_center_sequences_v1.npz": {
+      "bytes": 216350163,
+      "sha256": "abdccf8e1f0af1b71aaab2834fce2182bff375917879d8acc5ece644e8d4ebd5"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_train_counterfactual_utility_partial32_smoke_v1_49faacc3/dataset_summary.json": {
+      "bytes": 1056,
+      "sha256": "86f7a45186e545a61a23e6b3e5091058d7df7ff4e09448d2961724560f61f89f"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_train_counterfactual_utility_partial32_smoke_v1_49faacc3/protocol_manifest.json": {
+      "bytes": 1928,
+      "sha256": "09b2d82af68dbea3ebd8806f5ac0e57a9b44aedf4ebd23b4fe4b317615c227db"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_train_counterfactual_utility_partial32_smoke_v1_49faacc3/fit_calibration_split.json": {
+      "bytes": 410640,
+      "sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3/protocol_manifest.json": {
+      "bytes": 2262,
+      "sha256": "30331c1701c95b5c720b92a17ae905522d911164caf66b795ed93c5a6c8d1d85"
+    },
+    "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/phoenix_iso_with_blank.vocab": {
+      "bytes": 12551,
+      "sha256": "d79c8ef31d8ec4345b511d641a832a67f1d8045020bee35521edee3b773fcc34"
+    }
+  },
+  "outputs": {
+    "metrics.json": {
+      "bytes": 5690,
+      "sha256": "5cc75c6279a6b3f3dc929c7994ae4ead998de76160862c58de4398c5e5004833"
+    },
+    "resolved_config.json": {
+      "bytes": 637,
+      "sha256": "d5bbdb1124c16f9f9d1cd2ffa2c90cf3ac48f6b859b94882e78aabbedeeb2cc3"
+    },
+    "calibration_schedules.jsonl.gz": {
+      "bytes": 45921,
+      "sha256": "88a8e0e9c80490aa81f4453c557df1119e89002ab74e22470422d35b917bf8fe"
+    },
+    "bookkeeping_linear.npz": {
+      "bytes": 2070,
+      "sha256": "0d84ae4c09c91e05a29da37794495fefae551a3c14ea9abde38fc7252e5057a2"
+    },
+    "bookkeeping_mlp.pt": {
+      "bytes": 7575,
+      "sha256": "4ea6029c40bc9f4882ee562a54e88950d2fef3324698d168be718054ae4c3af4"
+    },
+    "causal_pose_handshape_mlp.pt": {
+      "bytes": 87319,
+      "sha256": "0c53577d56f9d75d2624b4e6fa26804f1a33b0e413b7fe4614de8c2e1e74907b"
+    }
+  }
+}

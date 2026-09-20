@@ -1,0 +1,40 @@
+{
+  "experiment": "complete-train fit robust-continuation counterfactual block-label dataset",
+  "created_before_dataset_outcomes": true,
+  "scope": {
+    "samples": 6378,
+    "sources": 578,
+    "sample_ids_sha256": "ea9f022ef1160bc3be5786fc31ec745b7007222c400864bbe16cb5101a6ec28e"
+  },
+  "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+  "teacher": {
+    "past": "closed-loop robust-oracle selected past",
+    "future_continuations": [
+      "fixed offset2 center",
+      "fixed offset3 late"
+    ],
+    "side_label": "strictly positive minimum terminal edit-error improvement versus center",
+    "selection": "maximum minimum improvement, tie left then right, otherwise center",
+    "uses_reference_future_and_EOS": true
+  },
+  "predictor_inputs": {
+    "stored": [
+      "bookkeeping",
+      "past-paid-window decoder-prefix summary"
+    ],
+    "external_visual_archive": "must be supplied by separately audited full-train causal feature build",
+    "candidate_expensive_logits": false,
+    "reference_future_total_length_or_EOS": false,
+    "decision_arrival": "offset3, so all three candidate positions have arrived"
+  },
+  "intended_use": "source-disjoint fit-only OOF; calibration/dev/test forbidden for model selection",
+  "oracle_metrics_sha256": "b26a1045c8b1e5d7d98e4783961fd67fc0c695d7d84e10828fdfcbc2e90e70a7",
+  "forbidden": [
+    "GPU",
+    "calibration outcomes",
+    "dev",
+    "test",
+    "predictor training",
+    "git commit"
+  ]
+}

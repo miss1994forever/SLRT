@@ -1,0 +1,160 @@
+{
+  "scope": "partial-train rich-predictor smoke only; not a research result",
+  "gpu_used": false,
+  "dev_used": false,
+  "test_used": false,
+  "limitations": [
+    "only 32/56 non-random available train dense shards",
+    "one P2-excluded calibration sample omitted consistently from all comparisons",
+    "oracle training states are non-chronological",
+    "known-EOS replay chooses a complete schedule offline",
+    "no paired bootstrap CI, real wall-time, controller-cost, or latency claim",
+    "fixed smoke hyperparameters were not selected or frozen for a formal experiment"
+  ],
+  "causality_contract": {
+    "window_size": 16,
+    "padding_left": 7,
+    "candidate_coordinate": "padded 16-frame ISLR window start",
+    "latest_original_frame_visible": "min(T-1, candidate_start+8)",
+    "visual_history": "31 frames ending at latest_original_frame_visible",
+    "forbidden": [
+      "future frames",
+      "reference",
+      "candidate expensive logits",
+      "exact EOS",
+      "exact total or remaining budget"
+    ]
+  },
+  "shared_data": {
+    "fit_states": 103377,
+    "sampled_candidates": 293901,
+    "sampled_positive_candidates": 2645,
+    "sampled_utility_counts": {
+      "-3": 154,
+      "-2": 3492,
+      "-1": 112225,
+      "0": 175385,
+      "1": 2612,
+      "2": 33
+    },
+    "negative_zero_sampling": "all nonzero plus deterministic 2% of zero labels",
+    "excluded_samples": [
+      "train/25August_2009_Tuesday_heute-3301"
+    ]
+  },
+  "models": {
+    "bookkeeping_mlp": {
+      "input_width": 4,
+      "hidden_width": 32,
+      "training_history": [
+        {
+          "epoch": 1,
+          "weighted_bce": 1.2318995972222329
+        },
+        {
+          "epoch": 2,
+          "weighted_bce": 0.8719743296150785
+        },
+        {
+          "epoch": 3,
+          "weighted_bce": 0.6476912632842692
+        },
+        {
+          "epoch": 4,
+          "weighted_bce": 0.6172042243308727
+        }
+      ],
+      "training_seconds": 0.7576859118416905
+    },
+    "causal_pose_handshape_mlp": {
+      "input_width": 426,
+      "hidden_width": 32,
+      "training_history": [
+        {
+          "epoch": 1,
+          "weighted_bce": 1.3285593915675438
+        },
+        {
+          "epoch": 2,
+          "weighted_bce": 1.1593855427783704
+        },
+        {
+          "epoch": 3,
+          "weighted_bce": 1.0264891682435928
+        },
+        {
+          "epoch": 4,
+          "weighted_bce": 0.8882951860445282
+        }
+      ],
+      "training_seconds": 2.451326783746481
+    }
+  },
+  "ranking": {
+    "bookkeeping_mlp": {
+      "calibration_states": 15284,
+      "positive_utility_states": 111,
+      "candidate_records": 1360067,
+      "positive_candidates": 454,
+      "pr_auc_average_precision": 0.008022205629810802,
+      "positive_recall_at_top_10pct": 0.1145374449339207,
+      "mean_ndcg_at_top_10pct_positive_states": 0.07788804184888835,
+      "top1_utility_regret": {
+        "mean": 0.022703480764197852,
+        "positive_fraction": 0.01956294163831458
+      },
+      "evaluation_seconds": 139.82129460200667
+    },
+    "causal_pose_handshape_mlp": {
+      "calibration_states": 15284,
+      "positive_utility_states": 111,
+      "candidate_records": 1360067,
+      "positive_candidates": 454,
+      "pr_auc_average_precision": 0.0014812832005582875,
+      "positive_recall_at_top_10pct": 0.11013215859030837,
+      "mean_ndcg_at_top_10pct_positive_states": 0.08120369968076024,
+      "top1_utility_regret": {
+        "mean": 0.03035854488353834,
+        "positive_fraction": 0.029180842711332113
+      },
+      "evaluation_seconds": 141.6815378125757
+    }
+  },
+  "schedule_replay": {
+    "samples": 526,
+    "equal_budget_uniform": {
+      "wer": 5.167322834645669,
+      "error": 210,
+      "del": 97,
+      "ins": 88,
+      "sub": 25,
+      "ref_len": 4064
+    },
+    "replay_seconds_all_models": 62.581955479457974,
+    "bookkeeping_mlp": {
+      "wer": 5.265748031496063,
+      "error": 214,
+      "del": 107,
+      "ins": 83,
+      "sub": 24,
+      "ref_len": 4064
+    },
+    "bookkeeping_mlp_minus_uniform": {
+      "wer_pp": 0.09842519685039353,
+      "error_count": 4
+    },
+    "causal_pose_handshape_mlp": {
+      "wer": 5.78248031496063,
+      "error": 235,
+      "del": 127,
+      "ins": 81,
+      "sub": 27,
+      "ref_len": 4064
+    },
+    "causal_pose_handshape_mlp_minus_uniform": {
+      "wer_pp": 0.6151574803149602,
+      "error_count": 25
+    }
+  },
+  "runtime_seconds": 496.19905448239297
+}
