@@ -1,122 +1,168 @@
 #!/usr/bin/env python3
-"""
-Convert Online CSLR prediction results to G2T training format
-"""
-import pickle
+"""Convert online CSLR result dictionaries into G2T annotation files."""
+
+import argparse
+import gzip
 import os
-import sys
-from collections import defaultdict
+import pickle
+import tempfile
+from pathlib import Path
 
-def load_cslr_predictions(pred_dir, split='dev'):
-    """Load CSLR prediction results"""
-    # Try both locations: direct and in subdirectory
-    results_file = os.path.join(pred_dir, f'{split}_results.pkl')
-    if not os.path.exists(results_file):
-        results_file = os.path.join(pred_dir, split, f'{split}_results.pkl')
 
-    if not os.path.exists(results_file):
-        print(f"Error: Prediction file not found. Tried:")
-        print(f"  - {os.path.join(pred_dir, f'{split}_results.pkl')}")
-        print(f"  - {os.path.join(pred_dir, split, f'{split}_results.pkl')}")
-        return None
+def load_pickle(path):
+    """Load a plain or gzip-compressed pickle file."""
+    path = Path(path)
+    try:
+        with gzip.open(path, "rb") as handle:
+            return pickle.load(handle)
+    except (gzip.BadGzipFile, OSError):
+        with path.open("rb") as handle:
+            return pickle.load(handle)
 
-    with open(results_file, 'rb') as f:
-        results = pickle.load(f)
 
-    print(f"Loaded {len(results)} results from {results_file}")
-    return results
+def resolve_results_file(pred_dir, split, explicit_path=None):
+    if explicit_path:
+        path = Path(explicit_path)
+        if not path.is_file():
+            raise FileNotFoundError(f"Prediction file not found: {path}")
+        return path
 
-def convert_to_g2t_format(results, decode_method='window_greedy_5_gls_hyp'):
-    """
-    Convert CSLR results to G2T format
-    Expected output format: [{'name': str, 'num_frames': int, 'gloss': str}, ...]
+    if not pred_dir:
+        raise ValueError(f"Provide --{split}-results or --pred-dir")
+    candidates = [
+        Path(pred_dir) / f"{split}_results.pkl",
+        Path(pred_dir) / split / f"{split}_results.pkl",
+    ]
+    for path in candidates:
+        if path.is_file():
+            return path
+    attempted = "\n  - ".join(str(path) for path in candidates)
+    raise FileNotFoundError(f"Prediction file not found. Tried:\n  - {attempted}")
 
-    Results format from CSLR:
-    {
-        'video_name': {
-            'gls_ref': 'reference gloss',
-            'window_greedy_5_gls_hyp': 'predicted gloss',
-            ...
-        }
-    }
-    """
-    g2t_data = []
 
-    for name, result in results.items():
-        # Find prediction key
-        pred_key = None
-        if decode_method in result:
-            pred_key = decode_method
-        else:
-            # Try to find any available decode method
-            for key in result.keys():
-                if 'gls_hyp' in key:
-                    pred_key = key
-                    break
+def load_reference(path):
+    annotation = load_pickle(path)
+    if not isinstance(annotation, list):
+        raise TypeError(f"Reference annotation must be a list, got {type(annotation).__name__}")
+    by_name = {}
+    for item in annotation:
+        name = item.get("name")
+        if not name:
+            raise ValueError(f"Reference item has no name: {item}")
+        if name in by_name:
+            raise ValueError(f"Duplicate reference name: {name}")
+        by_name[name] = item
+    return annotation, by_name
 
-            if pred_key is None:
-                print(f"Warning: No gloss hypothesis found for {name}, skipping")
-                continue
 
-            if decode_method == 'window_greedy_5_gls_hyp':  # Only print once
-                print(f"Using decode method: {pred_key}")
-                decode_method = pred_key  # Update for next iterations
+def normalize_gloss(value, name):
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, (list, tuple)):
+        return " ".join(str(token) for token in value).strip()
+    raise TypeError(f"Unexpected gloss type for {name}: {type(value).__name__}")
 
-        # Extract predicted gloss
-        pred_gloss = result[pred_key]
 
-        # Gloss should already be a string
-        if not isinstance(pred_gloss, str):
-            if isinstance(pred_gloss, list):
-                pred_gloss = ' '.join(pred_gloss)
-            else:
-                print(f"Warning: Unexpected gloss type for {name}: {type(pred_gloss)}")
-                continue
+def convert_to_g2t_format(results, reference, decode_method):
+    """Merge predicted glosses with reference text and sequence metadata."""
+    if not isinstance(results, dict):
+        raise TypeError(f"CSLR results must be a dictionary, got {type(results).__name__}")
 
-        # For num_frames, we don't have it in this format, so set to 0
-        # It's not critical for G2T training which uses glosses only
-        g2t_data.append({
-            'name': name,
-            'num_frames': 0,  # Not available in this format
-            'gloss': pred_gloss
-        })
+    reference_list, reference_by_name = reference
+    result_names = set(results)
+    reference_names = set(reference_by_name)
+    missing = reference_names - result_names
+    extra = result_names - reference_names
+    if missing or extra:
+        details = []
+        if missing:
+            details.append(f"missing {len(missing)} predictions, e.g. {sorted(missing)[:3]}")
+        if extra:
+            details.append(f"found {len(extra)} unknown predictions, e.g. {sorted(extra)[:3]}")
+        raise ValueError("Prediction/reference name mismatch: " + "; ".join(details))
 
-    return g2t_data
+    output = []
+    empty_predictions = []
+    for reference_item in reference_list:
+        name = reference_item["name"]
+        result = results[name]
+        if decode_method not in result:
+            available = sorted(key for key in result if "gls_hyp" in key)
+            raise KeyError(
+                f"{name} has no decode key {decode_method!r}; "
+                f"available hypotheses: {available}"
+            )
+        gloss = normalize_gloss(result[decode_method], name)
+        if not gloss:
+            empty_predictions.append(name)
+        output.append(
+            {
+                "name": name,
+                "num_frames": int(reference_item["num_frames"]),
+                "gloss": gloss,
+                "text": reference_item.get("text", ""),
+            }
+        )
+
+    if len(empty_predictions) == len(output):
+        raise ValueError(
+            "Every gloss prediction is empty; refusing to create a broken G2T input"
+        )
+    if empty_predictions:
+        print(
+            f"warning: {len(empty_predictions)}/{len(output)} gloss predictions are empty, "
+            f"e.g. {empty_predictions[:3]}"
+        )
+    return output
+
+
+def atomic_pickle_dump(value, output_path):
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile(
+        mode="wb", dir=output_path.parent, prefix=output_path.name + ".", delete=False
+    ) as handle:
+        temporary_path = Path(handle.name)
+        pickle.dump(value, handle)
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(temporary_path, output_path)
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--pred-dir", help="Directory containing dev/test result files")
+    parser.add_argument("--dev-results", help="Explicit dev result pickle")
+    parser.add_argument("--test-results", help="Explicit test result pickle")
+    parser.add_argument("--dev-reference", required=True, help="Dev reference annotation")
+    parser.add_argument("--test-reference", required=True, help="Test reference annotation")
+    parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--output-prefix", required=True)
+    parser.add_argument("--decode-method", default="window_greedy_5_gls_hyp")
+    return parser.parse_args()
+
 
 def main():
-    if len(sys.argv) < 3:
-        print("Usage: python generate_g2t_data.py <pred_dir> <output_dir>")
-        print("Example: python generate_g2t_data.py results/csl-daily-top-800_ISLR/prediction_slide results/online_slr_csl/prediction_slide")
-        sys.exit(1)
+    args = parse_args()
+    for split in ("dev", "test"):
+        results_file = resolve_results_file(
+            args.pred_dir, split, getattr(args, f"{split}_results")
+        )
+        reference_file = getattr(args, f"{split}_reference")
+        results = load_pickle(results_file)
+        converted = convert_to_g2t_format(
+            results,
+            load_reference(reference_file),
+            args.decode_method,
+        )
+        output_file = Path(args.output_dir) / f"{args.output_prefix}.{split}"
+        atomic_pickle_dump(converted, output_file)
+        print(
+            f"{split}: wrote {len(converted)} entries to {output_file} "
+            f"from {results_file}"
+        )
+        print(f"{split}: sample={converted[0]}")
 
-    pred_dir = sys.argv[1]
-    output_dir = sys.argv[2]
 
-    os.makedirs(output_dir, exist_ok=True)
-
-    for split in ['dev', 'test']:
-        print(f"\nProcessing {split} split...")
-
-        results = load_cslr_predictions(pred_dir, split)
-        if results is None:
-            print(f"Skipping {split} (file not found)")
-            continue
-
-        g2t_data = convert_to_g2t_format(results)
-
-        if not g2t_data:
-            print(f"Warning: No data generated for {split}")
-            continue
-
-        output_file = os.path.join(output_dir, f'csl_pred.{split}')
-        with open(output_file, 'wb') as f:
-            pickle.dump(g2t_data, f)
-
-        print(f"Saved {len(g2t_data)} entries to {output_file}")
-
-        # Print sample
-        if g2t_data:
-            print(f"Sample entry: {g2t_data[0]}")
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

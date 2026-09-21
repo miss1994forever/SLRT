@@ -18,11 +18,23 @@ class TranslationNetwork(torch.nn.Module):
         self.text_tokenizer = TextTokenizer(tokenizer_cfg=cfg['TextTokenizer'])
 
         if 'pretrained_model_name_or_path' in cfg:
-            self.logger.info('Initialize translation network from {}'.format(cfg['pretrained_model_name_or_path']))
-            self.model = MBartForConditionalGeneration.from_pretrained(
-                cfg['pretrained_model_name_or_path'],
-                **cfg.get('overwrite_cfg', {}) 
-            )
+            if cfg.get('load_pretrained_weights', True):
+                self.logger.info('Initialize translation network from {}'.format(cfg['pretrained_model_name_or_path']))
+                self.model = MBartForConditionalGeneration.from_pretrained(
+                    cfg['pretrained_model_name_or_path'],
+                    **cfg.get('overwrite_cfg', {})
+                )
+            else:
+                # Inference checkpoints already contain the complete translation
+                # network.  Build the checkpoint-compatible architecture without
+                # loading a stale base pytorch_model.bin whose vocabulary may
+                # predate the pruned text vocabulary.
+                config = MBartConfig.from_pretrained(cfg['pretrained_model_name_or_path'])
+                for k, v in cfg.get('overwrite_cfg', {}).items():
+                    setattr(config, k, v)
+                    self.logger.info('Overwrite {}={}'.format(k, v))
+                self.model = MBartForConditionalGeneration(config=config)
+                self.logger.info('Initialize translation architecture from config; weights will come from the inference checkpoint')
         elif 'model_config' in cfg:
             self.logger.info('Train translation network from scratch using config={}'.format(cfg['model_config']))
             config = MBartConfig.from_pretrained(cfg['model_config'])
@@ -249,5 +261,4 @@ class TranslationNetwork(torch.nn.Module):
         # print(output_dict['decoded_sequences'])
 
         return output_dict
-
 

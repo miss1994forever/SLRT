@@ -105,6 +105,13 @@ class TextTokenizer(BaseTokenizer):
                     new_id = self.tokenizer.convert_tokens_to_ids('<unk>')
                 else:
                     new_id = self.pruneids_reverse[id_]
+                    # Some released pruned vocabularies contain a sentinel
+                    # negative source id for a row that cannot be mapped back
+                    # to the original SentencePiece vocabulary.  Passing that
+                    # sentinel to SentencePiece raises an IndexError; decode it
+                    # as unknown instead.
+                    if new_id < 0:
+                        new_id = self.tokenizer.convert_tokens_to_ids('<unk>')
                 input_ids[b,i] = new_id
         return input_ids
     
@@ -281,4 +288,3 @@ class GlossTokenizer_G2T(BaseGlossTokenizer):
         attention_mask = torch.tensor(attention_mask, dtype=torch.long)
         return {'input_ids':input_ids, 'attention_mask':attention_mask}
             
-

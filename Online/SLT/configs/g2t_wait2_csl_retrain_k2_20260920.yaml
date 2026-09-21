@@ -1,25 +1,13 @@
 task: G2T
 data:
   dataset_name: csl
+  train: ../../TwoStreamNetwork/data/csl-daily/csl-daily.train
   dev: ../CSLR/results/online_slr_csl/prediction_slide/csl_pred.dev
   test: ../CSLR/results/online_slr_csl/prediction_slide/csl_pred.test
-  train: ../../data/csl-daily/csl.train
   input_data: gloss
   level: char
   max_sent_length: 400
   txt_lowercase: true
-  transform_cfg:
-    img_size: 224
-    color_jitter: true
-    bottom_area: 0.7 
-    center_crop_size: 224 
-    center_crop: False
-    randomcrop_threshold: 1
-    aspect_ratio_min: 0.75
-    aspect_ratio_max: 1.3
-    temporal_augmentation:
-      tmin: 0.5
-      tmax: 1.5
 testing:
   cfg:
     translation:
@@ -29,12 +17,13 @@ testing:
 training:
   batch_size: 8
   keep_last_ckpts: 1
-  model_dir: results/g2t_wait2_csl
+  model_dir: results/g2t_wait2_csl_retrain_k2_20260920
   num_workers: 4
+  load_ckpt: ../../../models/checkpoints/online_slrt/csl_daily_g2t_best.ckpt
   optimization:
     betas:
-    - 0.9
-    - 0.998
+      - 0.9
+      - 0.998
     learning_rate:
       default: 0.0001
       translation: 1.0e-05
@@ -42,7 +31,7 @@ training:
     scheduler: cosineannealing
     t_max: 80
     weight_decay: 0.001
-  overwrite: true
+  overwrite: false
   random_seed: 0
   shuffle: true
   total_epoch: 4
@@ -57,19 +46,21 @@ training:
 model:
   TranslationNetwork:
     GlossEmbedding:
-      freeze: true
-      gloss2embed_file: ../../pretrained_models/mBart_zh/gloss_embeddings.bin 
+      from_scratch: true
+      freeze: false
+      gloss2embed_file: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g/gloss_embeddings.bin
     GlossTokenizer:
-      gloss2id_file: ../../pretrained_models/mBart_zh/gloss2ids.pkl 
+      gloss2id_file: ../../../models/checkpoints/online_slrt/csl_daily_g2t_gloss2ids.pkl
       src_lang: zh_CSL
     TextTokenizer:
-      pretrained_model_name_or_path: ../../pretrained_models/mBart_zh/ 
-      pruneids_file: ../../pretrained_models/mBart_zh/old2new_vocab.pkl 
+      pretrained_model_name_or_path: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g
+      pruneids_file: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g/old2new_vocab.pkl
       tgt_lang: zh_CN
     freeze_txt_embed: true
+    load_pretrained_weights: false
     label_smoothing: 0.2
     overwrite_cfg:
       attention_dropout: 0.1
       dropout: 0.3
       wait_k: 2
-    pretrained_model_name_or_path: ../../pretrained_models/mBart_zh/
+    pretrained_model_name_or_path: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g

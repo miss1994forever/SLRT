@@ -60,10 +60,10 @@ model:
       pruneids_file: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g/old2new_vocab.pkl
       tgt_lang: zh_CN
     freeze_txt_embed: true
+    load_pretrained_weights: false
     label_smoothing: 0.2
     overwrite_cfg:
       # Base T2G heads are replaced by the complete G2T inference checkpoint.
-      ignore_mismatched_sizes: true
       attention_dropout: 0.1
       dropout: 0.3
     pretrained_model_name_or_path: ../../../downloads/manual_slrt/wait_k_slt/mBart_zh_t2g/

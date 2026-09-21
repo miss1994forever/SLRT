@@ -21,6 +21,7 @@ data:
       tmin: 0.5
       tmax: 1.5
 testing:
+  checkpoint: results/g2t_wait2/ckpts/best.ckpt
   cfg:
     translation:
       length_penalty: 1
@@ -59,18 +60,19 @@ model:
   TranslationNetwork:
     GlossEmbedding:
       freeze: true
-      gloss2embed_file: ../../pretrained_models/mBart_de/gloss_embeddings.bin
+      gloss2embed_file: ../../../downloads/manual_slrt/wait_k_slt/mBart_de_t2g/gloss_embeddings.bin
     GlossTokenizer:
-      gloss2id_file: ../../pretrained_models/mBart_de/gloss2ids.pkl
+      gloss2id_file: ../../../downloads/manual_slrt/wait_k_slt/mBart_de_t2g/gloss2ids.pkl
       src_lang: de_DGS
     TextTokenizer:
-      pretrained_model_name_or_path: ../../pretrained_models/mBart_de
-      pruneids_file: ../../pretrained_models/mBart_de/map_ids.pkl
+      pretrained_model_name_or_path: ../../../downloads/manual_slrt/wait_k_slt/mBart_de_t2g
+      pruneids_file: ../../../downloads/manual_slrt/wait_k_slt/mBart_de_t2g/map_ids.pkl
       tgt_lang: de_DE
     freeze_txt_embed: true
+    load_pretrained_weights: false
     label_smoothing: 0.2
     overwrite_cfg:
       attention_dropout: 0.1
       dropout: 0.3
       wait_k: 2
-    pretrained_model_name_or_path: ../../pretrained_models/mBart_de
+    pretrained_model_name_or_path: ../../../downloads/manual_slrt/wait_k_slt/mBart_de_t2g

@@ -788,6 +788,10 @@ if __name__ == "__main__":
     parser.add_argument('--keypoint_weight', default=0.70, type=float)
     parser.add_argument('--fuse_weight', default=0.20, type=float)
     parser.add_argument('--max_samples', default=None, type=int)
+    parser.add_argument('--sample_start', default=None, type=int,
+                        help='Inclusive dataset index for sharded inference.')
+    parser.add_argument('--sample_end', default=None, type=int,
+                        help='Exclusive dataset index for sharded inference.')
     args = parser.parse_args()
     cfg = load_config(args.config)
     _normalize_fusion_weights(args.rgb_weight, args.keypoint_weight, args.fuse_weight)
@@ -905,6 +909,19 @@ if __name__ == "__main__":
 
         g2g_tokenizer = model.tokenizer if cfg['task'] == 'G2G' else None
         dataloader, sampler = build_dataloader(cfg, split, task=cfg['task'], g2g_tokenizer=g2g_tokenizer, is_train=False, val_distributed=False)
+        if args.sample_start is not None or args.sample_end is not None:
+            sample_start = 0 if args.sample_start is None else args.sample_start
+            sample_end = len(dataloader.dataset) if args.sample_end is None else args.sample_end
+            if not 0 <= sample_start < sample_end <= len(dataloader.dataset):
+                raise ValueError(
+                    f'Invalid sample range [{sample_start}, {sample_end}) for '
+                    f'{len(dataloader.dataset)} examples'
+                )
+            dataloader.dataset.annotation = dataloader.dataset.annotation[sample_start:sample_end]
+            logger.info(
+                'Restrict inference to sample range [%d, %d), %d examples',
+                sample_start, sample_end, len(dataloader.dataset)
+            )
 
         if cfg['task'] == 'ISLR':
             _, _ = evaluation_slide(model=model, cslr_dataloader=dataloader, cfg=cfg, 
