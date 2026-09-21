@@ -1,0 +1,34 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-21T05:32:57.131865+00:00",
+  "blocks": 183401,
+  "side_rows": 366802,
+  "samples": 6378,
+  "sources": 578,
+  "executions": 366802,
+  "vocab_width": 1116,
+  "history_length": 16,
+  "robust_reward_counts": {
+    "-2": 39,
+    "-1": 1976,
+    "0": 364018,
+    "1": 755,
+    "2": 14
+  },
+  "blocks_with_any_nonzero_continuation_advantage": 3767,
+  "files": {
+    "history": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_decoder_conditioned_value_oof_v1_49faacc3/paid_decoder_history_blocks.npz",
+      "bytes": 12312269,
+      "sha256": "fbef2922b3526c4e4c25f8ebcb2f6772491a23292252bb802efd131bc7c105df"
+    },
+    "executed_logits": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_decoder_conditioned_value_oof_v1_49faacc3/paid_decoder_logits_float16.npy",
+      "bytes": 818702192,
+      "sha256": "fe902e48e801053021b6a3934e76e5a3c1a968130fc66bb65cd20963c7823af6"
+    }
+  },
+  "row_parity_with_frozen_K": true,
+  "candidate_unexecuted_logits_in_inputs": false,
+  "seconds": 71.76284369800123
+}

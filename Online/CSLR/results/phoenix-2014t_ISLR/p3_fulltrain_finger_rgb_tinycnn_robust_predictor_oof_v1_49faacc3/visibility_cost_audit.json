@@ -1,0 +1,65 @@
+{
+  "status": "pass",
+  "created_utc": "2026-09-21T02:06:15.111576+00:00",
+  "outcomes_read": false,
+  "calibration_dev_test_read": false,
+  "scope": "32 deterministic train-fit windows; identity, three-anchor crop, causality, and cost smoke",
+  "identities": {
+    "video_sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+    "keypoints_sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "pose_sha256": "ab659a6e5f1f9f545fe705318ff9be5d7bc2d843acad8930d446b4f83e4dbcb3",
+    "skeleton_oof_sha256": "9665b83e11a8c6c415142820d5428ec37f8ac234b3b02b68a23d91d8a94eb29a"
+  },
+  "fit_samples": 6378,
+  "fit_sources": 578,
+  "selection": "lowest SHA256(finger-rgb-smoke-v1+NUL+sample_id)",
+  "samples": 32,
+  "frames": 512,
+  "hand_crops": 1024,
+  "valid_hand_crops": 917,
+  "valid_hand_fraction": 0.8955078125,
+  "affine_out_of_bounds_fraction": {
+    "mean": 0.014571879165152067,
+    "p50": 0.0,
+    "p95": 0.10616319444444437,
+    "maximum": 0.5390625
+  },
+  "systematic_truncation_rule": "stop if valid-crop OOB p50>0.10 or p95>0.35",
+  "systematic_truncation_detected": false,
+  "timing_ms_per_frame": {
+    "decode_p50": 1.4369929995154962,
+    "decode_p95": 1.5236889856169,
+    "two_hand_affine_p50": 0.18330749298911542,
+    "two_hand_affine_p95": 0.19474699947750196,
+    "two_hand_encoder_batch1_p50": 0.4974240146111697,
+    "two_hand_encoder_batch1_p95": 0.6865329924039543
+  },
+  "encoder": {
+    "architecture": "Conv3x3 s2 3->16 BN SiLU; DW3x3 s2 16 + PW16->24 BN SiLU; DW3x3 s2 24 + PW24->32 BN SiLU; DW3x3 s1 32 + PW32->32 BN SiLU; GAP",
+    "projection_head": "Linear(32,64)-SiLU-Linear(64,32), training only",
+    "deployment_embedding": "L2-normalized pre-projection 32-D",
+    "parameters_encoder_including_bn": 3464,
+    "parameters_projection_head": 4192,
+    "macs_per_valid_hand_crop": 407520,
+    "macs_per_two_hand_frame_when_both_valid": 815040,
+    "identity_sha256": "e86e614219d1d3bf7c30cbb4784bb6f46e916385cf1bccc5ade0d6aaac7940e6"
+  },
+  "gpu": {
+    "visible_uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+    "pci_bus_id": "00000000:61:00.0",
+    "name": "NVIDIA GeForce RTX 3090",
+    "total_memory_bytes": 25296044032
+  },
+  "peak_cuda_memory_bytes": 25542656,
+  "cpu_gpu_transfer": "two 48x48x3 uint8 crops/frame CPU->GPU; 13,824 bytes/frame before tensor conversion",
+  "pose_detector_cost": "shared with K but non-zero; excluded from measured incremental crop/encoder timing",
+  "causality_checks": {
+    "same_frame_rgb_and_keypoints_only": true,
+    "temporal_crop_fill": false,
+    "candidate_window": "candidate_start+[-7,...,+8]",
+    "deadline": "min(last real frame, decision_arrival+8)",
+    "sample_id_and_frame_count_checked": true
+  },
+  "peak_process_rss_mib": 6827.0078125
+}

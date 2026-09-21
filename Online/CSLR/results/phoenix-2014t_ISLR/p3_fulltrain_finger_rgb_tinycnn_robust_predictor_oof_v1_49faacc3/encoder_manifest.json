@@ -1,0 +1,149 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-21T02:45:58.755102+00:00",
+  "gpu": {
+    "visible_uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+    "pci_bus_id": "00000000:61:00.0",
+    "name": "NVIDIA GeForce RTX 3090",
+    "total_memory_bytes": 25296044032
+  },
+  "encoder": {
+    "architecture": "Conv3x3 s2 3->16 BN SiLU; DW3x3 s2 16 + PW16->24 BN SiLU; DW3x3 s2 24 + PW24->32 BN SiLU; DW3x3 s1 32 + PW32->32 BN SiLU; GAP",
+    "projection_head": "Linear(32,64)-SiLU-Linear(64,32), training only",
+    "deployment_embedding": "L2-normalized pre-projection 32-D",
+    "parameters_encoder_including_bn": 3464,
+    "parameters_projection_head": 4192,
+    "macs_per_valid_hand_crop": 407520,
+    "macs_per_two_hand_frame_when_both_valid": 815040,
+    "identity_sha256": "e86e614219d1d3bf7c30cbb4784bb6f46e916385cf1bccc5ade0d6aaac7940e6"
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "outer_train_only": true,
+      "samples": 200000,
+      "selection_indices_sha256": "ba2f24e891e20951eeeeffe0c0deddbee6fa898d6d145e009c46596fdc09c4b4",
+      "model_seed": 261040,
+      "augmentation_and_order_seed": 261040,
+      "epoch_losses": [
+        3.5874493227386473,
+        2.897023303222656,
+        2.796645165939331,
+        2.7487722410583495,
+        2.7134010597229006,
+        2.6941173427581786,
+        2.6756896730804445,
+        2.659854297027588,
+        2.6495731618499754,
+        2.6421448667907717
+      ],
+      "seconds": 61.00466335899546,
+      "peak_cuda_memory_bytes": 272259072,
+      "checkpoint": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_tinycnn_fold0_epoch10.pt",
+      "checkpoint_bytes": 40840,
+      "checkpoint_sha256": "4f60ef146f11010ae558cb7696a84ff3a589be67c4502b02101b479cb01c03c2"
+    },
+    {
+      "fold": 1,
+      "outer_train_only": true,
+      "samples": 200000,
+      "selection_indices_sha256": "ef07c678b54244eeff75aa1e04a4526902f583cb658739601d4fba9e31afcfaa",
+      "model_seed": 261040,
+      "augmentation_and_order_seed": 261041,
+      "epoch_losses": [
+        3.583373074645996,
+        2.9053497374725343,
+        2.8130632020568846,
+        2.758310296936035,
+        2.7191745864105226,
+        2.695261215057373,
+        2.6816561418914793,
+        2.6672955458068848,
+        2.655271678771973,
+        2.642182532196045
+      ],
+      "seconds": 62.47463171498384,
+      "peak_cuda_memory_bytes": 272259072,
+      "checkpoint": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_tinycnn_fold1_epoch10.pt",
+      "checkpoint_bytes": 40840,
+      "checkpoint_sha256": "37e423814ed28e5c6c531ffa5e0a1438d90119bc3e9d2ca4467175deb7ec453a"
+    },
+    {
+      "fold": 2,
+      "outer_train_only": true,
+      "samples": 200000,
+      "selection_indices_sha256": "8bcbd3689f678cea59a9b6427787ca865457740ce2944a1e1d174b79b3b0197c",
+      "model_seed": 261040,
+      "augmentation_and_order_seed": 261042,
+      "epoch_losses": [
+        3.578695940093994,
+        2.890108196258545,
+        2.795351789703369,
+        2.7504381719970703,
+        2.7192775199890136,
+        2.6940089849090576,
+        2.674863965759277,
+        2.663432190628052,
+        2.656494307098389,
+        2.6503722608184814
+      ],
+      "seconds": 63.44534690698492,
+      "peak_cuda_memory_bytes": 272259072,
+      "checkpoint": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_tinycnn_fold2_epoch10.pt",
+      "checkpoint_bytes": 40840,
+      "checkpoint_sha256": "5762147e6c781899d4d36103fad8c052d02e56a064511e07f38dae48af85d46e"
+    },
+    {
+      "fold": 3,
+      "outer_train_only": true,
+      "samples": 200000,
+      "selection_indices_sha256": "008649a8af1f61dfa21a65fd8db00f172712e428dadcd98a1599cc7698f31b97",
+      "model_seed": 261040,
+      "augmentation_and_order_seed": 261043,
+      "epoch_losses": [
+        3.582531089172363,
+        2.901074792175293,
+        2.806914178619385,
+        2.750015060882568,
+        2.718021941986084,
+        2.696661053466797,
+        2.679430129394531,
+        2.6668649602508543,
+        2.658358515472412,
+        2.6486456115722654
+      ],
+      "seconds": 62.62909536799998,
+      "peak_cuda_memory_bytes": 272259072,
+      "checkpoint": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_tinycnn_fold3_epoch10.pt",
+      "checkpoint_bytes": 40840,
+      "checkpoint_sha256": "955d7b2d92726b7f556e6e0c03e9c8b8cf1b63e4391161e36f7beb9100b5cdb0"
+    },
+    {
+      "fold": 4,
+      "outer_train_only": true,
+      "samples": 200000,
+      "selection_indices_sha256": "365f620ce5a3b5487131d707efdb928e78eed5690542e190f9eecd3992d96322",
+      "model_seed": 261040,
+      "augmentation_and_order_seed": 261044,
+      "epoch_losses": [
+        3.5856344151306154,
+        2.8974461184692384,
+        2.799641765899658,
+        2.752842573928833,
+        2.7223672523498537,
+        2.6987123609924315,
+        2.6845255610656737,
+        2.6719237648010252,
+        2.6576518392944335,
+        2.6460889334106446
+      ],
+      "seconds": 63.88278248201823,
+      "peak_cuda_memory_bytes": 272259072,
+      "checkpoint": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_tinycnn_fold4_epoch10.pt",
+      "checkpoint_bytes": 40840,
+      "checkpoint_sha256": "d06c91a1e00a3f8cb9f89738554f11aba50857c388ac13937d2bcbf710a4c248"
+    }
+  ],
+  "five_fold_train_seconds": 313.43651983098243,
+  "single_deployment_encoder": "one shared encoder chosen only after family integration; two hand invocations per arrived frame"
+}

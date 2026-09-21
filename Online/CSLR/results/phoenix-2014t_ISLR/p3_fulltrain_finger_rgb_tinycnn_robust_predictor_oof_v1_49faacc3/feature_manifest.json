@@ -1,0 +1,87 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-21T02:49:04.917011+00:00",
+  "gpu": {
+    "visible_uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+    "pci_bus_id": "00000000:61:00.0",
+    "name": "NVIDIA GeForce RTX 3090",
+    "total_memory_bytes": 25296044032
+  },
+  "samples": 6378,
+  "sources": 578,
+  "frames": 743147,
+  "per_frame_width": 66,
+  "candidate_width": 264,
+  "fold_features": [
+    {
+      "fold": 0,
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_frame_embeddings_fold0_float16.npy",
+      "shape": [
+        743147,
+        66
+      ],
+      "dtype": "float16",
+      "bytes": 98095532,
+      "sha256": "0e672235ba166bb7815f1c8cf77ceed2d49563d635d8191b0ef3fe3bc518b514",
+      "seconds": 47.05754821500159,
+      "peak_cuda_memory_bytes": 415278080
+    },
+    {
+      "fold": 1,
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_frame_embeddings_fold1_float16.npy",
+      "shape": [
+        743147,
+        66
+      ],
+      "dtype": "float16",
+      "bytes": 98095532,
+      "sha256": "815f805711d81b3d00defeb958a97612eff49b39151c389f9e7cbb1597bfecf9",
+      "seconds": 21.942281496012583,
+      "peak_cuda_memory_bytes": 415278080
+    },
+    {
+      "fold": 2,
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_frame_embeddings_fold2_float16.npy",
+      "shape": [
+        743147,
+        66
+      ],
+      "dtype": "float16",
+      "bytes": 98095532,
+      "sha256": "04b77f7458a6ef53753af732d7d101e7d19d4f8108e62d2a2d7acb1c7a0cda8f",
+      "seconds": 21.983030886010965,
+      "peak_cuda_memory_bytes": 415278080
+    },
+    {
+      "fold": 3,
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_frame_embeddings_fold3_float16.npy",
+      "shape": [
+        743147,
+        66
+      ],
+      "dtype": "float16",
+      "bytes": 98095532,
+      "sha256": "2262965d84cb1eeeea3106f1cedb8d4edde224d661bd14e47f2622757d8e0e36",
+      "seconds": 21.444762648025062,
+      "peak_cuda_memory_bytes": 415278080
+    },
+    {
+      "fold": 4,
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/finger_frame_embeddings_fold4_float16.npy",
+      "shape": [
+        743147,
+        66
+      ],
+      "dtype": "float16",
+      "bytes": 98095532,
+      "sha256": "fb574d43484e9027e56baa23fe5d2d8c32fa1be754dbbc80207ee4b347adac50",
+      "seconds": 21.83842694197665,
+      "peak_cuda_memory_bytes": 415278080
+    }
+  ],
+  "invalid_hand_crops": 194133,
+  "validity_in_feature": true,
+  "causality": "same-frame embeddings cached once and reused by overlapping candidate windows",
+  "cpu_gpu_transfer": "offline extraction copies uint8 crops in batches; deployment copies two crops/frame and returns 64 float values",
+  "total_extraction_seconds": 134.26605018702685
+}

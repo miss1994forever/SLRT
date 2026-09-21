@@ -1,0 +1,51 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-21T02:30:05.000224+00:00",
+  "samples": 6378,
+  "sources": 578,
+  "frames": 743147,
+  "crop_shape": [
+    743147,
+    2,
+    48,
+    48,
+    3
+  ],
+  "dtype": "uint8",
+  "valid_hand_crops": 1292161,
+  "invalid_hand_crops": 194133,
+  "invalid_hand_crop_rate": 0.13061547715324157,
+  "affine_out_of_bounds_fraction": {
+    "mean": 0.01966301543230895,
+    "p50": 0.0,
+    "p95": 0.1605902777777778,
+    "maximum": 1.0
+  },
+  "timing_ms_per_frame": {
+    "decode_p50": 1.515206997282803,
+    "decode_p95": 1.621415390400216,
+    "two_hand_affine_p50": 0.22290600463747978,
+    "two_hand_affine_p95": 0.2892359916586429
+  },
+  "decoded_png_bytes": 32557845109,
+  "elapsed_seconds": 1390.4207967949915,
+  "sample_ids_sha256": "99189618cd7b7ee615bfb809dde5e16447d7e91351d89bbcc4a18f4f7747e217",
+  "files": {
+    "crops": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/train_fit_finger_affine_crops_uint8.npy",
+      "bytes": 10273264256,
+      "sha256": "938a39724fa684d2b1868ab4ec9f9e9958da33af113d06757c6e4718a54c0546"
+    },
+    "valid": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/train_fit_finger_crop_valid.npy",
+      "bytes": 1486422,
+      "sha256": "d54862961bdcb3167502070b70ca06b70cebd2e30c00ba639d34f4b43e230393"
+    },
+    "index": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/ssl_crop_index.npz",
+      "bytes": 3483575,
+      "sha256": "81030a568fad7b2c1fae43be4622b834055d6e754aa66541dfdd99919ccd36bc"
+    }
+  },
+  "causality": "each crop uses only same-frame RGB and same-frame anchors; invalid crops remain zero"
+}

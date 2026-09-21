@@ -1,0 +1,26 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-21T05:58:08.117174+00:00",
+  "samples": 6378,
+  "frames": 743147,
+  "vocab_width": 1116,
+  "files": {
+    "logits": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_utility_information_ladder_oof_v1_49faacc3/fit_dense_logits_float16.npy",
+      "bytes": 1658704232,
+      "sha256": "8fe80b17b379cb7e8c79c53b40e7655c8ee3614c267b371c4e88b5cab1d356d6"
+    },
+    "meta": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_utility_information_ladder_oof_v1_49faacc3/fit_dense_logit_meta_float32.npy",
+      "bytes": 8917892,
+      "sha256": "f0e178f1d1f77610005c5e80d55495a28c509942291c5541f742855db1f22999"
+    },
+    "index": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_utility_information_ladder_oof_v1_49faacc3/dense_index.npz",
+      "bytes": 54312,
+      "sha256": "d9b68140793db8f020f559c9227e1797177a74fb018b721c1e7cd0b46d6d28fe"
+    }
+  },
+  "calibration_dev_test_read": false,
+  "seconds": 52.073832863010466
+}
