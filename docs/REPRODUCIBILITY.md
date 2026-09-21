@@ -41,7 +41,9 @@ Top-800 R1 需要：
 
 ## 3. GPU 安全约束
 
-不要使用 CUDA 逻辑编号选择卡。先由管理员或 `nvidia-smi --query-gpu=pci.bus_id,uuid,...` 确认健康状态，再传入单卡 UUID。
+所有 `nvidia-smi`、CUDA 检查和 GPU 实验必须在沙盒外运行；沙盒内 CUDA 不可见不能用来判定
+驱动故障。不要使用宿主机 CUDA 逻辑编号选择卡。先用
+`nvidia-smi --query-gpu=pci.bus_id,uuid,...` 核对 PCI/UUID，再传入明确的 UUID。
 
 已知禁用卡：
 
@@ -49,8 +51,10 @@ Top-800 R1 需要：
 |---|---|---|
 | `01:00.0` | `GPU-dbd35875-dfa5-43f1-0cf0-f88ccb529c8a` | 历史故障，禁用 |
 | `25:00.0` | `GPU-06afe121-c4ce-b981-bb86-399e4a85ae83` | 历史多次故障，禁用 |
+| `41:00.0` | `GPU-2c6a50cb-f770-c785-dc1d-7f8cc7b7b9aa` | 当前研究协议禁用 |
 
-复现脚本要求 `CUDA_VISIBLE_DEVICES` 是单个 UUID，并拒绝上述 UUID。
+宿主机 GPU0（当前为 PCI `01:00.0`）同样禁止。复现脚本应使用 UUID 白名单，并在启动前拒绝
+上述 PCI/UUID；进程内的 `cuda:0` 只允许表示经过 `CUDA_VISIBLE_DEVICES` 隔离后的首张安全卡。
 
 ## 4. 单元测试
 

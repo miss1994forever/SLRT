@@ -9,6 +9,7 @@
 | [`phoenix_p0_schedule_diagnostics_v1_frozen.json`](phoenix_p0_schedule_diagnostics_v1_frozen.json) | P0 调度诊断冻结索引 | [`../P0_SCHEDULE_DIAGNOSTICS_V1.md`](../P0_SCHEDULE_DIAGNOSTICS_V1.md) |
 | [`phoenix_p1_causal_center_predictor_v1_frozen.json`](phoenix_p1_causal_center_predictor_v1_frozen.json) | P1 predictor No-Go 冻结索引 | [`../P1_CAUSAL_CENTER_PREDICTOR_V1.md`](../P1_CAUSAL_CENTER_PREDICTOR_V1.md) |
 | [`phoenix_p2_causal_center_tcn_v1_frozen.json`](phoenix_p2_causal_center_tcn_v1_frozen.json) | P2 causal TCN No-Go 冻结索引 | [`../P2_CAUSAL_CENTER_TCN_V1.md`](../P2_CAUSAL_CENTER_TCN_V1.md) |
+| [`../ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.json`](../ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.json) | P3 robust oracle、RGB/DCV predictor 与信息阶梯机器账本 | [`../ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md`](../ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md) |
 | [`phoenix_adaptive_stride_summary.json`](phoenix_adaptive_stride_summary.json) | 兼容历史摘要，包含修复前 retrospective test 叙事 | [`../RESULTS.md`](../RESULTS.md) |
 
 出现数字冲突时，优先级为：对应阶段的 `*_frozen.json` 与冻结文档、protocol manifest、

@@ -11,6 +11,7 @@
 | [`RESULTS.md`](RESULTS.md) | 跨阶段统一结果与声明口径 | 只记录已验证数字 |
 | [`REPRODUCIBILITY.md`](REPRODUCIBILITY.md) | 环境、资产和复现命令 | 命令或资产身份改变时更新 |
 | [`REPOSITORY_LAYOUT.md`](REPOSITORY_LAYOUT.md) | 目录职责与维护规范 | 结构规则改变时更新 |
+| [`ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md`](ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md) | P0--P3 完整事实账本与产物索引 | 每条实验链冻结后追加，不删除失败结果 |
 
 ## 已冻结的 Phoenix 研究阶段
 
@@ -20,9 +21,11 @@
 | P0 | [`P0_SCHEDULE_DIAGNOSTICS_V1.md`](P0_SCHEDULE_DIAGNOSTICS_V1.md) | sign-center offline Strong-Go；其余主要调度信号 No-Go |
 | P1 | [`P1_CAUSAL_CENTER_PREDICTOR_V1.md`](P1_CAUSAL_CENTER_PREDICTOR_V1.md) | 最小因果 center predictor No-Go |
 | P2 | [`P2_CAUSAL_CENTER_TCN_V1.md`](P2_CAUSAL_CENTER_TCN_V1.md) | 增强关键点 causal TCN No-Go；未打开 dev/test |
+| P3 | [`ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md`](ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md) | robust oracle 上界强；全部可部署 OOF predictor 未过 gate，停止当前 per-window utility target |
 
-对应的 compact、机器可读冻结索引统一列在 [`results/README.md`](results/README.md)。阶段冻结
-文档一旦提交不重写结论；新实验建立新版本并由 `RESULTS.md` 说明关系。
+对应的 compact、机器可读冻结索引统一列在 [`results/README.md`](results/README.md)。P3 的
+逐实验配置、metrics 和本地产物路径由完整实验账本索引。阶段冻结文档一旦提交不重写结论；
+新实验建立新版本并由 `RESULTS.md` 说明关系。
 
 ## 实验设计与专项复现
 

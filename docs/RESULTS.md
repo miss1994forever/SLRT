@@ -105,8 +105,31 @@ P2 复用 P1 的 train fit/calibration split、midpoint `±1` proxy target、事
 
 P2 表征明显强于 P1，但仍没有阈值达到 recall ≥75% 且 positive delay ≤25% 的预注册 gate，
 因此结论仍为 No-Go。P2 没有打开 dev、没有 scheduler replay、没有新 WER；test-only 未打开或
-运行。下一步不应继续小幅调整同一 TCN，而应新建 RGB/预训练视觉 feature causal probe，或
-转向 window/decoder 的 causal/bounded-lookahead 敏感性研究。
+运行。当时冻结的后续建议是转向 RGB 与 window/decoder utility；该建议已经由下方 P3 完整链
+执行并取代，不能再把它当作当前下一步。
+
+### P3 complete-train robust utility predictability（2026-09-21 冻结）
+
+P3 先在完整 train fit（6,378 samples、578 sources、183,401 blocks）复现 robust continuation
+oracle：同一 coverage skeleton 下 errors 从 2,325 降至 1,688，少 637，说明窗口选择上界真实。
+但部署 predictor 面对 366,802 个 side-candidate rows，其中只有 769 beneficial、2,015 harmful，
+其余 364,018 neutral。全部模型使用冻结的5折 source-disjoint OOF 和 top-769 signed utility gate；
+没有读取新的 calibration/dev/test 或运行闭环。
+
+| Predictor | 主要新增信息 | PR-AUC | Recall@769 | Top-769 utility | 决策 |
+|---|---|---:|---:|---:|---|
+| K | causal skeleton/history | .002549 | .01040 | -2 | No-Go |
+| R | 双手 RGB-DCT | .002042 | .00260 | -15 | No-Go |
+| HF | fold-specific finger RGB tiny-CNN | .002491 | .00650 | -3 | No-Go |
+| RF | fold-specific face RGB tiny-CNN | .002570 | .00260 | -5 | No-Go |
+| DCV | decoder-prefix state + causal K | .002649 | .00780 | -9 | No-Go |
+| L3 | 最丰富的可部署信息阶梯 | .005415 | .02341 | +5 | 仍远低于249-error gate |
+
+这些结果说明瓶颈不是缺少 oracle headroom，而是该 future/reference/EOS-aware counterfactual
+utility 标签难以由决策时可见信息稳定预测。细粒度 RGB 相比最初的手部 RGB-DCT 有局部改善，
+但没有超过 skeleton K，也没有形成可用累计 utility。当前冻结结论是停止这一 per-window target，
+不在相同 OOF 上继续调 crop、history、network 或 threshold。完整事实和产物见
+[实验账本](ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md)。
 
 ### Test：修复前历史 retrospective control
 
@@ -192,4 +215,9 @@ CSL-Daily Top-800 R1 是 isolated dev 可靠性诊断，报告 accuracy/AUROC，
 
 ## 下一步实验
 
-基础正确性对照、同卡交替三重复 runtime 和 P0 调度诊断均已完成。P0 不支持继续微调 motion、prediction-change 或 boundary-only 调度，但 label-derived sign-center oracle 显示了明确上界。下一步只使用 train 构造最小 causal sign-interior predictor，再在 repaired dev 评估 detection 与等预算 scheduler；仍不读取 test。由于 A0 对等预算 B2 的 dev WER 差异不显著，不能把本矩阵解释成现有自适应采样已经显著优于均匀采样。
+基础正确性对照、runtime、P0--P3 oracle 与完整 train OOF 均已完成。下一步不再训练同类
+per-window utility classifier，而应独立预注册更稳定、决策时可观测的中间 target，或重新分解为
+序列级/可微策略目标。新方案仍必须使用 source-disjoint train OOF；只有达到冻结的249-error
+headroom 才能解锁 unknown-EOS 闭环、逐样本等预算 uniform 和0/4/8 lookahead 比较。此前不得
+读取新的 held-out outcome 或运行 test。A0 对等预算 B2 的 dev WER 差异不显著，也不能被解释成
+现有自适应采样已经显著优于均匀采样。
