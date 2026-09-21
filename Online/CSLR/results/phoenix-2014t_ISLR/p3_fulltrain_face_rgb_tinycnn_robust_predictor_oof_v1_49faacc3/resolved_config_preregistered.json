@@ -1,0 +1,166 @@
+{
+  "experiment": "FACE_RGB fold-specific self-supervised tiny-CNN robust predictor OOF",
+  "created_before_feature_encoder_or_oof_outcomes": true,
+  "common_protocol": "docs/NEXT_RESEARCH_COMMON_PROTOCOL_FINE_RGB_20260921.md",
+  "branch_handoff": "docs/NEXT_RESEARCH_HANDOFF_FACE_RGB_ROBUST_PREDICTOR_20260921.md",
+  "identities": {
+    "video_sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+    "keypoints_sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "pose_sha256": "ab659a6e5f1f9f545fe705318ff9be5d7bc2d843acad8930d446b4f83e4dbcb3",
+    "skeleton_oof_sha256": "9665b83e11a8c6c415142820d5428ec37f8ac234b3b02b68a23d91d8a94eb29a"
+  },
+  "visibility_cost_audit_sha256": "6415bb0edbd074d5f2ef018f53e4fee12284eec1e3f82896aaed24d02a913320",
+  "rows": 366802,
+  "sources": 578,
+  "class_counts": {
+    "beneficial": 769,
+    "harmful": 2015,
+    "neutral": 364018
+  },
+  "crop": {
+    "wholebody_face_range": "23:91",
+    "confidence": 0.2,
+    "groups": {
+      "right_eye": "36:42",
+      "left_eye": "42:48",
+      "outer_lip": "48:60"
+    },
+    "minimum_valid_per_group": "at least half",
+    "mapping": {
+      "right_eye_center": [
+        20,
+        22
+      ],
+      "left_eye_center": [
+        44,
+        22
+      ],
+      "outer_lip_center": [
+        32,
+        45
+      ]
+    },
+    "operation": "cv2.warpAffine 64x64 bilinear constant-zero border",
+    "invalid": "32-D zero embedding plus validity=0; no temporal fill",
+    "normalization": "RGB uint8 -> [0,1] -> [-1,1]"
+  },
+  "encoder": {
+    "architecture": "Conv3x3 s2 3->16 BN SiLU; DW3x3 s2 16 + PW16->24 BN SiLU; DW3x3 s2 24 + PW24->32 BN SiLU; DW3x3 s1 32 + PW32->32 BN SiLU; GAP",
+    "projection_head": "Linear(32,64)-SiLU-Linear(64,32), training only",
+    "deployment_embedding": "L2-normalized pre-projection 32-D",
+    "parameters_encoder_including_bn": 3464,
+    "parameters_projection_head": 4192,
+    "macs_per_valid_face_crop": 724480,
+    "macs_per_arrived_frame_when_valid": 724480,
+    "identity_sha256": "760f26a0308840d4a32447d7d31e54671cfca0099926699f1006f81c7302a5d1"
+  },
+  "ssl": {
+    "outer_train_only": true,
+    "stable_selection": "first 200000 valid crops by SHA256(sample_id+NUL+frame)",
+    "samples_per_fold": 200000,
+    "objective": "symmetric NT-Xent",
+    "temperature": 0.2,
+    "epochs": 10,
+    "batch": 512,
+    "optimizer": "AdamW",
+    "lr": 0.001,
+    "weight_decay": 0.0001,
+    "scheduler": null,
+    "early_stopping": false,
+    "augmentation": {
+      "translation_pixels_xy": [
+        -2,
+        2
+      ],
+      "scale": [
+        0.9,
+        1.0
+      ],
+      "brightness": [
+        0.8,
+        1.2
+      ],
+      "contrast": [
+        0.8,
+        1.2
+      ],
+      "saturation": [
+        0.8,
+        1.2
+      ],
+      "horizontal_flip": false,
+      "implementation": "grid_sample align_corners=True; fixed brightness-contrast-saturation order"
+    },
+    "seed": 261041,
+    "augmentation_and_order_seed": "261041+fold",
+    "checkpoint": "fixed epoch 10"
+  },
+  "candidate_feature": {
+    "window": "candidate_start+[-7,-6,...,+8]",
+    "start_padding": "repeat first real frame",
+    "end_padding": "repeat last real frame only once EOS has arrived by deadline",
+    "deadline": "min(last real frame, decision_arrival+8)",
+    "per_frame": "face32+validity = 33",
+    "pooling": "four contiguous 4-frame segment means",
+    "width": 132
+  },
+  "models": {
+    "RF": {
+      "input": "B0(49)+faceRGB(132)",
+      "width": 181,
+      "status": "primary gate-eligible"
+    },
+    "KRF": {
+      "input": "B0(49)+K(68)+faceRGB(132)",
+      "width": 249,
+      "status": "secondary non-gating"
+    }
+  },
+  "folds": "exact frozen robust-oof-v1 source-disjoint mapping; row parity asserted",
+  "normalization": "outer-train rows only",
+  "predictor": {
+    "network": "MLP 32-16",
+    "epochs": 20,
+    "optimizer": "AdamW",
+    "lr": 0.002,
+    "weight_decay": 0.0001,
+    "batch": 8192,
+    "binary_seeds": [
+      261026,
+      261027,
+      261028
+    ],
+    "signed_seeds": [
+      261029,
+      261030,
+      261031
+    ],
+    "signed_primary": true
+  },
+  "top_K": 769,
+  "primary_comparison": "RF minus frozen K",
+  "gate": "RF signed top-769 utility >=249",
+  "family_priority": [
+    "FINGER_RGB",
+    "FACE_RGB"
+  ],
+  "gpu": {
+    "pci_bus_id": "00000000:81:00.0",
+    "uuid": "GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631",
+    "forbidden_pci": [
+      "00000000:25:00.0",
+      "00000000:41:00.0"
+    ],
+    "gpu0_forbidden": true
+  },
+  "forbidden": [
+    "FINGER_RGB outcomes",
+    "calibration/dev/test",
+    "closed-loop before integrated family decision",
+    "crop/CNN/augmentation/temporal tuning after OOF",
+    "external data or weights",
+    "git commit"
+  ],
+  "output_directory": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_face_rgb_tinycnn_robust_predictor_oof_v1_49faacc3"
+}

@@ -104,6 +104,12 @@ Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/*
 !Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/resolved_config_preregistered.json
 !Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/dataset_manifest.json
 !Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/rgb_feature_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/rgb_visibility_cost_audit.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/crop_cache_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/encoder_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/feature_manifest.json
+!Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_*/visibility_cost_audit.json
 Online/CTC_fusion/results/
 Online/SLT/results/
 Online/CSLR/run_logs/

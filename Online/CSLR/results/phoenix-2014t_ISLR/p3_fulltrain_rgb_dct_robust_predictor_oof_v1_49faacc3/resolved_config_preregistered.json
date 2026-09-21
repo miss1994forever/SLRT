@@ -1,0 +1,182 @@
+{
+  "experiment": "complete-fit RGB-DCT versus frozen skeleton robust predictor OOF",
+  "created_before_rgb_feature_generation_or_oof_outcomes": true,
+  "scope": {
+    "samples": 6378,
+    "sources": 578,
+    "sample_ids_sha256": "ea9f022ef1160bc3be5786fc31ec745b7007222c400864bbe16cb5101a6ec28e"
+  },
+  "rows": 366802,
+  "class_counts": {
+    "beneficial": 769,
+    "harmful": 2015,
+    "neutral": 364018
+  },
+  "inputs": {
+    "video": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/PHOENIX2014T_videos.zip",
+      "sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457"
+    },
+    "keypoints": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.train.pkl",
+      "sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763"
+    },
+    "checkpoint_identity_only_not_predictor_input": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "robust_dataset_manifest_sha256": "a5d3cf37fe256c9527029b789071ba3e6f23c30453c675c2fedd04383164db6a",
+    "pose_archive_sha256": "ab659a6e5f1f9f545fe705318ff9be5d7bc2d843acad8930d446b4f83e4dbcb3",
+    "frozen_skeleton_oof_sha256": "9665b83e11a8c6c415142820d5428ec37f8ac234b3b02b68a23d91d8a94eb29a",
+    "visibility_cost_audit_sha256": "979468deb553ea05c6c51f2df1a6ff629a45f1a59421192f31a74904ceadd92e"
+  },
+  "rgb_encoder": {
+    "name": "fixed-ycrcb-dct-v1",
+    "crop_size": [
+      32,
+      32
+    ],
+    "luma_coords": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        5
+      ]
+    ],
+    "chroma_coords": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "normalization": "RGB uint8 -> YCrCb float32 / 255; orthonormal OpenCV DCT",
+    "basis_sha256": "f538ea3f200a5362f0f917ec01b3913aa4991e4968d5e87713b50dd879acd0f9",
+    "learned_weights": false,
+    "encoder_identity_sha256": "7d899af1a794f626c09de786b794e9eb8cc985cca3d97ed886f0ae847d35d5e3",
+    "crop": "each hand from same-frame HRNet points confidence>=0.2; square 1.5xbbox, minimum 24 px; resize 32x32",
+    "invalid_crop": "all 24 DCT coefficients and validity flag are zero; no future/past fill",
+    "output": "16 Y plus 4 Cr plus 4 Cb DCT coefficients and one validity flag per hand; 50/frame; float16 archive"
+  },
+  "temporal_visibility": {
+    "decision": "after offset3 candidate arrives; same bounded lookahead as K",
+    "last_visible_frame": "min(last real frame, candidate start + 8)",
+    "history": 31,
+    "left_padding": "repeat first visible real frame",
+    "pooling": [
+      "last",
+      "mean",
+      "std",
+      "last-minus-first"
+    ],
+    "R_width": 249
+  },
+  "feature_sets": {
+    "B0": "reuse frozen saved OOF score; 49 bookkeeping+decoder-prefix inputs",
+    "K": "reuse frozen saved OOF score; B0 plus 68 skeleton-history summary inputs",
+    "R": "B0 plus 200 RGB-DCT-history summary inputs; primary candidate",
+    "KR": "B0 plus K and R histories; preregistered secondary complement diagnostic; not gate-eligible"
+  },
+  "folds": "exact frozen robust-oof-v1 5-fold deterministic source mapping",
+  "normalization": "mean/std independently fit on each OOF training fold only; no PCA/codebook",
+  "objectives": {
+    "signed_primary": "harmful/neutral/beneficial inverse-frequency weighted cross entropy",
+    "binary_diagnostic": "beneficial versus rest weighted BCE",
+    "network": "MLP 32-16; 20 fixed epochs; AdamW lr 0.002 weight_decay 0.0001; batch 8192",
+    "binary_seeds": [
+      261026,
+      261027,
+      261028
+    ],
+    "signed_seeds": [
+      261029,
+      261030,
+      261031
+    ]
+  },
+  "K": 769,
+  "primary_comparison": "R minus K signed top-K utility with source-cluster bootstrap 95% CI",
+  "candidate_priority": [
+    "R"
+  ],
+  "KR_status": "secondary diagnostic fixed now; cannot replace R as the confirmatory comparison or unlock closed loop",
+  "closed_loop_gate": "R signed top-769 robust utility >=249 errors",
+  "forbidden": [
+    "calibration",
+    "dev",
+    "test",
+    "closed-loop outcome before gate",
+    "threshold tuning",
+    "feature/crop/history/architecture tuning",
+    "expensive ISLR logits or embeddings as R",
+    "git commit"
+  ],
+  "output_directory": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_rgb_dct_robust_predictor_oof_v1_49faacc3"
+}

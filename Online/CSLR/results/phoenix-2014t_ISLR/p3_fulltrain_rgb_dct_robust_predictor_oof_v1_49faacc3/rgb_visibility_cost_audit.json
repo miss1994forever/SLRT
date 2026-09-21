@@ -1,0 +1,136 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-21T00:44:31.830622+00:00",
+  "scope": "read-only train-fit RGB visibility, identity, causality, and CPU cost audit",
+  "outcomes_read": false,
+  "calibration_dev_test_read": false,
+  "identities": {
+    "video_sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+    "keypoints_sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "pose_sha256": "ab659a6e5f1f9f545fe705318ff9be5d7bc2d843acad8930d446b4f83e4dbcb3",
+    "skeleton_oof_sha256": "9665b83e11a8c6c415142820d5428ec37f8ac234b3b02b68a23d91d8a94eb29a"
+  },
+  "fit_samples": 6378,
+  "cost_sample": {
+    "selection": "lowest SHA256(rgb-dct-cost-v1+NUL+fit sample id)",
+    "samples": 32,
+    "frames": 512,
+    "decoded_png_bytes": 22740128,
+    "decode_ms_per_frame": 1.6352890312418822,
+    "two_hand_crop_plus_dct_ms_per_frame": 0.30511946698652537,
+    "valid_hand_fraction": 0.99609375,
+    "peak_process_rss_mib": 1812.51953125
+  },
+  "deployment": {
+    "execution_frequency": "every arrived RGB frame, including frames in windows later skipped by the scheduler",
+    "candidate_deadline": "history ends at min(last real frame, candidate start + 8), identical to K",
+    "causal_inputs": "same-frame RGB plus same-frame HRNet hand points; no temporal fill",
+    "cpu_gpu_transfer": "none for descriptor; CPU float vector may be appended to the scheduler input",
+    "descriptor_gpu_memory_bytes": 0,
+    "approximate_dct_arithmetic_per_frame": "393216 MACs for six separable 32x32 2-D DCTs, excluding decode/crop resize",
+    "pose_detector_cost": "not included; K already requires the same online pose stream",
+    "risk": "continuous PNG/RGB decode and pose inference remain mandatory and can offset saved ISLR windows"
+  },
+  "forbidden_rejected": {
+    "dense_islr_logits": true,
+    "candidate_islr_backbone_embeddings": true,
+    "future_frames_reference_true_eos_total_length": true,
+    "reason": "these are unavailable before the scheduler decision or are outcome leakage"
+  },
+  "encoder": {
+    "name": "fixed-ycrcb-dct-v1",
+    "crop_size": [
+      32,
+      32
+    ],
+    "luma_coords": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        0,
+        3
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        2,
+        1
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        4,
+        0
+      ],
+      [
+        3,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        1,
+        3
+      ],
+      [
+        0,
+        4
+      ],
+      [
+        0,
+        5
+      ]
+    ],
+    "chroma_coords": [
+      [
+        0,
+        0
+      ],
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        1,
+        1
+      ]
+    ],
+    "normalization": "RGB uint8 -> YCrCb float32 / 255; orthonormal OpenCV DCT",
+    "basis_sha256": "f538ea3f200a5362f0f917ec01b3913aa4991e4968d5e87713b50dd879acd0f9",
+    "learned_weights": false,
+    "encoder_identity_sha256": "7d899af1a794f626c09de786b794e9eb8cc985cca3d97ed886f0ae847d35d5e3"
+  }
+}

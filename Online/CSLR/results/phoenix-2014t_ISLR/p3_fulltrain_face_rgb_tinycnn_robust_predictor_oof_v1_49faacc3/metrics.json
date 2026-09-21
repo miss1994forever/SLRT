@@ -1,0 +1,190 @@
+{
+  "created_utc": "2026-09-21T04:01:54.039526+00:00",
+  "device": {
+    "visible_uuid": "GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631",
+    "pci_bus_id": "00000000:81:00.0",
+    "name": "NVIDIA GeForce RTX 3090",
+    "total_memory_bytes": 25296044032
+  },
+  "rows": 366802,
+  "sources": 578,
+  "class_counts": {
+    "-2": 39,
+    "-1": 1976,
+    "0": 364018,
+    "1": 755,
+    "2": 14
+  },
+  "feature_widths": {
+    "B0": 49,
+    "K": 117,
+    "RF": 181,
+    "KRF": 249
+  },
+  "folds": [
+    {
+      "fold": 0,
+      "train_rows": 304014,
+      "eval_rows": 62788,
+      "train_sources_exclude_eval": true,
+      "encoder_checkpoint_sha256": "16a7e3d9b75ac3b9d0ee0156d68530860dee08190203580cbb13d62dbfb18721"
+    },
+    {
+      "fold": 1,
+      "train_rows": 294930,
+      "eval_rows": 71872,
+      "train_sources_exclude_eval": true,
+      "encoder_checkpoint_sha256": "b381200cd39a54931809ca59c05640e6705e6cdc595f5e175ebaff6f4555164f"
+    },
+    {
+      "fold": 2,
+      "train_rows": 288960,
+      "eval_rows": 77842,
+      "train_sources_exclude_eval": true,
+      "encoder_checkpoint_sha256": "29c9750a419048e3c5b4d93da33624e0e005221471aecd03f98f9788d9357c44"
+    },
+    {
+      "fold": 3,
+      "train_rows": 289654,
+      "eval_rows": 77148,
+      "train_sources_exclude_eval": true,
+      "encoder_checkpoint_sha256": "0951e514666076b7c8ca58ecd693fa0d8ce4abddd66300c5c2ebfac5392512c3"
+    },
+    {
+      "fold": 4,
+      "train_rows": 289650,
+      "eval_rows": 77152,
+      "train_sources_exclude_eval": true,
+      "encoder_checkpoint_sha256": "223597eac080e9c2f3734d103d537f0209d1ddf5e1418e60e27b49f73eb3ea9d"
+    }
+  ],
+  "metrics": {
+    "binary": {
+      "B0": {
+        "pr_auc": 0.006320664360909513,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.015604681335389614,
+        "precision_at_K": 0.015604681335389614,
+        "top_K_signed_robust_utility": -22,
+        "top_K_positive_utility_captured": 12,
+        "top_K_harmful_actions": 34,
+        "all_positive_utility": 783
+      },
+      "K": {
+        "pr_auc": 0.0051749363817881555,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.01690507121384144,
+        "precision_at_K": 0.01690507121384144,
+        "top_K_signed_robust_utility": -4,
+        "top_K_positive_utility_captured": 13,
+        "top_K_harmful_actions": 17,
+        "all_positive_utility": 783
+      },
+      "RF": {
+        "pr_auc": 0.004966097437563435,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.01690507121384144,
+        "precision_at_K": 0.01690507121384144,
+        "top_K_signed_robust_utility": -8,
+        "top_K_positive_utility_captured": 13,
+        "top_K_harmful_actions": 21,
+        "all_positive_utility": 783
+      },
+      "KRF": {
+        "pr_auc": 0.0038890545258402826,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.005201560445129871,
+        "precision_at_K": 0.005201560445129871,
+        "top_K_signed_robust_utility": -7,
+        "top_K_positive_utility_captured": 4,
+        "top_K_harmful_actions": 11,
+        "all_positive_utility": 783
+      }
+    },
+    "signed": {
+      "B0": {
+        "pr_auc": 0.0030240744215937142,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.0013003901112824678,
+        "precision_at_K": 0.0013003901112824678,
+        "top_K_signed_robust_utility": -9,
+        "top_K_positive_utility_captured": 1,
+        "top_K_harmful_actions": 10,
+        "all_positive_utility": 783
+      },
+      "K": {
+        "pr_auc": 0.0025492400230537346,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.010403120890259743,
+        "precision_at_K": 0.010403120890259743,
+        "top_K_signed_robust_utility": -2,
+        "top_K_positive_utility_captured": 8,
+        "top_K_harmful_actions": 10,
+        "all_positive_utility": 783
+      },
+      "RF": {
+        "pr_auc": 0.0025704522223977742,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.0026007802225649357,
+        "precision_at_K": 0.0026007802225649357,
+        "top_K_signed_robust_utility": -5,
+        "top_K_positive_utility_captured": 2,
+        "top_K_harmful_actions": 7,
+        "all_positive_utility": 783
+      },
+      "KRF": {
+        "pr_auc": 0.0024117280308977975,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.009102731011807919,
+        "precision_at_K": 0.009102731011807919,
+        "top_K_signed_robust_utility": -6,
+        "top_K_positive_utility_captured": 7,
+        "top_K_harmful_actions": 13,
+        "all_positive_utility": 783
+      }
+    }
+  },
+  "signed_RF_minus_K_top_K_utility": -3,
+  "signed_RF_minus_K_top_K_utility_source_bootstrap_95pct": [
+    -16.0,
+    9.0
+  ],
+  "signed_KRF_minus_K_top_K_utility_source_bootstrap_95pct_secondary": [
+    -19.0,
+    10.0
+  ],
+  "cost": {
+    "encoder_parameters": 3464,
+    "encoder_macs_per_arrived_frame": 724480,
+    "five_fold_ssl_train_seconds": 480.0182186579914,
+    "five_fold_feature_extraction_seconds": 111.4940323359915,
+    "deployment": "one shared encoder, invoked once for every arrived frame; cached embeddings reused"
+  },
+  "gate": {
+    "threshold_errors": 249,
+    "RF_utility": -5,
+    "passed": false,
+    "decision": "no-go",
+    "action": "do_not_run_closed_loop_in_this_branch"
+  },
+  "limitations": [
+    "fit-only OOF ranking",
+    "bounded +8 candidate lookahead",
+    "pose detector shared but non-zero",
+    "KRF is secondary and cannot unlock closed loop"
+  ],
+  "elapsed_seconds": 266.1665859039931,
+  "oof_scores": {
+    "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_face_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/oof_scores.npz",
+    "bytes": 10852170,
+    "sha256": "86674f6d1dbfbdf68656512174ae30002617e98dc5bffc347bf2fb8525558a76"
+  }
+}

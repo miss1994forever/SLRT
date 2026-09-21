@@ -1,0 +1,219 @@
+{
+  "created_utc": "2026-09-21T01:11:51.971389+00:00",
+  "device": {
+    "requested": "cuda:0",
+    "cuda_visible_devices": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+    "torch_cuda_name": "NVIDIA GeForce RTX 3090",
+    "verified_physical_index": 3,
+    "verified_pci_bus_id": "00000000:61:00.0",
+    "execution_scope": "outside sandbox"
+  },
+  "rows": 366802,
+  "sources": 578,
+  "class_counts": {
+    "-2": 39,
+    "-1": 1976,
+    "0": 364018,
+    "1": 755,
+    "2": 14
+  },
+  "feature_widths": {
+    "B0": 49,
+    "K": 117,
+    "R": 249,
+    "KR": 317
+  },
+  "folds": {
+    "R": [
+      {
+        "fold": 0,
+        "train_rows": 304014,
+        "eval_rows": 62788,
+        "train_beneficial": 628,
+        "eval_beneficial": 141
+      },
+      {
+        "fold": 1,
+        "train_rows": 294930,
+        "eval_rows": 71872,
+        "train_beneficial": 626,
+        "eval_beneficial": 143
+      },
+      {
+        "fold": 2,
+        "train_rows": 288960,
+        "eval_rows": 77842,
+        "train_beneficial": 613,
+        "eval_beneficial": 156
+      },
+      {
+        "fold": 3,
+        "train_rows": 289654,
+        "eval_rows": 77148,
+        "train_beneficial": 613,
+        "eval_beneficial": 156
+      },
+      {
+        "fold": 4,
+        "train_rows": 289650,
+        "eval_rows": 77152,
+        "train_beneficial": 596,
+        "eval_beneficial": 173
+      }
+    ],
+    "KR": [
+      {
+        "fold": 0,
+        "train_rows": 304014,
+        "eval_rows": 62788,
+        "train_beneficial": 628,
+        "eval_beneficial": 141
+      },
+      {
+        "fold": 1,
+        "train_rows": 294930,
+        "eval_rows": 71872,
+        "train_beneficial": 626,
+        "eval_beneficial": 143
+      },
+      {
+        "fold": 2,
+        "train_rows": 288960,
+        "eval_rows": 77842,
+        "train_beneficial": 613,
+        "eval_beneficial": 156
+      },
+      {
+        "fold": 3,
+        "train_rows": 289654,
+        "eval_rows": 77148,
+        "train_beneficial": 613,
+        "eval_beneficial": 156
+      },
+      {
+        "fold": 4,
+        "train_rows": 289650,
+        "eval_rows": 77152,
+        "train_beneficial": 596,
+        "eval_beneficial": 173
+      }
+    ]
+  },
+  "metrics": {
+    "binary": {
+      "B0": {
+        "pr_auc": 0.006320664360909513,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.015604681335389614,
+        "precision_at_K": 0.015604681335389614,
+        "top_K_signed_robust_utility": -22,
+        "top_K_positive_utility_captured": 12,
+        "top_K_harmful_actions": 34,
+        "all_positive_utility": 783
+      },
+      "K": {
+        "pr_auc": 0.0051749363817881555,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.01690507121384144,
+        "precision_at_K": 0.01690507121384144,
+        "top_K_signed_robust_utility": -4,
+        "top_K_positive_utility_captured": 13,
+        "top_K_harmful_actions": 17,
+        "all_positive_utility": 783
+      },
+      "R": {
+        "pr_auc": 0.0035965336392576215,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.009102731011807919,
+        "precision_at_K": 0.009102731011807919,
+        "top_K_signed_robust_utility": -6,
+        "top_K_positive_utility_captured": 8,
+        "top_K_harmful_actions": 14,
+        "all_positive_utility": 783
+      },
+      "KR": {
+        "pr_auc": 0.0035778798714132245,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.0039011703338474035,
+        "precision_at_K": 0.0039011703338474035,
+        "top_K_signed_robust_utility": -11,
+        "top_K_positive_utility_captured": 3,
+        "top_K_harmful_actions": 14,
+        "all_positive_utility": 783
+      }
+    },
+    "signed": {
+      "B0": {
+        "pr_auc": 0.0030240744215937142,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.0013003901112824678,
+        "precision_at_K": 0.0013003901112824678,
+        "top_K_signed_robust_utility": -9,
+        "top_K_positive_utility_captured": 1,
+        "top_K_harmful_actions": 10,
+        "all_positive_utility": 783
+      },
+      "K": {
+        "pr_auc": 0.0025492400230537346,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.010403120890259743,
+        "precision_at_K": 0.010403120890259743,
+        "top_K_signed_robust_utility": -2,
+        "top_K_positive_utility_captured": 8,
+        "top_K_harmful_actions": 10,
+        "all_positive_utility": 783
+      },
+      "R": {
+        "pr_auc": 0.0020419769562816594,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.0026007802225649357,
+        "precision_at_K": 0.0026007802225649357,
+        "top_K_signed_robust_utility": -15,
+        "top_K_positive_utility_captured": 2,
+        "top_K_harmful_actions": 16,
+        "all_positive_utility": 783
+      },
+      "KR": {
+        "pr_auc": 0.0023378450702123185,
+        "positive_prevalence": 0.0020964988507330418,
+        "K": 769,
+        "positive_recall_at_K": 0.007802340667694807,
+        "precision_at_K": 0.007802340667694807,
+        "top_K_signed_robust_utility": -10,
+        "top_K_positive_utility_captured": 6,
+        "top_K_harmful_actions": 16,
+        "all_positive_utility": 783
+      }
+    }
+  },
+  "signed_R_minus_K_top_K_utility": -13,
+  "signed_R_minus_K_top_K_utility_source_bootstrap_95pct": [
+    -27.0,
+    0.0
+  ],
+  "signed_KR_minus_K_top_K_utility_source_bootstrap_95pct_secondary": [
+    -20.0,
+    4.0
+  ],
+  "gate": {
+    "threshold_errors": 249,
+    "R_utility": -15,
+    "passed": false,
+    "decision": "no-go",
+    "action": "do_not_run_closed_loop"
+  },
+  "limitations": [
+    "fit-only OOF ranking",
+    "offset3 bounded candidate lookahead",
+    "pose detector cost excluded because shared with K",
+    "no held-out or final WER claim"
+  ],
+  "elapsed_seconds": 107.12683321500663
+}

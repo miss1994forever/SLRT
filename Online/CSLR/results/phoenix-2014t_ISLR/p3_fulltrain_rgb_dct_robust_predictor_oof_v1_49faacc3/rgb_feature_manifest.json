@@ -1,0 +1,33 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-21T01:07:35.450325+00:00",
+  "samples": 6378,
+  "sources": 578,
+  "frames": 743147,
+  "feature_shape": [
+    743147,
+    50
+  ],
+  "dtype": "float16",
+  "sample_ids_sha256": "99189618cd7b7ee615bfb809dde5e16447d7e91351d89bbcc4a18f4f7747e217",
+  "input_sha256": {
+    "video": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+    "keypoints": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763"
+  },
+  "output": {
+    "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_rgb_dct_robust_predictor_oof_v1_49faacc3/train_fit_rgb_hand_dct_sequences.npz",
+    "bytes": 68926196,
+    "sha256": "bafd1504aa079148c4ecd88a2f708bcd87ee6f33a35309aaa7a85b1d26bdedab"
+  },
+  "invalid_hand_crops": 7226,
+  "total_hand_crops": 1486294,
+  "invalid_hand_crop_rate": 0.004861756826038456,
+  "frames_with_any_invalid_hand": 7046,
+  "invalid_frame_rate": 0.009481300469489886,
+  "decoded_png_bytes": 32557845109,
+  "decode_seconds": 1124.5970564514573,
+  "crop_and_dct_seconds": 199.43840297311544,
+  "total_seconds": 1332.3627287679992,
+  "causality": "each row uses only same-frame RGB and same-frame HRNet points; invalid crops zeroed without temporal fill",
+  "encoder_identity_sha256": "7d899af1a794f626c09de786b794e9eb8cc985cca3d97ed886f0ae847d35d5e3"
+}

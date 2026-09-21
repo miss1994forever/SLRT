@@ -1,6 +1,6 @@
 # 在线 CSLR 实验账本（2026-09-20）
 
-本账本只整理仓库中已落盘的事实；`unknown` 表示从现有产物无法确认，不能用对话记忆补齐。2026-09-20 已在完整 train fit 范围完成 robust continuation oracle、反事实标签集、因果特征归档、标签稳定性审计与 source-disjoint OOF predictor；没有读取新的 held-out dev/test 结果。
+本账本只整理仓库中已落盘的事实；`unknown` 表示从现有产物无法确认，不能用对话记忆补齐。2026-09-21 已在完整 train fit 范围继续完成预注册的 RGB-DCT vs skeleton source-disjoint OOF predictor；没有读取新的 calibration/dev/test 或 closed-loop outcome。
 
 ## 固定身份与解释约束
 
@@ -39,6 +39,11 @@
 | Full robust labels + causal archive | 完整 predictor 输入与标签是否覆盖且可复现 | labels: 6,378/578；features: 7,096 samples、827,354 frames | 标签 future/reference/EOS-aware；211 维特征只由截至当前的 pose/手形/运动序列生成 | 366,802 side rows；769 beneficial、2,015 harmful、364,018 neutral | 标签逐项重放精确复现 oracle 2,325→1,688 errors；56/56 label shards 与 feature shards 完整；20 samples/209 decoder states parity 无 token mismatch，数值差≤9.537e-7 | 完整训练资产通过覆盖与数值一致性检查，可用于冻结 OOF；不是准确率结果 | `p3_fulltrain_robust_continuation_fit6378_dataset_v2_49faacc3/dataset_manifest.json`；`p3_fulltrain_causal_pose_hand_motion_v1_49faacc3/manifest.json` |
 | Full continuation stability | robust 取交集是否仍有必要 | fit 6,378，578 sources，183,401 blocks | 描述性审计读取两种 future continuation、reference、EOS；不可部署 | fixed-center future vs fixed-late future；同一 span15 decoder | center positive 1,219；其中769仍为正，survival .6308，source CI [.6065,.6572]；仅3个反转为负；union-nonzero sign agreement .4624；informative-block best-action agreement .7400，CI [.7257,.7546] | 比 partial32 的.50稳定，但绝非策略无关；robust intersection 仍必要 | `p3_fulltrain_robust_label_stability_fit6378_v1_49faacc3/metrics.json` |
 | Full robust predictor OOF | 冻结的 causal skeleton/prefix 能否选出足够 robust utility | fit 6,378，578 sources；366,802 rows；5-fold source-disjoint OOF | B0=bookkeeping+prefix；K=B0+冻结的17个 P2 temporal features/31步历史；标签 future/reference/EOS-aware | binary 兼容诊断；signed 三分类为主；top-K=769；strong headroom=249 errors | signed K PR-AUC .002549（prevalence .002096）；recall@769 .01040；top-K 只捕获8正效用、10 harmful，累计 utility=-2；K-B0 source CI [-5,19]；binary K utility=-4 | 冻结 gate 失败，**停止当前 robust predictor 分支，不进入闭环、不做 threshold tuning**。完整 oracle 强而 predictor 弱，瓶颈在可预测性而非上界 | `p3_fulltrain_robust_predictor_oof_v1_49faacc3/metrics.json` |
+| Full RGB-DCT robust predictor OOF | 廉价因果手部 RGB 外观能否比 K 更早识别 robust decoder utility | fit 6,378，578 sources；743,147 RGB frames；366,802 rows；复用同一5折 | R=B0+双手32×32 same-frame YCrCb-DCT 的31帧历史；逐帧执行，无 learned encoder；KR 仅为预注册次要诊断；标签仍 future/reference/EOS-aware | 与 K 相同 MLP/epoch/seeds；signed 主目标；top-K=769；strong gate=249 | R signed PR-AUC .002042、recall@769 .002601；top-K 捕获2正效用、16 harmful，utility=-15；R-K=-13，source CI [-27,0]。次要 KR PR-AUC .002338、utility=-10，KR-K CI [-20,4]。全量提取平均约1.51 ms decode + .27 ms crop/DCT 每帧，invalid hand crop .486% | R 不优于 K 且 utility 为负，**no-go：停止当前 RGB-DCT 表征，不运行闭环、不调 crop/history/network**。KR 不能升级为主结果。 | `p3_fulltrain_rgb_dct_robust_predictor_oof_v1_49faacc3/metrics.json`；同目录 `rgb_visibility_cost_audit.json`、`rgb_feature_manifest.json` |
+| Full finger RGB tiny-CNN OOF | 更细的手指构形、接触和遮挡能否弥补 DCT 丢失的信息 | fit 6,378，578 sources；366,802 rows；5个 fold-specific 自监督 encoder | HF=B0+候选窗口双手仿射对齐 RGB；每折 encoder 只见 outer-train sources；KHF 为次要诊断 | signed 主目标；top-K=769；strong gate=249 | HF PR-AUC .002491、recall .006502、utility=-3（5 positive utility、8 harmful）；HF-K=-1，source CI [-13,11]；KHF utility=-8 | **no-go**；细粒度手部 RGB 相对 K 无可靠增益，不进入闭环 | `p3_fulltrain_finger_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/metrics.json` |
+| Full face RGB tiny-CNN OOF | 口型、眉眼和面部非手部标记能否提供 K 之外的信息 | fit 6,378，578 sources；366,802 rows；5个 fold-specific 自监督 encoder | RF=B0+眼-口仿射对齐 face RGB；每折 encoder 隔离；KRF 为次要诊断 | signed 主目标；top-K=769；strong gate=249 | RF PR-AUC .002570、recall .002601、utility=-5（2 positive utility、7 harmful）；RF-K=-3，source CI [-16,9]；KRF utility=-6 | **no-go**；面部 RGB 不进入闭环 | `p3_fulltrain_face_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/metrics.json` |
+| Decoder-conditioned value OOF | decoder 当前内部状态是否能把可见视觉线索映射为未来 utility | fit 6,378，578 sources；366,802 rows；5折 | 因果 decoder-prefix hidden-state summary + K；predictor 不读 future/reference/true EOS | top-K=769；strong gate=249 | DCV PR-AUC .002649、recall .007802；捕获6正效用、15 harmful，utility=-9；K 为 -2 | **no-go**；decoder conditioning 没有解决 target 可预测性 | `p3_fulltrain_decoder_conditioned_value_oof_v1_49faacc3/metrics.json` |
+| Utility information ladder OOF | 逐级增加可部署因果信息后，utility 是否出现可用上升曲线 | fit 6,378，578 sources；同一冻结 folds | L0=DCV，L1-L3 逐级加入更丰富的因果视觉历史；全部保持部署可见性 | top-K=769；strong gate=249 | utility：K=-2、L0=-9、L1=-4、L2=-6、L3=+5；最丰富 L3 PR-AUC .005415、recall .02341，仍只捕获18正效用并选中13 harmful | 所有层级远低于249；**停止当前 per-window counterfactual utility prediction target**，下一步应改 target/决策分解而不是继续加同类特征 | `p3_fulltrain_utility_information_ladder_oof_v1_49faacc3/metrics.json` |
 
 ## 协议冲突与口径风险
 
@@ -74,8 +79,8 @@
 
 ## 下一阶段冻结顺序
 
-1. 当前 skeleton robust predictor 已按预注册门槛 no-go；不运行闭环、不在同一标签上调 threshold，也不机械复刻 partial32 失败变体。
-2. 若继续 predictor 研究，应把 RGB/手形外观等新表征作为独立 rescue 假设，复用相同 labels、source folds、B0/K 对照和 top-K utility gate；这不是当前 skeleton 结果的追调参。
-3. 只有新的表示在 train OOF 达到冻结 headroom，才解锁 unknown-EOS token-bucket 闭环、逐样本等预算 uniform 与0/4/8 lookahead。
+1. skeleton、RGB-DCT、finger RGB、face RGB、DCV 与信息阶梯均未达到同一冻结门槛；不运行闭环，不在同一 OOF 上调 threshold、crop、历史长度或网络。
+2. 当前证据支持停止“预测每个窗口的反事实 decoder utility”这一 target；下一步优先改为更稳定、可观测的中间 target 或直接优化可微/序列级决策，而不是继续堆叠同类视觉特征。
+3. 新 target 必须独立预注册并保持 source-disjoint OOF；只有 train OOF 达到冻结 headroom，才解锁 unknown-EOS token-bucket 闭环、逐样本等预算 uniform 与0/4/8 lookahead。
 4. 通过闭环后才运行冻结 held-out WER、真实 wall time、controller cost、队列积压与P95稳定提交延迟。
 5. AdaBrowse-inspired 同协议比较和论文级多重校正留到主方法通过上述 gate 之后。

@@ -1,0 +1,50 @@
+{
+  "status": "complete",
+  "created_utc": "2026-09-21T03:43:12.020668+00:00",
+  "samples": 6378,
+  "sources": 578,
+  "frames": 743147,
+  "crop_shape": [
+    743147,
+    64,
+    64,
+    3
+  ],
+  "dtype": "uint8",
+  "valid_face_crops": 743144,
+  "invalid_face_crops": 3,
+  "invalid_face_crop_rate": 4.03688637645042e-06,
+  "affine_out_of_bounds_fraction": {
+    "mean": 4.599335727665163e-09,
+    "p50": 0.0,
+    "p95": 0.0,
+    "maximum": 0.00146484375
+  },
+  "timing_ms_per_frame": {
+    "decode_p50": 1.5355069772340357,
+    "decode_p95": 3.509216595557509,
+    "face_affine_p50": 0.20804701489396393,
+    "face_affine_p95": 0.2972549991682172
+  },
+  "decoded_png_bytes": 32557845109,
+  "elapsed_seconds": 1795.8171708010195,
+  "sample_ids_sha256": "99189618cd7b7ee615bfb809dde5e16447d7e91351d89bbcc4a18f4f7747e217",
+  "files": {
+    "crops": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_face_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/train_fit_face_affine_crops_uint8.npy",
+      "bytes": 9131790464,
+      "sha256": "1d9cda216a477ad95e4ed0c50bbcd7c64d5ce385f9335e1a749fe1d1304b21b9"
+    },
+    "valid": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_face_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/train_fit_face_crop_valid.npy",
+      "bytes": 743275,
+      "sha256": "493e01cd552570e87a11450be83e71d4d6f9f36d798e3b31275b450048e3667f"
+    },
+    "index": {
+      "path": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_face_rgb_tinycnn_robust_predictor_oof_v1_49faacc3/ssl_crop_index.npz",
+      "bytes": 3334598,
+      "sha256": "6b2cc33f089656f1175a43d0da437f2162436fedf7f4156939cddfa4b8e820a5"
+    }
+  },
+  "causality": "each crop uses only same-frame RGB and same-frame face landmarks; invalid crops remain zero"
+}
