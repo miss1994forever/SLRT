@@ -1,0 +1,29 @@
+{
+  "experiment": "P6 K/history independent source-disjoint calibration confirmation v1",
+  "created_before_calibration_outcomes": true,
+  "authorization": "user continued after being told that the next formal step requires reading the previously unused calibration partition",
+  "fixed_assets": {
+    "dense_protocol_sha256": "30331c1701c95b5c720b92a17ae905522d911164caf66b795ed93c5a6c8d1d85",
+    "fit_calibration_split_sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784",
+    "fit_p6_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d",
+    "fit_p6_metrics_sha256": "3804e732b0524d609c11b41d790eab760c52a9521b38c8782d6a4ae8cda43ed2"
+  },
+  "fit": {"samples": 6378, "sources": 578, "rows": 183401},
+  "calibration": {"samples": 718, "sources": 65, "assignment": "previously unused by P6; source-disjoint from fit"},
+  "target": "log(symmetric posterior JS(offset0,offset2)+1e-8)",
+  "deadline": "after current offset0 and before current offset2; no reference, future beyond offset2, or EOS in predictor",
+  "features": "frozen 153-D K/history only: hashed paid-posterior history plus scheduling bookkeeping; no heatmap, RGB, or keypoints",
+  "state": "teacher-forced full-center paid-logit history through current offset0",
+  "model": "single ridge alpha=100 trained on all 6378 fit samples with fit-only normalization; no calibration tuning",
+  "policy": "within each calibration sample retain offset0 coverage and ceil(B/2) offset2 bonuses with highest predicted score",
+  "comparators": ["per-sample equal-budget uniform sparse", "full center"],
+  "decoder": "frozen span-weighted-15 replay",
+  "primary_gates": {
+    "calibration_r2_against_fit_mean_at_least": 0.20,
+    "K_error_reduction_vs_uniform_at_least": 14,
+    "K_vs_uniform_source_cluster_bootstrap_upper_lt_zero": true
+  },
+  "decision": "all gates pass to unlock a separately preregistered calibration unknown-EOS self-history simulation; any failure stops K/history before closed loop and held-out",
+  "limitations": ["known-length within-sample top-K", "teacher-forced full-center history", "calibration confirmation is not final held-out evidence"],
+  "forbidden": ["GPU or CUDA", "heatmap feature selection", "calibration tuning", "dev/test/held-out", "unknown-EOS closed loop in this identity", "changing alpha, budget, decoder, or gates"]
+}

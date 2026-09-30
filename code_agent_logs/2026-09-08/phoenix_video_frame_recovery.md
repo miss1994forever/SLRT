@@ -54,7 +54,14 @@ train/dev/test 的缺失数现在均为 0。原先缺失的 7 个 dev 帧全部�
 
 ## 尚未解决的问题
 
-本次只修复 RGB 视频帧。完整性审计发现的 train keypoints 中 9 个样本、13 个非有限 x/y 标量尚未处理。它们不影响当前 Phoenix dev/test 自适应步长推理，但如果重新训练 ISLR，必须先确定可复现的清洗或重提取策略。
+本次只修复 RGB 视频帧。当时完整性审计发现的 train keypoints 中 9 个样本、13 个非有限 x/y 标量尚未处理。
+
+2026-09-28 后续处置：采用可复现的“异常关节点视为缺失点”策略；只要 x/y
+任一为非有限值，就把该关节点的完整 `(x, y, confidence)` 三元组置零。原文件不覆盖，
+生成 `keypoints_hrnet_dark_coco_wholebody_iso.finite.pkl` 和
+`keypoints_hrnet_dark_coco_wholebody_iso.train.finite.pkl`。共处理 9 个样本、10 个关节点、
+13 个非有限 x/y 标量；重载验证确认全部输出有限且其他值不变。正式 Online CSLR 配置已
+切换到有限值版本，详情见同目录的 `.finite.manifest.json`。
 
 ## 下一步
 

@@ -1,0 +1,51 @@
+{
+  "experiment": "P5 H4 nonlinear opportunity-capacity audit v1",
+  "status": "post-OOF diagnostic only",
+  "created_before_audit_outputs": true,
+  "fixed_assets": {
+    "dataset_sha256": "83bcc91be603ab1bcc4dcdc3d14991f2c112f8dd988ac62517ef8dc1fdbc4881",
+    "oof_audit_metrics_sha256": "98792dc01a0b8a78399bd1efcc2612b4f54bd98ca5598a46d731da41cbe54694",
+    "target_stability_metrics_sha256": "5d05ad1806a2c47913f4a61e2f5b6e25f69efbb731fdc192ee51a3c50487e9fb"
+  },
+  "scope": {
+    "rows": 43437,
+    "positive_opportunities": 824,
+    "features": "KO only: frozen 153-D K/history plus frozen 256-D ordered-U",
+    "target": "max robust value across 81 schedules is strictly positive"
+  },
+  "model": {
+    "type": "CPU MLP binary detector",
+    "layers": [409, 64, 16, 1],
+    "activation": "ReLU",
+    "dropout": 0.0,
+    "loss": "BCEWithLogitsLoss with outer-train pos_weight=negatives/positives",
+    "optimizer": "AdamW",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "epochs": 10,
+    "batch_size": 2048,
+    "early_stopping": false,
+    "normalization": "outer-train mean/std only",
+    "seeds": {
+      "resubstitution": 261160,
+      "row_random_folds": [261170, 261171, 261172, 261173, 261174],
+      "sample_disjoint_folds": [261180, 261181, 261182, 261183, 261184],
+      "source_disjoint_folds": [261190, 261191, 261192, 261193, 261194],
+      "shuffled_label_source_folds": [261200, 261201, 261202, 261203, 261204]
+    }
+  },
+  "split_identity": "exact folds from p5_h4_oof_design_audit_v1; shuffled labels use seed 261153",
+  "primary_metric": "average precision",
+  "interpretation_rules": {
+    "material_nonlinear_source_gain": "MLP source AP minus ridge source AP at least 0.02",
+    "large_nonlinear_row_source_gap": "MLP row-random AP minus MLP source AP at least 0.02",
+    "strong_resub_only": "resub AP at least 0.10 while every OOF AP remains below 0.05",
+    "negative_control": "shuffled-label source AP within 0.01 of prevalence"
+  },
+  "forbidden": [
+    "GPU or CUDA",
+    "changing architecture, epochs, seed, optimizer, or splits after outputs",
+    "calibration, dev, test, held-out, or closed-loop outcomes",
+    "policy evaluation or treating this diagnostic as model confirmation"
+  ]
+}

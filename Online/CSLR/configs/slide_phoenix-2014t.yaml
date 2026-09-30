@@ -4,7 +4,8 @@ data:
   input_streams:
     - keypoint
     - rgb
-  keypoint_file: ../../data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.pkl
+  # Non-finite training joints are zeroed as missing points; source is preserved.
+  keypoint_file: ../../data/phoenix_2014t/keypoints_hrnet_dark_coco_wholebody_iso.finite.pkl
   use_keypoints:
     - pose
     - mouth_half

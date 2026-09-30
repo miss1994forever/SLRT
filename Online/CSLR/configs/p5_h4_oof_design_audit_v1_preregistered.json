@@ -1,0 +1,47 @@
+{
+  "experiment": "P5 H4 OOF design and failure-localization audit v1",
+  "status": "post-OOF diagnostic only; cannot unlock policy, calibration, closed loop, or held-out",
+  "created_before_audit_outputs": true,
+  "fixed_assets": {
+    "dataset_sha256": "83bcc91be603ab1bcc4dcdc3d14991f2c112f8dd988ac62517ef8dc1fdbc4881",
+    "direct_metrics_sha256": "c0ae236c2a76380374d6a009d4266902ab2bde8a7a02e11b86980201dd849d39",
+    "abstention_metrics_sha256": "860126bd631629d2a6f6b336cb21d2d2211d5d8fe6c3724daa02b626857ed9f5"
+  },
+  "scope": {
+    "rows": 43437,
+    "positive_opportunities": 824,
+    "sources": 578,
+    "feature_sets": ["K", "KS", "KO", "KX"]
+  },
+  "split_regimes": {
+    "resubstitution": "fit and evaluate the same rows; optimistic fixed-model capacity diagnostic only",
+    "row_random_5fold": "SHA256 p5-oof-audit-row-v1 over sample and horizon index modulo 5",
+    "sample_disjoint_5fold": "SHA256 p5-oof-audit-sample-v1 over sample id modulo 5",
+    "source_disjoint_5fold": "existing frozen robust-oof-v1 folds",
+    "label_shuffled_source_5fold": "KO only; deterministic opportunity permutation seed 261153 under existing source folds"
+  },
+  "fixed_models": {
+    "opportunity": "same class-weighted closed-form ridge alpha100 as abstention v1",
+    "conditional_ranker": "same 81-output ridge alpha100 trained and evaluated only on true positive-opportunity rows; center score zero",
+    "tuning": false
+  },
+  "diagnostics": [
+    "opportunity average precision and fold prevalence",
+    "conditional ranker signed reward, oracle reward capture, and positive/negative selected schedules",
+    "source concentration of positive opportunities",
+    "row-random minus source-disjoint and sample-disjoint minus source-disjoint gaps",
+    "label-shuffled negative-control average precision"
+  ],
+  "interpretation_rules": {
+    "large_row_source_gap": "at least 0.02 AP suggests source/domain shift or near-duplicate benefit",
+    "all_splits_low": "row-random AP below 0.05 suggests fixed representation/model cannot identify opportunity even without source generalization",
+    "conditional_resub_low": "less than 25 percent oracle reward capture on positive rows suggests the fixed ranker cannot resolve schedule identity even with training-row reuse",
+    "negative_control": "label-shuffled AP should remain near prevalence"
+  },
+  "forbidden": [
+    "GPU or CUDA",
+    "calibration, dev, test, held-out, or closed-loop outcomes",
+    "using the best split or feature set as confirmatory model selection",
+    "changing folds, alpha, hashes, or interpretation thresholds after audit outputs"
+  ]
+}

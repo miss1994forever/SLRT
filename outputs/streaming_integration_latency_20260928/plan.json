@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "scope": "train-fit engineering verification; recorded-video replay",
+  "samples": [
+    "train/25October_2010_Monday_tagesschau-14",
+    "train/25October_2010_Monday_tagesschau-23",
+    "train/05May_2011_Thursday_tagesschau-30"
+  ],
+  "fps": 25,
+  "repetitions": 2,
+  "policies": [
+    "quantile",
+    "online_uniform"
+  ],
+  "window_size": 16,
+  "window_available_at": "min(T-1,start+8)",
+  "offset0": "on window availability",
+  "offset2": "buffer input at start+2 availability; decide at start+3 availability",
+  "device_pci": "61:00.0",
+  "gpu_uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+  "timing": "monotonic perf_counter; includes frame zip decode, per-selected-window CPU preparation, transfers, model forward, controller, pacing waits; excludes model load and full train keypoint pickle load",
+  "first_output": "first paid-window posterior ready",
+  "stable_commit": "first nonblank gloss in causally finalized triangular span-15 votes; positions at least 7.5 window-center units behind latest paid window",
+  "translation": "not measured; no compatible wait-2 chain established",
+  "controller_sha256": "53a17e01641cea239379504f0f46fa079c8e858dc882713596364ef34d1425d5",
+  "model_sha256": "116996aef99b4177fb6159086eba6a9ca90f03df6e61e8974a50a760922221e0",
+  "rule_sha256": "48f2a6f58ee3e5ee321baeffed922c14416fa4ec01f2c28625e9f4560c40ef33",
+  "split_sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784",
+  "script_sha256": "1981c49bf9889b4cda8fdf60d07dc6b99824ddd4c89f6d3576007bbe94bc1cdc",
+  "checkpoint_sha256_documented": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+  "video_zip_sha256_documented": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+  "cache_wait": "sum over executed offset2: decision time minus offset2 input availability time"
+}

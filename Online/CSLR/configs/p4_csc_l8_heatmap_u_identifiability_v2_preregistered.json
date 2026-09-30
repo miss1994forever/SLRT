@@ -1,0 +1,54 @@
+{
+  "experiment": "CSC-L8-v2 new-observation heatmap-U identifiability probe",
+  "created_before_fulltrain_heatmap_outputs": true,
+  "status": "preregistered; run only after the full-train heatmap archive passes completion gates",
+  "interpretation": "exploratory new-observation test after CSC-L8-v1 A2 was observed to fail; not an untouched confirmation",
+  "target": "the already frozen three T=1 JS semantic-curvature scores per valid CSC-L8 block",
+  "folds": "the exact five source-disjoint folds and 578-source grouping carried by the CSC-L8 target archive",
+  "visible_time": "decision_arrival plus bounded L8 offset; no future continuation, reference, reward, WER, or true EOS",
+  "features": {
+    "K": "unchanged 68-D causal pose/hand/motion history summary from CSC-L8-v1 A2",
+    "U_frame_groups": {
+      "body": [0, 23],
+      "face": [23, 91],
+      "left_hand": [91, 112],
+      "right_hand": [112, 133]
+    },
+    "U_frame_quantities": [
+      "normalized_covariance_trace",
+      "normalized_covariance_anisotropy",
+      "entropy",
+      "probability_peak",
+      "log1p_positive_mass",
+      "raw_peak"
+    ],
+    "U_keypoint_pooling": ["mean", "standard_deviation", "minimum", "maximum"],
+    "U_frame_dimension": 96,
+    "U_history": "31 frames ending at the bounded-L8 visible time; repeat frame zero at the left boundary",
+    "U_history_summary": ["last", "mean", "standard_deviation", "last_minus_first"],
+    "U_unprojected_dimension": 384,
+    "U_projection": "fixed signed feature-hash projection 384 to 64, seed 261121, shared across folds; no target fitting",
+    "primary_matrix": "K+U, 132 dimensions",
+    "secondary_diagnostic": "U alone, 64 dimensions",
+    "normalization": "outer-train mean and standard deviation only"
+  },
+  "model": {
+    "type": "three-output closed-form ridge with unpenalized intercept",
+    "alpha": 10.0,
+    "tuning": false
+  },
+  "primary_gates": {
+    "KU_pooled_r2_at_least": 0.10,
+    "KU_winner_accuracy_at_least": 0.45,
+    "KU_positive_r2_folds_at_least": 4,
+    "KU_minus_K_pooled_r2_at_least": 0.03,
+    "KU_minus_K_winner_accuracy_at_least": 0.02,
+    "decision": "all five gates must pass before any policy outcome or closed-loop evaluation"
+  },
+  "forbidden": [
+    "changing U groups, quantities, pooling, history, projection, ridge alpha, or gates after extraction",
+    "selecting between U and K+U after outcomes",
+    "reading robust reward, terminal advantage, reference, WER, future continuation, or true EOS",
+    "dev or test", "formal policy OOF or closed loop before all primary gates pass"
+  ]
+}

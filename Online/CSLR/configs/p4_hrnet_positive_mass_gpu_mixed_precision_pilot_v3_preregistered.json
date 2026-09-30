@@ -1,0 +1,82 @@
+{
+  "experiment": "P4 HRNet positive-mass GPU mixed-precision statistics pilot v3",
+  "created_before_pilot_outcomes": true,
+  "parent_experiment": "p4_hrnet_positive_mass_gpu_stats_pilot_v2_49faacc3",
+  "change_from_parent": "retain float32 heatmap values and float32 xlogx products, but use float64 reductions and moment arithmetic on CUDA to match the frozen v1 CPU definition",
+  "scope": {
+    "split": "Phoenix-2014T train only",
+    "selection_seed": "p4-hrnet-heatmap-uncertainty-pilot-v1",
+    "videos": 50,
+    "frames_per_video_max": 100,
+    "video_rule": "identical fixed selection to positive-mass v1 and v2",
+    "frame_rule": "unique integer linspace from 0 through T-1"
+  },
+  "normalization": {
+    "definition": "p[y,x] = max(H[y,x], 0) / sum_uv max(H[u,v], 0)",
+    "epsilon": 1e-12,
+    "invalid_definition": "positive mass <= epsilon or any non-finite heatmap value",
+    "arithmetic": "input and max/log products float32; reductions and moments float64 on the same visible CUDA device; result float32",
+    "transfer_in_this_compatibility_pilot": "existing MMPose returns raw heatmap to CPU before v3 sends it to CUDA; production should aggregate before raw heatmap leaves CUDA",
+    "coordinate_scaling": {
+      "mu_x": "divide by heatmap width 72",
+      "mu_y": "divide by heatmap height 96",
+      "var_x": "divide by 72 squared",
+      "var_y": "divide by 96 squared",
+      "cov_xy": "divide by 72 times 96"
+    },
+    "statistics_per_keypoint": [
+      "mu_x_normalized", "mu_y_normalized", "var_x_normalized",
+      "var_y_normalized", "cov_xy_normalized", "raw_peak",
+      "probability_peak", "entropy", "positive_mass",
+      "mu_x_heatmap_pixels", "mu_y_heatmap_pixels"
+    ]
+  },
+  "inputs": {
+    "video_zip_sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+    "frozen_train_keypoints_sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "detector_checkpoint_sha256": "d022e22795c17ecd53915ea8231bac43dd7b62ae2b322f1d59bf5b66af217bf9",
+    "pose_checkpoint_sha256": "f572656370050193134ef50e27745cdcdda54986d396ff78e6169608efcdc3c1",
+    "pose_model": "HRNet-W48 COCO-WholeBody 384x288 DARK-plus"
+  },
+  "inference": {
+    "detector_score_threshold": 0.5,
+    "detector_area_threshold": 1600,
+    "person_choice": "highest detector bbox score exactly as original SLRT pose extraction",
+    "return_heatmap": true,
+    "heatmap_expected_shape": [133, 96, 72],
+    "raw_diagnostic": "float16 hand heatmaps 91:133 for the first two selected frames of each video only"
+  },
+  "outcome_blind_gates": {
+    "invalid_keypoint_fraction_strictly_less_than": 0.001,
+    "valid_covariance_finite_fraction_at_least": 1.0,
+    "normalized_covariance_min_eigenvalue_at_least": -1e-6,
+    "hand_trace_iqr_strictly_greater_than": 1e-6,
+    "hand_entropy_iqr_strictly_greater_than": 1e-3,
+    "absolute_spearman_hand_trace_vs_raw_peak_strictly_less_than": 0.98,
+    "absolute_spearman_frame_median_hand_trace_vs_bbox_area_strictly_less_than": 0.5,
+    "statistics_median_ms_per_frame_at_most": 5.0,
+    "v1_max_absolute_difference_moments_at_most": 2e-5,
+    "v1_max_absolute_difference_entropy_at_most": 2e-4,
+    "v1_max_relative_difference_positive_mass_at_most": 2e-5,
+    "decision": "all numeric, parity, and latency gates must pass before full-train extraction"
+  },
+  "gpu_policy": {
+    "run_outside_sandbox": true,
+    "workers": 5,
+    "allowed": [
+      {"pci": "00000000:61:00.0", "uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed"},
+      {"pci": "00000000:81:00.0", "uuid": "GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631"},
+      {"pci": "00000000:A1:00.0", "uuid": "GPU-4f5bee72-bad2-f8c9-2656-58e4d94c3c98"},
+      {"pci": "00000000:C1:00.0", "uuid": "GPU-1c25de34-7fce-3f81-158c-c4d82d3ac729"},
+      {"pci": "00000000:E1:00.0", "uuid": "GPU-8c92fc9f-aaa8-cd49-7196-a08cca1c6c7b"}
+    ],
+    "forbidden_pci": ["00000000:25:00.0", "00000000:41:00.0"],
+    "host_gpu0_forbidden": true
+  },
+  "forbidden": [
+    "dev or test", "WER, utility, reference, or held-out outcome",
+    "overwriting v1 or v2", "changing the positive-mass definition or gates",
+    "starting full-train extraction unless every v3 gate passes"
+  ],
+  "output_directory": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p4_hrnet_positive_mass_gpu_mixed_precision_pilot_v3_49faacc3"
+}

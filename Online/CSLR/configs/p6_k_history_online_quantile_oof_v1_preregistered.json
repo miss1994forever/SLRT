@@ -1,0 +1,42 @@
+{
+  "experiment": "P6 K/history causal within-video quantile controller source-OOF v1",
+  "created_before_policy_outcomes": true,
+  "motivated_by": "frozen factorial audit found +29 controller/pacing errors and -1 self-history feedback error",
+  "fixed_assets": {
+    "factorial_manifest_sha256": "05230f1516596c24fe8cd242ccac921aa4597f34bf2f64d174d14852647a5c71",
+    "factorial_metrics_sha256": "8970e894566c8bdf8ff008ef67021f7efc4e887e7c9abe374d6491fd2b6329cd",
+    "fit_p6_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d",
+    "fit_calibration_split_sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784"
+  },
+  "scope": {"partition": "train fit only", "samples": 6378, "sources": 578, "folds": 5},
+  "model": "for each source fold, ridge alpha100 trained on the other four folds of frozen teacher-forced K rows with outer-train-only normalization",
+  "state": "self-history: only posteriors of windows executed by this policy plus current offset0",
+  "controller": {
+    "unknown_EOS": true,
+    "tail_topup": false,
+    "coverage": "offset0 of every four-window block",
+    "bonus": "offset2 of complete blocks only",
+    "token_initial": 0.0,
+    "token_accrual_per_block": 0.5,
+    "token_capacity": 2.0,
+    "eligible_at": 1.0,
+    "forced_at": 2.0,
+    "autonomous_action": "execute iff current predicted log-JS is at least the exact median of all strictly previous scores in this video",
+    "warmup": "the first eligible decision always has the preceding block score; no global threshold fallback"
+  },
+  "comparators": {
+    "online_uniform": "same token rule, eagerly execute whenever eligible",
+    "matched_count_uniform": "offline diagnostic with exactly the quantile policy's observed bonus count per sample",
+    "full_center": "offset0 plus offset2 for every complete block"
+  },
+  "decoder": "frozen span-weighted-15",
+  "primary_gates": {
+    "quantile_windows_at_most_online_uniform": true,
+    "error_reduction_vs_online_uniform_at_least": 125,
+    "vs_online_uniform_source_cluster_bootstrap_upper_lt_zero": true,
+    "error_reduction_vs_matched_count_uniform_at_least": 125,
+    "vs_matched_count_uniform_source_cluster_bootstrap_upper_lt_zero": true
+  },
+  "decision": "all gates pass to request explicit authorization for separately frozen final held-out planning with multiplicity caveat; any failure stops this controller identity",
+  "forbidden": ["GPU or CUDA", "calibration/dev/test/held-out", "global threshold", "future scores or EOS", "tail topup", "quantile/token/model tuning after outcomes"]
+}

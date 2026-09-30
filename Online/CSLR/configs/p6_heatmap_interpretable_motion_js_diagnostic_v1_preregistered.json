@@ -1,0 +1,59 @@
+{
+  "experiment": "P6 interpretable heatmap motion versus local-JS diagnostic v1",
+  "created_before_diagnostic_outputs": true,
+  "scope": {
+    "split": "Phoenix-2014T train fit only",
+    "rows": 183401,
+    "samples": 6378,
+    "sources": 578,
+    "folds": 5
+  },
+  "fixed_assets": {
+    "p6_predictor_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d",
+    "heatmap_fulltrain_manifest_sha256": "7d5d75a1b1c74d1a6a7db1115d5d0c685d9607756377d1a0d9a1c7d5beec9228",
+    "heatmap_assignment_sha256": "50512e64ac5ebdc8d787ce33f84998e97b4183e0892e84f23bf955e2bf972902"
+  },
+  "deadline": "all heatmap frames end at the current offset-0 frame; no offset-1/2/3 or later frame is visible",
+  "history": "up to 31 real frames ending at current offset-0; no repeated-padding transitions are counted",
+  "heatmap_groups": {
+    "body": [0, 23],
+    "face": [23, 91],
+    "left_hand": [91, 112],
+    "right_hand": [112, 133]
+  },
+  "motion_features_per_group": [
+    "step_displacement_mean", "step_displacement_std", "step_displacement_p90",
+    "step_displacement_max", "recent_step_displacement_mean",
+    "net_displacement_mean", "path_length_mean", "acceleration_mean"
+  ],
+  "quality_features_per_group": [
+    "trace_current_mean", "trace_history_mean", "trace_current_minus_first_mean",
+    "entropy_current_mean", "entropy_history_mean", "entropy_current_minus_first_mean",
+    "probability_peak_current_mean", "probability_peak_history_mean",
+    "probability_peak_current_minus_first_mean"
+  ],
+  "target": "log(symmetric posterior JS(offset0,offset2)+1e-8), reused unchanged from the frozen P6 dataset",
+  "models": {
+    "M": "32 interpretable motion features",
+    "Q": "36 interpretable heatmap quality features",
+    "MQ": "68 motion plus quality features",
+    "K": "frozen 153-D posterior-history baseline",
+    "KM": "K plus M",
+    "KQ": "K plus Q",
+    "KMQ": "K plus M plus Q",
+    "KMM2": "K plus M plus elementwise squared M",
+    "KX": "K plus deterministic time-shuffled-history motion negative control"
+  },
+  "estimator": "five-fold source-disjoint ridge alpha=100 with outer-train-only normalization",
+  "descriptive_analysis": {
+    "motion_deciles": "ten equal-count bins with mean raw JS, median raw JS, and top-JS-quartile rate",
+    "monotonicity": "Spearman correlation and decile-mean turning count; descriptive only",
+    "group_summary": "report every named feature, with emphasis on left and right hand motion"
+  },
+  "decision": "diagnostic only; cannot unlock policy replay, closed loop, calibration, held-out, dev, or test regardless of result",
+  "forbidden": [
+    "GPU or CUDA", "reference text or WER", "utility or robust reward",
+    "calibration/dev/test/held-out", "policy replay or closed loop",
+    "changing feature definitions, alpha, folds, or interpretations after reading outputs"
+  ]
+}

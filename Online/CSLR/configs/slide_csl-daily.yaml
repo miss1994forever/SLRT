@@ -13,7 +13,9 @@ data:
   zip_file: ../../data/csl-daily
   strict_frame_loading: true  # Reject missing/corrupt images instead of placeholders.
   # Original sentence annotations; regenerated csl.* files alter lengths/glosses.
-  train: ../../TwoStreamNetwork/data/csl-daily/csl-daily.train
+  # Four samples with unrecoverable frame-count mismatches are quarantined;
+  # see data/csl-daily/csl_daily_strict_train_manifest.json.
+  train: ../../TwoStreamNetwork/data/csl-daily/csl-daily.strict.train
   dev: ../../TwoStreamNetwork/data/csl-daily/csl-daily.dev
   test: ../../TwoStreamNetwork/data/csl-daily/csl-daily.test
   vocab_file: ../../data/csl-daily/csl_iso_with_blank.vocab

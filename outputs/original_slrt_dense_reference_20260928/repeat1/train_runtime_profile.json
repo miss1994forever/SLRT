@@ -1,0 +1,8 @@
+{
+  "split": "train",
+  "samples": 3,
+  "clips": 250,
+  "model_forward_calls": 17,
+  "model_forward_seconds": 4.619494812011719,
+  "peak_cuda_memory_allocated_bytes": 7831646208
+}

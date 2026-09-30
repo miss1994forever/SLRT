@@ -1,0 +1,32 @@
+{
+  "experiment": "P6 causal local-JS predictor source-disjoint OOF v1",
+  "created_before_predictor_outcomes": true,
+  "fixed_assets": {
+    "p6_oracle_metrics_sha256": "36b43af57ee7bc9f85b13d6a7a94bc7a76f3f2c9832e4bcc782fe97cc5a66d66",
+    "p6_oracle_manifest_sha256": "6a5dfbf97cc8b290c34a3eb9c0255db1572f0f6779fbf64cc4890aca17adc53a",
+    "u_frames_sha256": "39be97d231cb3d5b4e750f846c92bc6f33a4b3533f1e266229f56a083a7e7f87",
+    "u_index_sha256": "6cc7097c5a92047ddd191635becff8354359f1327e41b21dd26e358da31ec6dc"
+  },
+  "scope": {"rows": 183401, "samples": 6378, "sources": 578, "folds": 5},
+  "target": "log(symmetric posterior JS(offset0,offset2)+1e-8)",
+  "deadline": "after offset0 and before offset2; no future frames, reference, EOS, or candidate posterior",
+  "state": "teacher-forced full-center paid-logit history through current offset0",
+  "features": {
+    "K": "153-D hashed top-8 posterior and paid-history summary",
+    "KS": "K plus fixed 64-D 31-frame summary-U",
+    "KO": "K plus fixed 256-D ordered DCT-U",
+    "KX": "K plus deterministic time-shuffled DCT-U negative control"
+  },
+  "model": "five-fold source-disjoint closed-form ridge alpha100; outer-train normalization only",
+  "policy_replay": "within each sample retain ceil(B/2) offset2 bonuses with highest OOF score; equal budget and decoder as P6 oracle",
+  "gates": {
+    "KO_error_reduction_vs_uniform_at_least": 125,
+    "KO_vs_uniform_bootstrap_upper_lt_zero": true,
+    "KO_error_reduction_vs_K_at_least": 25,
+    "KO_vs_K_bootstrap_upper_lt_zero": true,
+    "KO_error_reduction_vs_KX_at_least": 25,
+    "KO_vs_KX_bootstrap_upper_lt_zero": true,
+    "decision": "all gates pass to unlock separately preregistered unknown-EOS token-bucket simulation"
+  },
+  "forbidden": ["GPU or CUDA", "calibration/dev/test/held-out/closed-loop outcomes", "threshold or model tuning after OOF", "claiming online deployability from known-length top-K replay"]
+}

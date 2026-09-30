@@ -1,0 +1,29 @@
+{
+  "experiment": "P6 K/history controller versus state-shift factorial audit v1",
+  "created_before_audit_outputs": true,
+  "fixed_assets": {
+    "known_topk_manifest_sha256": "d40b52db656bfea370ff47440f0eadce0285fd6853c0311ebfed1ce92f562809",
+    "known_topk_per_sample_sha256": "fc24db27a520a0bbffe885f3a2948d87653ffea4f7722200f0180cf9cc0ecb5b",
+    "self_history_manifest_sha256": "3e1ad58080e474c819859f1222f30d0ddfd03d260043b8670f0945ffd87e6059",
+    "self_history_per_sample_sha256": "8f4904f70007033c89a7ff194b0d621564c6a9482003579c81cff080858357ce",
+    "fit_p6_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d"
+  },
+  "scope": "already consumed train-calibration only: 718 samples, 65 sources",
+  "frozen_model_and_threshold": "identical fit-trained ridge alpha100 and fit-OOF median -3.8027050495147705",
+  "factorial_cells": {
+    "TF_topK": "existing known-length teacher-forced K result",
+    "TF_token": "new: full-center teacher-forced scores passed through the frozen unknown-EOS token controller",
+    "SH_token": "existing and exactly reproduced unknown-EOS self-history policy",
+    "fixed_TF_schedule_SH_scores": "diagnostic: recompute self-history scores along TF-token actions without changing those actions"
+  },
+  "decomposition": {
+    "controller_shift_errors": "TF_token errors minus TF_topK errors",
+    "state_feedback_shift_errors": "SH_token errors minus TF_token errors",
+    "dominance_rule": "one component is called dominant only if its error increase exceeds the other by at least 10; otherwise mixed_or_not_separable",
+    "note": "descriptive noncausal-additive decomposition; feedback can interact with controller"
+  },
+  "score_diagnostics": ["Pearson TF versus fixed-schedule SH score", "mean absolute score change", "threshold-side disagreement"],
+  "action_diagnostics": ["TF-token versus SH-token bonus agreement", "Jaccard", "window counts", "forced and autonomous actions"],
+  "decision": "diagnostic only. If controller shift is larger, future new work should study fit-only online quantile/pacing; if state-feedback shift is larger, future new work should study fit-only on-policy dataset aggregation; mixed results require a joint redesign.",
+  "forbidden": ["GPU or CUDA", "threshold/token/model tuning", "new calibration choices", "dev/test/held-out", "claiming a passed scheduler gate"]
+}

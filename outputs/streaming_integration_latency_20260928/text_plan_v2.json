@@ -1,0 +1,16 @@
+{
+  "source": "/mnt/workspace/projects/haojun/SLRT/outputs/streaming_integration_latency_20260928/measurements.jsonl",
+  "source_sha256": "b36507deea436c238d7956731c213d5f78f0a9674a9f18a5763587bf41a9ad20",
+  "script_sha256": "1fa07c5db6c5473c2bdaf7df779d66c874dc027cb44c85bf313a579a05578767",
+  "gpu_uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+  "repetition": 0,
+  "samples": 3,
+  "policies": [
+    "quantile",
+    "uniform"
+  ],
+  "text_model": "Online/SLT/results/g2t_wait2/ckpts/best.ckpt",
+  "wait_k": 2,
+  "scope": "separate sequential G2T stage diagnostic on recorded gloss readiness, not system total latency",
+  "text_stage": "tokenization + embedding + synchronized generation + decoding; first short output max_length 3"
+}

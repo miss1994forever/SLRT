@@ -1,0 +1,44 @@
+{
+  "experiment": "P6 K/history unknown-EOS self-history calibration simulation v1",
+  "created_before_closed_loop_outcomes": true,
+  "unlocked_by": "all three p6_k_history_independent_calibration_v1 gates passed",
+  "fixed_assets": {
+    "confirmation_manifest_sha256": "d40b52db656bfea370ff47440f0eadce0285fd6853c0311ebfed1ce92f562809",
+    "confirmation_metrics_sha256": "43925843b95182f8e7ed24725942e7ff6b91ad94d24c347b17c4d9360996c2af",
+    "calibration_dataset_sha256": "545c499c0091cc827f96aa24c7acfb487ce0f7e128ac076921d955672764abc3",
+    "fit_oof_predictions_sha256": "9c293fbabe655342147d068c80e71545093859ef2b31671f1f6eb8e03ee48408",
+    "fit_p6_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d"
+  },
+  "scope": {"partition": "same 718-sample, 65-source independent calibration", "heldout": false},
+  "model": "same ridge alpha=100 trained once on all fit K/history rows with fit-only normalization",
+  "threshold": {"source": "median of frozen fit source-OOF K predictions", "value": -3.8027050495147705, "calibration_tuning": false},
+  "controller": {
+    "unknown_EOS": true,
+    "tail_topup": false,
+    "coverage": "execute offset0 of every four-window block, including incomplete tail block",
+    "bonus_candidate": "offset2 of each complete block only",
+    "token_initial": 0.0,
+    "token_accrual_per_complete_block": 0.5,
+    "token_capacity": 2.0,
+    "eligible_at": 1.0,
+    "forced_execute_at": 2.0,
+    "learned_action": "when eligible and not forced, execute iff predicted log-JS >= fixed threshold",
+    "state": "only posteriors of windows actually executed by this policy plus current offset0; skipped blocks add no previous-offset entry"
+  },
+  "comparators": {
+    "online_uniform": "same token initial/accrual; eagerly execute whenever eligible; no EOS/topup",
+    "matched_count_uniform": "offline diagnostic placing exactly the policy's observed bonus count evenly within each sample",
+    "known_length_teacher_forced_K": "previous confirmation result only, not recomputed or used for decisions",
+    "full_center": "execute offset0 and offset2 in every complete block"
+  },
+  "decoder": "frozen span-weighted-15",
+  "primary_gates": {
+    "K_windows_at_most_online_uniform_windows": true,
+    "K_error_reduction_vs_online_uniform_at_least": 14,
+    "K_vs_online_uniform_source_cluster_bootstrap_upper_lt_zero": true,
+    "K_error_reduction_vs_matched_count_uniform_at_least": 14,
+    "K_vs_matched_count_uniform_source_cluster_bootstrap_upper_lt_zero": true
+  },
+  "decision": "all gates pass to retain K/history as a deployable-controller candidate and permit separately frozen final held-out planning; any failure stops before held-out",
+  "forbidden": ["GPU or CUDA", "threshold tuning", "EOS or tail topup", "teacher-forced logits in policy state", "dev/test/held-out", "changing token parameters or gates"]
+}

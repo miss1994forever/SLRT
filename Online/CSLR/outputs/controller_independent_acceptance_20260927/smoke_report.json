@@ -1,0 +1,22 @@
+{
+  "samples": 4,
+  "blocks": 83,
+  "mismatches": 0,
+  "max_score_error": 1.0225306499300757e-06,
+  "max_feature_error": 4.172325134277344e-07,
+  "complete_fit": false,
+  "whitelist_count": 6378,
+  "trace_sha256": "615203d858fd5adacd7d729751d60c791b8117c19fbf605f0ae9c138f3a4b7e5",
+  "frozen_script_sha256": "f08241e5e60bd841eca41a06a15754ff89c29bea62adc124331a167298b1242a",
+  "controller_sha256": "53a17e01641cea239379504f0f46fa079c8e858dc882713596364ef34d1425d5",
+  "model": {
+    "rows": 183401,
+    "max_abs_error": 2.388138389264327e-07,
+    "rmse": 1.01892153680909e-07,
+    "model_sha256": "116996aef99b4177fb6159086eba6a9ca90f03df6e61e8974a50a760922221e0",
+    "fit_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d",
+    "oof_predictions_sha256": "9c293fbabe655342147d068c80e71545093859ef2b31671f1f6eb8e03ee48408",
+    "passed": true
+  },
+  "passed": true
+}

@@ -1,0 +1,54 @@
+{
+  "experiment": "P5 H4 joint-schedule label dataset v1",
+  "created_before_label_dataset_outputs": true,
+  "purpose": "materialize every H<=4 schedule and its two frozen continuation rewards so a later source-disjoint schedule ranker can be trained without changing the passed P5 oracle identity",
+  "scope": {
+    "split": "Phoenix-2014T complete train fit only",
+    "samples": 6378,
+    "sources": 578,
+    "horizons_expected": 48229,
+    "calibration_dev_test_or_heldout_forbidden": true
+  },
+  "fixed_assets": {
+    "p5_config_sha256": "f29d0a7008d4c3948cb9b0dda6ea8d1663c1629c74618b0193602e86978210d9",
+    "p5_metrics_sha256": "d03dfb6c4faf3e40f2650ff2bed67e65458a0e021e86af2f636f35fc053b331a",
+    "p5_manifest_sha256": "798604576876c37dc2aeab6fbb3879239d0bd0e983a34773138f6a51dbb0a102",
+    "p5_per_sample_sha256": "e7174807114e4ed733be1145e70f08874bfec3fca576a99227ee0d8d79d4c3ed",
+    "fit_calibration_split_sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784",
+    "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "uniform_errors_expected": 2325,
+    "joint_h4_errors_expected": 1447
+  },
+  "row_identity": {
+    "unit": "one nonoverlapping horizon of one to four complete four-window blocks",
+    "candidate_order": "lexicographic Cartesian product of offsets [1,2,3]^H",
+    "past": "the P5 oracle's own previously selected horizons",
+    "future_continuations": ["fixed offset2 center", "fixed offset3 late"],
+    "stored_targets": [
+      "two signed terminal edit-error rewards versus the all-center schedule for every candidate",
+      "minimum of those rewards as robust value",
+      "P5 eligible winner after the frozen tie-break"
+    ],
+    "folds": "five deterministic source-video-disjoint folds using SHA256('robust-oof-v1\\0'+source) modulo 5",
+    "label_visibility": "targets read reference, future continuations, and true endpoint and are nondeployable"
+  },
+  "integrity_gates": [
+    "6378 samples and 578 sources",
+    "48229 horizons with the exact P5 horizon-size distribution",
+    "chosen schedules reproduce 857 changed horizons, 1097 noncenter bonuses, and summed robust horizon reward 877",
+    "uniform reproduces 2325 errors and chosen schedules reproduce 1447 errors",
+    "per-sample rows reproduce the frozen P5 per-sample errors and counts"
+  ],
+  "next_experiment_not_part_of_this_dataset_build": {
+    "comparison": ["K/history", "summary-U", "ordered temporal-U", "time-shuffled U negative control"],
+    "evaluation": "five-fold source-disjoint OOF schedule ranking",
+    "action_deadline": "features must be available at the first block start of each horizon; no within-horizon future frames",
+    "warning": "predictor representation, loss, gates, and seeds require a separate preregistration after this dataset passes integrity"
+  },
+  "forbidden": [
+    "GPU or CUDA",
+    "calibration, dev, test, held-out, or closed-loop outcomes",
+    "changing the P5 candidate schedules, reward, continuations, eligibility, or tie-break",
+    "treating oracle-state OOF as deployable closed-loop evidence"
+  ]
+}

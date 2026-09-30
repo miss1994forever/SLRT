@@ -1,0 +1,9 @@
+{
+  "rows": 183401,
+  "max_abs_error": 2.388138389264327e-07,
+  "rmse": 1.01892153680909e-07,
+  "model_sha256": "116996aef99b4177fb6159086eba6a9ca90f03df6e61e8974a50a760922221e0",
+  "fit_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d",
+  "oof_predictions_sha256": "9c293fbabe655342147d068c80e71545093859ef2b31671f1f6eb8e03ee48408",
+  "passed": true
+}

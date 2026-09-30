@@ -1,0 +1,27 @@
+{
+  "experiment": "P6 K/history online quantile repaired-dev retrospective v1",
+  "scope": "one authorized retrospective evaluation on 519 recognizer-unseen dev videos; non-confirmatory; test forbidden",
+  "authorization": "user reply on 2026-09-25: 授权一次 dev retrospective 评价",
+  "fixed_assets": {
+    "fit_p6_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d",
+    "fit_controller_config_sha256": "48f2a6f58ee3e5ee321baeffed922c14416fa4ec01f2c28625e9f4560c40ef33",
+    "fit_controller_script_sha256": "f08241e5e60bd841eca41a06a15754ff89c29bea62adc124331a167298b1242a",
+    "dev_baseline_manifest_sha256": "2e6889ec14777d938a3c7ac9265ab97f87118523e9258f5f93beba4b3e854b8f",
+    "dev_results_sha256": "798d32866d3080c862d2575006208404652223fd2f3a262f18f124149cc54207",
+    "dev_logits_sha256": "1bb643f84032710c39c4bbd5125b51bb4bdf20e4b5f7a6f1dd85914a7dcdaec3",
+    "recognizer_checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "vocab_sha256": "d79c8ef31d8ec4345b511d641a832a67f1d8045020bee35521edee3b773fcc34"
+  },
+  "model": "fit-only K ridge alpha100 on all 183401 rows; same feature, target, outer standardization and solver as frozen five-fold P6 script; no dev labels or outcome in fit",
+  "policy": "exact frozen schedules() with paid-window self-history, current offset0, strict past-score median, unknown EOS, token initial0/accrual0.5/capacity2/no tail topup",
+  "decoder": "frozen span-weighted-15 replay",
+  "comparators": {
+    "primary": "matched_uniform: evenly spaced bonus positions, exactly the quantile bonus count in each dev video",
+    "secondary": "online_uniform: eager use of the same token rule",
+    "diagnostic": "full_center: offset0 and offset2 in every complete block"
+  },
+  "main_outcome": "paired total word-error difference quantile minus matched_uniform, divided by total reference words to report WER percentage points",
+  "uncertainty": "10000 source-cluster bootstrap draws, fixed seed 261227, percentile 95% CI; source is sample name without final numeric segment",
+  "evidence_rule": "negative point difference and CI upper below zero constitute directional evidence in this dev retrospective only; otherwise report insufficient or contrary evidence without changing policy",
+  "forbidden": ["test", "dev-based model selection", "dev-based threshold tuning", "reruns with changed policy", "claim of untouched confirmatory held-out"]
+}

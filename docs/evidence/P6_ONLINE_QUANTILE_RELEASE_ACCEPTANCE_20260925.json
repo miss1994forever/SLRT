@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "model_checks": {
+    "config": true,
+    "frozen_script": true,
+    "portable_fitter": true,
+    "fit_inputs": true,
+    "prediction_parity": true
+  },
+  "unit_tests_passed": true,
+  "unit_test_output": "test_future_and_tail_cannot_change_completed_decisions (tests.test_p6_online_quantile_controller.FrozenControllerTests) ... ok\ntest_history_uses_only_paid_features_and_current (tests.test_p6_online_quantile_controller.FrozenControllerTests) ... ok\ntest_invalid_order_or_score_rejected (tests.test_p6_online_quantile_controller.FrozenControllerTests) ... ok\ntest_streaming_matches_frozen_for_lengths_and_scores (tests.test_p6_online_quantile_controller.FrozenControllerTests) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.009s\n\nOK\n",
+  "frozen_artifact_audit": {
+    "passed": true,
+    "checks": {
+      "frozen_config": true,
+      "frozen_simulator": true,
+      "upstream_assets": true,
+      "outcome_artifacts": true,
+      "source_disjoint_folds": true,
+      "sample_totals": true,
+      "budget_rules": true,
+      "frozen_gates": true,
+      "scope": true
+    },
+    "samples": 6378,
+    "sources": 578,
+    "errors": {
+      "quantile": 2543,
+      "online_uniform": 2758,
+      "matched_uniform": 2773,
+      "full_center": 2325
+    },
+    "windows": {
+      "quantile": 273882,
+      "online_uniform": 278307,
+      "matched_uniform": 273882,
+      "full_center": 371594
+    },
+    "config_sha256": "48f2a6f58ee3e5ee321baeffed922c14416fa4ec01f2c28625e9f4560c40ef33",
+    "frozen_script_sha256": "f08241e5e60bd841eca41a06a15754ff89c29bea62adc124331a167298b1242a",
+    "fit_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d"
+  },
+  "action_parity": {
+    "passed": true,
+    "checked_samples": 6378,
+    "checked_blocks": 183401,
+    "observed_bonus": 85689,
+    "matched_block_actions": 183401,
+    "max_abs_teacher_feature_error": 2.6881694793701172e-05,
+    "frozen_bonus": 85689,
+    "mismatch_count": 0,
+    "first_mismatches": [],
+    "model_sha256": "116996aef99b4177fb6159086eba6a9ca90f03df6e61e8974a50a760922221e0",
+    "fit_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d",
+    "frozen_per_sample_sha256": "97448268530bc15bf7fa381538d685d2c6a1842a50ccd541d78bbef3888c3943",
+    "note": "Uses frozen K-row means to reconstruct paid offset2 summaries; compares actions only, no outcome replay."
+  },
+  "model_sha256": "116996aef99b4177fb6159086eba6a9ca90f03df6e61e8974a50a760922221e0",
+  "implementation_sha256": {
+    "utils/online_quantile_controller.py": "53a17e01641cea239379504f0f46fa079c8e858dc882713596364ef34d1425d5",
+    "tools/export_p6_online_quantile_models_portable.py": "e2fa90d24a92855c1f5ddc9257c709a2b68c9969e03cdb1977599922ecd205e2",
+    "tools/p6_ridge_fit_portable.cpp": "b8adbba8dcdce450f9a678d6256f8d32d5d9e093d52964bd16ef4b8e9909c687",
+    "tools/audit_p6_online_quantile_release.py": "437bd7e2f55ab30f1b37f398e68a574896c71cd1b2fcb3ffbbefb1dd66a1bd87",
+    "tools/audit_p6_online_quantile_action_parity.py": "a94c68e6e716b46fe2c4d47efc04833f2ba0c215bea1702a7afc5267eefbb8b4",
+    "tests/test_p6_online_quantile_controller.py": "68d0db0d1840ca7ba3c7bfc6b838bfc9314bf2499a572c874fea250f7fbea31c"
+  },
+  "scope": "train fit only; no GPU, calibration, dev, test, or held-out read"
+}

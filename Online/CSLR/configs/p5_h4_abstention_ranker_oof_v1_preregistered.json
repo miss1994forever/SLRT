@@ -1,0 +1,61 @@
+{
+  "experiment": "P5 H4 rare-event abstention plus conditional ranker OOF v1",
+  "status": "post-OOF exploratory identity proposed after observing the direct ranker's over-action failure",
+  "created_after_direct_ranker_outcomes_but_before_abstention_outcomes": true,
+  "observed_parent_result": {
+    "metrics_sha256": "c0ae236c2a76380374d6a009d4266902ab2bde8a7a02e11b86980201dd849d39",
+    "direct_rewards": {"K": -40, "KS": -24, "KO": -51, "KX": -19},
+    "motivation": "direct ridge changed center on approximately 98 percent of horizons although only 824 of 43437 horizons had positive oracle headroom"
+  },
+  "fixed_assets": {
+    "ranker_dataset_sha256": "83bcc91be603ab1bcc4dcdc3d14991f2c112f8dd988ac62517ef8dc1fdbc4881",
+    "parent_config_sha256": "958271f2e4f46358151c85cf0ab2942ef829442cb85cf92cfdce3d15762b06c7",
+    "parent_metrics_sha256": "c0ae236c2a76380374d6a009d4266902ab2bde8a7a02e11b86980201dd849d39"
+  },
+  "scope": {
+    "rows": 43437,
+    "sources": 578,
+    "positive_opportunity_rows_expected": 824,
+    "folds": "same five deterministic source-disjoint folds",
+    "feature_sets": ["K", "KS", "KO", "KX"]
+  },
+  "stage_1_opportunity_detector": {
+    "target": "max signed robust value across 81 schedules is strictly positive",
+    "model": "class-weighted closed-form ridge, alpha 100, unpenalized intercept",
+    "positive_weight": "outer-train negatives divided by outer-train positives",
+    "action_count": "for each outer fold, round(eval rows times outer-train positive prevalence)",
+    "selection": "highest detector scores with stable row-index tie-break",
+    "threshold_tuning": false
+  },
+  "stage_2_conditional_ranker": {
+    "training_rows": "only positive-opportunity rows in the outer training fold",
+    "model": "81-output closed-form ridge, alpha 100, outer-positive normalization only",
+    "target": "all 81 signed robust values",
+    "inference": "only on stage-1 selected rows; center score fixed to zero; argmax with lexicographic first tie-break",
+    "abstention": "all unselected rows and selected rows whose conditional argmax is center retain center"
+  },
+  "metrics": {
+    "detector": ["OOF average precision", "recall at frozen fold action count"],
+    "policy_proxy": "sum of actual signed robust value at the OOF-selected schedule; diagnostic only, not WER",
+    "bootstrap": "10000 source-cluster resamples, seed 261143"
+  },
+  "gates": {
+    "KO_average_precision_at_least": 0.05,
+    "KO_minus_K_average_precision_at_least": 0.01,
+    "KO_minus_KX_average_precision_at_least": 0.01,
+    "KO_signed_robust_reward_at_least": 249,
+    "KO_reward_bootstrap_lower_gt": 0,
+    "KO_minus_K_reward_at_least": 50,
+    "KO_minus_K_reward_bootstrap_lower_gt": 0,
+    "KO_minus_KX_reward_at_least": 50,
+    "KO_minus_KX_reward_bootstrap_lower_gt": 0,
+    "decision": "all gates pass only to unlock a separately preregistered independent calibration confirmation; never direct closed-loop or held-out unlock from this post-OOF reuse"
+  },
+  "forbidden": [
+    "GPU or CUDA",
+    "calibration, dev, test, held-out, or closed-loop outcomes",
+    "changing action count, alpha, features, folds, or gates after outcomes",
+    "posthoc score-threshold selection",
+    "calling this reused-fit OOF an independent confirmation or WER result"
+  ]
+}

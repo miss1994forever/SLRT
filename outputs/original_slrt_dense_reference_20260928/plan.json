@@ -1,0 +1,16 @@
+{
+  "samples": [
+    "train/25October_2010_Monday_tagesschau-14",
+    "train/25October_2010_Monday_tagesschau-23",
+    "train/05May_2011_Thursday_tagesschau-30"
+  ],
+  "split": "train-fit only",
+  "repetitions": 2,
+  "gpu_uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed",
+  "dense_windows": 250,
+  "config_sha256": "0242a9812ba2ead614d61f78bb36415cc9e8748f8796e752aaf47b3e0a9b7ac9",
+  "metadata_sha256": "f7a5b857672513b889c0a8b5e4c75214596213afbe07764bc8c939ad439bdc17",
+  "script_sha256": "bec0bceaa4d6f61d3754d6785876d1ebef1a37cc5cf6e79a9aa7ed8fc2e0fe5c",
+  "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+  "scope": "original prediction_slide.py offline full-video stride1 batch16, command wall and total model forward; not streaming first/stable latency"
+}

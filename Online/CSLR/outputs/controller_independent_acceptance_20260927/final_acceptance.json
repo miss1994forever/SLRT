@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "samples": 6378,
+  "blocks": 183401,
+  "action_token_and_frozen_count_mismatches": 0,
+  "source_script_sha256": "97e21cbd9e0f2357100a6314591478167e8a4a556ccbbbdc0b07a8c0c9162670",
+  "finalize_script_sha256": "11c0299e9be673ba866378ed7622eab4a846c1b1d322b2c61428cd5e2eba987a",
+  "full_report_sha256": "bad27d2a7cb8527bb282a4c6efa2d1a37d0c974f93a3b945c65f981e1a56eb83",
+  "trace_full_sha256": "0a73655b50e8f92f83d2ea84a2a9dea102cda19dd1702f06c769598f0b6029bf",
+  "trace_full_enriched_sha256": "76de05b4ffd0980767cb58a3f800ff25e69b6b0e7fedd752a761a0a0e74e0ce6",
+  "frozen_per_sample_sha256": "97448268530bc15bf7fa381538d685d2c6a1842a50ccd541d78bbef3888c3943",
+  "split_manifest_sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784",
+  "release_model_sha256": "116996aef99b4177fb6159086eba6a9ca90f03df6e61e8974a50a760922221e0",
+  "frozen_script_sha256": "f08241e5e60bd841eca41a06a15754ff89c29bea62adc124331a167298b1242a",
+  "release_controller_sha256": "53a17e01641cea239379504f0f46fa079c8e858dc882713596364ef34d1425d5"
+}

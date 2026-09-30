@@ -1,0 +1,68 @@
+{
+  "experiment": "P5 H4 robust joint-schedule oracle v1",
+  "created_before_oracle_outcomes": true,
+  "purpose": "test whether four-block joint scheduling has material WER headroom beyond the existing blockwise robust utility oracle before training any heatmap temporal model",
+  "scope": {
+    "split": "Phoenix-2014T complete train fit only",
+    "samples": 6378,
+    "sources": 578,
+    "reference_length_expected": 49613,
+    "calibration_dev_test_or_heldout_forbidden": true
+  },
+  "fixed_assets": {
+    "dense_root": "Online/CSLR/results/phoenix-2014t_ISLR/train_dense_stride1_v1_49faacc3",
+    "fit_calibration_split_sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784",
+    "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "existing_blockwise_oracle_metrics": "Online/CSLR/results/phoenix-2014t_ISLR/p3_fulltrain_robust_continuation_oracle_fit6378_v1_49faacc3/metrics.json",
+    "existing_blockwise_oracle_errors_expected": 1688,
+    "uniform_errors_expected": 2325
+  },
+  "budget_and_decoder": {
+    "block_width_dense_windows": 4,
+    "hard_skeleton_offset": 0,
+    "one_bonus_offsets": [1, 2, 3],
+    "uniform_bonus_offset": 2,
+    "per_sample_equal_budget": true,
+    "decoder": "frozen triangular span-weighted-15 replay",
+    "tail": "enumerate the remaining one to three complete blocks as a shorter final horizon; incomplete final block receives skeleton only"
+  },
+  "blockwise_control": {
+    "definition": "exact reproduction of the existing robust-continuation oracle",
+    "future_continuations": ["fixed offset2 center", "fixed offset3 late"],
+    "choice": "choose a side only when its minimum terminal edit-error improvement versus center is strictly positive; maximize that minimum; tie left then right"
+  },
+  "joint_h4_oracle": {
+    "horizon_complete_blocks": 4,
+    "candidate_schedules": "all 3^H bonus-offset schedules for H in 1..4",
+    "past": "the joint oracle's own previously selected horizons",
+    "future_continuations_after_horizon": ["fixed offset2 center", "fixed offset3 late"],
+    "reward": "for each future separately, terminal edit error of the all-center schedule minus candidate-schedule terminal edit error",
+    "robust_value": "minimum reward across the two future continuations",
+    "eligibility": "robust_value strictly greater than zero; otherwise select the all-center schedule",
+    "tie_break": ["larger robust_value", "larger sum of the two rewards", "fewer noncenter bonuses", "lexicographically earlier offset tuple"]
+  },
+  "primary_comparisons": {
+    "joint_h4_vs_uniform": "equal-budget final train-fit WER",
+    "joint_h4_vs_blockwise_robust": "incremental value of multi-block joint selection",
+    "bootstrap": "10000-repetition 578-source cluster bootstrap, seed 261123"
+  },
+  "gates": {
+    "integrity": [
+      "uniform reproduces 2325 errors",
+      "blockwise robust reproduces 1688 errors",
+      "all three policies have identical selected-window counts per sample"
+    ],
+    "joint_total_error_reduction_vs_uniform_at_least": 249,
+    "joint_incremental_error_reduction_vs_blockwise_at_least": 125,
+    "joint_vs_uniform_bootstrap_upper_lt_zero": true,
+    "joint_vs_blockwise_bootstrap_upper_lt_zero": true,
+    "decision": "all gates must pass before any H4 schedule predictor or ordered heatmap-U experiment"
+  },
+  "forbidden": [
+    "GPU or CUDA",
+    "calibration, dev, test, or held-out outcomes",
+    "changing horizon, continuations, tie-break, thresholds, or decoder after outcomes",
+    "training a predictor before the oracle gates pass",
+    "claiming deployability: this oracle reads reference, future continuation, and true sequence endpoint"
+  ]
+}

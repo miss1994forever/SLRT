@@ -1,0 +1,26 @@
+{
+  "experiment": "P6 interpretable heatmap motion equal-budget WER replay v1",
+  "created_before_wer_outputs": true,
+  "status": "post-diagnostic exploratory decision-relevance test; not independent confirmation",
+  "fixed_assets": {
+    "diagnostic_manifest_sha256": "b717792326bd95c7fa393708a35315d180db9ac9c53935ba395227e8173bd46f",
+    "diagnostic_metrics_sha256": "4ad8c83c4496230ee713068bb8966a177b561552c8e24260d0808e7bf1f42ea8",
+    "diagnostic_oof_predictions_sha256": "3736eddee2a4ef609cc17fbc1a1b37f9656f73b1abe022654f4f4efa321939e5",
+    "p6_dataset_sha256": "daeefd11c1fa7ac554a3c39e6ef932bf39c4bed8a89e187c6c1b3db4130e105d",
+    "p6_oracle_manifest_sha256": "6a5dfbf97cc8b290c34a3eb9c0255db1572f0f6779fbf64cc4890aca17adc53a"
+  },
+  "scope": {"split": "Phoenix-2014T train fit only", "samples": 6378, "sources": 578, "blocks": 183401},
+  "scores": ["K", "KM", "KQ", "KMQ", "KMM2", "KX"],
+  "policy": "for each sample retain offset0 coverage and the ceil(B/2) offset2 bonuses with highest frozen source-OOF score",
+  "budget": "exactly identical selected-window count within every sample for uniform and all six learned scores",
+  "decoder": "same frozen span-weighted-15 replay as P6 local-JS oracle and predictor",
+  "primary_comparisons": {
+    "KMQ_vs_uniform": "at least 125 fewer errors and source-cluster bootstrap upper CI below zero",
+    "KMQ_vs_K": "at least 25 fewer errors and source-cluster bootstrap upper CI below zero",
+    "KMQ_vs_KX": "at least 25 fewer errors and source-cluster bootstrap upper CI below zero"
+  },
+  "secondary": ["KM_vs_K", "KQ_vs_K", "KMM2_vs_K", "all WER and error totals"],
+  "decision": "if all primary comparisons pass, request explicit authorization for a separately frozen independent calibration confirmation; otherwise stop the interpretable heatmap scheduler branch",
+  "no_unlock": "this same-fit post-diagnostic replay cannot itself unlock closed loop, calibration, held-out, dev, test, or a deployability claim",
+  "forbidden": ["GPU or CUDA", "changing scores or thresholds", "calibration/dev/test/held-out", "unknown-EOS closed loop", "latency claims"]
+}

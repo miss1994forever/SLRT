@@ -1,0 +1,53 @@
+{
+  "experiment": "P6 local posterior-JS information-gain oracle v1",
+  "created_before_oracle_outcomes": true,
+  "motivation": "replace future/reference/EOS-derived H4 utility with a local dense training target that asks whether the center bonus changes the ISLR posterior",
+  "scope": {
+    "split": "Phoenix-2014T complete train fit only",
+    "samples": 6378,
+    "sources": 578,
+    "reference_length_expected": 49613,
+    "calibration_dev_test_or_heldout_forbidden": true
+  },
+  "fixed_assets": {
+    "dense_protocol_sha256": "30331c1701c95b5c720b92a17ae905522d911164caf66b795ed93c5a6c8d1d85",
+    "fit_calibration_split_sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784",
+    "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "full_center_errors_expected": 2325
+  },
+  "target": {
+    "unit": "one complete four-window block",
+    "score": "symmetric Jensen-Shannon divergence in natural-log units between the softmax ISLR posteriors at offset0 and offset2",
+    "score_visibility": "training target observes the offset2 posterior but no reference, decoder continuation, future beyond offset2, or true EOS",
+    "intended_predictor_deadline": "after offset0 and before paying for offset2"
+  },
+  "policies": {
+    "hard_skeleton": "select offset0 in every block including an incomplete tail",
+    "bonus_budget": "for B complete blocks retain K=ceil(B/2) offset2 bonuses",
+    "uniform_sparse": "choose K block indices floor((j+0.5)*B/K), j=0..K-1",
+    "js_oracle": "choose the K largest local JS scores; ties use earlier block index",
+    "full_center_control": "offset0 plus offset2 in every complete block",
+    "decoder": "frozen triangular span-weighted-15 replay",
+    "per_sample_equal_budget": "uniform_sparse and js_oracle must select exactly the same number of windows"
+  },
+  "primary_comparison": {
+    "metric": "final train-fit WER of JS oracle versus equal-budget uniform_sparse",
+    "bootstrap": "10000-repetition 578-source cluster bootstrap, seed 261210"
+  },
+  "gates": {
+    "integrity": [
+      "6378 samples, 578 sources, reference length 49613",
+      "full-center reproduces 2325 errors",
+      "JS and uniform sparse have equal selected-window counts for every sample"
+    ],
+    "js_error_reduction_vs_uniform_sparse_at_least": 125,
+    "js_vs_uniform_sparse_bootstrap_upper_lt_zero": true,
+    "decision": "both relevance gates plus all integrity gates must pass before any causal predictor for local JS information gain"
+  },
+  "forbidden": [
+    "GPU or CUDA",
+    "calibration, dev, test, held-out, or closed-loop outcomes",
+    "changing the score, 50 percent bonus retention, uniform placement, decoder, threshold, or gates after outcomes",
+    "claiming deployability: the oracle observes the candidate offset2 posterior and uses known sample block count for exact budgeting"
+  ]
+}

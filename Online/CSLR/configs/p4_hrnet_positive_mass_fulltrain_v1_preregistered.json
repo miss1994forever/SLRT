@@ -1,0 +1,73 @@
+{
+  "experiment": "P4 HRNet positive-mass full-train extraction v1",
+  "created_before_fulltrain_outputs": true,
+  "unlocked_by": "p4_hrnet_positive_mass_gpu_mixed_precision_pilot_v3_49faacc3",
+  "unlock_diagnostics_sha256": "727e01e61b646beec2eaa2426c41de72f62a150e711ec175b9679f6855709729",
+  "scope": {
+    "split": "Phoenix-2014T train only",
+    "videos_expected": 7096,
+    "frames_expected": 827354,
+    "frame_rule": "every frame represented by the frozen train keypoint archive",
+    "assignment": "deterministic longest-processing-time balancing by frozen video length over five workers",
+    "checkpoint_unit": "one atomic compressed npz per video; valid completed files are skipped on resume"
+  },
+  "statistics": {
+    "definition": "identical to positive-mass GPU mixed-precision pilot v3",
+    "shape_per_frame": [133, 11],
+    "fields": [
+      "mu_x_normalized", "mu_y_normalized", "var_x_normalized",
+      "var_y_normalized", "cov_xy_normalized", "raw_peak",
+      "probability_peak", "entropy", "positive_mass",
+      "mu_x_heatmap_pixels", "mu_y_heatmap_pixels"
+    ],
+    "raw_heatmaps_saved": false,
+    "frozen_keypoints_duplicated": false,
+    "arithmetic": "v3 float32 input/products, float64 CUDA reductions/moments, float32 output"
+  },
+  "inputs": {
+    "video_zip_sha256": "49faacc304666a75cb51e3e2d335dfbead8d08e8dd5ff834c66c690e1175d457",
+    "frozen_train_keypoints_sha256": "18a045bfe7790064e06a9016d0949d7f2f8243ae62ddad4f08d3fb5ea3d5b763",
+    "detector_checkpoint_sha256": "d022e22795c17ecd53915ea8231bac43dd7b62ae2b322f1d59bf5b66af217bf9",
+    "pose_checkpoint_sha256": "f572656370050193134ef50e27745cdcdda54986d396ff78e6169608efcdc3c1",
+    "pose_model": "HRNet-W48 COCO-WholeBody 384x288 DARK-plus"
+  },
+  "inference": {
+    "detector_score_threshold": 0.5,
+    "detector_area_threshold": 1600,
+    "person_choice": "highest detector bbox score exactly as original SLRT pose extraction",
+    "heatmap_expected_shape": [133, 96, 72]
+  },
+  "completion_gates": {
+    "videos_complete": 7096,
+    "frames_accounted": 827354,
+    "successful_frame_fraction_at_least": 0.999,
+    "all_saved_valid_statistics_finite": true,
+    "no_outcomes_read": true
+  },
+  "gpu_policy": {
+    "run_outside_sandbox": true,
+    "workers": 5,
+    "allowed": [
+      {"pci": "00000000:61:00.0", "uuid": "GPU-91f9e38c-0a59-15c0-bd08-6a4f89da07ed"},
+      {"pci": "00000000:81:00.0", "uuid": "GPU-e1683bce-0e4f-68bc-54cc-4a2f62f55631"},
+      {"pci": "00000000:A1:00.0", "uuid": "GPU-4f5bee72-bad2-f8c9-2656-58e4d94c3c98"},
+      {"pci": "00000000:C1:00.0", "uuid": "GPU-1c25de34-7fce-3f81-158c-c4d82d3ac729"},
+      {"pci": "00000000:E1:00.0", "uuid": "GPU-8c92fc9f-aaa8-cd49-7196-a08cca1c6c7b"}
+    ],
+    "forbidden_pci": ["00000000:25:00.0", "00000000:41:00.0"],
+    "host_gpu0_forbidden": true
+  },
+  "durability": {
+    "detached_supervisor": true,
+    "survives_codex_disconnect": true,
+    "per_video_atomic_write": true,
+    "resume_skips_valid_completed_video_files": true,
+    "progress_file": "job_status.json"
+  },
+  "forbidden": [
+    "dev or test", "WER, utility, reference, or held-out outcome",
+    "saving full raw heatmaps", "overwriting v1-v3 pilot outputs",
+    "changing the normalization or arithmetic after launch"
+  ],
+  "output_directory": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p4_hrnet_positive_mass_fulltrain_v1_49faacc3"
+}

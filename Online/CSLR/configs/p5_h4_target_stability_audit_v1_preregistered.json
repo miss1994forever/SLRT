@@ -1,0 +1,28 @@
+{
+  "experiment": "P5 H4 two-continuation target-stability audit v1",
+  "status": "post-OOF diagnostic using already materialized labels only",
+  "created_before_audit_outputs": true,
+  "fixed_assets": {
+    "label_metrics_sha256": "d54315f87279829c3c7701553b8d220828ec04975f15c12d7a209fe1cb032cfe",
+    "label_manifest_sha256": "d8853bd5e301eb37ea00e9a5c8cbee1b4b6f15a491453cd26706792ed1490dd8"
+  },
+  "scope": "all 43437 complete H4 horizons and all 81 schedules",
+  "comparisons": [
+    "positive-opportunity prevalence separately under center-future and late-future",
+    "Jaccard overlap of opportunity horizons",
+    "best positive schedule agreement across futures",
+    "candidate reward sign agreement and Pearson correlation on candidates active in either future",
+    "robust opportunity retained from the single-future union and intersection"
+  ],
+  "definitions": {
+    "single_future_opportunity": "maximum signed reward under that continuation is greater than zero",
+    "single_future_choice": "lexicographic argmax when maximum is positive, otherwise all-center",
+    "robust_opportunity": "maximum across schedules of the minimum of the two continuation rewards is positive"
+  },
+  "forbidden": [
+    "GPU or CUDA",
+    "new decoding or changed continuations",
+    "calibration, dev, test, held-out, or closed-loop outcomes",
+    "using this diagnostic to unlock a policy"
+  ]
+}

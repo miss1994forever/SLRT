@@ -1,0 +1,69 @@
+{
+  "experiment": "P5 H4 schedule-ranker source-disjoint OOF v1",
+  "created_before_predictor_outcomes": true,
+  "status": "preregistered after the H4 label dataset passed all integrity gates",
+  "scope": {
+    "split": "Phoenix-2014T complete train fit only",
+    "primary_rows": "all and only H=4 horizons",
+    "expected_rows": 43437,
+    "expected_sources": 578,
+    "candidates_per_row": 81,
+    "tail_H1_H2_H3": "excluded from primary predictor because horizon size reveals true EOS"
+  },
+  "fixed_assets": {
+    "label_metrics_sha256": "d54315f87279829c3c7701553b8d220828ec04975f15c12d7a209fe1cb032cfe",
+    "label_manifest_sha256": "d8853bd5e301eb37ea00e9a5c8cbee1b4b6f15a491453cd26706792ed1490dd8",
+    "heatmap_U_frames_sha256": "39be97d231cb3d5b4e750f846c92bc6f33a4b3533f1e266229f56a083a7e7f87",
+    "heatmap_U_index_sha256": "6cc7097c5a92047ddd191635becff8354359f1327e41b21dd26e358da31ec6dc",
+    "dense_protocol_sha256": "30331c1701c95b5c720b92a17ae905522d911164caf66b795ed93c5a6c8d1d85"
+  },
+  "causal_deadline": {
+    "decision_time": "immediately after the first block's offset-0 skeleton observation",
+    "visible_heatmap": "31 frames ending at that offset-0 frame, left padded by the sample's first frame",
+    "visible_decoder_history": "at most 16 previously selected oracle-state windows plus the current offset-0 window",
+    "forbidden": "all later frames inside the H4 horizon, reference, reward, continuation, remaining length, and true EOS",
+    "interpretation": "teacher-forced oracle-state identifiability only, not closed-loop deployment"
+  },
+  "features": {
+    "K_history": "top-8 probability mass of each visible paid logit hashed to 32 token buckets plus entropy, blank probability, top-1 probability and margin; last/mean/std/last-first pooling; append past schedule counts and previous four offsets",
+    "summary_U": "existing 96-D positive-mass heatmap descriptor over 31 visible frames; concatenate last/mean/std/last-first and fixed signed hash 384->64, seed 261131",
+    "ordered_U": "orthonormal DCT-II coefficients 0..7 along the 31 visible frames for each of 96 descriptors; fixed signed hash 768->256, seed 261132",
+    "time_shuffled_U": "same ordered-U transform after a deterministic per-row permutation of the 31 frames, SHA256 seed namespace p5-h4-u-shuffle-v1",
+    "feature_sets": {
+      "K": "K/history only",
+      "KS": "K/history plus summary-U",
+      "KO": "K/history plus ordered-U",
+      "KX": "K/history plus time-shuffled-U negative control"
+    }
+  },
+  "model": {
+    "type": "81-output closed-form ridge regression with unpenalized intercept",
+    "target": "signed robust value min(center-future reward, late-future reward) for every schedule",
+    "outer_folds": "exact deterministic five source-disjoint robust-oof-v1 folds",
+    "normalization": "mean/std fit on each outer training fold only",
+    "alpha": 100.0,
+    "center_schedule": "score fixed to zero at inference",
+    "selection": "argmax score; lexicographic first on ties; center remains available",
+    "tuning_or_early_stopping": false
+  },
+  "primary_metrics": {
+    "signed_robust_reward": "sum of the frozen target value at each OOF-selected schedule; diagnostic error-equivalent reward, not WER",
+    "oracle_reward_capture": "selected signed robust reward divided by the H4 oracle robust reward",
+    "bootstrap": "10000 source-cluster resamples, seed 261133, reported for KO total reward and KO-minus-K and KO-minus-KX reward"
+  },
+  "gates": {
+    "KO_signed_robust_reward_at_least": 249,
+    "KO_source_bootstrap_lower_gt": 0,
+    "KO_minus_K_reward_at_least": 50,
+    "KO_minus_K_source_bootstrap_lower_gt": 0,
+    "KO_minus_KX_reward_at_least": 50,
+    "KO_minus_KX_source_bootstrap_lower_gt": 0,
+    "decision": "all gates must pass to unlock unknown-EOS equal-budget closed loop; otherwise stop this ordered heatmap-U ranker identity"
+  },
+  "forbidden": [
+    "GPU or CUDA",
+    "calibration, dev, test, held-out, or closed-loop outcomes",
+    "changing features, alpha, folds, candidate selection, seeds, or gates after OOF outcomes",
+    "calling signed robust reward WER or claiming deployment from teacher-forced OOF"
+  ]
+}

@@ -131,6 +131,97 @@ utility 标签难以由决策时可见信息稳定预测。细粒度 RGB 相比�
 不在相同 OOF 上继续调 crop、history、network 或 threshold。完整事实和产物见
 [实验账本](ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md)。
 
+### P5 H4 joint-schedule oracle（2026-09-22冻结）
+
+P5把连续四个完整block作为一个horizon，精确枚举每个block的三个bonus位置，共`3^4=81`种
+schedule，并在fixed-center/fixed-late两种future continuation下最大化最差终端收益。完整train fit
+上，uniform为2,325 errors/4.6863%，旧逐block robust oracle为1,688/3.4023%，H4 joint oracle为
+1,447/2.9166%。H4相对旧oracle再减少241 errors（-0.4858 pp，578-source cluster bootstrap
+95% CI [-0.5511,-0.4223]），相对uniform共减少878 errors。三种策略逐样本预算完全一致，全部
+预注册门控通过。
+
+该结果证明多窗口schedule-level target的上界显著强于逐窗口utility，但oracle读取reference、未来
+continuation和真实endpoint，不可部署。它只解锁新的source-disjoint H4 schedule predictor及
+ordered heatmap-U对照，不直接解锁闭环或held-out。详见
+[P5报告](P5_H4_ROBUST_JOINT_SCHEDULE_ORACLE_V1.md)。
+
+### P5 H4 schedule-ranker OOF（2026-09-23冻结）
+
+在43,437个完整H4 horizon和578-source五折上，固定81-output ridge直接预测全部schedule的signed
+robust value。K、K+summary-U、K+ordered-U和K+time-shuffled-U的累计reward分别为
+`-40/-24/-51/-19`；ordered-U相对K为-11、相对打乱对照为-32，六项门槛全部失败。H4 oracle
+正headroom只出现在824个horizon，而KO在42,928个horizon离开center，说明当前模型缺少可靠的
+rare-event abstention；保序heatmap也没有表现出超过时间打乱对照的证据。因此不解锁闭环或
+held-out。详见[P5 ranker报告](P5_H4_SCHEDULE_RANKER_OOF_V1.md)。
+
+失败后另行冻结了post-OOF rare-event detector + conditional ranker：每折只按训练正例率选择约
+1.9%的horizon。KO detector AP为.02925（prevalence .01897），固定预算召回4.98%，最终reward
+仍为-11，CI [-28,6]；相对K和time-shuffled只增加4和3 reward。9/9 gate失败，说明限制动作率
+仍不能定位正机会。详见[P5 abstention报告](P5_H4_ABSTENTION_RANKER_OOF_V1.md)。
+
+后续诊断排除了“source-disjoint OOF设计导致失败”这一主要解释。KO detector AP在训练内、
+row-random、sample-disjoint、source-disjoint分别为.0483/.0302/.0280/.0292；row与source只差
+.0009，label-shuffled为.0193，接近.0190 prevalence。如果预先知道真实正机会，KO conditional
+ranker在source OOF可捕获44.8% oracle reward。两种future continuation的机会Jaccard为.821，
+共同正机会上的best schedule一致率94.8%。因此主要瓶颈是从全部horizon定位稀疏机会，而不是
+source fold或两future标签不稳定。详见[P5诊断报告](P5_H4_OOF_AND_TARGET_AUDITS_V1.md)。
+
+固定CPU MLP容量probe进一步显示：KO训练内AP可升到.2784，但row/sample/source OOF仅
+.0325/.0275/.0290，source相对ridge还低.00028；shuffled-label为.0200。网络可以记忆训练模式，
+却没有泛化增益。因此当前失败也不能主要归因于线性ridge容量不足；应停止在相同target/输入上
+继续换分类器。
+
+### P6 local posterior-JS information gain（2026-09-23冻结）
+
+P6改用局部、无reference target：每个block计算offset0与offset2 ISLR posterior的symmetric JS，
+每个样本只保留一半center bonus。逐样本等预算下，uniform sparse为2,761 errors/5.5651%，JS oracle
+为2,562/5.1640%，减少199 errors、-0.4011 pp，source bootstrap CI [-0.5340,-0.2642]；125-error
+和CI门槛均通过。它仍弱于保留全部bonus的full center 2,325 errors，但证明局部信息增益能在相同
+稀疏预算下显著改善分配。该结果只解锁source-disjoint causal JS predictor，不直接解锁闭环或
+held-out。详见[P6报告](P6_LOCAL_JS_INFORMATION_GAIN_ORACLE_V1.md)。
+
+随后完成source-disjoint predictor OOF。K/KS/KO/KX的R2为.256/.267/.275/.257，对应等预算errors
+2,387/2,399/2,418/2,386，均显著优于uniform sparse 2,761。KO相对uniform少343 errors，CI
+[-0.8285,-0.5556] pp；但KO比K和KX分别多31和32 errors，两个CI均明确为正。ordered-U提高R2
+却损害WER，未显示时序增量。预注册总gate仅2/6通过，不解锁闭环或held-out；K-only只能作为
+需要独立确认的post-OOF候选。详见[P6 predictor报告](P6_LOCAL_JS_PREDICTOR_OOF_V1.md)。
+
+为直接检验heatmap运动，随后在不读取reference/WER的诊断身份下，从正质量heatmap均值坐标显式
+计算body/face/左右手的逐帧位移、最近运动、净位移、路径长度和加速度。运动M单独OOF R2为
+.01419；在K/history上增加M为+.00474，而时间打乱运动仅+.00074；运动与质量联合为+.01224。
+右手最近一步位移与raw JS的相关最高（rho .1064），但多数分位曲线在中等运动后平台或回落，
+不支持“运动越大越重要”的全局单调假设。该结果只证明弱heatmap时序信号，不解锁policy replay、
+闭环或held-out。详见[P6 heatmap运动诊断](P6_HEATMAP_INTERPRETABLE_MOTION_JS_DIAGNOSTIC_V1.md)。
+
+随后以冻结OOF分数做同一train-fit的等预算WER诊断。K/KM/KQ/KMQ/KMM2/KX分别得到
+2,387/2,391/2,402/2,399/2,377/2,390 errors。KMQ比K多12 errors、比时间打乱对照多9，两个
+CI均跨0；KMM2虽少10 errors，但CI `[-.0509,+.0102]` pp跨0且是次要比较。主检查仅2/6通过，
+停止heatmap scheduler分支；不启动该分支的正式GPU延时、calibration、闭环或held-out。
+详见[P6 heatmap WER报告](P6_HEATMAP_INTERPRETABLE_MOTION_WER_REPLAY_V1.md)。
+
+K-only随后在此前未用于P6的718个calibration样本、65个独立source上正式确认。local-JS R2为
+.25851；逐样本等预算uniform/K/full-center为331/283/287 errors。K相对uniform少48 errors，
+CI `[-1.2802,-.4564]` pp，3/3门槛通过。随后解锁的unknown-EOS自身历史模拟使用固定fit-OOF
+中位阈值和0.5-token/block、容量2、no-topup控制：K/online-uniform/matched-uniform/full-center
+为311/325/330/287 errors。K方向上少14/19 errors，但CI上界`+.0188/+.0174`，五项门槛只通过
+三项。停止K路线，不读取held-out或调控制器。详见
+[P6 K独立确认与闭环报告](P6_K_HISTORY_CALIBRATION_AND_UNKNOWN_EOS_V1.md)。
+
+factorial audit随后确认闭环退化来自controller而非state：teacher-forced top-K、teacher-forced
+fixed-token、self-history fixed-token分别为283/312/311 errors；controller shift +29，state shift
+-1，固定schedule分数相关`.9739`。据此新建不使用全局阈值的因果视频内中位数控制器。在完整fit
+source-OOF unknown-EOS self-history模拟中，quantile/online-uniform/matched-uniform/full-center为
+2,543/2,758/2,773/2,325 errors和273,882/278,307/273,882/371,594 windows。quantile相对两个
+uniform少215/230 errors，CI全负，5/5 gate通过。它相对full-center少26.3%窗口但多218 errors，
+仍是精度—效率折中。详见
+[P6 K控制器与在线分位报告](P6_K_HISTORY_CONTROLLER_AUDIT_AND_ONLINE_QUANTILE_V1.md)。
+
+在获准规划final held-out后、读取新outcome之前完成split readiness audit：train 7,096样本已全部
+进入fit/calibration且两者均被P6使用；dev已参与多轮历史选择；test已有历史WER结果。修复后test
+尚未重跑并不能恢复其“未见”身份。因此没有执行dev/test，当前quantile结果仍是train-fit
+source-disjoint OOF证据而非外部确认。详见
+[P6 final evaluation readiness audit](P6_FINAL_EVALUATION_READINESS_AUDIT.md)。
+
 ### Test：修复前历史 retrospective control
 
 以下结果绑定修复前视频资产，且 Phoenix test 已被历史实验查看。test split 自身没有缺帧，但这些结果不能重新标记成修复后资产的正式结果。截至 2026-09-10，尚未以修复后 hash 运行新的 test。
@@ -215,9 +306,9 @@ CSL-Daily Top-800 R1 是 isolated dev 可靠性诊断，报告 accuracy/AUROC，
 
 ## 下一步实验
 
-基础正确性对照、runtime、P0--P3 oracle 与完整 train OOF 均已完成。下一步不再训练同类
-per-window utility classifier，而应独立预注册更稳定、决策时可观测的中间 target，或重新分解为
-序列级/可微策略目标。新方案仍必须使用 source-disjoint train OOF；只有达到冻结的249-error
-headroom 才能解锁 unknown-EOS 闭环、逐样本等预算 uniform 和0/4/8 lookahead 比较。此前不得
-读取新的 held-out outcome 或运行 test。A0 对等预算 B2 的 dev WER 差异不显著，也不能被解释成
-现有自适应采样已经显著优于均匀采样。
+基础正确性对照、runtime、P0--P5 oracle、标签提取与完整train OOF均已完成。H4 joint oracle通过，
+但H4 direct ranker与随后冻结的rare-event/abstention新身份都得到负signed robust reward，门槛
+分别6/6和9/9失败。因此停止当前H4 utility预测链，不运行calibration、unknown-EOS闭环、held-out
+或test。下一方向必须更换为决策时直接可观测的训练目标或端到端资源约束目标，不能继续在同一
+future/reference/EOS-derived标签上调阈值。A0对等预算B2的dev WER差异不显著，也不能解释成
+现有自适应采样显著优于均匀采样。

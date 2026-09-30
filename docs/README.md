@@ -22,6 +22,7 @@
 | P1 | [`P1_CAUSAL_CENTER_PREDICTOR_V1.md`](P1_CAUSAL_CENTER_PREDICTOR_V1.md) | 最小因果 center predictor No-Go |
 | P2 | [`P2_CAUSAL_CENTER_TCN_V1.md`](P2_CAUSAL_CENTER_TCN_V1.md) | 增强关键点 causal TCN No-Go；未打开 dev/test |
 | P3 | [`ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md`](ONLINE_CSLR_EXPERIMENT_LEDGER_20260920.md) | robust oracle 上界强；全部可部署 OOF predictor 未过 gate，停止当前 per-window utility target |
+| P6 online quantile 实现验收 | [`P6_ONLINE_QUANTILE_RELEASE_AUDIT_20260925.md`](P6_ONLINE_QUANTILE_RELEASE_AUDIT_20260925.md) | 冻结 train-fit 模型可重建；流式规则与 183,401 个 block 的冻结动作一致；端到端视频推理仍未验收 |
 
 对应的 compact、机器可读冻结索引统一列在 [`results/README.md`](results/README.md)。P3 的
 逐实验配置、metrics 和本地产物路径由完整实验账本索引。阶段冻结文档一旦提交不重写结论；

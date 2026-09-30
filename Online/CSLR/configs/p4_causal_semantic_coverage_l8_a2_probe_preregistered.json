@@ -1,0 +1,38 @@
+{
+  "experiment": "CSC-L8-v1 Phase A2 outcome-blind identifiability probe",
+  "preregistered_after_a1_pass_before_a2_outcomes": true,
+  "a1_manifest_sha256": "32c235ae5df820520a45af215edb8d2baeb04d7c09c2a482ee184c898000fb9f",
+  "folds": "exact five source-disjoint folds carried by A1 target archive",
+  "target": "three T=1 JS semantic-curvature scores per block",
+  "features": {
+    "K": "31-step 17-D causal pose/hand/motion history at the frozen L8 decision arrival, summarized by last/mean/std/last-minus-first (68-D)",
+    "finger_face": "for each of offsets 1/2/3, frozen outer-fold-specific finger66 plus face33 embeddings over frames start-7..start+8, pooled into four nonoverlapping four-frame means (396-D per candidate)",
+    "projection": "one fixed signed feature-hash projection shared across folds and candidates, 396 to 64 dimensions, seed 261110; no outcome fitting",
+    "block_width": 260,
+    "normalization": "outer-train mean and standard deviation only"
+  },
+  "model": {
+    "type": "three-output closed-form ridge with unpenalized intercept via centered normalized features and targets",
+    "alpha": 10.0,
+    "tuning": false
+  },
+  "metrics": {
+    "pooled_r2": "1-SSE/SST over all three scores and all OOF blocks, using outer-train target mean as fold baseline",
+    "winner_accuracy": "argmax of three OOF predictions versus argmax target",
+    "per_fold_r2": true
+  },
+  "gate": {
+    "pooled_r2_min": 0.10,
+    "winner_accuracy_min": 0.45,
+    "positive_r2_folds_min": 4
+  },
+  "forbidden": [
+    "reading robust rewards or continuous terminal advantages",
+    "reading reference, WER, future continuation, or true EOS",
+    "dev or test",
+    "feature, projection, alpha, threshold, or gate tuning",
+    "formal policy OOF before this gate passes"
+  ],
+  "compute": "CPU only; no CUDA or nvidia-smi required",
+  "output_directory": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p4_csc_l8_identifiability_probe_v1_49faacc3"
+}

@@ -1,0 +1,54 @@
+{
+  "experiment": "CSC-L8-v1 train-fit oracle relevance diagnostic",
+  "created_before_csc_policy_or_wer_outcomes": true,
+  "classification": "exploratory target-relevance ceiling after the preregistered identifiability probes failed; not deployable and not untouched confirmation",
+  "scope": {
+    "split": "Phoenix-2014T train fit only",
+    "samples": 6378,
+    "sources": 578,
+    "reference_length_expected": 49613,
+    "dense_shards": 56
+  },
+  "inputs": {
+    "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "fit_calibration_split_sha256": "38763cd9c1ccde2e13bbd9f344b92cdc1b7873afe39d38316ddc877986fb6784",
+    "dense_protocol_sha256": "30331c1701c95b5c720b92a17ae905522d911164caf66b795ed93c5a6c8d1d85",
+    "csc_target_manifest_sha256": "32c235ae5df820520a45af215edb8d2baeb04d7c09c2a482ee184c898000fb9f",
+    "csc_target_scores_sha256": "30bf590800c4a68e087d0b11e2e8de22f3266e0313492b59e776a128db27974c"
+  },
+  "schedule": {
+    "hard_coverage": "offset0 in every complete four-frame block",
+    "uniform_baseline_bonus": "offset2 in every complete four-frame block",
+    "csc_oracle_bonus": "argmax of frozen JS-T1 curvature among offsets1/2/3",
+    "invalid_csc_block_fallback": "offset2",
+    "tail_top_up": false,
+    "selected_window_count": "exactly identical between baseline and CSC oracle for every sample",
+    "decoder": "frozen triangular span-weighted-15 with minimum weight .05"
+  },
+  "primary_metrics": {
+    "error_difference": "CSC oracle errors minus uniform offset2 errors",
+    "wer_difference_pp": "100 times aggregate error difference divided by aggregate reference length",
+    "uncertainty": "10000-repetition bootstrap over 578 source clusters",
+    "bootstrap_seed": 261122
+  },
+  "primary_gate": {
+    "minimum_error_reduction": 249,
+    "bootstrap_95pct_delta_wer_upper_strictly_less_than": 0.0,
+    "decision": "both checks must pass to call CSC target relevant enough for further predictor research"
+  },
+  "sanity_checks": {
+    "uniform_errors_expected": 2325,
+    "uniform_wer_expected": 4.686271743293089,
+    "valid_csc_blocks_expected": 181815,
+    "all_complete_blocks_expected": 183401
+  },
+  "forbidden": [
+    "calibration, dev, test, or new held-out outcomes",
+    "changing temperature, curvature metric, fallback, decoder, offsets, budget, gate, or bootstrap seed after the result",
+    "using the CSC oracle as a deployable policy",
+    "running a learned closed loop from this diagnostic",
+    "post-hoc thresholding by curvature magnitude or margin"
+  ],
+  "compute": "CPU only; CUDA and nvidia-smi are not used",
+  "output_directory": "/mnt/workspace/projects/haojun/SLRT/Online/CSLR/results/phoenix-2014t_ISLR/p4_csc_l8_oracle_relevance_v1_49faacc3"
+}
