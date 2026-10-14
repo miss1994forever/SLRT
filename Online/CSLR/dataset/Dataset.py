@@ -143,7 +143,8 @@ class ISLRDataset(torch.utils.data.Dataset):
             #vfile2raw_len
             if 'iso' in self.dataset_cfg['dataset_name']:
                 if self.dataset_cfg['dataset_name'] == 'phoenix_iso':
-                    with gzip.open('../../data/phoenix_2014t/phoenix14t.{}'.format(self.split), 'rb') as f:
+                    metadata_split = self.dataset_cfg.get('raw_vlens_split_overrides', {}).get(self.split, self.split)
+                    with gzip.open('../../data/phoenix_2014t/phoenix14t.{}'.format(metadata_split), 'rb') as f:
                         ori_meta = pickle.load(f)
                     for item in ori_meta:
                         self.vfile2raw_vlens[item['name']] = item['num_frames']

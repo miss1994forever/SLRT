@@ -1,0 +1,80 @@
+{
+  "experiment": "P7 frozen-checkpoint context-margin and frame-count grid v1",
+  "created_before_grid_outcome_inspection": true,
+  "scope": {
+    "split": "source-disjoint train calibration only",
+    "items_per_candidate": 1280,
+    "dev_read": false,
+    "test_read": false
+  },
+  "candidate_families": {
+    "D_context_margin_resampled_to_16": [
+      "D_margin0_to16",
+      "D_margin2_to16",
+      "D_margin4_to16",
+      "D_margin6_to16"
+    ],
+    "E_centered_context_frame_count": [
+      "E_context8",
+      "E_context12",
+      "E_context16",
+      "E_context24",
+      "E_context32"
+    ]
+  },
+  "primary_head": {
+    "name": "weighted_main",
+    "rgb": 0.1,
+    "keypoint": 0.7,
+    "fuse": 0.2
+  },
+  "primary_population": "nonblank",
+  "paired_comparisons": {
+    "context_margin": "margin 2/4/6 minus margin 0",
+    "frame_count": "8/12/24/32 minus 16"
+  },
+  "reported_subsets": [
+    "all nonblank",
+    "5-6 frames",
+    "common glosses with at least 51 base bags",
+    "7-9 and 10+ frames",
+    "gloss frequency bins",
+    "signer"
+  ],
+  "uncertainty": {
+    "method": "paired source-cluster bootstrap",
+    "repetitions": 10000,
+    "metrics": [
+      "top1 delta",
+      "correct-class probability delta"
+    ]
+  },
+  "runtime": {
+    "timing": "synchronized model forward only",
+    "reported": [
+      "items per second",
+      "mean batch milliseconds",
+      "peak allocated and reserved CUDA memory",
+      "input frames and centered lookahead"
+    ]
+  },
+  "interpretation": {
+    "positive_margin_effect": "proxy boundaries omit useful adjacent evidence",
+    "shorter_or_longer_E_beats_16": "one fixed 16-frame temporal scale is mismatched",
+    "no_stable_gain": "do not promote frame-count or variable-length engineering from frozen sensitivity alone"
+  },
+  "guardrails": [
+    "Frozen-checkpoint sensitivity is not a trained causal effect",
+    "Blank examples are excluded from primary isolated accuracy",
+    "A candidate cannot advance on 5-6 frames if common-gloss top1 broadly regresses",
+    "Do not inspect dev or test for grid selection"
+  ],
+  "fixed_assets": {
+    "parent_preregister_sha256": "4a5d4ae2a4dad7d681ac09434772f212ac065a4ceed70079b83ec53d6ed66fbf",
+    "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "grid_asset_manifest_sha256": "45c856636dc30ed151b8223ed2d5a5cfda5527a7bb2b3b96db407275da4f25dc",
+    "geometry_summary_sha256": "6678860d678ae9835032e039b6d168a832994c1937c1ede765d97079e68e071e",
+    "evaluator_sha256": "98ed40df7a2d7280c21a3ce4cf8259ac93ceedcf540792465985678f4f2ff183",
+    "analyzer_sha256": "490912156ce7a5a0cd691b37d5f97674fee2455220c481685737ec8c48abca01"
+  }
+}

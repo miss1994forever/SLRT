@@ -1,0 +1,69 @@
+{
+  "experiment": "P7 A/B/C trained-recognizer source-disjoint isolated calibration v1",
+  "created_before_checkpoint_or_evaluation_outcome_inspection": true,
+  "scope": {
+    "split": "train calibration only",
+    "items": 1280,
+    "source_disjoint_from_fit": true,
+    "dev_read": false,
+    "test_read": false
+  },
+  "candidates": [
+    "A_current_fixed16",
+    "B_aligned_fixed16",
+    "C_inside_even16"
+  ],
+  "primary_head": {
+    "name": "weighted_main",
+    "rgb": 0.1,
+    "keypoint": 0.7,
+    "fuse": 0.2
+  },
+  "primary_inputs": {
+    "deployment_consistent": "context_center16",
+    "required_isolated_control": "base_pad16"
+  },
+  "primary_population": "nonblank",
+  "reported_controls": [
+    "blank as a separate duration stratum",
+    "inside_even16 input sensitivity for every trained model",
+    "ensemble_main and foreground heads as diagnostics only"
+  ],
+  "strata": [
+    "duration 5-6, 7-9, 10+",
+    "gloss frequency 1-10, 11-50, 51+ base bags",
+    "signer"
+  ],
+  "metrics": [
+    "top1",
+    "top5",
+    "blank prediction rate",
+    "mean correct-class probability"
+  ],
+  "uncertainty": {
+    "method": "paired source-cluster bootstrap",
+    "repetitions": 10000,
+    "comparisons": [
+      "B minus A",
+      "C minus A"
+    ],
+    "subsets": [
+      "context_center16 nonblank",
+      "context_center16 5-6",
+      "base_pad16 nonblank",
+      "base_pad16 5-6"
+    ]
+  },
+  "guardrails": [
+    "Do not include blank examples in primary isolated accuracy",
+    "Do not choose a candidate from diagnostic heads or diagnostic input variants",
+    "Do not read official dev until the train-only candidate decision is frozen",
+    "Do not read official test"
+  ],
+  "fixed_assets": {
+    "fairness_audit_sha256": "58c1a05c67063dcd41f6bf0b687eff014f943e84f425a8d8f248a935b4b84349",
+    "asset_manifest_sha256": "848c0be2f194cf723b4d4c548a97401093354b198d4eec4d4516035d2b0565c2",
+    "evaluator_sha256": "bbc0aac759b5ccebe3a2a83c364c098eb8848f9ada4597cb696a746547f2717c",
+    "analyzer_sha256": "909029933293b064e55f5246af555987e677d9a397ab317c58dd5c6481784cef"
+  }
+}

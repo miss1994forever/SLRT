@@ -33,6 +33,8 @@ import datetime
 
 
 def make_wandb(model_dir, cfg):
+    if cfg.get('training', {}).get('disable_wandb', False):
+        return None
     import wandb
     if is_main_process():
         if 'debug' in model_dir or 'comb' in model_dir or 'csl' in model_dir:

@@ -71,6 +71,7 @@ def collate_fn_(batch, data_cfg, is_train, vocab, name2keypoint, word_emb_tab, v
     
     if task == 'ISLR':
         num_output_frames = data_cfg['num_output_frames']
+        index_setting = data_cfg['transform_cfg'].get('index_setting', ['consecutive','pad','central','pad'])
 
         if len(vfile2raw_vlens) > 0:
             outputs['raw_vlens'] = [vfile2raw_vlens[sample['video_file']] for sample in batch]
@@ -79,18 +80,31 @@ def collate_fn_(batch, data_cfg, is_train, vocab, name2keypoint, word_emb_tab, v
             # scale at T//2!
             outputs['temp_idx'] = []
             ratio = data_cfg.get('temp_idx_ratio', 2)  #if get temp_idx of original scale
+            align_temp_idx = data_cfg.get('align_temp_idx_with_padding', False)
+            pad_mode = index_setting[1] if is_train else index_setting[3]
             for sample in batch:
                 start, end, vlen, base_start, base_end = sample['start'], sample['end'], sample['seq_len'], sample['base_start'], sample['base_end']
                 if sample['aug'] == 0:
                     # for base data, take the center
                     if vlen < num_output_frames:
-                        temp_start = (num_output_frames-vlen) // (2*ratio)
-                        temp_end = temp_start + vlen//ratio
+                        if align_temp_idx and pad_mode == 'even':
+                            # All output frames are replicas of foreground frames.
+                            temp_start, temp_end = 0, num_output_frames//ratio
+                        else:
+                            temp_start = (num_output_frames-vlen) // (2*ratio)
+                            temp_end = temp_start + vlen//ratio
                     else:
                         temp_start, temp_end = 0, num_output_frames//ratio
                 else:
                     temp_start = max(start, base_start) - start
                     temp_end = min(end, base_end) - start
+                    if align_temp_idx and vlen < num_output_frames and pad_mode in ['pad', 'center_pad']:
+                        # Evaluation ``pad`` and training ``center_pad`` both use
+                        # centered endpoint padding.  Shift the raw-window
+                        # overlap into the padded input coordinate system.
+                        pad_left = (num_output_frames-vlen) // 2
+                        temp_start += pad_left
+                        temp_end += pad_left
                     temp_start, temp_end = temp_start//ratio, temp_end//ratio
                 temp_start = max(0, temp_start)
                 temp_start = min(temp_start, num_output_frames//ratio-1)
@@ -99,7 +113,6 @@ def collate_fn_(batch, data_cfg, is_train, vocab, name2keypoint, word_emb_tab, v
                 outputs['temp_idx'].append([temp_start, temp_end])
             outputs['temp_idx'] = torch.tensor(outputs['temp_idx']).long()
 
-        index_setting = data_cfg['transform_cfg'].get('index_setting', ['consecutive','pad','central','pad'])
         sgn_videos, sgn_keypoints, start_idx = load_batch_video(
             zip_file = data_cfg['zip_file'], 
             names = outputs['names'], 

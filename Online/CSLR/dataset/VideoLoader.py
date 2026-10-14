@@ -120,7 +120,7 @@ def get_selected_indexs(vlen, num_frames=64, is_train=True, setting=['consecutiv
     # denote train > 64, test > 64, test < 64
     train_p, train_m, test_p, test_m = setting
     assert train_p in ['consecutive', 'random', 'temp_scale', 'crop_then_pad']
-    assert train_m in ['pad', 'even', 'temp_scale']
+    assert train_m in ['pad', 'center_pad', 'even', 'temp_scale']
     assert test_p in ['central', 'start', 'end', 'left_mid', 'right_mid']
     assert test_m in ['pad', 'start_pad', 'end_pad', 'left_mid_pad', 'right_mid_pad', 'even']
     if num_frames > 0:
@@ -139,10 +139,13 @@ def get_selected_indexs(vlen, num_frames=64, is_train=True, setting=['consecutiv
                 else:
                     selected_index = np.arange(0, vlen)
             elif vlen < num_frames:
-                if train_m == 'pad':
+                if train_m in ['pad', 'center_pad']:
                     remain = num_frames - vlen
                     selected_index = np.arange(0, vlen)
-                    pad_left = np.random.randint(0, remain, 1)[0]
+                    if train_m == 'center_pad':
+                        pad_left = remain // 2
+                    else:
+                        pad_left = np.random.randint(0, remain, 1)[0]
                     pad_right = remain - pad_left
                     pad = (pad_left, pad_right)
                 else:
@@ -338,6 +341,14 @@ def load_video(zip_file, name, vlen, raw_vlen, num_frames, dataset_name, is_trai
         else:
             video_arrays = read_jpg(zip_file, dataset_name, selected_index, vlen, ori_vfile, strict_frame_loading=strict_frame_loading)
 
+    # Keep the frame coordinates used to load ``video_arrays``.  Any later
+    # temporal replication indexes that in-memory array and must be composed
+    # with these coordinates before returning ``selected_index`` for the
+    # keypoint stream.  Returning the local replication indexes here used to
+    # make RGB sample the isolated clip while keypoints sampled the beginning
+    # of the full sentence for Phoenix ``even`` mode.
+    loaded_selected_index = np.asarray(selected_index)
+
     train_p, train_m, test_p, test_m = index_setting
     if is_train:
         if train_p == 'temp_scale':
@@ -363,16 +374,20 @@ def load_video(zip_file, name, vlen, raw_vlen, num_frames, dataset_name, is_trai
                 # even replicate
                 selected_index = even_replicate(vlen, num_frames, pre_index=selected_index, is_train=is_train)
             # print(vlen)
-            video_arrays = video_arrays[selected_index]
+            local_selected_index = np.asarray(selected_index)
+            video_arrays = video_arrays[local_selected_index]
+            selected_index = loaded_selected_index[local_selected_index]
 
         elif vlen < num_frames and train_m == 'even':
-            selected_index = even_replicate(vlen, num_frames, is_train=is_train)
-            video_arrays = video_arrays[selected_index]
+            local_selected_index = even_replicate(vlen, num_frames, is_train=is_train)
+            video_arrays = video_arrays[local_selected_index]
+            selected_index = loaded_selected_index[local_selected_index]
     
     else:
         if vlen < num_frames and test_m == 'even':
-            selected_index = even_replicate(vlen, num_frames, is_train=is_train)
-            video_arrays = video_arrays[selected_index]
+            local_selected_index = even_replicate(vlen, num_frames, is_train=is_train)
+            video_arrays = video_arrays[local_selected_index]
+            selected_index = loaded_selected_index[local_selected_index]
     
     # pad
     if pad is not None:

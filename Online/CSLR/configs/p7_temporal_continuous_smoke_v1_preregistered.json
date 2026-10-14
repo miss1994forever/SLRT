@@ -1,0 +1,59 @@
+{
+  "experiment": "P7 trained temporal-input candidates on source-disjoint train continuous screen v1",
+  "created_before_candidate_checkpoint_or_continuous_outcome_inspection": true,
+  "scope": {
+    "split": "train calibration only",
+    "sentences": 256,
+    "dev_read": false,
+    "test_read": false
+  },
+  "candidates": [
+    "A_current_fixed16",
+    "B_aligned_fixed16",
+    "C_inside_even16"
+  ],
+  "inference": {
+    "window_frames": 16,
+    "dense_stride": 1,
+    "posterior_head": "weighted rgb/keypoint/fuse probabilities",
+    "weights": [0.1, 0.7, 0.2],
+    "save_dense_logits": true,
+    "synchronized_runtime_profile": true
+  },
+  "primary_replay": {
+    "scheduler": "unchanged P6 source-fold online-quantile controller",
+    "unknown_eos": true,
+    "tail_topup": false,
+    "coverage": "offset0 of every four-window block",
+    "optional_window": "offset2 under the frozen token and causal within-video median rule",
+    "decoder": "frozen triangular span-weighted-15",
+    "decoder_min_weight": 0.05,
+    "phoenix_cleanup": "clean_phoenix_2014_trans"
+  },
+  "diagnostic_replays": [
+    "full_center with the same span-15 decoder",
+    "dense stride-1 with the same span-15 decoder"
+  ],
+  "selection_order": [
+    "source-disjoint isolated primary top1 and 5-6 frame top1",
+    "source-disjoint continuous primary WER and DEL/INS/SUB",
+    "source-cluster bootstrap candidate-minus-A uncertainty",
+    "runtime, peak memory, lookahead and implementation complexity"
+  ],
+  "guardrails": [
+    "Do not select from official dev before the train-only candidate identity is frozen",
+    "Do not read official test",
+    "Do not refit or tune the P6 scheduler or decoder per candidate",
+    "Report insertion changes separately so deletion gains cannot hide insertion regressions"
+  ],
+  "fixed_assets": {
+    "continuous_assets_manifest_sha256": "08406da97c116fc6f3e178cd7ae49b755c35ed48e6ef13a1c583b7754ab9b532",
+    "A_config_sha256": "84c636e183a998c2067d450beae543b270f3ed509bcd9720f6c23cc2aee0a253",
+    "B_config_sha256": "e9d99b3e2d1819befc3c2c3a041d7bff77b31fd6ea019e0609fb2d0e2f202149",
+    "C_config_sha256": "5ae26ba62870192be4bf795859864c21f46e031975b173bb7b604e90c6e14380",
+    "p6_rule_sha256": "48f2a6f58ee3e5ee321baeffed922c14416fa4ec01f2c28625e9f4560c40ef33",
+    "p6_models_sha256": "116996aef99b4177fb6159086eba6a9ca90f03df6e61e8974a50a760922221e0",
+    "p6_controller_sha256": "53a17e01641cea239379504f0f46fa079c8e858dc882713596364ef34d1425d5",
+    "span_decoder_implementation_sha256": "2af9d6c9a6d17e55d8657a9b70446c961bcda4f4e03958a0b26c6b68f89e292a"
+  }
+}

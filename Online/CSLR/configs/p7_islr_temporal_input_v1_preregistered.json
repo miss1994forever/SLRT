@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "experiment_id": "p7_islr_temporal_input_v1",
+  "created_utc": "2026-09-30T00:00:00Z",
+  "scope": "Phoenix-2014T train-only selection followed by one frozen retrospective dev confirmation; test forbidden",
+  "question": "Which temporal input construction gives the best implementable WER/latency tradeoff for the current ISLR plus online CSLR pipeline?",
+  "frozen_baseline": {
+    "checkpoint_sha256": "b3390f0dc4b6a826b53c88d3309b1d98fb75e5b58a5ec3f5779628cf3d51767b",
+    "config_sha256": "693f0059210155fa565feacddc0b0b458aa3a80093fa0f0959b1d68402c32361",
+    "train_bags_sha256": "05a587562648191945129c704533735df79b5dfa3acdec0bdacdee02551e2564",
+    "dev_annotations_sha256": "e8614d3523cde8320679a466766c1e14a303aacbf9245db55cdaab752bc6ba52",
+    "vocab_sha256": "d79c8ef31d8ec4345b511d641a832a67f1d8045020bee35521edee3b773fcc34",
+    "input_frames": 16,
+    "bag_size": 6,
+    "checkpoint_epoch": 92
+  },
+  "selection_protocol": {
+    "primary_split": "source-disjoint train calibration/evaluation folds",
+    "confirmation_split": "dev, exactly once after candidate and decoder are frozen",
+    "forbidden_split": "test",
+    "primary_metric": "continuous WER",
+    "guardrails": [
+      "5-6 frame reference DEL+SUB rate",
+      "insertion component must not erase the DEL+SUB gain",
+      "source-cluster uncertainty",
+      "online lookahead and model-forward cost"
+    ]
+  },
+  "stages": [
+    {
+      "id": "S0",
+      "name": "implementation and coordinate audit",
+      "candidates": ["current fixed-16"],
+      "promotion": "all input/foreground coordinates are understood and any mismatch is quantified"
+    },
+    {
+      "id": "S1",
+      "name": "frozen-checkpoint input sensitivity",
+      "candidates": [
+        "A_current_fixed16",
+        "B_fixed16_valid_foreground_pool",
+        "C_inside_resampled16",
+        "D_context_margin_fixed16",
+        "E_bucket_8_12_16_24_32"
+      ],
+      "promotion": "candidate improves short-gloss top-1 or correct-class margin without a broad common-gloss regression"
+    },
+    {
+      "id": "S2",
+      "name": "equal-budget short fine-tuning",
+      "budget": "same initialization, optimizer steps, gloss bags and random seeds",
+      "promotion": "stable source-disjoint train gain on isolated diagnostics and continuous WER"
+    },
+    {
+      "id": "S3",
+      "name": "full training for promoted candidates",
+      "budget": "same 100-epoch ceiling and stopping rule as baseline",
+      "promotion": "Pareto improvement in WER, short-gloss errors, latency and complexity"
+    },
+    {
+      "id": "S4",
+      "name": "single frozen dev confirmation",
+      "promotion": "source-cluster interval and error decomposition support the preregistered direction"
+    }
+  ],
+  "candidate_interpretation": {
+    "B_only_wins": "padding or foreground aggregation is the leading mechanism",
+    "C_wins": "adjacent motion or context-label mixing is the leading mechanism",
+    "D_wins": "proxy boundaries omit useful sign evidence",
+    "E_wins": "one fixed temporal scale is mismatched",
+    "none_win": "audit boundary quality, intrinsic short-sign ambiguity and domain shift before variable-length engineering"
+  },
+  "variable_length_gate": "Implement true variable-length batching only if bucketed/masked evidence beats every fixed-16 construction and the gain exceeds its measured latency/complexity cost."
+}
